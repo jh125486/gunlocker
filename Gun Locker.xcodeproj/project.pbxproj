@@ -1,0 +1,281 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		530DDEF914EEB6D800F1BC7F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDEF814EEB6D800F1BC7F /* UIKit.framework */; };
+		530DDEFB14EEB6D800F1BC7F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDEFA14EEB6D800F1BC7F /* Foundation.framework */; };
+		530DDEFD14EEB6D800F1BC7F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDEFC14EEB6D800F1BC7F /* CoreGraphics.framework */; };
+		530DDF0314EEB6D800F1BC7F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 530DDF0114EEB6D800F1BC7F /* InfoPlist.strings */; };
+		530DDF0514EEB6D800F1BC7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF0414EEB6D800F1BC7F /* main.m */; };
+		530DDF0914EEB6D800F1BC7F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF0814EEB6D800F1BC7F /* AppDelegate.m */; };
+		530DDF0C14EEB6D800F1BC7F /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 530DDF0A14EEB6D800F1BC7F /* MainStoryboard.storyboard */; };
+		530DDF0F14EEB6D800F1BC7F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF0E14EEB6D800F1BC7F /* ViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		530DDEF414EEB6D800F1BC7F /* Gun Locker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gun Locker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		530DDEF814EEB6D800F1BC7F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		530DDEFA14EEB6D800F1BC7F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		530DDEFC14EEB6D800F1BC7F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		530DDF0014EEB6D800F1BC7F /* Gun Locker-Info.plist */ = {isa = PBXFileReference; path = "Gun Locker-Info.plist"; sourceTree = "<group>"; };
+		530DDF0214EEB6D800F1BC7F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		530DDF0414EEB6D800F1BC7F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		530DDF0614EEB6D800F1BC7F /* Gun Locker-Prefix.pch */ = {isa = PBXFileReference; path = "Gun Locker-Prefix.pch"; sourceTree = "<group>"; };
+		530DDF0714EEB6D800F1BC7F /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		530DDF0814EEB6D800F1BC7F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		530DDF0B14EEB6D800F1BC7F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		530DDF0D14EEB6D800F1BC7F /* ViewController.h */ = {isa = PBXFileReference; path = ViewController.h; sourceTree = "<group>"; };
+		530DDF0E14EEB6D800F1BC7F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		530DDEF114EEB6D800F1BC7F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				530DDEF914EEB6D800F1BC7F /* UIKit.framework in Frameworks */,
+				530DDEFB14EEB6D800F1BC7F /* Foundation.framework in Frameworks */,
+				530DDEFD14EEB6D800F1BC7F /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		530DDEE914EEB6D800F1BC7F = {
+			isa = PBXGroup;
+			children = (
+				530DDEFE14EEB6D800F1BC7F /* Gun Locker */,
+				530DDEF714EEB6D800F1BC7F /* Frameworks */,
+				530DDEF514EEB6D800F1BC7F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		530DDEF514EEB6D800F1BC7F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				530DDEF414EEB6D800F1BC7F /* Gun Locker.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		530DDEF714EEB6D800F1BC7F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				530DDEF814EEB6D800F1BC7F /* UIKit.framework */,
+				530DDEFA14EEB6D800F1BC7F /* Foundation.framework */,
+				530DDEFC14EEB6D800F1BC7F /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		530DDEFE14EEB6D800F1BC7F /* Gun Locker */ = {
+			isa = PBXGroup;
+			children = (
+				530DDF0714EEB6D800F1BC7F /* AppDelegate.h */,
+				530DDF0814EEB6D800F1BC7F /* AppDelegate.m */,
+				530DDF0A14EEB6D800F1BC7F /* MainStoryboard.storyboard */,
+				530DDF0D14EEB6D800F1BC7F /* ViewController.h */,
+				530DDF0E14EEB6D800F1BC7F /* ViewController.m */,
+				530DDEFF14EEB6D800F1BC7F /* Supporting Files */,
+			);
+			path = "Gun Locker";
+			sourceTree = "<group>";
+		};
+		530DDEFF14EEB6D800F1BC7F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				530DDF0014EEB6D800F1BC7F /* Gun Locker-Info.plist */,
+				530DDF0114EEB6D800F1BC7F /* InfoPlist.strings */,
+				530DDF0414EEB6D800F1BC7F /* main.m */,
+				530DDF0614EEB6D800F1BC7F /* Gun Locker-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		530DDEF314EEB6D800F1BC7F /* Gun Locker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 530DDF1214EEB6D800F1BC7F /* Build configuration list for PBXNativeTarget "Gun Locker" */;
+			buildPhases = (
+				530DDEF014EEB6D800F1BC7F /* Sources */,
+				530DDEF114EEB6D800F1BC7F /* Frameworks */,
+				530DDEF214EEB6D800F1BC7F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Gun Locker";
+			productName = "Gun Locker";
+			productReference = 530DDEF414EEB6D800F1BC7F /* Gun Locker.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		530DDEEB14EEB6D800F1BC7F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 530DDEEE14EEB6D800F1BC7F /* Build configuration list for PBXProject "Gun Locker" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 530DDEE914EEB6D800F1BC7F;
+			productRefGroup = 530DDEF514EEB6D800F1BC7F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				530DDEF314EEB6D800F1BC7F /* Gun Locker */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		530DDEF214EEB6D800F1BC7F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				530DDF0314EEB6D800F1BC7F /* InfoPlist.strings in Resources */,
+				530DDF0C14EEB6D800F1BC7F /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		530DDEF014EEB6D800F1BC7F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				530DDF0514EEB6D800F1BC7F /* main.m in Sources */,
+				530DDF0914EEB6D800F1BC7F /* AppDelegate.m in Sources */,
+				530DDF0F14EEB6D800F1BC7F /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		530DDF0114EEB6D800F1BC7F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				530DDF0214EEB6D800F1BC7F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		530DDF0A14EEB6D800F1BC7F /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				530DDF0B14EEB6D800F1BC7F /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		530DDF1014EEB6D800F1BC7F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		530DDF1114EEB6D800F1BC7F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		530DDF1314EEB6D800F1BC7F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Gun Locker/Gun Locker-Prefix.pch";
+				INFOPLIST_FILE = "Gun Locker/Gun Locker-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		530DDF1414EEB6D800F1BC7F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Gun Locker/Gun Locker-Prefix.pch";
+				INFOPLIST_FILE = "Gun Locker/Gun Locker-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		530DDEEE14EEB6D800F1BC7F /* Build configuration list for PBXProject "Gun Locker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				530DDF1014EEB6D800F1BC7F /* Debug */,
+				530DDF1114EEB6D800F1BC7F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		530DDF1214EEB6D800F1BC7F /* Build configuration list for PBXNativeTarget "Gun Locker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				530DDF1314EEB6D800F1BC7F /* Debug */,
+				530DDF1414EEB6D800F1BC7F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 530DDEEB14EEB6D800F1BC7F /* Project object */;
+}
