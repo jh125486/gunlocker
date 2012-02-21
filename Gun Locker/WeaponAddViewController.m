@@ -10,9 +10,6 @@
 #import "Weapon.h"
 
 @implementation WeaponAddViewController
-{
-    NSString *caliber;
-}
 
 @synthesize delegate;
 @synthesize managedObjectContext;
@@ -162,7 +159,7 @@
 	{
 		CaliberChooserViewController *caliberChooserViewController = segue.destinationViewController;
 		caliberChooserViewController.delegate = self;
-		caliberChooserViewController.caliber = caliber;
+		caliberChooserViewController.caliber = self.caliberTextField.text;
 	}
 }
 
@@ -170,8 +167,7 @@
 
 - (void)caliberChooserViewController:(CaliberChooserViewController *)controller didSelectCaliber:(NSString *)selectedCaliber
 {
-	caliber = selectedCaliber;
-	self.caliberTextField.text = caliber;
+	self.caliberTextField.text = selectedCaliber;
 	[self.navigationController popViewControllerAnimated:YES];
 }
 @end

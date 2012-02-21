@@ -144,12 +144,13 @@
                     @"16 Gauge",
                     @"12 Gauge",
                     @"10 Gauge",
-                nil ];
+                    nil ];
     
-    if(![calibers containsObject:self.caliber])
+    if([self.caliber length] > 0 && ![calibers containsObject:self.caliber])
         [calibers insertObject:self.caliber atIndex:0];
     
     selectedIndex = [calibers indexOfObject:self.caliber];
+    NSLog(@"got here: %@ index:%d", self.caliber, selectedIndex);
     
 }
 
@@ -222,7 +223,7 @@
         cell.textLabel.text = [calibers objectAtIndex:indexPath.row];
     }
     
-    if (cell.textLabel.text == self.caliber)
+    if ([cell.textLabel.text isEqualToString:self.caliber])
         cell.accessoryType =  UITableViewCellAccessoryCheckmark;
     else
         cell.accessoryType = UITableViewCellAccessoryNone;
