@@ -15,6 +15,15 @@
 		530DDF0914EEB6D800F1BC7F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF0814EEB6D800F1BC7F /* AppDelegate.m */; };
 		530DDF0C14EEB6D800F1BC7F /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 530DDF0A14EEB6D800F1BC7F /* MainStoryboard.storyboard */; };
 		530DDF0F14EEB6D800F1BC7F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF0E14EEB6D800F1BC7F /* ViewController.m */; };
+		530DDF1714EECDDF00F1BC7F /* LockerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF1614EECDDF00F1BC7F /* LockerViewController.m */; };
+		530DDF1914EECF9400F1BC7F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDF1814EECF9400F1BC7F /* CoreData.framework */; };
+		530DDF2F14EF264F00F1BC7F /* Weapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF2E14EF264F00F1BC7F /* Weapon.m */; };
+		530DDF3214EF68F000F1BC7F /* WeaponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF3114EF68F000F1BC7F /* WeaponCell.m */; };
+		530DDF3914EF7AEB00F1BC7F /* Make.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF3814EF7AEB00F1BC7F /* Make.m */; };
+		530DDF3C14EFF74400F1BC7F /* WeaponAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF3B14EFF74400F1BC7F /* WeaponAddViewController.m */; };
+		5382681C14F2CB1100B2F747 /* CaliberChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5382681B14F2CB1100B2F747 /* CaliberChooserViewController.m */; };
+		539714C314F03F81003CCAE9 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 539714C114F03F81003CCAE9 /* DataModel.xcdatamodeld */; };
+		539714C614F03FF0003CCAE9 /* DatabaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 539714C514F03FF0003CCAE9 /* DatabaseHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,15 +31,31 @@
 		530DDEF814EEB6D800F1BC7F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		530DDEFA14EEB6D800F1BC7F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		530DDEFC14EEB6D800F1BC7F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		530DDF0014EEB6D800F1BC7F /* Gun Locker-Info.plist */ = {isa = PBXFileReference; path = "Gun Locker-Info.plist"; sourceTree = "<group>"; };
+		530DDF0014EEB6D800F1BC7F /* Gun Locker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Gun Locker-Info.plist"; sourceTree = "<group>"; };
 		530DDF0214EEB6D800F1BC7F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		530DDF0414EEB6D800F1BC7F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		530DDF0614EEB6D800F1BC7F /* Gun Locker-Prefix.pch */ = {isa = PBXFileReference; path = "Gun Locker-Prefix.pch"; sourceTree = "<group>"; };
-		530DDF0714EEB6D800F1BC7F /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		530DDF0614EEB6D800F1BC7F /* Gun Locker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Gun Locker-Prefix.pch"; sourceTree = "<group>"; };
+		530DDF0714EEB6D800F1BC7F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		530DDF0814EEB6D800F1BC7F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		530DDF0B14EEB6D800F1BC7F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		530DDF0D14EEB6D800F1BC7F /* ViewController.h */ = {isa = PBXFileReference; path = ViewController.h; sourceTree = "<group>"; };
+		530DDF0D14EEB6D800F1BC7F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		530DDF0E14EEB6D800F1BC7F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		530DDF1514EECDDF00F1BC7F /* LockerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LockerViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		530DDF1614EECDDF00F1BC7F /* LockerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LockerViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		530DDF1814EECF9400F1BC7F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		530DDF2D14EF264F00F1BC7F /* Weapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weapon.h; sourceTree = "<group>"; };
+		530DDF2E14EF264F00F1BC7F /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
+		530DDF3014EF68F000F1BC7F /* WeaponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeaponCell.h; sourceTree = "<group>"; };
+		530DDF3114EF68F000F1BC7F /* WeaponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeaponCell.m; sourceTree = "<group>"; };
+		530DDF3714EF7AEB00F1BC7F /* Make.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Make.h; sourceTree = "<group>"; };
+		530DDF3814EF7AEB00F1BC7F /* Make.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Make.m; sourceTree = "<group>"; };
+		530DDF3A14EFF74400F1BC7F /* WeaponAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WeaponAddViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		530DDF3B14EFF74400F1BC7F /* WeaponAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeaponAddViewController.m; sourceTree = "<group>"; };
+		5382681A14F2CB1100B2F747 /* CaliberChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaliberChooserViewController.h; path = ../CaliberChooserViewController.h; sourceTree = "<group>"; };
+		5382681B14F2CB1100B2F747 /* CaliberChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CaliberChooserViewController.m; path = ../CaliberChooserViewController.m; sourceTree = "<group>"; };
+		539714C214F03F81003CCAE9 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		539714C414F03FF0003CCAE9 /* DatabaseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseHelper.h; sourceTree = "<group>"; };
+		539714C514F03FF0003CCAE9 /* DatabaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,8 +63,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				530DDEF914EEB6D800F1BC7F /* UIKit.framework in Frameworks */,
 				530DDEFB14EEB6D800F1BC7F /* Foundation.framework in Frameworks */,
+				530DDF1914EECF9400F1BC7F /* CoreData.framework in Frameworks */,
+				530DDEF914EEB6D800F1BC7F /* UIKit.framework in Frameworks */,
 				530DDEFD14EEB6D800F1BC7F /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,6 +93,7 @@
 		530DDEF714EEB6D800F1BC7F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				530DDF1814EECF9400F1BC7F /* CoreData.framework */,
 				530DDEF814EEB6D800F1BC7F /* UIKit.framework */,
 				530DDEFA14EEB6D800F1BC7F /* Foundation.framework */,
 				530DDEFC14EEB6D800F1BC7F /* CoreGraphics.framework */,
@@ -79,9 +106,10 @@
 			children = (
 				530DDF0714EEB6D800F1BC7F /* AppDelegate.h */,
 				530DDF0814EEB6D800F1BC7F /* AppDelegate.m */,
+				53B00A1114F32569000A560F /* Models */,
+				53B00A1014F3255A000A560F /* Views */,
 				530DDF0A14EEB6D800F1BC7F /* MainStoryboard.storyboard */,
-				530DDF0D14EEB6D800F1BC7F /* ViewController.h */,
-				530DDF0E14EEB6D800F1BC7F /* ViewController.m */,
+				539714C114F03F81003CCAE9 /* DataModel.xcdatamodeld */,
 				530DDEFF14EEB6D800F1BC7F /* Supporting Files */,
 			);
 			path = "Gun Locker";
@@ -90,12 +118,42 @@
 		530DDEFF14EEB6D800F1BC7F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				539714C414F03FF0003CCAE9 /* DatabaseHelper.h */,
+				539714C514F03FF0003CCAE9 /* DatabaseHelper.m */,
 				530DDF0014EEB6D800F1BC7F /* Gun Locker-Info.plist */,
 				530DDF0114EEB6D800F1BC7F /* InfoPlist.strings */,
 				530DDF0414EEB6D800F1BC7F /* main.m */,
 				530DDF0614EEB6D800F1BC7F /* Gun Locker-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		53B00A1014F3255A000A560F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5382681A14F2CB1100B2F747 /* CaliberChooserViewController.h */,
+				5382681B14F2CB1100B2F747 /* CaliberChooserViewController.m */,
+				530DDF1514EECDDF00F1BC7F /* LockerViewController.h */,
+				530DDF1614EECDDF00F1BC7F /* LockerViewController.m */,
+				530DDF0D14EEB6D800F1BC7F /* ViewController.h */,
+				530DDF0E14EEB6D800F1BC7F /* ViewController.m */,
+				530DDF3A14EFF74400F1BC7F /* WeaponAddViewController.h */,
+				530DDF3B14EFF74400F1BC7F /* WeaponAddViewController.m */,
+				530DDF3014EF68F000F1BC7F /* WeaponCell.h */,
+				530DDF3114EF68F000F1BC7F /* WeaponCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		53B00A1114F32569000A560F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				530DDF3714EF7AEB00F1BC7F /* Make.h */,
+				530DDF3814EF7AEB00F1BC7F /* Make.m */,
+				530DDF2D14EF264F00F1BC7F /* Weapon.h */,
+				530DDF2E14EF264F00F1BC7F /* Weapon.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +221,14 @@
 				530DDF0514EEB6D800F1BC7F /* main.m in Sources */,
 				530DDF0914EEB6D800F1BC7F /* AppDelegate.m in Sources */,
 				530DDF0F14EEB6D800F1BC7F /* ViewController.m in Sources */,
+				530DDF1714EECDDF00F1BC7F /* LockerViewController.m in Sources */,
+				530DDF2F14EF264F00F1BC7F /* Weapon.m in Sources */,
+				530DDF3214EF68F000F1BC7F /* WeaponCell.m in Sources */,
+				530DDF3914EF7AEB00F1BC7F /* Make.m in Sources */,
+				530DDF3C14EFF74400F1BC7F /* WeaponAddViewController.m in Sources */,
+				539714C314F03F81003CCAE9 /* DataModel.xcdatamodeld in Sources */,
+				539714C614F03FF0003CCAE9 /* DatabaseHelper.m in Sources */,
+				5382681C14F2CB1100B2F747 /* CaliberChooserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,8 +340,23 @@
 				530DDF1414EEB6D800F1BC7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		539714C114F03F81003CCAE9 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				539714C214F03F81003CCAE9 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 539714C214F03F81003CCAE9 /* DataModel.xcdatamodel */;
+			name = DataModel.xcdatamodeld;
+			path = ../DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 530DDEEB14EEB6D800F1BC7F /* Project object */;
 }

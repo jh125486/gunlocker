@@ -7,17 +7,26 @@
 //
 
 #import "AppDelegate.h"
+#import "LockerViewController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize managedObjectContext;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    //UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    //UINavigationController *navigationController = [[tabBarController viewControllers] objectAtIndex:0];
+    //LockerViewController *lockerViewController = [[navigationController viewControllers] objectAtIndex:0];
+    
+    //lockerViewController.managedObjectContext = self.managedObjectContext;
+    managedObjectContext = [[DatabaseHelper sharedInstance] managedObjectContext];
     return YES;
 }
-							
+
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     /*
@@ -48,13 +57,30 @@
      */
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    /*
-     Called when the application is about to terminate.
-     Save data if appropriate.
-     See also applicationDidEnterBackground:.
-     */
+- (void)applicationWillTerminate:(UIApplication *)application {
+    NSError *error = nil;
+    if (managedObjectContext != nil) {
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+			// Handle error.
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			exit(-1);  // Fail
+        } 
+    }
 }
+
+- (void)saveContext {
+    NSError *error = nil;
+    NSManagedObjectContext *objectContext = self.managedObjectContext;
+    if (objectContext != nil)
+    {
+        if ([objectContext hasChanges] && ![objectContext save:&error])
+        {
+            // add error handling here
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
+
 
 @end

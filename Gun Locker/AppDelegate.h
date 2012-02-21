@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DatabaseHelper.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+{
+    NSManagedObjectContext *managedObjectContext;
+}
 
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) UIWindow *window;
 
 @end
