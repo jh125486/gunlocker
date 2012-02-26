@@ -304,6 +304,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
+                                                        <action selector="purchaseDateTextFieldTapped" destination="f3f-TF-aBG" eventType="editingDidEnd" id="y3g-Xw-dFf"/>
                                                         <outlet property="delegate" destination="f3f-TF-aBG" id="NRo-v8-Net"/>
                                                     </connections>
                                                 </textField>
@@ -611,6 +612,7 @@
                 <relationship kind="action" name="cancel:"/>
                 <relationship kind="action" name="checkData:"/>
                 <relationship kind="action" name="photoButtonTapped"/>
+                <relationship kind="action" name="purchaseDateTextFieldTapped"/>
                 <relationship kind="action" name="save:"/>
                 <relationship kind="outlet" name="barrelLengthTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="caliberTextField" candidateClass="UITextField"/>

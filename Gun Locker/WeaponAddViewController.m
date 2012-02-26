@@ -12,7 +12,7 @@
 
 @synthesize delegate;
 @synthesize managedObjectContext;
-
+@synthesize actionSheetPicker;
 @synthesize manufacturerTextField;
 @synthesize modelTextField;
 @synthesize caliberTextField;
@@ -165,6 +165,11 @@
     
     weapon.serial_number = self.serialNumberTextField.text;
     
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"EEEE MMMM d, YYYY"];
+    weapon.purchased_date = [dateFormat dateFromString:self.purchaseDateTextField.text];
+    NSLog([weapon.purchased_date description]);
+    
     NSError *error = nil;
     if (![managedObjectContext save:&error]) {
         NSLog(@"%@", [error localizedDescription]);
@@ -200,7 +205,7 @@
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - CaliberChooserViewControllerDelegate
+#pragma mark - ManufacturerChooserViewControllerDelegate
 
 - (void)manufacturerChooserViewController:(ManufacturerChooserViewController *)controller didSelectManufacturer:(NSString *)selectedManufacturer
 {
@@ -235,5 +240,24 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+#pragma ActionSheetPicker for PurchaseDateTextField
+
+- (IBAction)purchaseDateTextFieldTapped:(UIControl *)sender {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"EEEE MMMM d, YYYY"];
+    NSDate *selectedDate = [dateFormat dateFromString:self.purchaseDateTextField.text];
+
+    self.actionSheetPicker = [[ActionSheetDatePicker alloc] initWithTitle:@"" datePickerMode:UIDatePickerModeDate selectedDate:selectedDate target:self action:@selector(dateWasSelected:element:) origin:sender];
+    [self.actionSheetPicker addCustomButtonWithTitle:@"Today" value:[NSDate date]];
+//    [self.actionSheetPicker addCustomButtonWithTitle:@"Yesterday" value:[[NSDate date] TC_dateByAddingCalendarUnits:NSDayCalendarUnit amount:-1]];
+    self.actionSheetPicker.hideCancel = YES;
+    [self.actionSheetPicker showActionSheetPicker];
+}
+
+- (void)purchaseDateWasSelected:(NSDate *)selectedDate element:(id)element {    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"EEEE MMMM d, YYYY"];
+    self.purchaseDateTextField.text = [dateFormat stringFromDate:selectedDate];    
+}
 
 @end
