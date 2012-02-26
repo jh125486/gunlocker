@@ -10,8 +10,9 @@
 
 @interface WeaponCell : UITableViewCell
 
-@property (nonatomic, strong) IBOutlet UILabel *makeLabel;
+@property (nonatomic, strong) IBOutlet UILabel *manufacturerLabel;
 @property (nonatomic, strong) IBOutlet UILabel *modelLabel;
+@property (nonatomic, strong) IBOutlet UILabel *serialNumberLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *photoImageView;
 
 @end

@@ -1,8 +1,8 @@
 //
-//  Make.h
+//  Manufacturer.h
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 2/18/12.
+//  Created by Jacob Hochstetler on 2/23/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -10,8 +10,9 @@
 #import <CoreData/CoreData.h>
 
 
-@interface Make : NSManagedObject
+@interface Manufacturer : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * country;
 
 @end

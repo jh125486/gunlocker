@@ -12,7 +12,7 @@
 @class CaliberChooserViewController;
 
 @protocol CaliberChooserViewControllerDelegate <NSObject>
-- (void)caliberChooserViewController:(CaliberChooserViewController *)controller didSelectCaliber:(NSString *)caliber;
+- (void)caliberChooserViewController:(CaliberChooserViewController *)controller didSelectCaliber:(NSString *)selectedCaliber;
 @end
 
 @interface CaliberChooserViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate>{
@@ -21,7 +21,7 @@
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, weak) id <CaliberChooserViewControllerDelegate> delegate;
-@property (nonatomic, strong) NSString *caliber;
+@property (nonatomic, strong) NSString *selectedCaliber;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;
 @property (nonatomic, copy) NSArray *searchResults;

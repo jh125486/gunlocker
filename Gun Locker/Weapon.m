@@ -13,9 +13,10 @@
 @dynamic barrel_length;
 @dynamic caliber;
 @dynamic finish;
-@dynamic make;
+@dynamic manufacturer;
 @dynamic model;
 @dynamic photo;
+@dynamic photo_thumbnail;
 @dynamic purchased_date;
 @dynamic purchased_price;
 @dynamic serial_number;

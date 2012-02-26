@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="878" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1170" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Caliber" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -19,9 +19,6 @@
         <attribute name="caliber" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="weapons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Weapon" inverseName="preferred_load" inverseEntity="Weapon" syncable="YES"/>
     </entity>
-    <entity name="Make" representedClassName="Make" syncable="YES">
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
     <entity name="Malfunction" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="failure" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,26 +26,31 @@
         <attribute name="round_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="weapon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="malfunctions" inverseEntity="Weapon" syncable="YES"/>
     </entity>
+    <entity name="Manufacturer" representedClassName="Manufacturer" syncable="YES">
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
     <entity name="Weapon" representedClassName="Weapon" syncable="YES">
         <attribute name="barrel_length" optional="YES" attributeType="Float" syncable="YES"/>
         <attribute name="caliber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="finish" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="make" attributeType="String" syncable="YES"/>
+        <attribute name="manufacturer" attributeType="String" syncable="YES"/>
         <attribute name="model" attributeType="String" syncable="YES"/>
-        <attribute name="photo" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="photo" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="photo_thumbnail" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="purchased_date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="purchased_price" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="serial_number" attributeType="String" syncable="YES"/>
+        <attribute name="serial_number" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="malfunctions" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Malfunction" inverseName="weapon" inverseEntity="Malfunction" syncable="YES"/>
         <relationship name="preferred_load" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Load" inverseName="weapons" inverseEntity="Load" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Caliber" positionX="160" positionY="192" width="128" height="60"/>
         <element name="CommercialLoad" positionX="63" positionY="240" width="128" height="75"/>
         <element name="Handload" positionX="-0" positionY="342" width="128" height="120"/>
         <element name="Load" positionX="-288" positionY="297" width="128" height="90"/>
-        <element name="Make" positionX="160" positionY="192" width="128" height="60"/>
         <element name="Malfunction" positionX="160" positionY="-162" width="128" height="120"/>
-        <element name="Weapon" positionX="-324" positionY="-111" width="128" height="210"/>
-        <element name="Caliber" positionX="160" positionY="192" width="128" height="60"/>
+        <element name="Manufacturer" positionX="160" positionY="192" width="128" height="60"/>
+        <element name="Weapon" positionX="-324" positionY="-111" width="128" height="225"/>
     </elements>
 </model>

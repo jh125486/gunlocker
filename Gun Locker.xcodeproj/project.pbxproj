@@ -19,11 +19,16 @@
 		530DDF1914EECF9400F1BC7F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDF1814EECF9400F1BC7F /* CoreData.framework */; };
 		530DDF2F14EF264F00F1BC7F /* Weapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF2E14EF264F00F1BC7F /* Weapon.m */; };
 		530DDF3214EF68F000F1BC7F /* WeaponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF3114EF68F000F1BC7F /* WeaponCell.m */; };
-		530DDF3914EF7AEB00F1BC7F /* Make.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF3814EF7AEB00F1BC7F /* Make.m */; };
 		530DDF3C14EFF74400F1BC7F /* WeaponAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF3B14EFF74400F1BC7F /* WeaponAddViewController.m */; };
-		5382681C14F2CB1100B2F747 /* CaliberChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5382681B14F2CB1100B2F747 /* CaliberChooserViewController.m */; };
-		539714C314F03F81003CCAE9 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 539714C114F03F81003CCAE9 /* DataModel.xcdatamodeld */; };
+		532EE03914F736E5008A9558 /* Manufacturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 532EE03814F736E5008A9558 /* Manufacturer.m */; };
+		532EE03D14F74FFB008A9558 /* manufacturers.txt in Resources */ = {isa = PBXBuildFile; fileRef = 532EE03C14F74FFB008A9558 /* manufacturers.txt */; };
+		5333AA8A14F9C63C00D62E50 /* calibers.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5333AA8914F9C63C00D62E50 /* calibers.txt */; };
+		5333AA8D14F9D0A600D62E50 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 5333AA8C14F9D0A600D62E50 /* Images */; };
+		5356120E14F5B93600EC1ED4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5356120C14F5B93600EC1ED4 /* DataModel.xcdatamodeld */; };
 		539714C614F03FF0003CCAE9 /* DatabaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 539714C514F03FF0003CCAE9 /* DatabaseHelper.m */; };
+		539A835E14F867FA0092BD78 /* lockerViewAlphaGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 539A835D14F867FA0092BD78 /* lockerViewAlphaGradient.png */; };
+		53A6C86914F498C10045C186 /* ManufacturerChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A6C86814F498C10045C186 /* ManufacturerChooserViewController.m */; };
+		53A6C88414F5B8ED0045C186 /* CaliberChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A6C88314F5B8ED0045C186 /* CaliberChooserViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,15 +52,21 @@
 		530DDF2E14EF264F00F1BC7F /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
 		530DDF3014EF68F000F1BC7F /* WeaponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeaponCell.h; sourceTree = "<group>"; };
 		530DDF3114EF68F000F1BC7F /* WeaponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeaponCell.m; sourceTree = "<group>"; };
-		530DDF3714EF7AEB00F1BC7F /* Make.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Make.h; sourceTree = "<group>"; };
-		530DDF3814EF7AEB00F1BC7F /* Make.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Make.m; sourceTree = "<group>"; };
 		530DDF3A14EFF74400F1BC7F /* WeaponAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WeaponAddViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		530DDF3B14EFF74400F1BC7F /* WeaponAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeaponAddViewController.m; sourceTree = "<group>"; };
-		5382681A14F2CB1100B2F747 /* CaliberChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaliberChooserViewController.h; path = ../CaliberChooserViewController.h; sourceTree = "<group>"; };
-		5382681B14F2CB1100B2F747 /* CaliberChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CaliberChooserViewController.m; path = ../CaliberChooserViewController.m; sourceTree = "<group>"; };
-		539714C214F03F81003CCAE9 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		532EE03714F736E5008A9558 /* Manufacturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manufacturer.h; sourceTree = "<group>"; };
+		532EE03814F736E5008A9558 /* Manufacturer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Manufacturer.m; sourceTree = "<group>"; };
+		532EE03C14F74FFB008A9558 /* manufacturers.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = manufacturers.txt; path = "Gun Locker/manufacturers.txt"; sourceTree = SOURCE_ROOT; };
+		5333AA8914F9C63C00D62E50 /* calibers.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = calibers.txt; sourceTree = "<group>"; };
+		5333AA8C14F9D0A600D62E50 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+		5356120D14F5B93600EC1ED4 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		539714C414F03FF0003CCAE9 /* DatabaseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseHelper.h; sourceTree = "<group>"; };
 		539714C514F03FF0003CCAE9 /* DatabaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseHelper.m; sourceTree = "<group>"; };
+		539A835D14F867FA0092BD78 /* lockerViewAlphaGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lockerViewAlphaGradient.png; sourceTree = "<group>"; };
+		53A6C86714F498C10045C186 /* ManufacturerChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManufacturerChooserViewController.h; sourceTree = "<group>"; };
+		53A6C86814F498C10045C186 /* ManufacturerChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManufacturerChooserViewController.m; sourceTree = "<group>"; };
+		53A6C88214F5B8ED0045C186 /* CaliberChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaliberChooserViewController.h; sourceTree = "<group>"; };
+		53A6C88314F5B8ED0045C186 /* CaliberChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaliberChooserViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,12 +115,12 @@
 		530DDEFE14EEB6D800F1BC7F /* Gun Locker */ = {
 			isa = PBXGroup;
 			children = (
-				530DDF0714EEB6D800F1BC7F /* AppDelegate.h */,
-				530DDF0814EEB6D800F1BC7F /* AppDelegate.m */,
-				53B00A1114F32569000A560F /* Models */,
+				532EE03514F6C072008A9558 /* App Delegate */,
+				53B00A1114F32569000A560F /* Models and DataModel */,
 				53B00A1014F3255A000A560F /* Views */,
 				530DDF0A14EEB6D800F1BC7F /* MainStoryboard.storyboard */,
-				539714C114F03F81003CCAE9 /* DataModel.xcdatamodeld */,
+				5333AA8C14F9D0A600D62E50 /* Images */,
+				539A835D14F867FA0092BD78 /* lockerViewAlphaGradient.png */,
 				530DDEFF14EEB6D800F1BC7F /* Supporting Files */,
 			);
 			path = "Gun Locker";
@@ -128,11 +139,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		532EE03514F6C072008A9558 /* App Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				530DDF0714EEB6D800F1BC7F /* AppDelegate.h */,
+				530DDF0814EEB6D800F1BC7F /* AppDelegate.m */,
+			);
+			name = "App Delegate";
+			sourceTree = "<group>";
+		};
 		53B00A1014F3255A000A560F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5382681A14F2CB1100B2F747 /* CaliberChooserViewController.h */,
-				5382681B14F2CB1100B2F747 /* CaliberChooserViewController.m */,
+				53A6C88214F5B8ED0045C186 /* CaliberChooserViewController.h */,
+				53A6C88314F5B8ED0045C186 /* CaliberChooserViewController.m */,
+				5333AA8914F9C63C00D62E50 /* calibers.txt */,
+				53A6C86714F498C10045C186 /* ManufacturerChooserViewController.h */,
+				53A6C86814F498C10045C186 /* ManufacturerChooserViewController.m */,
 				530DDF1514EECDDF00F1BC7F /* LockerViewController.h */,
 				530DDF1614EECDDF00F1BC7F /* LockerViewController.m */,
 				530DDF0D14EEB6D800F1BC7F /* ViewController.h */,
@@ -145,15 +168,17 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		53B00A1114F32569000A560F /* Models */ = {
+		53B00A1114F32569000A560F /* Models and DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				530DDF3714EF7AEB00F1BC7F /* Make.h */,
-				530DDF3814EF7AEB00F1BC7F /* Make.m */,
+				532EE03714F736E5008A9558 /* Manufacturer.h */,
+				532EE03814F736E5008A9558 /* Manufacturer.m */,
+				532EE03C14F74FFB008A9558 /* manufacturers.txt */,
+				5356120C14F5B93600EC1ED4 /* DataModel.xcdatamodeld */,
 				530DDF2D14EF264F00F1BC7F /* Weapon.h */,
 				530DDF2E14EF264F00F1BC7F /* Weapon.m */,
 			);
-			name = Models;
+			name = "Models and DataModel";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,7 +207,7 @@
 		530DDEEB14EEB6D800F1BC7F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 530DDEEE14EEB6D800F1BC7F /* Build configuration list for PBXProject "Gun Locker" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -208,6 +233,10 @@
 			files = (
 				530DDF0314EEB6D800F1BC7F /* InfoPlist.strings in Resources */,
 				530DDF0C14EEB6D800F1BC7F /* MainStoryboard.storyboard in Resources */,
+				532EE03D14F74FFB008A9558 /* manufacturers.txt in Resources */,
+				539A835E14F867FA0092BD78 /* lockerViewAlphaGradient.png in Resources */,
+				5333AA8A14F9C63C00D62E50 /* calibers.txt in Resources */,
+				5333AA8D14F9D0A600D62E50 /* Images in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,11 +253,12 @@
 				530DDF1714EECDDF00F1BC7F /* LockerViewController.m in Sources */,
 				530DDF2F14EF264F00F1BC7F /* Weapon.m in Sources */,
 				530DDF3214EF68F000F1BC7F /* WeaponCell.m in Sources */,
-				530DDF3914EF7AEB00F1BC7F /* Make.m in Sources */,
 				530DDF3C14EFF74400F1BC7F /* WeaponAddViewController.m in Sources */,
-				539714C314F03F81003CCAE9 /* DataModel.xcdatamodeld in Sources */,
 				539714C614F03FF0003CCAE9 /* DatabaseHelper.m in Sources */,
-				5382681C14F2CB1100B2F747 /* CaliberChooserViewController.m in Sources */,
+				53A6C86914F498C10045C186 /* ManufacturerChooserViewController.m in Sources */,
+				53A6C88414F5B8ED0045C186 /* CaliberChooserViewController.m in Sources */,
+				5356120E14F5B93600EC1ED4 /* DataModel.xcdatamodeld in Sources */,
+				532EE03914F736E5008A9558 /* Manufacturer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +300,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -288,7 +318,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -305,7 +335,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gun Locker/Gun Locker-Prefix.pch";
 				INFOPLIST_FILE = "Gun Locker/Gun Locker-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -316,7 +348,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gun Locker/Gun Locker-Prefix.pch";
 				INFOPLIST_FILE = "Gun Locker/Gun Locker-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -345,14 +379,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		539714C114F03F81003CCAE9 /* DataModel.xcdatamodeld */ = {
+		5356120C14F5B93600EC1ED4 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				539714C214F03F81003CCAE9 /* DataModel.xcdatamodel */,
+				5356120D14F5B93600EC1ED4 /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 539714C214F03F81003CCAE9 /* DataModel.xcdatamodel */;
-			name = DataModel.xcdatamodeld;
-			path = ../DataModel.xcdatamodeld;
+			currentVersion = 5356120D14F5B93600EC1ED4 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

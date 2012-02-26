@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ManufacturerChooserViewController.h"
 #import "CaliberChooserViewController.h"
 #import "DatabaseHelper.h"
 #import "Weapon.h"
@@ -18,7 +19,11 @@
 - (void)WeaponAddViewControllerDidSave:(WeaponAddViewController *)controller;
 @end
 
-@interface WeaponAddViewController : UITableViewController <UITextFieldDelegate, CaliberChooserViewControllerDelegate> {
+@interface WeaponAddViewController : UITableViewController <UITextFieldDelegate, 
+                                                            CaliberChooserViewControllerDelegate, 
+                                                            ManufacturerChooserViewControllerDelegate,
+                                                            UIImagePickerControllerDelegate,
+                                                            UINavigationControllerDelegate> {
     NSManagedObjectContext *managedObjectContext;
 }
 
@@ -26,7 +31,7 @@
 
 @property (nonatomic, weak) id <WeaponAddViewControllerDelegate> delegate;
 
-@property (weak, nonatomic) IBOutlet UITextField *makeTextField;
+@property (weak, nonatomic) IBOutlet UITextField *manufacturerTextField;
 @property (weak, nonatomic) IBOutlet UITextField *modelTextField;
 @property (weak, nonatomic) IBOutlet UITextField *caliberTextField;
 @property (weak, nonatomic) IBOutlet UITextField *finishTextField;
@@ -34,10 +39,12 @@
 @property (weak, nonatomic) IBOutlet UITextField *serialNumberTextField;
 @property (weak, nonatomic) IBOutlet UITextField *purchaseDateTextField;
 @property (weak, nonatomic) IBOutlet UITextField *purchasePriceTextfield;
+@property (weak, nonatomic) IBOutlet UIButton *photoButton;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;
 - (IBAction)checkData:(id)sender;
+- (IBAction)photoButtonTapped;
 
 - (void)verifyEnteredData;
 @end

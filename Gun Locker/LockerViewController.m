@@ -56,9 +56,7 @@
     if (![self.fetchedResultsController performFetch:&error]) {
       // handle error!
     }
-    
 }
-
 
 - (void)viewDidUnload
 {
@@ -79,14 +77,17 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[[fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
+    NSInteger count = [[[fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
+
+    self.navigationItem.title = [self.navigationItem.title stringByAppendingString: [NSString stringWithFormat:@" (%d)", count]];;
+    return count;
 }
 
 - (void)configureCell:(WeaponCell *)cell withWeapon:(Weapon *)weapon {
-    cell.makeLabel.text = weapon.make;
+    cell.manufacturerLabel.text = weapon.manufacturer;
 	cell.modelLabel.text = weapon.model;
-	cell.photoImageView.image = [UIImage imageWithData:(NSData *)weapon.photo];
-
+    cell.serialNumberLabel.text = weapon.serial_number;
+	cell.photoImageView.image = [UIImage imageWithData:weapon.photo_thumbnail];
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -152,7 +153,7 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Weapon" inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"make" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"manufacturer" ascending:YES];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 

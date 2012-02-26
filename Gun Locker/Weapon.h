@@ -15,9 +15,10 @@
 @property (nonatomic, retain) NSNumber * barrel_length;
 @property (nonatomic, retain) NSString * caliber;
 @property (nonatomic, retain) NSString * finish;
-@property (nonatomic, retain) NSString * make;
+@property (nonatomic, retain) NSString * manufacturer;
 @property (nonatomic, retain) NSString * model;
 @property (nonatomic, retain) NSData * photo;
+@property (nonatomic, retain) NSData * photo_thumbnail;
 @property (nonatomic, retain) NSDate * purchased_date;
 @property (nonatomic, retain) NSDecimalNumber * purchased_price;
 @property (nonatomic, retain) NSString * serial_number;

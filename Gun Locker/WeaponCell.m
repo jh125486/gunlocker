@@ -10,8 +10,9 @@
 
 @implementation WeaponCell
 
-@synthesize makeLabel;
+@synthesize manufacturerLabel;
 @synthesize modelLabel;
+@synthesize serialNumberLabel;
 @synthesize photoImageView;
 
 //- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
