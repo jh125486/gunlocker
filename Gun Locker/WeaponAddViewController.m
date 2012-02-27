@@ -12,7 +12,7 @@
 
 @synthesize delegate;
 @synthesize managedObjectContext;
-@synthesize actionSheetPicker;
+
 @synthesize manufacturerTextField;
 @synthesize modelTextField;
 @synthesize caliberTextField;
