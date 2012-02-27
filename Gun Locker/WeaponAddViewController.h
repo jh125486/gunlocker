@@ -11,7 +11,6 @@
 #import "CaliberChooserViewController.h"
 #import "DatabaseHelper.h"
 #import "Weapon.h"
-#import "ActionSheetPicker.h"
 
 @class WeaponAddViewController;
 
@@ -32,8 +31,6 @@
 
 @property (nonatomic, weak) id <WeaponAddViewControllerDelegate> delegate;
 
-@property (nonatomic, retain) AbstractActionSheetPicker *actionSheetPicker;
-
 @property (weak, nonatomic) IBOutlet UITextField *manufacturerTextField;
 @property (weak, nonatomic) IBOutlet UITextField *modelTextField;
 @property (weak, nonatomic) IBOutlet UITextField *caliberTextField;
@@ -48,7 +45,6 @@
 - (IBAction)save:(id)sender;
 - (IBAction)checkData:(id)sender;
 - (IBAction)photoButtonTapped;
-- (IBAction)purchaseDateTextFieldTapped:(id)sender;
 
 - (void)verifyEnteredData;
 @end
