@@ -1,13 +1,13 @@
 //
-//  ViewController.h
+//  Weather.h
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 2/17/12.
+//  Created by Jacob Hochstetler on 3/9/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface Weather : NSObject
 
 @end

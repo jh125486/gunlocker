@@ -1,0 +1,6 @@
+[submodule "MagicalRecord"]
+	path = MagicalRecord
+	url = git://github.com/magicalpanda/MagicalRecord.git
+[submodule "TouchXML"]
+	path = TouchXML
+	url = git://github.com/TouchCode/TouchXML.git
