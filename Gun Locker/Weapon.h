@@ -43,4 +43,5 @@
 - (void)addPreferred_load:(NSSet *)values;
 - (void)removePreferred_load:(NSSet *)values;
 
+- (NSString*)barrel_length_in_inches;
 @end

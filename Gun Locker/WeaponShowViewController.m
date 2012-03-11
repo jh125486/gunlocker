@@ -13,6 +13,7 @@
 @end
 
 @implementation WeaponShowViewController
+@synthesize selectedWeapon;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,7 +27,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+
+    self.title = selectedWeapon.model;
 }
 
 - (void)viewDidUnload

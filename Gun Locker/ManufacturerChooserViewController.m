@@ -74,10 +74,10 @@
             tManufacturer.name = [splitParts objectAtIndex:0];
             tManufacturer.country = [splitParts objectAtIndex:1];
             
-            NSError *error = nil;
-            if (![managedObjectContext save:&error])
-                NSLog(@"%@", [error localizedDescription]);
         }   
+        NSError *error = nil;
+        if (![managedObjectContext save:&error])
+            NSLog(@"%@", [error localizedDescription]);
         // reload manufacturers
         manufacturers = [managedObjectContext executeFetchRequest:request error:&error];
     }

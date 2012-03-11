@@ -21,6 +21,7 @@
 @synthesize serialNumberTextField;
 @synthesize purchaseDateTextField;
 @synthesize purchasePriceTextfield;
+@synthesize purchaseDatePickerView;
 @synthesize photoButton;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -46,17 +47,64 @@
 {
     [super viewDidLoad];
 
-    self.barrelLengthTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-    if (([[[UIDevice currentDevice] systemVersion] doubleValue] >= 4.1)) {
-        self.barrelLengthTextField.keyboardType = UIKeyboardTypeDecimalPad;
-    }
+    // set up barrel length field with decimal pad and a Done button on accessoryview toolbar
+    self.barrelLengthTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    UIToolbar* toolBarView = [[UIToolbar alloc] init];
+    toolBarView.barStyle = UIBarStyleBlack;
+    toolBarView.translucent = YES;
+    toolBarView.tintColor = nil;
+    [toolBarView sizeToFit];
+
+    [toolBarView setItems:[NSArray arrayWithObjects: 
+                           [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self 
+                                                                         action:nil],
+                           [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self 
+                                                                         action:@selector(barrelLengthDoneClicked:)],
+                           nil]];
+    self.barrelLengthTextField.inputAccessoryView = toolBarView;
+
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // purchase date picker set up
+    purchaseDatePickerView = [[UIDatePicker alloc] init];
+    UIToolbar* pickerToolBarView = [[UIToolbar alloc] init];
+    pickerToolBarView.barStyle = UIBarStyleBlack;
+    pickerToolBarView.translucent = YES;
+    pickerToolBarView.tintColor = nil;
+    [pickerToolBarView sizeToFit];
+    
+    [pickerToolBarView setItems:[NSArray arrayWithObjects:
+                                 [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+                                                                    target:self
+                                                                    action:@selector(purchaseDatePickerCancelClicked:)],
+                                 [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil],
+
+                                 [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+                                                                  target:self
+                                                                  action:@selector(purchaseDatePickerDoneClicked:)],
+                                 nil]];
+    
+    purchaseDatePickerView.datePickerMode = UIDatePickerModeDate; 
+    self.purchaseDateTextField.inputView = purchaseDatePickerView;
+    self.purchaseDateTextField.inputAccessoryView = pickerToolBarView;
+    
 }
+
+- (void)barrelLengthDoneClicked:(id)sender {
+    [self.barrelLengthTextField resignFirstResponder];
+}
+
+- (void)purchaseDatePickerDoneClicked:(id)sender {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"EEEE MMMM d, YYYY"];
+    self.purchaseDateTextField.text = [dateFormat stringFromDate:purchaseDatePickerView.date];
+    
+    [self.purchaseDateTextField resignFirstResponder];
+}
+
+- (void)purchaseDatePickerCancelClicked:(id)sender {
+    [self.purchaseDateTextField resignFirstResponder];
+}
+
 
 - (void)viewDidUnload
 {
@@ -146,7 +194,7 @@
         // Create a thumbnail version of the image for the recipe object.
         CGSize size = photo.size;
         CGFloat ratio = 0;
-        ratio = (size.width > size.height) ? 140.0 / size.width : 105.0 / size.height;
+        ratio = (size.width > size.height) ? 160.0 / size.width : 120.0 / size.height;
         
         CGRect rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
         
@@ -160,13 +208,8 @@
         NSLog(@"New: %f x %f", thumbnail.size.width, thumbnail.size.height);
     }
         
-    
     weapon.serial_number = self.serialNumberTextField.text;
-    
-//    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-//    [dateFormat setDateFormat:@"EEEE MMMM d, YYYY"];
-//    weapon.purchased_date = [dateFormat dateFromString:self.purchaseDateTextField.text];
-//    NSLog([weapon.purchased_date description]);
+    weapon.purchased_date = purchaseDatePickerView.date;
     
     NSError *error = nil;
     if (![managedObjectContext save:&error]) {
@@ -237,29 +280,5 @@
 
     [self dismissModalViewControllerAnimated:YES];
 }
-
-//#pragma ActionSheetPicker for PurchaseDateTextField
-//
-//- (IBAction)selectADate:(UIControl *)sender {
-//    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-//    [dateFormat setDateFormat:@"EEEE MMMM d, YYYY"];
-//    NSDate *selectedDate = [dateFormat dateFromString:self.purchaseDateTextField.text];
-//
-//    self.actionSheetPicker = [[ActionSheetDatePicker alloc] initWithTitle:@"" datePickerMode:UIDatePickerModeDate selectedDate:selectedDate target:self action:@selector(dateWasSelected:element:) origin:sender];
-//    [self.actionSheetPicker addCustomButtonWithTitle:@"Today" value:[NSDate date]];
-////    [self.actionSheetPicker addCustomButtonWithTitle:@"Yesterday" value:[[NSDate date] TC_dateByAddingCalendarUnits:NSDayCalendarUnit amount:-1]];
-//    self.actionSheetPicker.hideCancel = YES;
-//    [self.actionSheetPicker showActionSheetPicker];
-//}
-//
-//- (IBAction)purchaseDateTextFieldTapped:(UIBarButtonItem *)sender {
-//    [self selectADate:sender];
-//}
-//
-//- (void)purchaseDateWasSelected:(NSDate *)selectedDate element:(id)element {    
-//    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-//    [dateFormat setDateFormat:@"EEEE MMMM d, YYYY"];
-//    self.purchaseDateTextField.text = [dateFormat stringFromDate:selectedDate];    
-//}
 
 @end

@@ -40,6 +40,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *purchaseDateTextField;
 @property (weak, nonatomic) IBOutlet UITextField *purchasePriceTextfield;
 @property (weak, nonatomic) IBOutlet UIButton *photoButton;
+@property (retain, nonatomic) UIDatePicker *purchaseDatePickerView;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;
@@ -47,4 +48,6 @@
 - (IBAction)photoButtonTapped;
 
 - (void)verifyEnteredData;
+- (void)purchaseDatePickerDoneClicked:(id)sender;
+
 @end

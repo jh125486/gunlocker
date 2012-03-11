@@ -23,4 +23,9 @@
 @dynamic malfunctions;
 @dynamic preferred_load;
 
+-(NSString*)barrel_length_in_inches
+{
+    return self.barrel_length > 0 ? [NSString stringWithFormat:@"%@\"", self.barrel_length] : @"";
+}
+
 @end

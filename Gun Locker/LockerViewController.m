@@ -7,8 +7,6 @@
 //
 
 #import "LockerViewController.h"
-#import "Weapon.h"
-#import "WeaponCell.h"
 
 @interface LockerViewController()
 @property(nonatomic, assign) BOOL firstInsert;
@@ -19,6 +17,8 @@
 @synthesize fetchedResultsController;
 @synthesize managedObjectContext;
 @synthesize firstInsert = _firstInsert;
+@synthesize segmentedTypeControl;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,15 +36,6 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
-
-#pragma mark - View lifecycle
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -79,15 +70,22 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger count = [[[fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
 
-    self.navigationItem.title = [self.navigationItem.title stringByAppendingString: [NSString stringWithFormat:@" (%d)", count]];;
+    self.navigationItem.title = [@"Locker (" stringByAppendingString: [NSString stringWithFormat:@"%d)", count]];;
     return count;
 }
 
 - (void)configureCell:(WeaponCell *)cell withWeapon:(Weapon *)weapon {
     cell.manufacturerLabel.text = weapon.manufacturer;
-	cell.modelLabel.text = weapon.model;
+	cell.modelLabel.text = [NSString stringWithFormat:@"%@", weapon.model];
+//    if (weapon.caliber) {
+//        cell.modelLabel.text = [cell.modelLabel.text stringByAppendingFormat:@" [%@]", weapon.caliber];
+//    }
+    cell.barrelLengthLabel.text = weapon.barrel_length_in_inches;
     cell.serialNumberLabel.text = weapon.serial_number;
+    
+    cell.roundCountLabel.text = [NSString stringWithFormat:@"%d rounds fired", arc4random() % 10000];
 	cell.photoImageView.image = [UIImage imageWithData:weapon.photo_thumbnail];
+    cell.weapon = weapon;
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -167,14 +165,26 @@
     return fetchedResultsController;
 }
 
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    NSLog(@"!did select row");
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    Weapon* weapon = [fetchedResultsController objectAtIndexPath:indexPath];
+//    NSLog(@"! weapon %@", [weapon description]);
+//    [self performSegueWithIdentifier:@"ShowWeapon" sender:weapon];
+//}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	if ([segue.identifier isEqualToString:@"AddWeapon"])
-	{
-		UINavigationController *navigationController = segue.destinationViewController;
-		WeaponAddViewController *detailsController = [[navigationController viewControllers] objectAtIndex:0];
-		detailsController.delegate = self;
-	}
+    NSString *segueID = segue.identifier;
+    
+	if ([segueID isEqualToString:@"AddWeapon"]) {
+        UINavigationController *destinationController = segue.destinationViewController;
+		WeaponAddViewController *addController = [[destinationController viewControllers] objectAtIndex:0];
+		addController.delegate = self;
+	} else if ([segueID isEqualToString:@"ShowWeapon"]) {
+        WeaponShowViewController *showController = segue.destinationViewController;
+        showController.selectedWeapon = [self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+    }
 }
 
 #pragma mark - WeaponAddViewControllerDelegate
@@ -187,6 +197,13 @@
 - (void)WeaponAddViewControllerDidSave:(WeaponAddViewController *)controller
 {
 	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+# pragma segmented control
+
+- (IBAction)segmentedTypeControlClicked
+{
+    NSLog(@"%d", self.segmentedTypeControl.selectedSegmentIndex);
 }
 
 @end

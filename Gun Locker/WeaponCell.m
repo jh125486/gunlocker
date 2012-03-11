@@ -14,15 +14,21 @@
 @synthesize modelLabel;
 @synthesize serialNumberLabel;
 @synthesize photoImageView;
+@synthesize barrelLengthLabel;
+@synthesize roundCountLabel;
+@synthesize weapon;
 
-//- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-//{
-//    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-//    if (self) {
-//        // Initialization code
-//    }
-//    return self;
-//}
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    NSLog(@"HERE!");
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+
+    
+    
+    }
+    return self;
+}
 //
 //- (void)setSelected:(BOOL)selected animated:(BOOL)animated
 //{

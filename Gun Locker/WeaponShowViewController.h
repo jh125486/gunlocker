@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Weapon.h"
 @interface WeaponShowViewController : UIViewController
 
+@property (nonatomic, strong) Weapon *selectedWeapon;
 @end

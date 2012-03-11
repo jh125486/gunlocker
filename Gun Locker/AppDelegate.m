@@ -16,13 +16,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    //UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-    //UINavigationController *navigationController = [[tabBarController viewControllers] objectAtIndex:0];
-    //LockerViewController *lockerViewController = [[navigationController viewControllers] objectAtIndex:0];
-    
-    //lockerViewController.managedObjectContext = self.managedObjectContext;
     managedObjectContext = [[DatabaseHelper sharedInstance] managedObjectContext];
+    
     return YES;
 }
 
@@ -82,5 +77,11 @@
     }
 }
 
+- (CMMotionManager *)motionManager
+{
+    if (!motionManager) 
+        motionManager = [[CMMotionManager alloc] init];
+    return motionManager;
+}
 
 @end

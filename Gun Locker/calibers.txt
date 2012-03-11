@@ -31,11 +31,13 @@
 .45 Colt
 .45 GAP
 .50 AE
+.500 S&W Magnum
 .204 Ruger
 .22 Hornet
 .22-250
 .222 Remington
-.223/5.56mm
+.223 Remington
+5.56mm NATO
 .243 Winchester
 .25-06 Remington
 .270 WSM
@@ -49,7 +51,8 @@
 .300 WSM
 .300 Win Mag
 .303 British
-.308/7.62x51mm
+.308 Winchester
+7.62x51mm NATO
 .338 Federal
 .338 Lapua
 .45-70
@@ -60,7 +63,6 @@
 .480 Ruger
 .50 BMG/12.7×99mm NATO
 .50 Beowulf
-.500 S&W Magnum
 5.45x39mm
 5.7x28mm
 6.5×52mm Carcano
