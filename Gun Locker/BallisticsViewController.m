@@ -15,6 +15,7 @@
 @synthesize dropDriftTableButton;
 @synthesize dopeCardButton;
 @synthesize whizWheelButton;
+@synthesize getWeatherButton;
 @synthesize densityAltitudeLabel;
 @synthesize rangeResultLabel;
 
@@ -44,6 +45,8 @@
     [arrayColors addObject:@"Indigo"];
     [arrayColors addObject:@"Violet"];
     
+
+    
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
 //    locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
@@ -51,11 +54,11 @@
     locationManager.distanceFilter = 3000.0f;
     [locationManager startUpdatingLocation];
     [locationManager startMonitoringSignificantLocationChanges];
-    self.locationTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 
+    self.locationTimer = [NSTimer scheduledTimerWithTimeInterval:300.0 
                                                           target:self 
                                                         selector:@selector(stopUpdatingLocations) 
                                                         userInfo:nil 
-                                                         repeats:NO]; 
+                                                         repeats:NO];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -66,8 +69,6 @@
 
 - (void)viewDidUnload
 {
-    [locationManager stopUpdatingLocation];
-    [locationTimer invalidate];
     [self setBallisticProfilePicker:nil];
     [self setEditProfileButton:nil];
     [self setDropDriftTableButton:nil];
@@ -75,8 +76,12 @@
     [self setWhizWheelButton:nil];
     [self setDensityAltitudeLabel:nil];
     [self setRangeResultLabel:nil];
-
+    [self setGetWeatherButton:nil];
     [super viewDidUnload];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [self stopUpdatingLocations];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -122,15 +127,15 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     self.currentLocation = newLocation;
 
-    if(newLocation.horizontalAccuracy <= 100.0f) {
-        [locationManager stopUpdatingLocation];
-    }
+    if(newLocation.horizontalAccuracy <= 100.0f)
+        [self stopUpdatingLocations];
     [self getWeather:nil];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     if(error.code == kCLErrorDenied) {
-        [locationManager stopUpdatingLocation];
+        [self stopUpdatingLocations];
+        self.getWeatherButton.hidden = TRUE;
     } else if(error.code == kCLErrorLocationUnknown) {
         // retry
     } else {
@@ -144,6 +149,8 @@
 }
 
 - (void)stopUpdatingLocations { 
+    locationManager.delegate = nil;
+    [locationManager stopMonitoringSignificantLocationChanges];
     [locationManager stopUpdatingLocation]; 
     [locationTimer invalidate]; 
 }

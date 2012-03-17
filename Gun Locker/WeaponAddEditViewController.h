@@ -9,28 +9,25 @@
 #import <UIKit/UIKit.h>
 #import "ManufacturerChooserViewController.h"
 #import "CaliberChooserViewController.h"
-#import "DatabaseHelper.h"
 #import "Weapon.h"
 
-@class WeaponAddViewController;
+@class WeaponAddEditViewController;
 
 @protocol WeaponAddViewControllerDelegate <NSObject>
-- (void)WeaponAddViewControllerDidCancel:(WeaponAddViewController *)controller;
-- (void)WeaponAddViewControllerDidSave:(WeaponAddViewController *)controller;
+- (void)WeaponAddViewControllerDidCancel:(WeaponAddEditViewController *)controller;
+- (void)WeaponAddViewControllerDidSave:(WeaponAddEditViewController *)controller;
 @end
 
-@interface WeaponAddViewController : UITableViewController <UITextFieldDelegate, 
+@interface WeaponAddEditViewController : UITableViewController <UITextFieldDelegate, 
                                                             CaliberChooserViewControllerDelegate, 
                                                             ManufacturerChooserViewControllerDelegate,
                                                             UIImagePickerControllerDelegate,
                                                             UINavigationControllerDelegate> {
-    NSManagedObjectContext *managedObjectContext;
 }
-
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-
+@property (weak, nonatomic) NSString *weaponType;
 @property (nonatomic, weak) id <WeaponAddViewControllerDelegate> delegate;
 
+@property (weak, nonatomic) Weapon *selectedWeapon;
 @property (weak, nonatomic) IBOutlet UITextField *manufacturerTextField;
 @property (weak, nonatomic) IBOutlet UITextField *modelTextField;
 @property (weak, nonatomic) IBOutlet UITextField *caliberTextField;
@@ -49,5 +46,5 @@
 
 - (void)verifyEnteredData;
 - (void)purchaseDatePickerDoneClicked:(id)sender;
-
+- (void)loadTextfieldsFromWeapon;
 @end

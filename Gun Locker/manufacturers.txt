@@ -21,21 +21,17 @@ Barrett Firearms Manufacturing:USA
 Bazalt:Russia
 Benelli:Italy
 Beretta:Italy
-Bharat Dynamics:India
-Bharat Earth Movers Limited:India
-Bharat Electronics Limited:India
 Birmingham Small Arms Company:UK
 Boeing Defense, Space & Security:USA
 Bricett:Turkey
-Browning Arms Company:Belgium
+Browning Arms Company:USA
 Bushmaster Firearms International:USA
 Caspian Arms Ltd:USA
 Chaiseri Metal & Rubber:Thailand
 Charles Daly:USA
 Charter Arms:USA
 CheyTac:USA
-Colt Canada (formerly Diemaco):Canada
-Colt's Manufacturing Company (CMC):USA
+Colt's Manufacturing Company:USA
 Česká Zbrojovka Uherský Brod:Czech Republic
 Defense Industries Organization:Iran
 Degtyarev Plant:Russia
@@ -58,31 +54,26 @@ Ferfrans:Philippines
 Finmeccanica:Italy
 Floro International Corporation:Philippines
 General Dynamics:USA
-Nexter (formerly GIAT Industries):France
-Glock Ges.m.b.H.:Austria
+Glock:Austria
 Grand Power:Slovakia
 Hanwha:South Korea
 Heavy Industries Taxila:Pakistan
-Heckler & Koch (H&K):Germany
+Heckler & Koch:Germany
 Henry Repeating Arms:USA
 Helibras:Brazil
 Hi-Point Firearms:USA
 Hindustan Aeronautics Limited:India
 Holland & Holland:UK
-Howaldtswerke-Deutsche Werft (HDW):Germany
 HS Produkt:Croatia
 Hyundai Rotem:South Korea
 IBRAP:Brazil
-Iran Aviation Industries Organization:Iran
-Iran Electronics Industries:Iran
 IMBEL:Brazil
 INDEP:Portugal
 Indumil:Colombia
 Innalabs:Russia
 Insys:UK
-Israel Military Industries (IMI):Israel
+Israel Military Industries:Israel
 Israel Weapon Industries (IWI):Israel
-Israel Aerospace Industries (IAI):Israel
 Izhevsk Mechanical Plant:Russia
 Izhmash:Russia
 James Purdey and Sons Ltd.:UK
@@ -90,22 +81,21 @@ JP Enterprises Inc:USA
 Kahr Arms:USA
 KBP Instrument Design Bureau:Russia
 Kel-Tec CNC Industries Inc:USA
-Kharkiv Morozov Machine Building Design Bureau:Ukraine
 Kimber Manufacturing:USA
 Klimovsk Specialized Ammunition Plant:Russia
 Knight's Armament Company (KAC):USA
 Kongsberg Defence & Aerospace:Norway
-Korea Aerospace Industries (KAI):South Korea
+Korea Aerospace Industries:South Korea
 KAL-ASD:South Korea
 Krauss-Maffei Wegmann (KMW):Germany
-Land Warfare Resources Corporation (LWRC):USA
+LWRC:USA
 Les Baer:USA
 LFK:Germany
 LIG nex1:South Korea
 Franchi:Italy
 Lürssen:Germany
-Magnum Research Inc. (MRI):Israel
-Mechanical and Chemical Industry Corporation (MKEK):Turkey
+Magnum Research Inc.:Israel
+MKEK:Turkey
 Manroy Engineering Ltd.:UK
 Manroy USA:USA
 MasterPiece Arms:USA
@@ -124,16 +114,13 @@ Oerlikon Contraves:Switzerland
 Olympic Arms:USA
 OMI Ordtech Military Industries:Greece
 Ordnance Factories Organisation:India
-Pakistan Aeronautical Complex (PAC):Pakistan
-Pakistan Ordnance Factories (POF):Pakistan
 Para-Ordnance Manufacturing Inc:Canada
 Patria:Finland
 Productos Mendoza:Mexico
 Pindad:Indonesia
-Rafael Advanced Defense Systems (Rafael):Israel
 Rangemaster Precision Arms:UK
-Remington Arms (Remington):USA
-Rheinmetall AG (Rheinmetall):Germany
+Remington Arms:USA
+Rheinmetall:Germany
 RND Manufacturing:USA
 Rock River Arms:USA
 Romtehnica:Romania
@@ -162,16 +149,15 @@ Swiss Arms (SIG Sauer):Switzerland
 Thai Aviation Industry:Thailand
 THOR Global Defense Group:USA
 Thompson:USA
-Turkish Aerospace Industries (TAI):Turkey
 Taser International:USA
 Forjas Taurus (Taurus):Brazil
 TEREM:Bulgaria
 Textron Systems (Textron):USA
-Thompson Center Arms (Thompson Center):USA
-Thales Group (Thales):France
+Thompson Center Arms:USA
+Thales Group:France
 ThyssenKrupp:Germany
-U.S. Repeating Arms Company (USRAC):Belgium
-Uralvagonzavod (UVZ):Russia
+U.S. Repeating Arms Company:Belgium
+Uralvagonzavod:Russia
 Winchester Repeating Arms Company:Belgium
 Walther:Germany
 Webley & Scott:UK

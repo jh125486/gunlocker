@@ -7,22 +7,28 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WeaponAddViewController.h"
+#import "WeaponAddEditViewController.h"
 #import "WeaponShowViewController.h"
-#import "DatabaseHelper.h"
 #import "Weapon.h"
 #import "WeaponCell.h"
+#import "NSDate+Formatting.h"
+#import "KKPasscodeLock.h"
 
-@interface LockerViewController : UITableViewController <WeaponAddViewControllerDelegate, NSFetchedResultsControllerDelegate> {
+@interface LockerViewController : UITableViewController <WeaponAddViewControllerDelegate, 
+                                                         NSFetchedResultsControllerDelegate, 
+                                                         KKPasscodeViewControllerDelegate> {
 	NSFetchedResultsController *fetchedResultsController;
-	NSManagedObjectContext *managedObjectContext;
     BOOL _firstInsert;
 }
-
 @property (nonatomic, retain) NSFetchedResultsController  *fetchedResultsController;
-@property (nonatomic, retain) NSManagedObjectContext      *managedObjectContext;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *segmentedTypeControl;
+@property (nonatomic, retain) NSArray *weapons;
+@property (nonatomic, retain) NSString *selectedType;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editModeButton;
+@property BOOL editModeOn;
+@property BOOL showPasscodeFlag;
 
--(IBAction)segmentedTypeControlClicked;
-
+- (IBAction)editMode:(id)sender;
+- (IBAction)segmentedTypeControlClicked;
+- (void)showPasscodeModal;
 @end

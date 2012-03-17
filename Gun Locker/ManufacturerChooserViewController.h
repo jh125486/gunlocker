@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DatabaseHelper.h"
 
 @class ManufacturerChooserViewController;
 
@@ -17,10 +16,8 @@
 
 @interface ManufacturerChooserViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate>{
     UILocalizedIndexedCollation *collation;
-    NSManagedObjectContext *managedObjectContext;
 }
 
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, weak) id <ManufacturerChooserViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSString *selectedManufacturer;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

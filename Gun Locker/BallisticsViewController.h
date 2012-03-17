@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *dropDriftTableButton;
 @property (weak, nonatomic) IBOutlet UIButton *dopeCardButton;
 @property (weak, nonatomic) IBOutlet UIButton *whizWheelButton;
+@property (weak, nonatomic) IBOutlet UIButton *getWeatherButton;
 @property (weak, nonatomic) IBOutlet UILabel *densityAltitudeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rangeResultLabel;
 

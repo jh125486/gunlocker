@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DatabaseHelper.h"
 
 @class CaliberChooserViewController;
 
@@ -15,11 +14,8 @@
 - (void)caliberChooserViewController:(CaliberChooserViewController *)controller didSelectCaliber:(NSString *)selectedCaliber;
 @end
 
-@interface CaliberChooserViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate>{
-    NSManagedObjectContext *managedObjectContext;
-}
+@interface CaliberChooserViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate>
 
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, weak) id <CaliberChooserViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSString *selectedCaliber;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

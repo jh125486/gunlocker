@@ -15,7 +15,6 @@
 	NSUInteger selectedIndex;
 }
 
-@synthesize managedObjectContext;
 @synthesize delegate;
 @synthesize selectedManufacturer;
 @synthesize searchDisplayController;
@@ -50,19 +49,9 @@
     // scroll searchbar out of view
     self.tableView.contentOffset = CGPointMake(0.0f, 44.0f);
     
-    managedObjectContext = [[DatabaseHelper sharedInstance] managedObjectContext];    
+    manufacturers = [Manufacturer findAllSortedBy:@"name" ascending:YES];
     
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Manufacturer" inManagedObjectContext:managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:entityDescription];
-    [request setPredicate:nil];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-    
-    NSError *error = nil;
-    manufacturers = [managedObjectContext executeFetchRequest:request error:&error];
-    
+    // if no manufacturers, load them from a txt file
     if([manufacturers count] == 0) {
         NSString* path = [[NSBundle mainBundle] pathForResource:@"manufacturers" ofType:@"txt"];
         NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
@@ -70,16 +59,14 @@
         for (NSString *manufacturer in [content componentsSeparatedByString:@"\n"]) {
             NSArray *splitParts = [manufacturer componentsSeparatedByString:@":"];
             
-            Manufacturer *tManufacturer = [NSEntityDescription insertNewObjectForEntityForName:@"Manufacturer" inManagedObjectContext:managedObjectContext];
-            tManufacturer.name = [splitParts objectAtIndex:0];
-            tManufacturer.country = [splitParts objectAtIndex:1];
-            
+            Manufacturer *newManufacturer = [Manufacturer createEntity];
+            newManufacturer.name = [splitParts objectAtIndex:0];
+            newManufacturer.country = [splitParts objectAtIndex:1];
         }   
-        NSError *error = nil;
-        if (![managedObjectContext save:&error])
-            NSLog(@"%@", [error localizedDescription]);
+        [[NSManagedObjectContext defaultContext] save];
+
         // reload manufacturers
-        manufacturers = [managedObjectContext executeFetchRequest:request error:&error];
+        manufacturers = [Manufacturer findAllSortedBy:@"name" ascending:YES];
     }
     
     // dont think selectedIndex matters anywhere
@@ -222,9 +209,7 @@
     if([self.selectedManufacturer length] != 0) {
         if([[manufacturers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@", self.selectedManufacturer]] count] == 0) {
             NSLog(@"Manufacturer not found");            
-            NSEntityDescription *entity = [NSEntityDescription entityForName:@"Manufacturer" inManagedObjectContext:self.managedObjectContext];
-            Manufacturer *tManufacturer = (Manufacturer *)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
-            
+            Manufacturer *tManufacturer = [Manufacturer createEntity];
             tManufacturer.name = self.selectedManufacturer;
 
             NSInteger sectionNumber = [collation sectionForObject:tManufacturer collationStringSelector:@selector(name)];		

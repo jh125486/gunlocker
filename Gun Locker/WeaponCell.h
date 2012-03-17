@@ -14,8 +14,13 @@
 @property (nonatomic, strong) IBOutlet UILabel *modelLabel;
 @property (nonatomic, strong) IBOutlet UILabel *manufacturerLabel;
 @property (nonatomic, strong) IBOutlet UILabel *barrelLengthLabel;
+@property (nonatomic, strong) IBOutlet UILabel *finishLabel;
 @property (nonatomic, strong) IBOutlet UILabel *roundCountLabel;
 @property (nonatomic, strong) IBOutlet UILabel *serialNumberLabel;
+@property (nonatomic, strong) IBOutlet UILabel *malfunctionNumberLabel;
+@property (nonatomic, strong) IBOutlet UILabel *caliberLabel;
+@property (nonatomic, strong) IBOutlet UILabel *purchaseDatePromptLabel;
+@property (nonatomic, strong) IBOutlet UILabel *purchaseDateLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *photoImageView;
 @property (nonatomic, strong) Weapon *weapon;
 

@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="BallisticProfiles" syncable="YES">
+    <entity name="BallisticProfiles" representedClassName="BallisticProfiles" syncable="YES">
         <attribute name="caliber" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
     </entity>
-    <entity name="Caliber" syncable="YES">
+    <entity name="Caliber" representedClassName="Caliber" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="CommercialLoad" parentEntity="Load" syncable="YES">
         <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="DopeCard" representedClassName="DopeCard" syncable="YES">
+        <attribute name="dope_unit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="drop_dope" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="range_end" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="range_increment" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="range_start" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="wind_dope" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="weapon" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="dope_cards" inverseEntity="Weapon" syncable="YES"/>
     </entity>
     <entity name="Handload" parentEntity="Load" syncable="YES">
         <attribute name="bullet_type" optional="YES" attributeType="String" syncable="YES"/>
@@ -22,19 +33,19 @@
         <attribute name="caliber" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="weapons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Weapon" inverseName="preferred_load" inverseEntity="Weapon" syncable="YES"/>
     </entity>
-    <entity name="Maintenance" syncable="YES">
+    <entity name="Maintenance" representedClassName="Maintenance" syncable="YES">
         <attribute name="action_performed" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="round_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="malfunction" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Malfunction" inverseName="maintenance" inverseEntity="Malfunction" syncable="YES"/>
         <relationship name="weapon" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="maintenances" inverseEntity="Weapon" syncable="YES"/>
     </entity>
-    <entity name="Malfunction" syncable="YES">
+    <entity name="Malfunction" representedClassName="Malfunction" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="failure" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fix" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="round_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="maintenance" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Maintenance" inverseName="malfunction" inverseEntity="Maintenance" syncable="YES"/>
+        <relationship name="maintenance" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Maintenance" inverseName="malfunction" inverseEntity="Maintenance" syncable="YES"/>
         <relationship name="weapon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="malfunctions" inverseEntity="Weapon" syncable="YES"/>
     </entity>
     <entity name="Manufacturer" representedClassName="Manufacturer" syncable="YES">
@@ -58,7 +69,8 @@
         <attribute name="threaded_barrel" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="threaded_barrel_pitch" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="maintenances" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Maintenance" inverseName="weapon" inverseEntity="Maintenance" syncable="YES"/>
+        <relationship name="dope_cards" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="DopeCard" inverseName="weapon" inverseEntity="DopeCard" syncable="YES"/>
+        <relationship name="maintenances" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Maintenance" inverseName="weapon" inverseEntity="Maintenance" syncable="YES"/>
         <relationship name="malfunctions" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Malfunction" inverseName="weapon" inverseEntity="Malfunction" syncable="YES"/>
         <relationship name="preferred_load" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Load" inverseName="weapons" inverseEntity="Load" syncable="YES"/>
     </entity>
@@ -68,9 +80,10 @@
         <element name="CommercialLoad" positionX="63" positionY="240" width="128" height="75"/>
         <element name="Handload" positionX="-0" positionY="342" width="128" height="120"/>
         <element name="Load" positionX="-288" positionY="297" width="128" height="90"/>
+        <element name="Maintenance" positionX="340" positionY="9" width="128" height="120"/>
         <element name="Malfunction" positionX="178" positionY="-174" width="128" height="120"/>
         <element name="Manufacturer" positionX="160" positionY="192" width="128" height="60"/>
-        <element name="Weapon" positionX="-324" positionY="-111" width="128" height="330"/>
-        <element name="Maintenance" positionX="340" positionY="9" width="128" height="120"/>
+        <element name="Weapon" positionX="-324" positionY="-111" width="128" height="345"/>
+        <element name="DopeCard" positionX="160" positionY="192" width="128" height="180"/>
     </elements>
 </model>

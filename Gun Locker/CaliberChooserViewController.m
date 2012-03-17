@@ -14,7 +14,6 @@
 	NSUInteger selectedIndex;
 }
 
-@synthesize managedObjectContext;
 @synthesize delegate;
 @synthesize selectedCaliber;
 @synthesize searchDisplayController;

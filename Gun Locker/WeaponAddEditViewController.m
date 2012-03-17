@@ -6,13 +6,13 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "WeaponAddViewController.h"
+#import "WeaponAddEditViewController.h"
 
-@implementation WeaponAddViewController
+@implementation WeaponAddEditViewController
 
 @synthesize delegate;
-@synthesize managedObjectContext;
-
+@synthesize selectedWeapon;
+@synthesize weaponType;
 @synthesize manufacturerTextField;
 @synthesize modelTextField;
 @synthesize caliberTextField;
@@ -47,6 +47,11 @@
 {
     [super viewDidLoad];
 
+    self.title = [NSString stringWithFormat:@"Add %@", [self.weaponType substringToIndex:[self.weaponType length] - 1]];
+        
+    if(selectedWeapon)
+        [self loadTextfieldsFromWeapon];
+    
     // set up barrel length field with decimal pad and a Done button on accessoryview toolbar
     self.barrelLengthTextField.keyboardType = UIKeyboardTypeDecimalPad;
     UIToolbar* toolBarView = [[UIToolbar alloc] init];
@@ -62,8 +67,23 @@
                                                                          action:@selector(barrelLengthDoneClicked:)],
                            nil]];
     self.barrelLengthTextField.inputAccessoryView = toolBarView;
+    // add inches to textfield
+    UILabel *inchLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 12, 12)];
+    inchLabel.text = @"\"";
+    inchLabel.textColor = [UIColor lightGrayColor];
+    inchLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
+    self.barrelLengthTextField.rightViewMode = UITextFieldViewModeAlways;
+    self.barrelLengthTextField.rightView = inchLabel;
 
     
+    // purchase price local currency symbol
+    UILabel *currencyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 12, 12)];
+    currencyLabel.text = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
+    currencyLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
+    currencyLabel.textColor = [UIColor lightGrayColor];
+    self.purchasePriceTextfield.leftViewMode = UITextFieldViewModeAlways;
+    self.purchasePriceTextfield.leftView = currencyLabel;
+
     // purchase date picker set up
     purchaseDatePickerView = [[UIDatePicker alloc] init];
     UIToolbar* pickerToolBarView = [[UIToolbar alloc] init];
@@ -86,7 +106,6 @@
     purchaseDatePickerView.datePickerMode = UIDatePickerModeDate; 
     self.purchaseDateTextField.inputView = purchaseDatePickerView;
     self.purchaseDateTextField.inputAccessoryView = pickerToolBarView;
-    
 }
 
 - (void)barrelLengthDoneClicked:(id)sender {
@@ -117,6 +136,7 @@
     [self setSerialNumberTextField:nil];
     [self setPurchaseDateTextField:nil];
     [self setPurchasePriceTextfield:nil];
+    [self setSelectedWeapon:nil];
     [super viewDidUnload];
 }
 
@@ -169,17 +189,31 @@
     [self verifyEnteredData];    
 }
 
+-(void)loadTextfieldsFromWeapon {
+    self.title = [NSString stringWithFormat:@"Edit %@", [self.weaponType substringToIndex:[self.weaponType length] - 1]];
+
+    self.manufacturerTextField.text = selectedWeapon.manufacturer;
+    self.modelTextField.text        = selectedWeapon.model;
+    self.caliberTextField.text      = selectedWeapon.caliber;
+    self.finishTextField.text       = selectedWeapon.finish;
+    self.barrelLengthTextField.text = [selectedWeapon.barrel_length stringValue];
+    [self.photoButton setImage:[UIImage imageWithData:selectedWeapon.photo_thumbnail] forState:UIControlStateNormal];
+    self.serialNumberTextField.text = selectedWeapon.serial_number;
+    self.purchasePriceTextfield.text = [selectedWeapon.purchased_price stringValue];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"EEEE MMMM d, YYYY"];
+    self.purchaseDateTextField.text = [dateFormat stringFromDate:selectedWeapon.purchased_date];
+    [self verifyEnteredData];
+}
+
 - (IBAction)cancel:(id)sender
 {
 	[self.delegate WeaponAddViewControllerDidCancel:self];
 }
 
-- (IBAction)save:(id)sender
-{
-    managedObjectContext = [[DatabaseHelper sharedInstance] managedObjectContext];
-    
-    Weapon *weapon = [NSEntityDescription insertNewObjectForEntityForName:@"Weapon" inManagedObjectContext:managedObjectContext];
-
+- (IBAction)save:(id)sender {
+    Weapon *weapon = selectedWeapon ? selectedWeapon : [Weapon createEntity];
+    weapon.type = self.weaponType;
     weapon.manufacturer = self.manufacturerTextField.text;
     weapon.model = self.modelTextField.text;
     weapon.caliber = self.caliberTextField.text;
@@ -191,7 +225,7 @@
     UIImage *photo = [self.photoButton imageForState:UIControlStateNormal];
     if(photo) {
         weapon.photo = UIImagePNGRepresentation(photo);
-        // Create a thumbnail version of the image for the recipe object.
+        // Create a thumbnail version of the image for the object.
         CGSize size = photo.size;
         CGFloat ratio = 0;
         ratio = (size.width > size.height) ? 160.0 / size.width : 120.0 / size.height;
@@ -204,21 +238,20 @@
         UIGraphicsEndImageContext();   
         
         UIImage *thumbnail = [UIImage imageWithData:weapon.photo_thumbnail];
-        NSLog(@"New: %f x %f", photo.size.width, photo.size.height);
-        NSLog(@"New: %f x %f", thumbnail.size.width, thumbnail.size.height);
+        NSLog(@"New photo: %f x %f", photo.size.width, photo.size.height);
+        NSLog(@"New thumbnail: %f x %f", thumbnail.size.width, thumbnail.size.height);
     }
         
     weapon.serial_number = self.serialNumberTextField.text;
     weapon.purchased_date = purchaseDatePickerView.date;
     
-    NSError *error = nil;
-    if (![managedObjectContext save:&error]) {
-        NSLog(@"%@", [error localizedDescription]);
-    }
+    [[NSManagedObjectContext defaultContext] save];
     
 	[self.delegate WeaponAddViewControllerDidSave:self];
 }
 
+// TODO possible a better way to do this... 
+// alert saying not enough fields completed?
 - (void)verifyEnteredData
 {
     [self.navigationItem.rightBarButtonItem setEnabled:(([self.manufacturerTextField.text length] > 0) && ([self.modelTextField.text length] > 0))];

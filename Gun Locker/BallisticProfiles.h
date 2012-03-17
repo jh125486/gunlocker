@@ -1,5 +1,5 @@
 //
-//  Manufacturer.h
+//  BallisticProfiles.h
 //  Gun Locker
 //
 //  Created by Jacob Hochstetler on 3/10/12.
@@ -10,9 +10,8 @@
 #import <CoreData/CoreData.h>
 
 
-@interface Manufacturer : NSManagedObject
+@interface BallisticProfiles : NSManagedObject
 
-@property (nonatomic, retain) NSString * country;
-@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSNumber * caliber;
 
 @end

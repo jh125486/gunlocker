@@ -2,11 +2,15 @@
 //  Weapon.m
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 2/17/12.
+//  Created by Jacob Hochstetler on 3/14/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "Weapon.h"
+#import "DopeCard.h"
+#import "Maintenance.h"
+#import "Malfunction.h"
+
 
 @implementation Weapon
 
@@ -15,17 +19,20 @@
 @dynamic finish;
 @dynamic manufacturer;
 @dynamic model;
+@dynamic nfa_stamp;
+@dynamic note;
 @dynamic photo;
 @dynamic photo_thumbnail;
 @dynamic purchased_date;
 @dynamic purchased_price;
+@dynamic round_count;
 @dynamic serial_number;
+@dynamic threaded_barrel;
+@dynamic threaded_barrel_pitch;
+@dynamic type;
+@dynamic maintenances;
 @dynamic malfunctions;
 @dynamic preferred_load;
-
--(NSString*)barrel_length_in_inches
-{
-    return self.barrel_length > 0 ? [NSString stringWithFormat:@"%@\"", self.barrel_length] : @"";
-}
+@dynamic dope_cards;
 
 @end

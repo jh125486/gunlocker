@@ -12,20 +12,21 @@
 
 @synthesize manufacturerLabel;
 @synthesize modelLabel;
-@synthesize serialNumberLabel;
-@synthesize photoImageView;
 @synthesize barrelLengthLabel;
+@synthesize finishLabel;
 @synthesize roundCountLabel;
+@synthesize serialNumberLabel;
+@synthesize malfunctionNumberLabel;
+@synthesize caliberLabel;
+@synthesize purchaseDatePromptLabel;
+@synthesize purchaseDateLabel;
+@synthesize photoImageView;
 @synthesize weapon;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    NSLog(@"HERE!");
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-
-    
-    
     }
     return self;
 }

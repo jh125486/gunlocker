@@ -1,17 +1,16 @@
 //
-//  Manufacturer.m
+//  BallisticProfiles.m
 //  Gun Locker
 //
 //  Created by Jacob Hochstetler on 3/10/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "Manufacturer.h"
+#import "BallisticProfiles.h"
 
 
-@implementation Manufacturer
+@implementation BallisticProfiles
 
-@dynamic country;
-@dynamic name;
+@dynamic caliber;
 
 @end

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface WhizWheelViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate> {
-    NSMutableArray *arrayColors;
+    NSMutableArray *arrayRanges;
 }
 
 @property (weak, nonatomic) IBOutlet UIPickerView *whizWheelPicker;

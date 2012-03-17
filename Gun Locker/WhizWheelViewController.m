@@ -31,14 +31,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    arrayColors = [[NSMutableArray alloc] init];
-    [arrayColors addObject:@"Red"];
-    [arrayColors addObject:@"Orange"];
-    [arrayColors addObject:@"Yellow"];
-    [arrayColors addObject:@"Green"];
-    [arrayColors addObject:@"Blue"];
-    [arrayColors addObject:@"Indigo"];
-    [arrayColors addObject:@"Violet"];
+    arrayRanges = [[NSMutableArray alloc] init];
+//    for(
+    [arrayRanges addObject:@"Red"];
+    [arrayRanges addObject:@"Orange"];
+    [arrayRanges addObject:@"Yellow"];
+    [arrayRanges addObject:@"Green"];
+    [arrayRanges addObject:@"Blue"];
+    [arrayRanges addObject:@"Indigo"];
+    [arrayRanges addObject:@"Violet"];
 }
 
 - (void)viewDidUnload
@@ -63,13 +64,13 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [arrayColors count];
+    return [arrayRanges count];
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     if(component == 0) {
-        return [arrayColors objectAtIndex:row];
+        return [arrayRanges objectAtIndex:row];
     } else {
         
         return [[NSNumber numberWithInt:row] stringValue];        
@@ -83,8 +84,8 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    self.selectedProfile = [arrayColors objectAtIndex:row];
-    NSLog(@"Selected Color: %@. Index of selected color: %i", [arrayColors objectAtIndex:row], row);
+    self.selectedProfile = [arrayRanges objectAtIndex:row];
+    NSLog(@"Selected Color: %@. Index of selected color: %i", [arrayRanges objectAtIndex:row], row);
 }
 
 - (IBAction)closeModalPopup:(id)sender

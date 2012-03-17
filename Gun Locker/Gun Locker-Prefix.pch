@@ -12,7 +12,8 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
-    #import "CoreData+MagicalRecord.h"
     #import <CoreLocation/CoreLocation.h>
-    #define MR_SHORTHAND
+    #define MR_SHORTHAND 1
+    #import "CoreData+MagicalRecord.h"
+    #import <QuickDialog/QuickDialog.h>
 #endif

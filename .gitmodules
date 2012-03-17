@@ -1,3 +1,9 @@
 [submodule "MagicalRecord"]
 	path = MagicalRecord
 	url = git://github.com/magicalpanda/MagicalRecord.git
+[submodule "QuickDialog"]
+	path = QuickDialog
+	url = git://github.com/escoz/QuickDialog.git
+[submodule "KKPasscodeLock"]
+	path = KKPasscodeLock
+	url = git://github.com/aporat/KKPasscodeLock.git
