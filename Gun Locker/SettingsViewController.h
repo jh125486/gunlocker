@@ -8,19 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "KKPasscodeSettingsViewController.h"
+#import "TextStepperField.h"
+#import "WindLeadingTableViewController.h"
 
-@interface SettingsViewController : UITableViewController <KKPasscodeSettingsViewControllerDelegate>
+@interface SettingsViewController : UITableViewController <KKPasscodeSettingsViewControllerDelegate, WindLeadingTableViewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *nightModeControl;
+@property (weak, nonatomic) IBOutlet UITableViewCell *passcodeCell;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *rangeUnitsControl;
-@property (weak, nonatomic) IBOutlet UILabel *rangeIncrementLabel;
+@property (weak, nonatomic) IBOutlet TextStepperField *rangeStart;
+@property (weak, nonatomic) IBOutlet TextStepperField *rangeEnd;
+@property (weak, nonatomic) IBOutlet TextStepperField *rangeStep;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *reticleUnitsControl;
-@property (weak, nonatomic) IBOutlet UIStepper *rangeIncrementStepper;
-@property (weak, nonatomic) IBOutlet UILabel *passcodeCellStatusLabel;
-@property double prevIncrementValue;
-
-- (IBAction)settingsChanged:(id)sender;
-- (IBAction)setStepValue:(id)sender;
-- (IBAction)passcodeCellClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *directionControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *nightModeControl;
+@property (weak, nonatomic) IBOutlet UILabel *windLeadingLabel;
 
 @end

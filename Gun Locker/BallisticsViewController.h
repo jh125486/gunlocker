@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Weather.h"
+#import "WhizWheelViewController.h"
 
 @interface BallisticsViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, CLLocationManagerDelegate> {
     NSMutableArray *arrayColors;

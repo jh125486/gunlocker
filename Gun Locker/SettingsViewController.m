@@ -7,7 +7,6 @@
 //
 
 #import "SettingsViewController.h"
-#import "KKPasscodeSettingsViewController.h"
 #import "KKPasscodeLock.h"
 
 @interface SettingsViewController ()
@@ -17,12 +16,13 @@
 @implementation SettingsViewController
 @synthesize nightModeControl;
 @synthesize rangeUnitsControl;
+@synthesize rangeStart;
+@synthesize rangeEnd;
+@synthesize rangeStep;
 @synthesize reticleUnitsControl;
-@synthesize rangeIncrementLabel;
-@synthesize rangeIncrementStepper;
-@synthesize passcodeCellStatusLabel;
-
-@synthesize prevIncrementValue;
+@synthesize windLeadingLabel;
+@synthesize directionControl;
+@synthesize passcodeCell;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,13 +39,32 @@
     [super viewDidLoad];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    self.passcodeCellStatusLabel.text = ([[KKPasscodeLock sharedLock] isPasscodeRequired]) ? @"On" : @"Off";
-    nightModeControl.selectedSegmentIndex = [[defaults objectForKey:@"nightModeControl"] intValue];
-    rangeUnitsControl.selectedSegmentIndex = [[defaults objectForKey:@"rangeUnitsControl"] intValue];
-    reticleUnitsControl.selectedSegmentIndex = [[defaults objectForKey:@"reticleUnitsControl"] intValue];
-    rangeIncrementStepper.value = [[defaults objectForKey:@"rangeIncrement"] intValue];
-    prevIncrementValue = rangeIncrementStepper.value;
-    [self setStepValue:nil];
+    self.passcodeCell.detailTextLabel.text   = ([[KKPasscodeLock sharedLock] isPasscodeRequired]) ? @"On" : @"Off";
+    rangeUnitsControl.selectedSegmentIndex   = [defaults integerForKey:@"rangeUnitsControl"];
+    reticleUnitsControl.selectedSegmentIndex = [defaults integerForKey:@"reticleUnitsControl"];
+
+    rangeStart.Current = [defaults integerForKey:@"rangeStart"] ? [defaults integerForKey:@"rangeStart"] : 50;
+    rangeEnd.Current   = [defaults integerForKey:@"rangeEnd"]   ? [defaults integerForKey:@"rangeEnd"]   : 1200;
+    rangeStep.Current  = [defaults integerForKey:@"rangeStep"]  ? [defaults integerForKey:@"rangeStep"]  : 25;
+    rangeStart.Minimum = 5;
+    rangeStart.Maximum = 500;
+    rangeEnd.Minimum   = 100;
+    rangeEnd.Maximum   = 2000;
+    rangeStep.Minimum  = 1;
+    rangeStep.Maximum  = 250;
+    rangeStart.VariableSteps = rangeEnd.VariableSteps = rangeStep.VariableSteps = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:1], [NSNumber numberWithInt:5],  [NSNumber numberWithInt:50], nil];
+    rangeStart.VariableRanges = rangeEnd.VariableRanges = rangeStep.VariableRanges = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:10], [NSNumber numberWithInt:50], nil];
+    rangeStart.NumDecimals = rangeEnd.NumDecimals = rangeStep.NumDecimals = 0;
+    rangeStart.IsEditableTextField = rangeEnd.IsEditableTextField = rangeStep.IsEditableTextField = NO;
+    
+    windLeadingLabel.text = [NSString stringWithFormat:@"%@ %@", [defaults stringForKey:@"speedType"], [defaults stringForKey:@"speedUnit"]];
+
+    nightModeControl.selectedSegmentIndex    = [defaults integerForKey:@"nightModeControl"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidUnload
@@ -53,9 +72,12 @@
     [self setNightModeControl:nil];
     [self setRangeUnitsControl:nil];
     [self setReticleUnitsControl:nil];
-    [self setRangeIncrementLabel:nil];
-    [self setRangeIncrementStepper:nil];
-    [self setPasscodeCellStatusLabel:nil];
+    [self setPasscodeCell:nil];
+    [self setRangeStart:nil];
+    [self setRangeEnd:nil];
+    [self setRangeStep:nil];
+    [self setWindLeadingLabel:nil];
+    [self setDirectionControl:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -65,66 +87,38 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)settingsChanged:(id)sender {
+- (void)didSettingsChanged:(KKPasscodeSettingsViewController*)viewController {
+    self.passcodeCell.detailTextLabel.text = ([[KKPasscodeLock sharedLock] isPasscodeRequired]) ? @"On" : @"Off";
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if(cell == self.passcodeCell) {
+        KKPasscodeSettingsViewController *vc = [[KKPasscodeSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        vc.delegate = self;
+        [self.navigationController pushViewController:vc animated:YES];        
+    }
+}
+
+- (IBAction)saveSettings:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        
+
     [defaults setObject:[NSNumber numberWithInt:[nightModeControl selectedSegmentIndex]] forKey:@"nightModeControl"];
     [defaults setObject:[NSNumber numberWithInt:[rangeUnitsControl selectedSegmentIndex]] forKey:@"rangeUnitsControl"];
     [defaults setObject:[NSNumber numberWithInt:[reticleUnitsControl selectedSegmentIndex]] forKey:@"reticleUnitsControl"];
-    [defaults setObject:[NSNumber numberWithInt:[rangeIncrementLabel.text intValue]] forKey:@"rangeIncrement"];
-    
-    [defaults synchronize];
+    [defaults setObject:[NSNumber numberWithInt:(int)rangeStart.Current] forKey:@"rangeStart"];
+    [defaults setObject:[NSNumber numberWithInt:(int)rangeEnd.Current]   forKey:@"rangeEnd"];
+    [defaults setObject:[NSNumber numberWithInt:(int)rangeStep.Current]  forKey:@"rangeStep"];
 }
 
-- (IBAction)setStepValue:(id)sender {
-    double newIncrementValue = rangeIncrementStepper.value;
-//    NSLog(@"%.0f %.0f", prevIncrementValue, newIncrementValue);
-    
-    // hacks for uistepper acting weird
-    if (newIncrementValue == 249) {
-        newIncrementValue = 200;
-    } else if (newIncrementValue == 49) {
-        newIncrementValue = 45;
-    } else if (newIncrementValue == 55) {
-        newIncrementValue = 100;
-    } else if (newIncrementValue == 105){
-        newIncrementValue = 150;
-    }
-        
-    if(newIncrementValue > prevIncrementValue) {
-        if (newIncrementValue >= 50) {
-            rangeIncrementStepper.stepValue = 50;
-        } else if (newIncrementValue >= 10) {
-            rangeIncrementStepper.stepValue = 5;    
-        } else  {
-            rangeIncrementStepper.stepValue = 1;
-        } 
-//        NSLog(@"going up from %.0f to %.0f step %.0f", prevIncrementValue, newIncrementValue, rangeIncrementStepper.stepValue);
-    } else {
-        if (newIncrementValue <= 10) {
-            rangeIncrementStepper.stepValue = 1;
-        } else if (newIncrementValue <= 50) {
-            rangeIncrementStepper.stepValue = 5;    
-        } else {
-            rangeIncrementStepper.stepValue = 50;
-        }
-//        NSLog(@"going down from %.0f to %.0f step %.0f", prevIncrementValue, newIncrementValue, rangeIncrementStepper.stepValue);
-    }
-    
-    rangeIncrementLabel.text = [NSString stringWithFormat:@"%0.f", newIncrementValue];
-    prevIncrementValue = newIncrementValue;
+- (void)windLeadingTableViewController:(WindLeadingTableViewController *)controller didSelectWindLeading:(NSString *)selectedWindLeading {
+	self.windLeadingLabel.text = selectedWindLeading;
+	[self.navigationController popViewControllerAnimated:YES];
 }
 
-
-
-- (IBAction)passcodeCellClicked:(id)sender {
-    KKPasscodeSettingsViewController *vc = [[KKPasscodeSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    vc.delegate = self;
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (void)didSettingsChanged:(KKPasscodeSettingsViewController*)viewController {
-    self.passcodeCellStatusLabel.text = ([[KKPasscodeLock sharedLock] isPasscodeRequired]) ? @"On" : @"Off";
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    [[segue destinationViewController] setDelegate:self];
 }
 
 @end

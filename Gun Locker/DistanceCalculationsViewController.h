@@ -21,7 +21,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *targetDistanceUnitLabel;
 @property (weak, nonatomic) IBOutlet UITextField *shootingAngleTextField;
 @property (weak, nonatomic) IBOutlet UILabel *resultHorizontalRangeLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *liveAngleUpdateSwitch;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *liveAngleUpdatingSegment;
+
 @property (weak, nonatomic) IBOutlet UILabel *resultHorizontalRangeUnitLabel;
 
 @property (weak, nonatomic) NSString *passedResult;

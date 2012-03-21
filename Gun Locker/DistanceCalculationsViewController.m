@@ -22,7 +22,7 @@
 @synthesize targetDistanceUnitLabel;
 @synthesize shootingAngleTextField;
 @synthesize resultHorizontalRangeLabel;
-@synthesize liveAngleUpdateSwitch;
+@synthesize liveAngleUpdatingSegment;
 @synthesize resultHorizontalRangeUnitLabel;
 
 @synthesize passedResult;
@@ -90,9 +90,9 @@
     [self setTargetDistanceTextField:nil];
     [self setShootingAngleTextField:nil];
     [self setResultHorizontalRangeLabel:nil];
-    [self setLiveAngleUpdateSwitch:nil];
     [self setTargetDistanceUnitLabel:nil];
     [self setResultHorizontalRangeUnitLabel:nil];
+    [self setLiveAngleUpdatingSegment:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 
@@ -155,7 +155,7 @@
 
 - (IBAction)liveAngleUpdating:(id)sender {
 
-    if(self.liveAngleUpdateSwitch.on) {
+    if(self.liveAngleUpdatingSegment.selectedSegmentIndex) {
         // if iphone 4 do 
         // CMAttitude* currentAttitude = currentMotion.attitude;
         // angleInRadians = currentAttitude.roll;

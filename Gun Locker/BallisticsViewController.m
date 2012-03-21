@@ -104,17 +104,19 @@
     return [arrayColors objectAtIndex:row];
 }
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     NSLog(@"Selected Color: %@. Index of selected color: %i", [arrayColors objectAtIndex:row], row);
 }
 
 - (IBAction)getWeather:(id)sender {
-    void (^now)(void) = ^ {
-        self.currentWeather = [[Weather alloc] initWithLocation:currentLocation];
-        [self logWeather];
-    };
-    now();
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    
+    dispatch_async(queue, ^{
+        self.currentWeather = [[Weather alloc] initWithLocation:currentLocation];        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self logWeather];
+        });
+    });
 }
 
 - (IBAction)closeModalPopup:(id)sender
@@ -156,12 +158,20 @@
 }
 
 - (void)logWeather {
-//    NSLog(@"Latitude: %g Longitude: %g", self.currentLocation.coordinate.latitude, self.currentLocation.coordinate.longitude);
-//    NSLog(@"Accuracy H:%gm V:%gm", self.currentLocation.horizontalAccuracy, self.currentLocation.verticalAccuracy);
-//    NSLog(@"Altitude: %gm (%0.2fft)", self.currentLocation.altitude, self.currentLocation.altitude * 3.2808399);
     if(self.currentWeather.goodData) {
         NSLog(@"%@", [self.currentWeather description]);
         self.densityAltitudeLabel.text = [NSString stringWithFormat:@"%.0f ft%", self.currentWeather.densityAltitude];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString *segueID = segue.identifier;
+    
+	if ([segueID isEqualToString:@"WhizWheel"]) {
+        WhizWheelViewController *dst = segue.destinationViewController;
+        dst.selectedProfile = [arrayColors objectAtIndex:[self.ballisticProfilePicker selectedRowInComponent:0]];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Profiles" style:UIBarButtonItemStyleBordered target:nil action:nil];
+
     }
 }
 
