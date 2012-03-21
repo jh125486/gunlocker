@@ -27,6 +27,7 @@
 @synthesize resultReticleView;
 @synthesize resultBulletImpactImage;
 @synthesize nightMode;
+@synthesize speedUnit, speedType;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,23 +44,13 @@
     self.title = (NSString*)self.selectedProfile;
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSLog(@"DidAppear %@ - %@ - %@", [defaults objectForKey:@"rangeStart"], [defaults objectForKey:@"rangeEnd"], [defaults objectForKey:@"rangeStep"]);
-}
-
 -(void)viewWillAppear:(BOOL)animated {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSLog(@"WillAppear %@ - %@ - %@", [defaults objectForKey:@"rangeStart"], [defaults objectForKey:@"rangeEnd"], [defaults objectForKey:@"rangeStep"]);
-    int rangeStart       = [[defaults objectForKey:@"rangeStart"] intValue] ? [[defaults objectForKey:@"rangeStart"] intValue] : 100;
-    int rangeEnd         = [[defaults objectForKey:@"rangeEnd"] intValue] ? [[defaults objectForKey:@"rangeEnd"] intValue] : 1200;
-    int rangeStep        = [[defaults objectForKey:@"rangeStep"] intValue] ? [[defaults objectForKey:@"rangeStep"] intValue] : 25;
-    self.rangeLabel.text = [[defaults objectForKey:@"rangeUnitsControl"] intValue] == 0 ? @"Yards" : @"Meters";
-    
-    // TODO set up defaults for direction type
-    // TODO set up defaults for speed type/units
-    
-    
+    int rangeStart       = [defaults integerForKey:@"rangeStart"] ? [defaults integerForKey:@"rangeStart"] : 100;
+    int rangeEnd         = [defaults integerForKey:@"rangeEnd"]   ? [defaults integerForKey:@"rangeEnd"]   : 1200;
+    int rangeStep        = [defaults integerForKey:@"rangeStep"]  ? [defaults integerForKey:@"rangeStep"]  : 25;
+    self.rangeLabel.text = [defaults integerForKey:@"rangeUnitsControl"] == 0 ? @"Yards" : @"Meters";
+        
     // array of Ranges:  pad front and bad to get proper pickerview from tableview
     arrayRanges = [[NSMutableArray alloc] initWithObjects:@"", @"", nil];
     for(int range = rangeStart; range <= rangeEnd; range += rangeStep)
@@ -69,17 +60,19 @@
     
     // array of Directions
     arrayDirections = [[NSMutableArray alloc] init];
-    switch ([[defaults objectForKey:@"directionType"] intValue]) {
+    switch ([defaults integerForKey:@"directionControl"]) {
         case 0:          // degrees
             for(int degree = 0; degree < 360; degree += 10)
                 [arrayDirections addObject:[NSString stringWithFormat:@"%d°", degree]];
+            directionLabel.text = @"Degree";
             break;
         case 1:          // clock
             [arrayDirections addObject:@"12 o'clock"];
             for(int clock = 1; clock < 12; clock++)
                 [arrayDirections addObject:[NSString stringWithFormat:@"%d o'clock", clock]];
+            directionLabel.text = @"Clock";
             break;
-        case 2:          // cardinal
+        case 2:          // cardinal  --> Needs compass to be implemented correctly
             [arrayDirections addObject:@"North"];
             [arrayDirections addObject:@"Northeast"];
             [arrayDirections addObject:@"East"];
@@ -95,21 +88,20 @@
     
     // array of Speeds
     arraySpeeds = [[NSMutableArray alloc] init];
-    switch ([[defaults objectForKey:@"directionType"] intValue]) {
-        case 0: // MPH || MPS || KPH || Knots
-            for (int speed = 0; speed < 25; speed++)
-                [arraySpeeds addObject:[NSString stringWithFormat:@"%d", speed]];
-            break;
-        case 1: // human speed
-            [arraySpeeds addObject:@"At Rest"];
-            [arraySpeeds addObject:@"Walking"];
-            [arraySpeeds addObject:@"Jogging"];
-            [arraySpeeds addObject:@"Running"];
-            break;
-        default:
-            break;
+    self.speedUnit = [defaults objectForKey:@"speedUnit"];
+    self.speedType = [defaults objectForKey:@"speedType"];
+    if([speedUnit isEqualToString:@"Human"]) {
+        speedLabel.text = speedUnit;
+        [arraySpeeds addObject:@"At Rest"];
+        [arraySpeeds addObject:@"Walking"];
+        [arraySpeeds addObject:@"Jogging"];
+        [arraySpeeds addObject:@"Running"];        
+    } else { // MPH KPH MPS Knots
+        for (int speed = 0; speed < 25; speed++)
+            [arraySpeeds addObject:[NSString stringWithFormat:@"%d %@", speed, speedUnit]];
+        speedLabel.text = speedType;
     }
-
+    
     [rangesTableView reloadData];
     [directionsTableView reloadData];
     [speedTableView reloadData];
@@ -151,6 +143,8 @@
     [self setDropResultLabel:nil];
     [self setDriftResultLabel:nil];
     [self setResultBulletImpactImage:nil];
+    [self setSpeedType:nil];
+    [self setSpeedUnit:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

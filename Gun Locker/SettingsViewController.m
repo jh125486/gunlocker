@@ -58,8 +58,8 @@
     rangeStart.IsEditableTextField = rangeEnd.IsEditableTextField = rangeStep.IsEditableTextField = NO;
     
     windLeadingLabel.text = [NSString stringWithFormat:@"%@ %@", [defaults stringForKey:@"speedType"], [defaults stringForKey:@"speedUnit"]];
-
-    nightModeControl.selectedSegmentIndex    = [defaults integerForKey:@"nightModeControl"];
+    directionControl.selectedSegmentIndex = [defaults integerForKey:@"directionControl"];
+    nightModeControl.selectedSegmentIndex = [defaults integerForKey:@"nightModeControl"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -107,6 +107,7 @@
     [defaults setObject:[NSNumber numberWithInt:[nightModeControl selectedSegmentIndex]] forKey:@"nightModeControl"];
     [defaults setObject:[NSNumber numberWithInt:[rangeUnitsControl selectedSegmentIndex]] forKey:@"rangeUnitsControl"];
     [defaults setObject:[NSNumber numberWithInt:[reticleUnitsControl selectedSegmentIndex]] forKey:@"reticleUnitsControl"];
+    [defaults setObject:[NSNumber numberWithInt:[directionControl selectedSegmentIndex]] forKey:@"directionControl"];
     [defaults setObject:[NSNumber numberWithInt:(int)rangeStart.Current] forKey:@"rangeStart"];
     [defaults setObject:[NSNumber numberWithInt:(int)rangeEnd.Current]   forKey:@"rangeEnd"];
     [defaults setObject:[NSNumber numberWithInt:(int)rangeStep.Current]  forKey:@"rangeStep"];

@@ -37,8 +37,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     selectedPath = [NSIndexPath indexPathForRow:[defaults integerForKey:@"speedIndexPathRow"] inSection:[defaults integerForKey:@"speedIndexPathSection"]];
     
-    [[self.tableView cellForRowAtIndexPath:selectedPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
-    
+    [[self.tableView cellForRowAtIndexPath:selectedPath] setAccessoryType:UITableViewCellAccessoryCheckmark];    
     [super viewDidAppear:animated];
 }
 

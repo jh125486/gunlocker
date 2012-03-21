@@ -34,6 +34,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *driftLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dropResultLabel;
 @property (weak, nonatomic) IBOutlet UILabel *driftResultLabel;
+@property (weak, nonatomic) NSString *speedType;
+@property (weak, nonatomic) NSString *speedUnit;
 
 @property (strong, nonatomic) NSObject *selectedProfile;
 @end
