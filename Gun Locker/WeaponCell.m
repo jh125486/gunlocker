@@ -12,15 +12,19 @@
 
 @synthesize manufacturerLabel;
 @synthesize modelLabel;
-@synthesize barrelLengthLabel;
+@synthesize barrelInfoLabel;
 @synthesize finishLabel;
 @synthesize roundCountLabel;
 @synthesize serialNumberLabel;
 @synthesize malfunctionNumberLabel;
 @synthesize caliberLabel;
-@synthesize purchaseDatePromptLabel;
 @synthesize purchaseDateLabel;
+@synthesize photoImageContainer;
 @synthesize photoImageView;
+@synthesize stampViewButton;
+@synthesize stampViewContainer;
+@synthesize stampSerialNumberLabel;
+@synthesize stampDateLabel;
 @synthesize weapon;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

@@ -2,7 +2,7 @@
 //  Weapon.m
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 3/14/12.
+//  Created by Jacob Hochstetler on 3/26/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -10,6 +10,8 @@
 #import "DopeCard.h"
 #import "Maintenance.h"
 #import "Malfunction.h"
+#import "Note.h"
+#import "StampInfo.h"
 
 
 @implementation Weapon
@@ -19,7 +21,6 @@
 @dynamic finish;
 @dynamic manufacturer;
 @dynamic model;
-@dynamic nfa_stamp;
 @dynamic note;
 @dynamic photo;
 @dynamic photo_thumbnail;
@@ -30,9 +31,11 @@
 @dynamic threaded_barrel;
 @dynamic threaded_barrel_pitch;
 @dynamic type;
+@dynamic dope_cards;
 @dynamic maintenances;
 @dynamic malfunctions;
+@dynamic notes;
 @dynamic preferred_load;
-@dynamic dope_cards;
+@dynamic stamp;
 
 @end

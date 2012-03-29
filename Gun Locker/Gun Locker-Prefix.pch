@@ -16,4 +16,5 @@
     #define MR_SHORTHAND 1
     #import "CoreData+MagicalRecord.h"
     #import <QuickDialog/QuickDialog.h>
+    #import "NSDate+Formatting.h"
 #endif

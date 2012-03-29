@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "Weapon.h"
+#import "Malfunction.h"
+#import "MalfunctionsAddViewController.h"
 
 @interface MalfunctionsTableViewController : UITableViewController {
-    NSMutableArray *tableDataArray;
+    NSMutableDictionary *data;
+    NSMutableArray *sections;
 }
 
-@property (nonatomic, strong) Weapon *selectedWeapon;
+@property (nonatomic, weak) Weapon *selectedWeapon;
 
 @end

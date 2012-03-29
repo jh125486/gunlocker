@@ -13,6 +13,7 @@
 
 @interface SettingsViewController : UITableViewController <KKPasscodeSettingsViewControllerDelegate, WindLeadingTableViewControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UISwitch *showNFADetailsSwitch;
 @property (weak, nonatomic) IBOutlet UITableViewCell *passcodeCell;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *rangeUnitsControl;
 @property (weak, nonatomic) IBOutlet TextStepperField *rangeStart;

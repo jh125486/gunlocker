@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Weapon.h"
+#import "Malfunction.h"
 
-@interface MalfunctionsAddViewController : UIViewController
+@interface MalfunctionsAddViewController : QuickDialogController
 
-- (IBAction)savePressed:(id)sender;
-- (IBAction)closeModalPopup:(id)sender;
+@property (nonatomic, weak) Weapon *selectedWeapon;
+
+- (IBAction)saveTapped:(id)sender;
+- (IBAction)cancelTapped:(id)sender;
 
 @end

@@ -8,15 +8,10 @@
 
 #import "MaintenancesTableViewController.h"
 
-@interface MaintenancesTableViewController ()
-
-@end
-
 @implementation MaintenancesTableViewController
 @synthesize selectedWeapon;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
@@ -24,105 +19,90 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //Register addNewMalfunctionToArray to recieve "newMalfunction" notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewMaintenanceToArray:) name:@"newMaintenance" object:nil];
+    
+    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
+    tableDataArray = [[self.selectedWeapon.maintenances sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+    
+    [self.tableView reloadData];
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
+    [self setSelectedWeapon:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [tableDataArray count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    MaintenanceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintenanceCell"];
+
+    if (cell == nil)
+        cell = [[MaintenanceCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MaintenanceCell"];
+
     // Configure the cell...
+    Maintenance *currentMaintenance = [tableDataArray objectAtIndex:indexPath.row];
+    cell.dateLabel.text = [currentMaintenance.date distanceOfTimeInWords];
+    cell.roundCountLabel.text = [currentMaintenance.round_count stringValue];
+    cell.actionPerformedLabel.text = currentMaintenance.action_performed;
+    NSMutableString *malfunctions = [[NSMutableString alloc] initWithString:@""];
+    for (Malfunction *malfunction in currentMaintenance.malfunctions)
+        [malfunctions appendFormat:@"• %@\n", malfunction.failure];
     
+    NSLog(@"failures %@ - %d", malfunctions, [currentMaintenance.malfunctions count]);
+    cell.malfunctionsTextView.text = malfunctions;
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+        Maintenance *newMaintenance = [tableDataArray objectAtIndex:indexPath.row];
+        [newMaintenance deleteEntity];
+        [tableDataArray removeObjectAtIndex:indexPath.row];
+        
+//        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        [self.tableView endUpdates];
+    }    
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
+- (void) addNewMaintenanceToArray:(NSNotification*) notification {
+    Maintenance *newMaintenance = [notification object];
+    [tableDataArray addObject:newMaintenance];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+    [tableDataArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    NSUInteger index = [tableDataArray indexOfObject:newMaintenance];
+    
+    [self.tableView beginUpdates];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationRight];
+    [self.tableView endUpdates];    
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UINavigationController *destinationController = segue.destinationViewController;
+    // dig past navigationcontroller to get to AddViewController
+    MaintenancesAddViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
+    [dst setSelectedWeapon:self.selectedWeapon];
 }
 
 @end

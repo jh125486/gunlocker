@@ -13,11 +13,13 @@
 @end
 
 @implementation WeaponShowViewController
-@synthesize maintenanceButton;
-@synthesize malfunctionsButton;
-@synthesize dopeCardsButton;
+@synthesize notesCell;
+@synthesize nfaCell;
+@synthesize dopeCardsCell;
+@synthesize maintenanceCountLabel;
+@synthesize malfunctionCountLabel;
+@synthesize adjustRoundCountStepper;
 @synthesize quickCleanButton;
-@synthesize thumbnailImageView;
 @synthesize selectedWeapon;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -29,21 +31,19 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     // set title for navigation back button
     self.title = selectedWeapon.model;
-    
     // replace titleView with a title and subtitle
-    float titleViewWidth = 320 - ([selectedWeapon.type sizeWithFont:[UIFont boldSystemFontOfSize:12]].width + 26 + 20);
+    float titleViewWidth = 320 - ([selectedWeapon.type sizeWithFont:[UIFont boldSystemFontOfSize:12]].width + 94);
     CGRect headerTitleSubtitleFrame = CGRectMake(0, 0, titleViewWidth, 44);    
     UIView* _headerTitleSubtitleView = [[UILabel alloc] initWithFrame:headerTitleSubtitleFrame];
     _headerTitleSubtitleView.backgroundColor = [UIColor clearColor];
     _headerTitleSubtitleView.autoresizesSubviews = YES;
     
-    CGRect titleFrame = CGRectMake(0, 0, titleViewWidth, 24);  
+    CGRect titleFrame = CGRectMake(0, 2, titleViewWidth, 22);  
     UILabel *titleView = [[UILabel alloc] initWithFrame:titleFrame];
     titleView.backgroundColor = [UIColor clearColor];
     titleView.font = [UIFont boldSystemFontOfSize:20];
@@ -55,7 +55,7 @@
     titleView.adjustsFontSizeToFitWidth = YES;
     [_headerTitleSubtitleView addSubview:titleView];
     
-    CGRect subtitleFrame = CGRectMake(0, 24, titleViewWidth, 44-24);   
+    CGRect subtitleFrame = CGRectMake(0, 22, titleViewWidth, 44-24);   
     UILabel *subtitleView = [[UILabel alloc] initWithFrame:subtitleFrame];
     subtitleView.backgroundColor = [UIColor clearColor];
     subtitleView.font = [UIFont boldSystemFontOfSize:16];
@@ -68,28 +68,104 @@
     [_headerTitleSubtitleView addSubview:subtitleView];
     
     self.navigationItem.titleView = _headerTitleSubtitleView;
-
-    [self.maintenanceButton  setTitle:[NSString stringWithFormat:@"Maintenance (%d)", [self.selectedWeapon.maintenances count]] forState: UIControlStateNormal];
-    [self.malfunctionsButton setTitle:[NSString stringWithFormat:@"Malfunctions (%d)", [self.selectedWeapon.maintenances count]] forState: UIControlStateNormal];
-    [self.dopeCardsButton    setTitle:[NSString stringWithFormat:@"Dope Cards (%d)", [self.selectedWeapon.maintenances count]] forState: UIControlStateNormal];
     
 }
 
-- (void)viewDidUnload
-{
-    [self setMaintenanceButton:nil];
-    [self setMalfunctionsButton:nil];
+-(void)viewWillAppear:(BOOL)animated {
+    NSArray *nfa_types = [[NSArray alloc] initWithObjects:@"SBR", @"SBS", @"Suppressor", @"Machinegun", @"DD", @"AOW",nil];
+    self.adjustRoundCountStepper.Current = [selectedWeapon.round_count floatValue];
+    self.adjustRoundCountStepper.Minimum = 0;
+    self.adjustRoundCountStepper.Step = 1;
+    self.adjustRoundCountStepper.NumDecimals = 0;
+    self.notesCell.detailTextLabel.text     = [NSString stringWithFormat:@"%d",[self.selectedWeapon.notes count]];
+    self.nfaCell.detailTextLabel.text       = [nfa_types objectAtIndex:[self.selectedWeapon.stamp.nfa_type integerValue]];
+    self.dopeCardsCell.detailTextLabel.text = [NSString stringWithFormat:@"%d",[self.selectedWeapon.dope_cards count]];
+    self.maintenanceCountLabel.text         = [NSString stringWithFormat:@"%d",[self.selectedWeapon.maintenances count]];
+    self.malfunctionCountLabel.text         = [NSString stringWithFormat:@"%d",[self.selectedWeapon.malfunctions count]];
+    [self.tableView reloadData];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidUnload {
+    [self setNotesCell:nil];
+    [self setNfaCell:nil];
+    [self setDopeCardsCell:nil];
+    [self setMaintenanceCountLabel:nil];
+    [self setMalfunctionCountLabel:nil];
     [self setQuickCleanButton:nil];
-    [self setThumbnailImageView:nil];
-    [self setDopeCardsButton:nil];
+    [self setAdjustRoundCountStepper:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - WeaponAddViewControllerDelegate
 
+- (void)WeaponAddViewControllerDidCancel:(WeaponAddEditViewController *)controller {
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)WeaponAddViewControllerDidSave:(WeaponAddEditViewController *)controller {
+    [self.tableView reloadData];
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
+	tableView.sectionHeaderHeight = headerView.frame.size.height;
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, headerView.frame.size.width - 20, 22)];
+	label.text = [self tableView:tableView titleForHeaderInSection:section];
+	label.font = [UIFont fontWithName:@"Futura-Medium" size:26.0];
+	label.shadowOffset = CGSizeMake(1, 1);
+	label.shadowColor = [UIColor whiteColor];
+	label.backgroundColor = [UIColor clearColor];
+    
+	label.textColor = [UIColor blackColor];
+    
+	[headerView addSubview:label];
+	return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // manually set cellPath since tableView indexPathForCell: is returning wrong row ??
+    NSIndexPath *nfaCellPath = [NSIndexPath indexPathForRow:1 inSection:0];
+
+    // compare row and section since NSIndexPath isEqual:  is broken on ios5
+    if((![[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"]) && 
+        nfaCellPath.row == indexPath.row && 
+        nfaCellPath.section == indexPath.section) {
+        return 0;
+    }
+    
+    return 40.0;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString *segueID = segue.identifier;
+    
+	if ([segueID isEqualToString:@"EditWeapon"]) {
+        WeaponAddEditViewController *dst =[[segue.destinationViewController viewControllers] objectAtIndex:0];
+		dst.delegate = self;
+        dst.weaponType = self.selectedWeapon.type;
+        dst.selectedWeapon = self.selectedWeapon;
+	} else if ([segueID isEqualToString:@"Malfunctions"]) {
+        MalfunctionsTableViewController *dst = segue.destinationViewController;
+        dst.selectedWeapon = self.selectedWeapon;
+	} else if ([segueID isEqualToString:@"Maintenances"]) {
+        MaintenancesTableViewController *dst = segue.destinationViewController;
+        dst.selectedWeapon = self.selectedWeapon;
+	} else if ([segueID isEqualToString:@"NFA"]) {
+        NFAInformationViewController *dst = segue.destinationViewController;
+        dst.selectedWeapon = self.selectedWeapon;
+    }
+}
+# pragma mark - Adjust Round count
+- (IBAction)roundCountAdjust:(id)sender {
+    self.selectedWeapon.round_count = [NSNumber numberWithInt:(int)adjustRoundCountStepper.Current];
+    [[NSManagedObjectContext defaultContext] save];
+}
 @end

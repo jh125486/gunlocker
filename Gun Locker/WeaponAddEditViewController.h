@@ -33,14 +33,19 @@
 @property (weak, nonatomic) IBOutlet UITextField *caliberTextField;
 @property (weak, nonatomic) IBOutlet UITextField *finishTextField;
 @property (weak, nonatomic) IBOutlet UITextField *barrelLengthTextField;
+@property (weak, nonatomic) IBOutlet UITextField *barrelThreadingTextField;
 @property (weak, nonatomic) IBOutlet UITextField *serialNumberTextField;
 @property (weak, nonatomic) IBOutlet UITextField *purchaseDateTextField;
 @property (weak, nonatomic) IBOutlet UITextField *purchasePriceTextfield;
 @property (weak, nonatomic) IBOutlet UIButton *photoButton;
+@property (weak, nonatomic) IBOutlet UILabel *barrelLengthUnitLabel;
 @property (retain, nonatomic) UIDatePicker *purchaseDatePickerView;
 
-- (IBAction)cancel:(id)sender;
-- (IBAction)save:(id)sender;
+
+- (IBAction)barrelLengthValueChanged:(id)sender;
+- (IBAction)purchasePriceValueChanged:(id)sender;
+- (IBAction)cancelTapped:(id)sender;
+- (IBAction)saveTapped:(id)sender;
 - (IBAction)checkData:(id)sender;
 - (IBAction)photoButtonTapped;
 

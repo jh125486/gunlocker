@@ -2,7 +2,7 @@
 //  Maintenance.h
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 3/14/12.
+//  Created by Jacob Hochstetler on 3/24/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -16,7 +16,15 @@
 @property (nonatomic, retain) NSString * action_performed;
 @property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSNumber * round_count;
-@property (nonatomic, retain) Malfunction *malfunction;
+@property (nonatomic, retain) NSSet *malfunctions;
 @property (nonatomic, retain) Weapon *weapon;
+@end
+
+@interface Maintenance (CoreDataGeneratedAccessors)
+
+- (void)addMalfunctionsObject:(Malfunction *)value;
+- (void)removeMalfunctionsObject:(Malfunction *)value;
+- (void)addMalfunctions:(NSSet *)values;
+- (void)removeMalfunctions:(NSSet *)values;
 
 @end

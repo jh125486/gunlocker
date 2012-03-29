@@ -9,13 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "Weapon.h"
 #import "WeaponAddEditViewController.h"
+#import "MaintenancesTableViewController.h"
+#import "MalfunctionsTableViewController.h"
+#import "NFAInformationViewController.h"
+#import "TextStepperField.h"
 
-@interface WeaponShowViewController : UIViewController
+@interface WeaponShowViewController : UITableViewController <WeaponAddViewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIButton *maintenanceButton;
-@property (weak, nonatomic) IBOutlet UIButton *malfunctionsButton;
-@property (weak, nonatomic) IBOutlet UIButton *dopeCardsButton;
+@property (weak, nonatomic) IBOutlet UITableViewCell *nfaCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *notesCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *dopeCardsCell;
+@property (weak, nonatomic) IBOutlet UILabel *maintenanceCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *malfunctionCountLabel;
+@property (weak, nonatomic) IBOutlet TextStepperField *adjustRoundCountStepper;
 @property (weak, nonatomic) IBOutlet UIButton *quickCleanButton;
-@property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (nonatomic, strong) Weapon *selectedWeapon;
+
+- (IBAction)roundCountAdjust:(id)sender;
 @end

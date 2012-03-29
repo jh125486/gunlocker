@@ -39,7 +39,7 @@
         [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
         
         NSArray *stationWeather;
-        int closestStationIndex;
+        int closestStationIndex = -1;
         self.kilometersFromStation = MAXFLOAT;
         float distanceKM;
         
@@ -57,7 +57,7 @@
         }
         
         // set up ivars with weather
-        if(closestStationIndex) {
+        if(closestStationIndex >= 0) {
             stationWeather = [[weatherArray objectAtIndex:closestStationIndex] componentsSeparatedByString:@","];
             self.timestamp = [formatter dateFromString:[stationWeather objectAtIndex:2]];        
             self.stationID = [stationWeather objectAtIndex:1];

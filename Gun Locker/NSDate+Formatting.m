@@ -167,4 +167,84 @@
   return [NSString stringWithFormat:@"%@%d %@ %@", modifier, number, measure, direction];
 }
 
+- (NSString *)distanceOfTimeInWordsOnlyDate {
+    return [self distanceOfTimeInWordsOnlyDate:[NSDate date]];
+}
+
+- (NSString *)distanceOfTimeInWordsOnlyDate:(NSDate *)date {
+    NSString *Ago      = NSLocalizedString(@"ago", @"Denotes past dates");
+    NSString *FromNow  = NSLocalizedString(@"from now", @"Denotes future dates");
+    NSString *About    = NSLocalizedString(@"About", @"Indicates an approximate number");
+    NSString *Over     = NSLocalizedString(@"Over", @"Indicates an exceeding number");
+    NSString *Almost   = NSLocalizedString(@"Almost", @"Indicates an approaching number");
+    //NSString *Second   = NSLocalizedString(@"second", @"One second in time");
+    NSString *Day      = NSLocalizedString(@"day", @"One day in time");
+    NSString *Days     = NSLocalizedString(@"days", @"More than one day in time");
+    NSString *Month    = NSLocalizedString(@"month", @"One month in time");
+    NSString *Months   = NSLocalizedString(@"months", @"More than one month in time");
+    NSString *Year     = NSLocalizedString(@"year", @"One year in time");
+    NSString *Years    = NSLocalizedString(@"years", @"More than one year in time");
+    
+    NSTimeInterval since = [self timeIntervalSinceDate:date];
+    NSString *direction = since <= 0.0 ? Ago : FromNow;
+    since = fabs(since);
+    
+    int minutes   = (int)round(since / SECONDS_PER_MINUTE);
+    int days      = (int)round(since / SECONDS_PER_DAY);
+    int months    = (int)round(since / SECONDS_PER_MONTH);
+    int years     = (int)floor(since / SECONDS_PER_YEAR);
+    int offset    = (int)round(floor((float)years / 4.0) * 1440.0);
+    int remainder = (minutes - offset) % 525600;
+    
+    int number;
+    NSString *measure;
+    NSString *modifier = @"";
+    
+    switch (minutes) {
+        case 0 ... 1439:
+            return @"Today";
+            break;
+        case 1440 ... 2529:
+            number = 1;
+            measure = Day;
+            break;
+        case 2530 ... 43199:
+            number = days;
+            measure = Days;
+            break;
+        case 43200 ... 86399:
+            number = 1;
+            measure = Month;
+            modifier = About;
+            break;
+        case 86400 ... 525599:
+            number = months;
+            measure = Months;
+            break;
+        default:
+            number = years;
+            measure = number == 1 ? Year : Years;
+            if (remainder < 131400) {
+                modifier = About;
+            } else if (remainder < 394200) {
+                modifier = Over;
+            } else {
+                ++number;
+                measure = Years;
+                modifier = Almost;
+            }
+            break;
+    }
+    if ([modifier length] > 0) {
+        modifier = [modifier stringByAppendingString:@" "];
+    }
+    return [NSString stringWithFormat:@"%@%d %@ %@", modifier, number, measure, direction];
+}
+
+- (NSString *)onlyDate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MMMM d, YYYY"];
+    return [dateFormat stringFromDate:self];
+}
+
 @end

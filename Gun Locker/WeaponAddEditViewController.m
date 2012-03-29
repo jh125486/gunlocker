@@ -18,11 +18,13 @@
 @synthesize caliberTextField;
 @synthesize finishTextField;
 @synthesize barrelLengthTextField;
+@synthesize barrelThreadingTextField;
 @synthesize serialNumberTextField;
 @synthesize purchaseDateTextField;
 @synthesize purchasePriceTextfield;
 @synthesize purchaseDatePickerView;
 @synthesize photoButton;
+@synthesize barrelLengthUnitLabel;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -46,11 +48,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.title = [NSString stringWithFormat:@"Add %@", [self.weaponType substringToIndex:[self.weaponType length] - 1]];
+    
+    if([self.weaponType isEqualToString:@"Misc."])
+        self.title = @"Add Miscellaneous";
+    else
+        self.title = [NSString stringWithFormat:@"Add %@", [self.weaponType substringToIndex:[self.weaponType length] -1]];
         
     if(selectedWeapon)
         [self loadTextfieldsFromWeapon];
+    
+    self.photoButton.titleLabel.textAlignment = UITextAlignmentCenter;
     
     // set up barrel length field with decimal pad and a Done button on accessoryview toolbar
     self.barrelLengthTextField.keyboardType = UIKeyboardTypeDecimalPad;
@@ -67,21 +74,14 @@
                                                                          action:@selector(barrelLengthDoneClicked:)],
                            nil]];
     self.barrelLengthTextField.inputAccessoryView = toolBarView;
-    // add inches to textfield
-    UILabel *inchLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 12, 12)];
-    inchLabel.text = @"\"";
-    inchLabel.textColor = [UIColor lightGrayColor];
-    inchLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
-    self.barrelLengthTextField.rightViewMode = UITextFieldViewModeAlways;
-    self.barrelLengthTextField.rightView = inchLabel;
-
     
     // purchase price local currency symbol
     UILabel *currencyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 12, 12)];
     currencyLabel.text = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
     currencyLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
     currencyLabel.textColor = [UIColor lightGrayColor];
-    self.purchasePriceTextfield.leftViewMode = UITextFieldViewModeAlways;
+    self.purchasePriceTextfield.keyboardType = UIKeyboardTypeDecimalPad;
+    self.purchasePriceTextfield.leftViewMode = UITextFieldViewModeWhileEditing;
     self.purchasePriceTextfield.leftView = currencyLabel;
 
     // purchase date picker set up
@@ -113,9 +113,7 @@
 }
 
 - (void)purchaseDatePickerDoneClicked:(id)sender {
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"EEEE MMMM d, YYYY"];
-    self.purchaseDateTextField.text = [dateFormat stringFromDate:purchaseDatePickerView.date];
+    self.purchaseDateTextField.text = [purchaseDatePickerView.date onlyDate];
     
     [self.purchaseDateTextField resignFirstResponder];
 }
@@ -137,26 +135,24 @@
     [self setPurchaseDateTextField:nil];
     [self setPurchasePriceTextfield:nil];
     [self setSelectedWeapon:nil];
+    [self setBarrelLengthUnitLabel:nil];
+    [self setBarrelThreadingTextField:nil];
     [super viewDidUnload];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
 }
 
@@ -171,21 +167,19 @@
     
     // resign all firstresponders
     [self.view endEditing:TRUE];
+    
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
     [self verifyEnteredData];
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
+- (void)textFieldDidEndEditing:(UITextField *)textField {
     [self verifyEnteredData];
 }
 
-- (IBAction)checkData:(id)sender
-{
+- (IBAction)checkData:(id)sender {
     [self verifyEnteredData];    
 }
 
@@ -197,21 +191,32 @@
     self.caliberTextField.text      = selectedWeapon.caliber;
     self.finishTextField.text       = selectedWeapon.finish;
     self.barrelLengthTextField.text = [selectedWeapon.barrel_length stringValue];
+    self.barrelThreadingTextField.text = selectedWeapon.threaded_barrel_pitch;
+    [self barrelLengthValueChanged:nil];
     [self.photoButton setImage:[UIImage imageWithData:selectedWeapon.photo_thumbnail] forState:UIControlStateNormal];
     self.serialNumberTextField.text = selectedWeapon.serial_number;
     self.purchasePriceTextfield.text = [selectedWeapon.purchased_price stringValue];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"EEEE MMMM d, YYYY"];
-    self.purchaseDateTextField.text = [dateFormat stringFromDate:selectedWeapon.purchased_date];
+    self.purchaseDateTextField.text = [selectedWeapon.purchased_date onlyDate];
     [self verifyEnteredData];
 }
 
-- (IBAction)cancel:(id)sender
-{
+- (IBAction)barrelLengthValueChanged:(id)sender {
+    if([self.barrelLengthTextField.text length]) {
+        self.barrelLengthUnitLabel.frame = CGRectMake(142,71,[self.barrelLengthTextField.text sizeWithFont:self.barrelLengthTextField.font].width,21); 
+        self.barrelLengthUnitLabel.hidden = NO;
+    } else {
+        self.barrelLengthUnitLabel.hidden = YES;
+    }
+}
+
+- (IBAction)purchasePriceValueChanged:(id)sender {
+}
+
+- (IBAction)cancelTapped:(id)sender {
 	[self.delegate WeaponAddViewControllerDidCancel:self];
 }
 
-- (IBAction)save:(id)sender {
+- (IBAction)saveTapped:(id)sender {
     Weapon *weapon = selectedWeapon ? selectedWeapon : [Weapon createEntity];
     weapon.type = self.weaponType;
     weapon.manufacturer = self.manufacturerTextField.text;
@@ -221,6 +226,7 @@
     
     if(self.barrelLengthTextField.text.length > 0)
         weapon.barrel_length = [NSNumber numberWithFloat:[self.barrelLengthTextField.text floatValue]];    
+    weapon.threaded_barrel_pitch = self.barrelThreadingTextField.text;
     
     UIImage *photo = [self.photoButton imageForState:UIControlStateNormal];
     if(photo) {
@@ -228,7 +234,7 @@
         // Create a thumbnail version of the image for the object.
         CGSize size = photo.size;
         CGFloat ratio = 0;
-        ratio = (size.width > size.height) ? 160.0 / size.width : 120.0 / size.height;
+        ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
         
         CGRect rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
         
@@ -252,8 +258,7 @@
 
 // TODO possible a better way to do this... 
 // alert saying not enough fields completed?
-- (void)verifyEnteredData
-{
+- (void)verifyEnteredData {
     [self.navigationItem.rightBarButtonItem setEnabled:(([self.manufacturerTextField.text length] > 0) && ([self.modelTextField.text length] > 0))];
 }
 
@@ -292,12 +297,8 @@
 -(IBAction)photoButtonTapped {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];        
     
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    } else {
-        imagePicker.sourceType =  UIImagePickerControllerSourceTypePhotoLibrary;  
+    imagePicker.sourceType = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] ? UIImagePickerControllerSourceTypeCamera : UIImagePickerControllerSourceTypePhotoLibrary;  
         
-    }
     imagePicker.delegate = self;
     imagePicker.allowsEditing = NO;
     [self presentModalViewController:imagePicker animated:YES];
@@ -308,10 +309,53 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-
-    [self.photoButton setImage:[info objectForKey:UIImagePickerControllerOriginalImage] forState:UIControlStateNormal];
-
+    NSLog(@"set photoButton image");
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [self dismissModalViewControllerAnimated:YES];
+    [self.photoButton setImage:image forState:UIControlStateNormal];
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if(textField == self.purchasePriceTextfield) {
+        static NSString *numbers = @"0123456789";
+        static NSString *numbersPeriod = @"01234567890.";
+        static NSString *numbersComma = @"0123456789,";
+        
+        //NSLog(@"%d %d %@", range.location, range.length, string);
+        if (range.length > 0 && [string length] == 0) {
+            // enable delete
+            return YES;
+        }
+        
+        // decimalseparator should not be first
+        NSString *symbol = [[NSLocale currentLocale] objectForKey:NSLocaleDecimalSeparator];
+        if (range.location == 0 && [string isEqualToString:symbol]) {
+            return NO;
+        } else {
+
+        }
+        
+        NSCharacterSet *characterSet;
+        NSRange separatorRange = [textField.text rangeOfString:symbol];
+        if (separatorRange.location == NSNotFound) {
+            if ([symbol isEqualToString:@"."]) {
+                characterSet = [[NSCharacterSet characterSetWithCharactersInString:numbersPeriod] invertedSet];
+            }
+            else {
+                characterSet = [[NSCharacterSet characterSetWithCharactersInString:numbersComma] invertedSet];              
+            }
+        }
+        else {
+            // allow 2 characters after the decimal separator
+            if (range.location > (separatorRange.location + 2)) {
+                return NO;
+            }
+            characterSet = [[NSCharacterSet characterSetWithCharactersInString:numbers] invertedSet];               
+        }
+        return ([[string stringByTrimmingCharactersInSet:characterSet] length] > 0);
+    }
+    
+    return YES;
 }
 
 @end

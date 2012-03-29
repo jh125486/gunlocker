@@ -7,16 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Weapon.h"
+#import "Maintenance.h"
+#import "Malfunction.h"
 
-@interface MaintenancesAddViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface MaintenancesAddViewController : QuickDialogController <QuickDialogStyleProvider> {
+    NSMutableSet *linkedMalfunctions;
+    NSArray *malfunctions;
+}
 
-@property (weak, nonatomic) IBOutlet UITextView *actionPerformedTextView;
-@property (weak, nonatomic) IBOutlet UIPickerView *linkedMalfunctionPicker;
-@property (weak, nonatomic) IBOutlet UITextField *dateTextField;
-@property (retain, nonatomic) UIDatePicker *datePickerView;
+@property (nonatomic, weak) Weapon *selectedWeapon;
 
-
-- (IBAction)savePressed:(id)sender;
-- (IBAction)closeModalPopup:(id)sender;
+- (IBAction)saveTapped:(id)sender;
+- (IBAction)cancelTapped:(id)sender;
 
 @end

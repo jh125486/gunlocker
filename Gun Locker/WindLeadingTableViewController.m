@@ -72,8 +72,8 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    [defaults setObject:[NSNumber numberWithInt:indexPath.row] forKey:@"speedIndexPathRow"];
-    [defaults setObject:[NSNumber numberWithInt:indexPath.section] forKey:@"speedIndexPathSection"];
+    [defaults setInteger:indexPath.row forKey:@"speedIndexPathRow"];
+    [defaults setInteger:indexPath.section forKey:@"speedIndexPathSection"];
     
     [defaults setObject:speedType forKey:@"speedType"];
     [defaults setObject:speedUnit forKey:@"speedUnit"];

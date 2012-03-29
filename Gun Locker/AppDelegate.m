@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "LockerViewController.h"
+#import "CardsViewController.h"
 
 @implementation AppDelegate
 

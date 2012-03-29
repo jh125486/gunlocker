@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Weapon.h"
+#import "Malfunction.h"
+#import "Maintenance.h"
+#import "MaintenanceCell.h"
+#import "MaintenancesAddViewController.h"
 
 @interface MaintenancesTableViewController : UITableViewController {
     NSMutableArray *tableDataArray;

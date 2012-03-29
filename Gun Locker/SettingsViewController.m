@@ -22,6 +22,7 @@
 @synthesize reticleUnitsControl;
 @synthesize windLeadingLabel;
 @synthesize directionControl;
+@synthesize showNFADetailsSwitch;
 @synthesize passcodeCell;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -39,6 +40,7 @@
     [super viewDidLoad];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
+    showNFADetailsSwitch.on = [defaults boolForKey:@"showNFADetails"];
     self.passcodeCell.detailTextLabel.text   = ([[KKPasscodeLock sharedLock] isPasscodeRequired]) ? @"On" : @"Off";
     rangeUnitsControl.selectedSegmentIndex   = [defaults integerForKey:@"rangeUnitsControl"];
     reticleUnitsControl.selectedSegmentIndex = [defaults integerForKey:@"reticleUnitsControl"];
@@ -78,6 +80,7 @@
     [self setRangeStep:nil];
     [self setWindLeadingLabel:nil];
     [self setDirectionControl:nil];
+    [self setShowNFADetailsSwitch:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -104,13 +107,15 @@
 - (IBAction)saveSettings:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    [defaults setObject:[NSNumber numberWithInt:[nightModeControl selectedSegmentIndex]] forKey:@"nightModeControl"];
-    [defaults setObject:[NSNumber numberWithInt:[rangeUnitsControl selectedSegmentIndex]] forKey:@"rangeUnitsControl"];
-    [defaults setObject:[NSNumber numberWithInt:[reticleUnitsControl selectedSegmentIndex]] forKey:@"reticleUnitsControl"];
-    [defaults setObject:[NSNumber numberWithInt:[directionControl selectedSegmentIndex]] forKey:@"directionControl"];
-    [defaults setObject:[NSNumber numberWithInt:(int)rangeStart.Current] forKey:@"rangeStart"];
-    [defaults setObject:[NSNumber numberWithInt:(int)rangeEnd.Current]   forKey:@"rangeEnd"];
-    [defaults setObject:[NSNumber numberWithInt:(int)rangeStep.Current]  forKey:@"rangeStep"];
+    [defaults setBool:showNFADetailsSwitch.on forKey:@"showNFADetails"];
+    [defaults setInteger:[nightModeControl selectedSegmentIndex] forKey:@"nightModeControl"];
+    [defaults setInteger:[rangeUnitsControl selectedSegmentIndex] forKey:@"rangeUnitsControl"];
+    [defaults setInteger:[reticleUnitsControl selectedSegmentIndex] forKey:@"reticleUnitsControl"];
+    [defaults setInteger:[directionControl selectedSegmentIndex] forKey:@"directionControl"];
+    [defaults setInteger:(int)rangeStart.Current forKey:@"rangeStart"];
+    [defaults setInteger:(int)rangeEnd.Current forKey:@"rangeEnd"];
+    [defaults setInteger:(int)rangeStep.Current forKey:@"rangeStep"];
+    NSLog(@"%d", [defaults boolForKey:@"showNFADetails"]);
 }
 
 - (void)windLeadingTableViewController:(WindLeadingTableViewController *)controller didSelectWindLeading:(NSString *)selectedWindLeading {
@@ -119,7 +124,8 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    [[segue destinationViewController] setDelegate:self];
+    if([segue.identifier isEqualToString:@"WindLeadingTable"])
+        [[segue destinationViewController] setDelegate:self];
 }
 
 @end
