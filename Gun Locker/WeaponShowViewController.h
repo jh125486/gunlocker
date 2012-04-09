@@ -12,9 +12,14 @@
 #import "MaintenancesTableViewController.h"
 #import "MalfunctionsTableViewController.h"
 #import "NFAInformationViewController.h"
+#import "NotesTableViewController.h"
 #import "TextStepperField.h"
+#import "DopeCardsTableViewController.h"
+#import "CardsViewController.h"
 
-@interface WeaponShowViewController : UITableViewController <WeaponAddViewControllerDelegate>
+@class CardsViewController;
+
+@interface WeaponShowViewController : UITableViewController <WeaponAddViewControllerDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *nfaCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *notesCell;
@@ -23,7 +28,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *malfunctionCountLabel;
 @property (weak, nonatomic) IBOutlet TextStepperField *adjustRoundCountStepper;
 @property (weak, nonatomic) IBOutlet UIButton *quickCleanButton;
-@property (nonatomic, strong) Weapon *selectedWeapon;
+@property (weak, nonatomic) IBOutlet UILabel *weaponTypeLabel;
+
+@property (assign, nonatomic) CardsViewController *cardsViewController;
+@property (strong, nonatomic) Weapon *selectedWeapon;
 
 - (IBAction)roundCountAdjust:(id)sender;
+- (IBAction)changeWeaponTypeTapped:(id)sender;
 @end

@@ -2,7 +2,7 @@
 //  DopeCard.m
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 3/14/12.
+//  Created by Jacob Hochstetler on 4/8/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -12,14 +12,14 @@
 
 @implementation DopeCard
 
-@dynamic range_start;
-@dynamic range_end;
-@dynamic range_increment;
-@dynamic drop_dope;
+@dynamic dope_data;
 @dynamic name;
-@dynamic wind_dope;
 @dynamic notes;
-@dynamic dope_unit;
+@dynamic wind_info;
+@dynamic zero;
+@dynamic range_unit;
+@dynamic drop_unit;
+@dynamic drift_unit;
 @dynamic weapon;
 
 @end

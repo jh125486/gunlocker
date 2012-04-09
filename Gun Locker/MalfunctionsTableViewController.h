@@ -10,12 +10,15 @@
 #import "Weapon.h"
 #import "Malfunction.h"
 #import "MalfunctionsAddViewController.h"
+#import "MalfunctionCell.h"
+#import "Maintenance.h"
 
 @interface MalfunctionsTableViewController : UITableViewController {
-    NSMutableDictionary *data;
+    NSMutableDictionary *malfunctions;
     NSMutableArray *sections;
 }
 
 @property (nonatomic, weak) Weapon *selectedWeapon;
+@property (nonatomic, weak) Maintenance *selectedMaintenance;
 
 @end

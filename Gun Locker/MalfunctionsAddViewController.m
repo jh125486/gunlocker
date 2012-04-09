@@ -32,7 +32,7 @@
     malfunctionDate.mode = UIDatePickerModeDate;
     malfunctionDate.key = @"date";
 
-    QDecimalElement *roundCount = [[QDecimalElement alloc] initWithTitle:@"Round count" value:[self.selectedWeapon.round_count floatValue]];
+    QDecimalElement *roundCount = [[QDecimalElement alloc] initWithTitle:@"Round count" value:[self.selectedWeapon.round_count intValue]];
     roundCount.fractionDigits = 0;
     roundCount.keyboardType = UIKeyboardTypeNumberPad;
     roundCount.key = @"round_count";

@@ -181,8 +181,7 @@
         cellIdentifier = @"SpeedCell";
     }
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil)
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+
     cell.backgroundColor = self.nightMode ? [UIColor blackColor] : [UIColor whiteColor];
     cell.textLabel.textColor = self.nightMode ? [UIColor redColor] : [UIColor blackColor];
     cell.textLabel.textAlignment = UITextAlignmentRight;

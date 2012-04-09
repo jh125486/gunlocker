@@ -9,10 +9,6 @@
 #import "SettingsViewController.h"
 #import "KKPasscodeLock.h"
 
-@interface SettingsViewController ()
-
-@end
-
 @implementation SettingsViewController
 @synthesize nightModeControl;
 @synthesize rangeUnitsControl;
@@ -25,8 +21,7 @@
 @synthesize showNFADetailsSwitch;
 @synthesize passcodeCell;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -35,8 +30,7 @@
 }
 
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
@@ -115,7 +109,7 @@
     [defaults setInteger:(int)rangeStart.Current forKey:@"rangeStart"];
     [defaults setInteger:(int)rangeEnd.Current forKey:@"rangeEnd"];
     [defaults setInteger:(int)rangeStep.Current forKey:@"rangeStep"];
-    NSLog(@"%d", [defaults boolForKey:@"showNFADetails"]);
+    
 }
 
 - (void)windLeadingTableViewController:(WindLeadingTableViewController *)controller didSelectWindLeading:(NSString *)selectedWindLeading {

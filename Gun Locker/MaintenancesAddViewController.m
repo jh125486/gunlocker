@@ -22,7 +22,7 @@
 - (void)setQuickDialogTableView:(QuickDialogTableView *)aQuickDialogTableView {
     [super setQuickDialogTableView:aQuickDialogTableView];
     
-    self.quickDialogTableView.backgroundColor = [UIColor darkGrayColor];
+    self.quickDialogTableView.backgroundColor = [UIColor colorWithRed:0.757 green:0.710 blue:0.588 alpha:1.000];
     self.quickDialogTableView.bounces = NO;
     self.quickDialogTableView.styleProvider = self;
 }

@@ -26,8 +26,7 @@
 @synthesize photoButton;
 @synthesize barrelLengthUnitLabel;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
@@ -35,18 +34,13 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
+- (void)didReceiveMemoryWarning {
+//    [super didReceiveMemoryWarning];
 }
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     if([self.weaponType isEqualToString:@"Misc."])
@@ -123,8 +117,7 @@
 }
 
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [self setManufacturerTextField:nil];
     [self setModelTextField:nil];
     [self setCaliberTextField:nil];
@@ -156,9 +149,7 @@
     [super viewDidDisappear:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
@@ -172,15 +163,30 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self animateTextField:textField up:YES];
     [self verifyEnteredData];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    [self animateTextField:textField up:NO];
     [self verifyEnteredData];
 }
 
 - (IBAction)checkData:(id)sender {
     [self verifyEnteredData];    
+}
+
+- (void) animateTextField: (UITextField*) textField up: (BOOL) up {
+    const int movementDistance = 40; // tweak as needed
+    const float movementDuration = 0.3f; // tweak as needed
+    
+    int movement = (up ? -movementDistance : movementDistance);
+    
+    [UIView beginAnimations: @"anim" context: nil];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationDuration: movementDuration];
+    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+    [UIView commitAnimations];
 }
 
 -(void)loadTextfieldsFromWeapon {
@@ -202,14 +208,11 @@
 
 - (IBAction)barrelLengthValueChanged:(id)sender {
     if([self.barrelLengthTextField.text length]) {
-        self.barrelLengthUnitLabel.frame = CGRectMake(142,71,[self.barrelLengthTextField.text sizeWithFont:self.barrelLengthTextField.font].width,21); 
+        self.barrelLengthUnitLabel.frame = CGRectMake(142,70,[self.barrelLengthTextField.text sizeWithFont:self.barrelLengthTextField.font].width,34); 
         self.barrelLengthUnitLabel.hidden = NO;
     } else {
         self.barrelLengthUnitLabel.hidden = YES;
     }
-}
-
-- (IBAction)purchasePriceValueChanged:(id)sender {
 }
 
 - (IBAction)cancelTapped:(id)sender {

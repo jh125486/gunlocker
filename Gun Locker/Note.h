@@ -13,8 +13,9 @@
 
 @interface Note : NSManagedObject
 
-@property (nonatomic, retain) NSDate * timestamp;
-@property (nonatomic, retain) NSString * entry;
+@property (nonatomic, retain) NSDate * date;
+@property (nonatomic, retain) NSString * body;
+@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) Weapon *weapon;
 
 @end

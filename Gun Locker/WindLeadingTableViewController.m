@@ -8,8 +8,7 @@
 
 #import "WindLeadingTableViewController.h"
 
-@interface WindLeadingTableViewController ()
-{
+@interface WindLeadingTableViewController () {
     NSIndexPath *selectedPath;
 }
 @end
@@ -19,8 +18,7 @@
 @synthesize delegate;
 @synthesize selectedWindLeading;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization

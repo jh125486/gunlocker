@@ -10,10 +10,11 @@
 
 @interface MaintenanceCell : UITableViewCell
 
-@property (nonatomic, strong) IBOutlet UILabel *dateLabel;
-@property (nonatomic, strong) IBOutlet UILabel *actionPerformedLabel;
 @property (nonatomic, strong) IBOutlet UILabel *roundCountLabel;
-@property (nonatomic, strong) IBOutlet UITextView *malfunctionsTextView;
-
+@property (nonatomic, strong) IBOutlet UITextView *actionPerformedText;
+@property (nonatomic, strong) IBOutlet UIButton *viewMalfunctions;
+@property (nonatomic, strong) IBOutlet UILabel *malfunctionCountLabel;
+@property (nonatomic, strong) IBOutlet UILabel *malfunctionLabel;
+@property (nonatomic, strong) IBOutlet UILabel *modelLabel;
 
 @end

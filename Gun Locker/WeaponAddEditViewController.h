@@ -43,7 +43,7 @@
 
 
 - (IBAction)barrelLengthValueChanged:(id)sender;
-- (IBAction)purchasePriceValueChanged:(id)sender;
+
 - (IBAction)cancelTapped:(id)sender;
 - (IBAction)saveTapped:(id)sender;
 - (IBAction)checkData:(id)sender;

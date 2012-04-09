@@ -60,7 +60,6 @@
     self.selectedType = [self.segmentedTypeControl titleForSegmentAtIndex:self.segmentedTypeControl.selectedSegmentIndex];
     
     // sets initial segment
-    [self segmentedTypeControlClicked];
     self.segmentedTypeControl.apportionsSegmentWidthsByContent = YES;
     
     int segmentedUnitHeight = 32;
@@ -72,11 +71,8 @@
     [self.segmentedTypeControl setContentOffset:CGSizeMake(0, 3) forSegmentAtIndex:1];
     [self.segmentedTypeControl setContentOffset:CGSizeMake(0, 3) forSegmentAtIndex:2];
     [self.segmentedTypeControl setContentOffset:CGSizeMake(0, 3) forSegmentAtIndex:3];
-    
-    self.tableView.backgroundColor = [UIColor colorWithRed:0.757 green:0.710 blue:0.588 alpha:1.000];
-    
-    
-    if([Weapon countOfEntities] == 0)
+        
+    if([Weapon countOfEntities] == 0) // enable for deletions?
         self.navigationItem.leftBarButtonItem.enabled = NO;
     
     
@@ -89,18 +85,16 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    int count = [[[fetchedResultsController sections] objectAtIndex:0] numberOfObjects];
-    if (count == 1) {
-        self.navigationItem.title = [NSString stringWithFormat:@"Showing %d card of %d total", count, [Weapon countOfEntities]];
-    } else {
-        self.navigationItem.title = [NSString stringWithFormat:@"Showing %d cards of %d total", count, [Weapon countOfEntities]];
-    }
+    [self segmentedTypeControlClicked];
 }
+
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.fetchedResultsController.delegate = nil;
-    self.fetchedResultsController = nil;
+    [self setFetchedResultsController:nil];
+    [self setSegmentedTypeControl:nil];
     [self setTableView:nil];
+    [self setSelectedType:nil];
     [super viewDidUnload];
 }
 
@@ -148,7 +142,7 @@
             case 5: //AOW
                 [cell.stampViewButton setImage:[UIImage imageNamed:@"Stamp_AOW"] forState:UIControlStateNormal];
                 cell.stampDateLabel.transform = CGAffineTransformMakeRotation(-0.6);
-                cell.stampSerialNumberLabel.frame = CGRectMake(15, 15, 56, 21);
+                cell.stampSerialNumberLabel.frame = CGRectMake(13, 15, 60, 21);
                 cell.stampDateLabel.font = [UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0];
                 break;
                 
@@ -156,7 +150,7 @@
                 [cell.stampViewButton setImage:[UIImage imageNamed:@"Stamp_NFA"] forState:UIControlStateNormal];
                 cell.stampDateLabel.transform = CGAffineTransformMakeRotation(-0.8);
                 cell.stampDateLabel.font = [UIFont fontWithName:@"AmericanTypewriter-CondensedBold" size:17.0];
-                cell.stampSerialNumberLabel.frame = CGRectMake(15, 12, 56, 21);
+                cell.stampSerialNumberLabel.frame = CGRectMake(14, 11, 58, 21);
                 break;
         }
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -167,8 +161,6 @@
     } else {
         [cell.stampViewContainer setHidden:YES];
     }
-    
-    cell.weapon = weapon;
 }
 
 
@@ -203,6 +195,7 @@
         self.navigationItem.title = self.selectedType;
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:self.selectedType style:UIBarButtonItemStyleBordered target:nil action:nil];
         dst.selectedWeapon = [self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
+        [dst setCardsViewController:self];
     } else if ([segueID isEqualToString:@"NFADetails"]) {
         UIButton *button = (UIButton *)sender;
         NSIndexPath *index = [self.tableView indexPathForRowAtPoint:CGPointMake(button.frame.origin.x, button.frame.origin.y)];
@@ -225,8 +218,7 @@
 
 # pragma mark - segmented control
 
-- (IBAction)segmentedTypeControlClicked
-{
+- (IBAction)segmentedTypeControlClicked {
     self.selectedType = [self.segmentedTypeControl titleForSegmentAtIndex:self.segmentedTypeControl.selectedSegmentIndex];
     self.fetchedResultsController.fetchRequest.predicate = [NSPredicate predicateWithFormat:@"type = %@", self.selectedType];
     
@@ -307,12 +299,8 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"WeaponCell";
-    WeaponCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil)
-        cell = [[WeaponCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    
+    WeaponCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"WeaponCell"];
+        
     [self configureCell:cell withWeapon:[fetchedResultsController objectAtIndexPath:indexPath]];
     
     return cell;
@@ -324,11 +312,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger count = [[[fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
-    if (count == 1) {
-        self.navigationItem.title = [NSString stringWithFormat:@"Showing %d card of %d total", count, [Weapon countOfEntities]];
-    } else {
-        self.navigationItem.title = [NSString stringWithFormat:@"Showing %d cards of %d total", count, [Weapon countOfEntities]];
-    }
+    self.navigationItem.title = [NSString stringWithFormat:@"%d card%@ in folder", count, (count == 1) ? @"" : @"s"];
+
     return count;
 }
 

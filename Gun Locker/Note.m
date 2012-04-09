@@ -12,8 +12,9 @@
 
 @implementation Note
 
-@dynamic timestamp;
-@dynamic entry;
+@dynamic date;
+@dynamic title;
+@dynamic body;
 @dynamic weapon;
 
 @end

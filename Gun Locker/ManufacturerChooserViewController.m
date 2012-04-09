@@ -136,12 +136,10 @@
 //    return [collation sectionForSectionIndexTitleAtIndex:index];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"SimpleCell";
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"ManufacturerCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-
+    
     if (cell == nil)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     
@@ -153,17 +151,13 @@
         cell.detailTextLabel.text = [[[sectionsArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] country];
     }
     
-    if ([cell.textLabel.text isEqualToString:self.selectedManufacturer])
-        cell.accessoryType =  UITableViewCellAccessoryCheckmark;
-    else
-        cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.accessoryType = ([cell.textLabel.text isEqualToString:self.selectedManufacturer]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 
     return cell;
 }
 
 
-- (void)configureSections
-{
+- (void)configureSections {
     self.collation = [UILocalizedIndexedCollation currentCollation];
     NSInteger index, sectionTitlesCount = [[collation sectionTitles] count];
 	NSMutableArray *newSectionsArray = [[NSMutableArray alloc] initWithCapacity:sectionTitlesCount];

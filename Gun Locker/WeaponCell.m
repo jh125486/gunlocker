@@ -25,7 +25,6 @@
 @synthesize stampViewContainer;
 @synthesize stampSerialNumberLabel;
 @synthesize stampDateLabel;
-@synthesize weapon;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

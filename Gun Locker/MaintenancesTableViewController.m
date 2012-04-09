@@ -21,17 +21,40 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    maintenances = [[NSMutableDictionary alloc] init];
+    sections = [[NSMutableArray alloc] init];
 
-    //Register addNewMalfunctionToArray to recieve "newMalfunction" notification
+    //Register addNewMaintenanceToArray to recieve "newMaintenance" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewMaintenanceToArray:) name:@"newMaintenance" object:nil];
-    
+
+    // just use the date for collating the malfunctions into sections
+    unsigned int flags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+
     NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
-    tableDataArray = [[self.selectedWeapon.maintenances sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+
+    for(Maintenance *maintenance in [self.selectedWeapon.maintenances sortedArrayUsingDescriptors:sortDescriptors]) {
+        NSDateComponents* components = [calendar components:flags fromDate:maintenance.date];
+        NSDate *date = [[calendar dateFromComponents:components] dateByAddingTimeInterval:[[NSTimeZone localTimeZone]secondsFromGMT]]; 
+        if ([maintenances objectForKey:date] != nil) {
+            [(NSMutableArray *)[maintenances objectForKey:date] addObject:maintenance];
+        } else {
+            [sections addObject:date];
+            [maintenances setObject:[NSMutableArray arrayWithObject:maintenance] forKey:date];
+        }
+    }
     
+    [sections sortUsingSelector:@selector(compare:)];
+    sections = [[[sections reverseObjectEnumerator] allObjects] mutableCopy];
     [self.tableView reloadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.title = [NSString stringWithFormat:@"Maintenance (%d)", [self.selectedWeapon.maintenances count]];
+}
+
 - (void)viewDidUnload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setSelectedWeapon:nil];
     [super viewDidUnload];
 }
@@ -40,69 +63,116 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString *segueID = segue.identifier;
+    
+	if ([segueID isEqualToString:@"AddNewMalfunction"]) {
+        // dig past navigationcontroller to get to AddViewController
+        MaintenancesAddViewController *dst = [[segue.destinationViewController viewControllers] objectAtIndex:0];
+        dst.selectedWeapon = self.selectedWeapon;
+    } else if ([segueID isEqualToString:@"ViewRelatedMalfunctions"]) {
+        UIButton *button = (UIButton *)sender;
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell*)[[button superview] superview]];        
+        Maintenance *currentMaintenance = [[maintenances objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        MalfunctionsTableViewController *dst = segue.destinationViewController;
+        dst.selectedWeapon = self.selectedWeapon;
+        dst.selectedMaintenance = currentMaintenance;
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return [sections count];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [tableDataArray count];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [[maintenances objectForKey:[sections objectAtIndex:section]] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [[sections objectAtIndex:section] distanceOfTimeInWordsOnlyDate];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MaintenanceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintenanceCell"];
 
-    if (cell == nil)
-        cell = [[MaintenanceCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MaintenanceCell"];
-
-    // Configure the cell...
-    Maintenance *currentMaintenance = [tableDataArray objectAtIndex:indexPath.row];
-    cell.dateLabel.text = [currentMaintenance.date distanceOfTimeInWords];
+    Maintenance *currentMaintenance = [[maintenances objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     cell.roundCountLabel.text = [currentMaintenance.round_count stringValue];
-    cell.actionPerformedLabel.text = currentMaintenance.action_performed;
-    NSMutableString *malfunctions = [[NSMutableString alloc] initWithString:@""];
-    for (Malfunction *malfunction in currentMaintenance.malfunctions)
-        [malfunctions appendFormat:@"• %@\n", malfunction.failure];
+    cell.actionPerformedText.text = currentMaintenance.action_performed;
     
-    NSLog(@"failures %@ - %d", malfunctions, [currentMaintenance.malfunctions count]);
-    cell.malfunctionsTextView.text = malfunctions;
+    int malfunctionCount = [currentMaintenance.malfunctions count];
+
+    CGRect cellFrame = [cell frame];
+    if (malfunctionCount > 0) {
+        cell.malfunctionLabel.text      = [NSString stringWithFormat:@"Related Malfunction%@", malfunctionCount == 1 ? @"" : @"s" ];
+        cell.malfunctionCountLabel.text = [NSString stringWithFormat:@"%d", malfunctionCount];
+        cellFrame.size.height = 186;
+    } else {
+        cellFrame.size.height = 96;
+    }
+    [cell setFrame:cellFrame];
+
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Maintenance *newMaintenance = [tableDataArray objectAtIndex:indexPath.row];
-        [newMaintenance deleteEntity];
-        [tableDataArray removeObjectAtIndex:indexPath.row];
+        Maintenance *currentMaintenance = [[maintenances objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        [currentMaintenance deleteEntity];
+        NSDate *section = [sections objectAtIndex:indexPath.section];
         
-//        [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//        [self.tableView endUpdates];
+        [[maintenances objectForKey:section] removeObjectAtIndex:indexPath.row];
+        
+        [self.tableView beginUpdates];
+        if([[maintenances objectForKey:section] count] == 0) {
+            [maintenances removeObjectForKey:section];
+            [sections removeObject:section];
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationRight];
+        } else {
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
+        [self.tableView endUpdates];
+        
     }    
+    [[NSManagedObjectContext defaultContext] save];      
 }
 
 - (void) addNewMaintenanceToArray:(NSNotification*) notification {
     Maintenance *newMaintenance = [notification object];
-    [tableDataArray addObject:newMaintenance];
+    unsigned int flags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSDateComponents* components = [calendar components:flags fromDate:newMaintenance.date];
+    NSDate *section = [[calendar dateFromComponents:components] dateByAddingTimeInterval:[[NSTimeZone localTimeZone]secondsFromGMT]]; 
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
-    [tableDataArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-    
-    NSUInteger index = [tableDataArray indexOfObject:newMaintenance];
-    
+    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
+
+    NSLog(@"sections: %@", [sections description]);
     [self.tableView beginUpdates];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationRight];
-    [self.tableView endUpdates];    
+    if([sections containsObject:section]) { 
+        NSLog(@"adding to section %@", [section description]);
+        [[maintenances objectForKey:section] insertObject:newMaintenance atIndex:0];
+        [[maintenances objectForKey:section] sortUsingDescriptors:sortDescriptors];
+    } else {
+        NSLog(@"creating section %@", [section description]);
+        [sections addObject:section];
+        [sections sortUsingSelector:@selector(compare:)];
+        sections = [[[sections reverseObjectEnumerator] allObjects] mutableCopy];
+        
+        [maintenances setObject:[NSMutableArray arrayWithObject:newMaintenance] forKey:section];
+        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:[sections indexOfObject:section]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[[maintenances objectForKey:section] indexOfObject:newMaintenance] inSection:[sections indexOfObject:section]];
+    
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
 }
 
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *destinationController = segue.destinationViewController;
-    // dig past navigationcontroller to get to AddViewController
-    MaintenancesAddViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
-    [dst setSelectedWeapon:self.selectedWeapon];
+// shorten cell for maintenances without relation malfunctions
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Maintenance *currentMaintenance = [[maintenances objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    return ([currentMaintenance.malfunctions count] > 0) ? 186 : 108;
 }
 
 @end

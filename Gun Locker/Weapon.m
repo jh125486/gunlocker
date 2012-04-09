@@ -2,7 +2,7 @@
 //  Weapon.m
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 3/26/12.
+//  Created by Jacob Hochstetler on 4/8/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 

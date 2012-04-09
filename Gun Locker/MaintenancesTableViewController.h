@@ -12,9 +12,11 @@
 #import "Maintenance.h"
 #import "MaintenanceCell.h"
 #import "MaintenancesAddViewController.h"
+#import "MalfunctionsTableViewController.h"
 
 @interface MaintenancesTableViewController : UITableViewController {
-    NSMutableArray *tableDataArray;
+    NSMutableDictionary *maintenances;
+    NSMutableArray *sections;
 }
 
 @property (nonatomic, strong) Weapon *selectedWeapon;

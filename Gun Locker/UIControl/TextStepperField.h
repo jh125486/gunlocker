@@ -42,4 +42,5 @@ typedef enum {
 // set editable TextField
 @property (nonatomic,assign) BOOL IsEditableTextField;
 
+@property (nonatomic,assign) BOOL longTapping;
 @end

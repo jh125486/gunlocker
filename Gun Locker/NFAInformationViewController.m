@@ -72,30 +72,30 @@
         QSection *timelineSection = [[QSection alloc] initWithTitle:@"Process Timeline"];
         
         QLabelElement *nfaType = [[QLabelElement alloc] initWithTitle:@"NFA type" 
-                                                                Value:stamp.nfa_type ? [nfa_types objectAtIndex:[stamp.nfa_type intValue]] : nil];
+                                                        Value:stamp.nfa_type ? [nfa_types objectAtIndex:[stamp.nfa_type intValue]] : @"∅"];
         nfaType.key = @"nfa_type";
         
         QLabelElement *transferType = [[QLabelElement alloc] initWithTitle:@"Transfer type" 
-                                                                     Value:stamp.transfer_type ? [transfer_types objectAtIndex:[stamp.transfer_type intValue]] : nil];
+                                                Value:stamp.transfer_type ? [transfer_types objectAtIndex:[stamp.transfer_type intValue]] : @"∅"];
         transferType.key = @"transfer_type";
 
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateStyle:NSDateFormatterMediumStyle];
 
         QLabelElement *formSent = [[QLabelElement alloc] initWithTitle:@"Form sent" 
-                                                                     Value:[dateFormat stringFromDate:stamp.form_sent]];
+                                                                 Value:stamp.form_sent ? [dateFormat stringFromDate:stamp.form_sent] : @"∅"];
         formSent.key = @"form_sent";
         
         QLabelElement *checkCashed = [[QLabelElement alloc] initWithTitle:@"Check cashed" 
-                                                                        Value:[dateFormat stringFromDate:stamp.check_cashed]];
+                                                            Value:stamp.check_cashed ? [dateFormat stringFromDate:stamp.check_cashed] : @"∅"];
         checkCashed.key = @"check_cashed";
         
         QLabelElement *wentPending = [[QLabelElement alloc] initWithTitle:@"Went pending" 
-                                                                        Value:[dateFormat stringFromDate:stamp.went_pending]];
+                                                            Value:stamp.went_pending ? [dateFormat stringFromDate:stamp.went_pending] : @"∅"];
         wentPending.key = @"went_pending";
         
         QLabelElement *stampReceived = [[QLabelElement alloc] initWithTitle:@"Stamp received" 
-                                                                          Value:[dateFormat stringFromDate:stamp.stamp_received]];
+                                                              Value:stamp.stamp_received ? [dateFormat stringFromDate:stamp.stamp_received] : @"∅"];
         stampReceived.key = @"stamp_received";
         
         [infoSection addElement:nfaType];
@@ -277,16 +277,21 @@
         cell.textLabel.shadowOffset = CGSizeMake(0, -1);
     } else if ([element isKindOfClass:[QRadioElement class]] || [element isKindOfClass:[QDateTimeInlineElement class]]) {
         cell.backgroundColor = [UIColor whiteColor];
+    } else if ([element isKindOfClass:[QRadioItemElement class]]){
+//        cell.textLabel.textColor = [UIColor whiteColor];
     } else {
-//        self.quickDialogTableView.separatorColor = [UIColor darkGrayColor];
+        self.quickDialogTableView.separatorColor = [UIColor darkGrayColor];
         cell.backgroundColor = [UIColor lightTextColor];
     }
 }
 
 - (void)setQuickDialogTableView:(QuickDialogTableView *)aQuickDialogTableView {
     [super setQuickDialogTableView:aQuickDialogTableView];
-    
-//    self.quickDialogTableView.backgroundColor = [UIColor lightTextColor];
+    if (self.root.grouped) {
+        self.quickDialogTableView.backgroundColor = [UIColor colorWithRed:0.757 green:0.710 blue:0.588 alpha:1.000];
+    } else {
+        self.quickDialogTableView.backgroundColor = [UIColor whiteColor];
+    }
     self.quickDialogTableView.bounces = NO;
     self.quickDialogTableView.styleProvider = self;
 }

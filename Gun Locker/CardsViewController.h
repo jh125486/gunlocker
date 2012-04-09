@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WeaponAddEditViewController.h"
-#import "WeaponShowViewController.h"
 #import "Weapon.h"
 #import "WeaponCell.h"
 #import "KKPasscodeLock.h"
+#import "WeaponAddEditViewController.h"
+#import "WeaponShowViewController.h"
 #import "NFAInformationViewController.h"
 
 @interface CardsViewController : UIViewController <WeaponAddViewControllerDelegate, 
@@ -24,12 +24,11 @@
 
 @property (nonatomic, retain) NSFetchedResultsController  *fetchedResultsController;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *segmentedTypeControl;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSString *selectedType;
 @property BOOL showPasscodeFlag;
 
 - (IBAction)segmentedTypeControlClicked;
 - (void)showPasscodeModal;
-
 
 @end

@@ -32,7 +32,8 @@ Minimum=_Minimum,
 Step=_Step,
 VariableRanges=_VariableRanges,
 VariableSteps=_VariableSteps,
-IsEditableTextField= _IsEditableTextField;
+IsEditableTextField= _IsEditableTextField,
+longTapping;
 
 TextStepperFieldChangeKind _longTapLoopValue;
 UIEdgeInsets insetMiddleImage={13,4,13,4};
@@ -105,7 +106,9 @@ UIEdgeInsets insetButtonImage={13,13,13,13};
     self.textField.borderStyle = UITextBorderStyleNone;
     self.textField.placeholder = [self getPlaceholderText];
     self.textField.inputView = nil;
-    [self.textField setKeyboardType:UIKeyboardTypeDecimalPad];
+    
+    
+    self.NumDecimals == 0 ? [self.textField setKeyboardType:UIKeyboardTypeNumberPad] : [self.textField setKeyboardType:UIKeyboardTypeDecimalPad];
     
     UIToolbar* toolBarView = [[UIToolbar alloc] init];
     toolBarView.barStyle = UIBarStyleBlack;
@@ -127,6 +130,8 @@ UIEdgeInsets insetButtonImage={13,13,13,13};
     self.textField.autoresizingMask = UIViewAutoresizingNone; // push to none
     self.textField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin |UIViewAutoresizingFlexibleBottomMargin;
     [self addSubview:self.textField];
+    
+    self.longTapping = NO;
 }
 
 -(void)doneClicked:(id)sender {
@@ -204,11 +209,17 @@ UIEdgeInsets insetButtonImage={13,13,13,13};
             }
         }
     }
-    
-    if (self.Current > self.Minimum) 
-        self.Current -= self.Step;
-    else
-        self.Current = self.Minimum;
+    if (self.longTapping) {
+        if (self.Current > self.Minimum) 
+            self.Current -= self.Step * 10;
+        else
+            self.Current = self.Minimum;
+    } else {
+        if (self.Current > self.Minimum) 
+            self.Current -= self.Step;
+        else
+            self.Current = self.Minimum;
+    }
 }
 
 - (void)increment {
@@ -220,11 +231,17 @@ UIEdgeInsets insetButtonImage={13,13,13,13};
             }
         }
     }
-    
-    if (self.Current < self.Maximum) 
-        self.Current += self.Step;
-    else
-        self.Current = self.Maximum;
+    if (self.longTapping) {
+        if (self.Current < self.Maximum) 
+            self.Current += self.Step * 10;
+        else
+            self.Current = self.Maximum;        
+    } else {
+        if (self.Current < self.Maximum) 
+            self.Current += self.Step;
+        else
+            self.Current = self.Maximum;
+    }
 }
 
 #pragma mark - Button Events
@@ -264,9 +281,11 @@ UIEdgeInsets insetButtonImage={13,13,13,13};
 - (void)didEndLongTap {
     [self.textField resignFirstResponder];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(backgroundLongTapLoop) object:nil];
+    self.longTapping = NO;
 }
 
 - (void)backgroundLongTapLoop {
+    self.longTapping = YES;
     [self.textField resignFirstResponder];
     [self performSelectorOnMainThread:@selector(longTapLoop) withObject:nil waitUntilDone:YES];
     [self performSelector:@selector(backgroundLongTapLoop) withObject:nil  afterDelay:0.1];

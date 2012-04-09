@@ -78,18 +78,13 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"SimpleCell";
-    
+    static NSString *CellIdentifier = @"CaliberCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-
+    
     if (cell == nil)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        cell.textLabel.text = [self.searchResults objectAtIndex:indexPath.row];
-    } else {
-        cell.textLabel.text = [calibers objectAtIndex:indexPath.row];
-    }
+
+    cell.textLabel.text = (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [calibers objectAtIndex:indexPath.row];
     
     if ([cell.textLabel.text isEqualToString:self.selectedCaliber])
         cell.accessoryType =  UITableViewCellAccessoryCheckmark;

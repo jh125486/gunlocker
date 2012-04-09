@@ -9,7 +9,7 @@
 #import "MalfunctionsTableViewController.h"
 
 @implementation MalfunctionsTableViewController
-@synthesize selectedWeapon;
+@synthesize selectedWeapon, selectedMaintenance;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -20,36 +20,45 @@
 }
 
 - (void)viewDidLoad {
+    // pass in an already sorted array of Malfunctions
+    // on newMalfunction, add in radio field for weapon if no weapon is passed
+    // on save of newMalfunction, make sure to set .weapon if self.selectedWeapon
+    
     [super viewDidLoad];
-    data = [[NSMutableDictionary alloc] init];
+    malfunctions = [[NSMutableDictionary alloc] init];
     sections = [[NSMutableArray alloc] init];
     
     //Register addNewMalfunctionToArray to recieve "newMalfunction" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewMalfunctionToArray:) name:@"newMalfunction" object:nil];
-
-    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
     
     // just use the date for collating the malfunctions into sections
     unsigned int flags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
     NSCalendar* calendar = [NSCalendar currentCalendar];
-    for(Malfunction *malfunction in [self.selectedWeapon.malfunctions sortedArrayUsingDescriptors:sortDescriptors]) {
+    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
+    
+    
+    for(Malfunction *malfunction in self.selectedMaintenance ? [self.selectedMaintenance.malfunctions sortedArrayUsingDescriptors:sortDescriptors] :[self.selectedWeapon.malfunctions sortedArrayUsingDescriptors:sortDescriptors]) {
         NSDateComponents* components = [calendar components:flags fromDate:malfunction.date];
         NSDate *date = [[calendar dateFromComponents:components] dateByAddingTimeInterval:[[NSTimeZone localTimeZone]secondsFromGMT]]; 
-        if ([data objectForKey:date] != nil) {
-            [(NSMutableArray *)[data objectForKey:date] addObject:malfunction];
+        if ([malfunctions objectForKey:date] != nil) {
+            [(NSMutableArray *)[malfunctions objectForKey:date] addObject:malfunction];
         } else {
             [sections addObject:date];
-            [data setObject:[NSMutableArray arrayWithObject:malfunction] forKey:date];
+            [malfunctions setObject:[NSMutableArray arrayWithObject:malfunction] forKey:date];
         }
     }
-    ;
+    
     [sections sortUsingSelector:@selector(compare:)];
     sections = [[[sections reverseObjectEnumerator] allObjects] mutableCopy];
-    
     [self.tableView reloadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.title = [NSString stringWithFormat:@"Malfunctions (%d)", [self.selectedWeapon.malfunctions count]];
+}
+
 - (void)viewDidUnload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setSelectedWeapon:nil];
     [super viewDidUnload];
 }
@@ -66,7 +75,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [[data objectForKey:[sections objectAtIndex:section]] count];
+    return [[malfunctions objectForKey:[sections objectAtIndex:section]] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -74,30 +83,28 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil)
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-    
-    // Configure the cell...
-    Malfunction *currentMalfunction = [[data objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-    cell.textLabel.text = currentMalfunction.failure;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"at %@ rounds", currentMalfunction.round_count];
+    MalfunctionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MalfunctionCell"];
+
+    Malfunction *currentMalfunction = [[malfunctions objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    cell.roundCountLabel.text = [currentMalfunction.round_count stringValue];
+    cell.failtureText.text = currentMalfunction.failure;
+    cell.fixText.text         = currentMalfunction.fix; 
+    cell.modelLabel.text = (self.selectedWeapon) ? nil : currentMalfunction.weapon.model;
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Malfunction *currentMalfunction = [[data objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        Malfunction *currentMalfunction = [[malfunctions objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
         [currentMalfunction deleteEntity];
         NSDate *section = [sections objectAtIndex:indexPath.section];
 
-        [[data objectForKey:section] removeObjectAtIndex:indexPath.row];
+        [[malfunctions objectForKey:section] removeObjectAtIndex:indexPath.row];
 
         [self.tableView beginUpdates];
-        if([[data objectForKey:section] count] == 0) {
-            [data removeObjectForKey:section];
+        if([[malfunctions objectForKey:section] count] == 0) {
+            [malfunctions removeObjectForKey:section];
             [sections removeObject:section];
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationRight];
         } else {
@@ -121,31 +128,35 @@
 
     [self.tableView beginUpdates];
     if([sections containsObject:section]) {
-        [[data objectForKey:section] insertObject:newMalfunction atIndex:0];
-        [[data objectForKey:section] sortUsingDescriptors:sortDescriptors];
+        [[malfunctions objectForKey:section] insertObject:newMalfunction atIndex:0];
+        [[malfunctions objectForKey:section] sortUsingDescriptors:sortDescriptors];
     } else {
         [sections addObject:section];
         [sections sortUsingSelector:@selector(compare:)];
         sections = [[[sections reverseObjectEnumerator] allObjects] mutableCopy];
         
-        [data setObject:[NSMutableArray arrayWithObject:newMalfunction] forKey:section];
+        [malfunctions setObject:[NSMutableArray arrayWithObject:newMalfunction] forKey:section];
         [self.tableView insertSections:[NSIndexSet indexSetWithIndex:[sections indexOfObject:section]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[[data objectForKey:section] indexOfObject:newMalfunction] inSection:[sections indexOfObject:section]];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[[malfunctions objectForKey:section] indexOfObject:newMalfunction] inSection:[sections indexOfObject:section]];
     
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *destinationController = segue.destinationViewController;
-    // dig past navigationcontroller to get to AddViewController
-    MalfunctionsAddViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
-    [dst setSelectedWeapon:self.selectedWeapon];
+    NSString *segueID = segue.identifier;
+    
+	if ([segueID isEqualToString:@"AddNewMalfunction"]) {
+        UINavigationController *destinationController = segue.destinationViewController;
+        // dig past navigationcontroller to get to AddViewController
+        MalfunctionsAddViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
+        [dst setSelectedWeapon:self.selectedWeapon];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Malfunction *currentMalfunction = [[data objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]; 
+    Malfunction *currentMalfunction = [[malfunctions objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]; 
     QRootElement *root = [[QRootElement alloc] init];
     root.grouped = YES;
     root.title = [NSString stringWithFormat:@"Malfunction %d/%d", indexPath.section, indexPath.row];

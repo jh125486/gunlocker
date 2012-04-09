@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Weapon.h"
 
 @interface WeaponCell : UITableViewCell
 
@@ -26,6 +25,5 @@
 @property (nonatomic, strong) IBOutlet UIButton *stampViewButton;
 @property (nonatomic, strong) IBOutlet UILabel *stampDateLabel;
 @property (nonatomic, strong) IBOutlet UILabel *stampSerialNumberLabel;
-@property (nonatomic, strong) Weapon *weapon;
 
 @end
