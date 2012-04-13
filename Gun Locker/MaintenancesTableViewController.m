@@ -33,7 +33,15 @@
 
     NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
 
-    for(Maintenance *maintenance in [self.selectedWeapon.maintenances sortedArrayUsingDescriptors:sortDescriptors]) {
+    NSArray *tempMaintenances;
+    if (self.selectedWeapon) {
+        tempMaintenances = [self.selectedWeapon.maintenances sortedArrayUsingDescriptors:sortDescriptors];
+    } else {
+        tempMaintenances = [Maintenance findAllSortedBy:@"date" ascending:YES];
+    }
+    count = [tempMaintenances count];
+    
+    for(Maintenance *maintenance in tempMaintenances) {
         NSDateComponents* components = [calendar components:flags fromDate:maintenance.date];
         NSDate *date = [[calendar dateFromComponents:components] dateByAddingTimeInterval:[[NSTimeZone localTimeZone]secondsFromGMT]]; 
         if ([maintenances objectForKey:date] != nil) {
@@ -47,10 +55,12 @@
     [sections sortUsingSelector:@selector(compare:)];
     sections = [[[sections reverseObjectEnumerator] allObjects] mutableCopy];
     [self.tableView reloadData];
+    
+    if (!selectedWeapon) self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.title = [NSString stringWithFormat:@"Maintenance (%d)", [self.selectedWeapon.maintenances count]];
+    self.title = [NSString stringWithFormat:@"Maintenance item%@ (%d)", (count == 1) ? @"" : @"s", count];
 }
 
 - (void)viewDidUnload {
@@ -101,7 +111,8 @@
     Maintenance *currentMaintenance = [[maintenances objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     cell.roundCountLabel.text = [currentMaintenance.round_count stringValue];
     cell.actionPerformedText.text = currentMaintenance.action_performed;
-    
+    cell.modelLabel.text = (self.selectedWeapon) ? nil : currentMaintenance.weapon.description;
+
     int malfunctionCount = [currentMaintenance.malfunctions count];
 
     CGRect cellFrame = [cell frame];

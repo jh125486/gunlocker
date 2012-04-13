@@ -2,14 +2,16 @@
 //  Weapon.m
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 4/8/12.
+//  Created by Jacob Hochstetler on 4/12/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "Weapon.h"
+#import "BallisticProfile.h"
 #import "DopeCard.h"
 #import "Maintenance.h"
 #import "Malfunction.h"
+#import "Manufacturer.h"
 #import "Note.h"
 #import "StampInfo.h"
 
@@ -19,7 +21,6 @@
 @dynamic barrel_length;
 @dynamic caliber;
 @dynamic finish;
-@dynamic manufacturer;
 @dynamic model;
 @dynamic note;
 @dynamic photo;
@@ -37,5 +38,7 @@
 @dynamic notes;
 @dynamic preferred_load;
 @dynamic stamp;
+@dynamic ballistic_profile;
+@dynamic manufacturer;
 
 @end

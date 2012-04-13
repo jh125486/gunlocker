@@ -2,21 +2,20 @@
 //  Weapon.h
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 4/8/12.
+//  Created by Jacob Hochstetler on 4/12/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class DopeCard, Maintenance, Malfunction, Note, StampInfo;
+@class BallisticProfile, DopeCard, Maintenance, Malfunction, Manufacturer, Note, StampInfo;
 
 @interface Weapon : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * barrel_length;
 @property (nonatomic, retain) NSString * caliber;
 @property (nonatomic, retain) NSString * finish;
-@property (nonatomic, retain) NSString * manufacturer;
 @property (nonatomic, retain) NSString * model;
 @property (nonatomic, retain) NSString * note;
 @property (nonatomic, retain) NSData * photo;
@@ -34,6 +33,8 @@
 @property (nonatomic, retain) NSSet *notes;
 @property (nonatomic, retain) NSSet *preferred_load;
 @property (nonatomic, retain) StampInfo *stamp;
+@property (nonatomic, retain) NSSet *ballistic_profile;
+@property (nonatomic, retain) Manufacturer *manufacturer;
 @end
 
 @interface Weapon (CoreDataGeneratedAccessors)
@@ -62,5 +63,10 @@
 - (void)removePreferred_loadObject:(NSManagedObject *)value;
 - (void)addPreferred_load:(NSSet *)values;
 - (void)removePreferred_load:(NSSet *)values;
+
+- (void)addBallistic_profileObject:(BallisticProfile *)value;
+- (void)removeBallistic_profileObject:(BallisticProfile *)value;
+- (void)addBallistic_profile:(NSSet *)values;
+- (void)removeBallistic_profile:(NSSet *)values;
 
 @end

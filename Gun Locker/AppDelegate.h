@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
+#import "Weapon+Helper.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     CMMotionManager *motionManager;

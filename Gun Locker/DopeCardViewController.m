@@ -34,7 +34,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.title = selectedDopeCard.name;
-    self.weaponLabel.text = selectedDopeCard.weapon.model;
+    self.weaponLabel.text = selectedDopeCard.weapon.description;
     NSString *zero_unit = selectedDopeCard.range_unit;
     zero_unit = ([zero_unit isEqualToString:@"Feet"]) ? @"foot": [[zero_unit substringToIndex:[zero_unit length] -1] lowercaseString];
     self.zeroLabel.text = [NSString stringWithFormat:@"%@ %@ zero", selectedDopeCard.zero, zero_unit];

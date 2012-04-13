@@ -7,19 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Manufacturer.h"
 
 @class ManufacturerChooserViewController;
 
 @protocol ManufacturerChooserViewControllerDelegate <NSObject>
-- (void)manufacturerChooserViewController:(ManufacturerChooserViewController *)controller didSelectManufacturer:(NSString *)selectedManufacturer;
+- (void)manufacturerChooserViewController:(ManufacturerChooserViewController *)controller didSelectManufacturer:(Manufacturer *)selectedManufacturer;
 @end
 
-@interface ManufacturerChooserViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate>{
+@interface ManufacturerChooserViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate> {
     UILocalizedIndexedCollation *collation;
+    NSArray *manufacturers;
+	NSUInteger selectedIndex;
 }
 
 @property (nonatomic, weak) id <ManufacturerChooserViewControllerDelegate> delegate;
-@property (nonatomic, strong) NSString *selectedManufacturer;
+@property (nonatomic, strong) Manufacturer *selectedManufacturer;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;
 @property (nonatomic, copy) NSArray *searchResults;

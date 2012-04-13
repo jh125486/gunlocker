@@ -24,8 +24,7 @@
 
     //Register addNewDopeCardToArray to recieve "addNewDopeCard" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewDopeCard:) name:@"newDopeCard" object:nil];
-    
-    self.navigationItem.rightBarButtonItem.enabled = self.selectedWeapon ? YES : NO;
+    if (!selectedWeapon) self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -49,11 +48,11 @@
         sections = [[self.selectedWeapon.dope_cards sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
     } else {
         for(DopeCard *dopeCard in [DopeCard findAllSortedBy:@"name" ascending:YES]) {
-            if ([dopeCards objectForKey:dopeCard.weapon] != nil) {
-                [(NSMutableArray *)[dopeCards objectForKey:dopeCard.weapon] addObject:dopeCard];
+            if ([dopeCards objectForKey:dopeCard.weapon.description] != nil) {
+                [(NSMutableArray *)[dopeCards objectForKey:dopeCard.weapon.description] addObject:dopeCard];
             } else {
-                [sections addObject:dopeCard.weapon];
-                [dopeCards setObject:[NSMutableArray arrayWithObject:dopeCard] forKey:dopeCard.weapon];
+                [sections addObject:dopeCard.weapon.description];
+                [dopeCards setObject:[NSMutableArray arrayWithObject:dopeCard] forKey:dopeCard.weapon.description];
             }
         }
         [sections sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"model" ascending:YES]]];
@@ -65,6 +64,7 @@
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self setSelectedWeapon:nil];
     [super viewDidUnload];
 }
 
@@ -131,12 +131,16 @@
         if(self.selectedWeapon) {
             [sections removeObject:currentDopeCard];
         } else {
-            [(NSMutableArray *)[dopeCards objectForKey:currentDopeCard.weapon] removeObject:currentDopeCard];
+            [(NSMutableArray *)[dopeCards objectForKey:currentDopeCard.weapon.description] removeObject:currentDopeCard];
         }
         
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self setTitle];
     }
 }
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath { 
+    cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor lightTextColor] : [UIColor clearColor];
+}  
 
 @end

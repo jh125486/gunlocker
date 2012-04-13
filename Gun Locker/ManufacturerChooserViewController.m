@@ -7,14 +7,8 @@
 //
 
 #import "ManufacturerChooserViewController.h"
-#import "Manufacturer.h"
 
 @implementation ManufacturerChooserViewController
-{
-	NSArray *manufacturers;
-	NSUInteger selectedIndex;
-}
-
 @synthesize delegate;
 @synthesize selectedManufacturer;
 @synthesize searchDisplayController;
@@ -23,8 +17,7 @@
 @synthesize collation;
 @synthesize sectionsArray;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
@@ -32,8 +25,7 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
@@ -42,8 +34,7 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     // scroll searchbar out of view
@@ -51,35 +42,14 @@
     
     manufacturers = [Manufacturer findAllSortedBy:@"name" ascending:YES];
     
-    // if no manufacturers, load them from a txt file
-    if([manufacturers count] == 0) {
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"manufacturers" ofType:@"txt"];
-        NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-        
-        for (NSString *manufacturer in [content componentsSeparatedByString:@"\n"]) {
-            NSArray *splitParts = [manufacturer componentsSeparatedByString:@":"];
-            
-            Manufacturer *newManufacturer = [Manufacturer createEntity];
-            newManufacturer.name = [splitParts objectAtIndex:0];
-            newManufacturer.country = [splitParts objectAtIndex:1];
-        }   
-        [[NSManagedObjectContext defaultContext] save];
-
-        // reload manufacturers
-        manufacturers = [Manufacturer findAllSortedBy:@"name" ascending:YES];
-    }
-    
-    // dont think selectedIndex matters anywhere
-    //selectedIndex = [manufacturers indexOfObject:self.selectedManufacturer];
+    selectedIndex = [manufacturers indexOfObject:self.selectedManufacturer];
 
     [self configureSections];
 }
 
 
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
@@ -101,9 +71,7 @@
     }
 }
 
-/*
- Section-related methods: Retrieve the section titles and section index titles from the collation.
- */
+#pragma TableView methods
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if(([[self.sectionsArray objectAtIndex:section] count] == 0) || (tableView == self.searchDisplayController.searchResultsTableView)) {
         return nil;
@@ -142,16 +110,13 @@
     
     if (cell == nil)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    Manufacturer *manufacturer = (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [[sectionsArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        cell.textLabel.text = [[self.searchResults objectAtIndex:indexPath.row] name];
-        cell.detailTextLabel.text = [[self.searchResults objectAtIndex:indexPath.row] country];
-    } else {        
-        cell.textLabel.text = [[[sectionsArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] name];
-        cell.detailTextLabel.text = [[[sectionsArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] country];
-    }
+    cell.textLabel.text = manufacturer.name;
+    [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
+    cell.detailTextLabel.text = manufacturer.country;
     
-    cell.accessoryType = ([cell.textLabel.text isEqualToString:self.selectedManufacturer]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    cell.accessoryType = ([manufacturer isEqual:self.selectedManufacturer]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 
     return cell;
 }
@@ -178,17 +143,17 @@
 		[sectionManufacturers addObject:manufacturer];
 	}
     
-    // add the selected manufacturer to the collation if not empty and not found in manufacturers
-    if([self.selectedManufacturer length] != 0) {
-        if([[manufacturers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@", self.selectedManufacturer]] count] == 0) {
-            NSLog(@"Manufacturer not found");            
-            Manufacturer *tManufacturer = [Manufacturer createEntity];
-            tManufacturer.name = self.selectedManufacturer;
-
-            NSInteger sectionNumber = [collation sectionForObject:tManufacturer collationStringSelector:@selector(name)];		
-            [[newSectionsArray objectAtIndex:sectionNumber] addObject:tManufacturer];
-        }
-    }
+//    // add the selected manufacturer to the collation if not empty and not found in manufacturers
+//    if([self.selectedManufacturer length] != 0) {
+//        if([[manufacturers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@", self.selectedManufacturer]] count] == 0) {
+//            NSLog(@"Manufacturer not found");            
+//            Manufacturer *tManufacturer = [Manufacturer createEntity];
+//            tManufacturer.name = self.selectedManufacturer;
+//
+//            NSInteger sectionNumber = [collation sectionForObject:tManufacturer collationStringSelector:@selector(name)];		
+//            [[newSectionsArray objectAtIndex:sectionNumber] addObject:tManufacturer];
+//        }
+//    }
     
     // Now that all the data's in place, each section array needs to be sorted.
 	for (index = 0; index < sectionTitlesCount; index++) {
@@ -205,20 +170,13 @@
 	self.sectionsArray = newSectionsArray;    
 }
 
-- (void)filterContentForSearchText:(NSString*)searchText  scope:(NSString*)scope
-{    
-    self.searchResults = [manufacturers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name contains[cd] %@", searchText]];
+- (void)filterContentForSearchText:(NSString*)searchText  scope:(NSString*)scope { 
+    self.searchResults = [manufacturers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (short_name contains[cd] %@)", searchText, searchText]];
 }
 
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    [[[sectionsArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] name];
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-	if (selectedIndex != NSNotFound)
-	{
+	if (selectedIndex != NSNotFound) {
 		UITableViewCell *cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedIndex inSection:0]];
 		cell.accessoryType = UITableViewCellAccessoryNone;
 	}
@@ -226,21 +184,21 @@
 	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 	cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
-    [self.delegate manufacturerChooserViewController:self didSelectManufacturer:cell.textLabel.text];
+    Manufacturer *manufacturer = (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [[sectionsArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+
+    [self.delegate manufacturerChooserViewController:self didSelectManufacturer:manufacturer];
 }
 
 #pragma mark - UISearchDisplayController delegate methods
 
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
     [self filterContentForSearchText:searchString 
                                scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
                                       objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     return YES;
 }
 
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
-{
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
     [self filterContentForSearchText:[self.searchDisplayController.searchBar text] 
                                scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
     

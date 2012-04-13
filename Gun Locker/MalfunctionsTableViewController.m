@@ -36,8 +36,17 @@
     NSCalendar* calendar = [NSCalendar currentCalendar];
     NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
     
+    NSArray *tempMalfunctions;
+    if (self.selectedMaintenance) {
+        tempMalfunctions = [self.selectedMaintenance.malfunctions sortedArrayUsingDescriptors:sortDescriptors];
+    } else if (self.selectedWeapon) {
+        tempMalfunctions = [self.selectedWeapon.malfunctions sortedArrayUsingDescriptors:sortDescriptors];
+    } else {
+        tempMalfunctions = [Malfunction findAllSortedBy:@"date" ascending:YES];
+    }
+    count = [tempMalfunctions count];
     
-    for(Malfunction *malfunction in self.selectedMaintenance ? [self.selectedMaintenance.malfunctions sortedArrayUsingDescriptors:sortDescriptors] :[self.selectedWeapon.malfunctions sortedArrayUsingDescriptors:sortDescriptors]) {
+    for(Malfunction *malfunction in tempMalfunctions) {
         NSDateComponents* components = [calendar components:flags fromDate:malfunction.date];
         NSDate *date = [[calendar dateFromComponents:components] dateByAddingTimeInterval:[[NSTimeZone localTimeZone]secondsFromGMT]]; 
         if ([malfunctions objectForKey:date] != nil) {
@@ -51,14 +60,17 @@
     [sections sortUsingSelector:@selector(compare:)];
     sections = [[[sections reverseObjectEnumerator] allObjects] mutableCopy];
     [self.tableView reloadData];
+    
+    if (!selectedWeapon) self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.title = [NSString stringWithFormat:@"Malfunctions (%d)", [self.selectedWeapon.malfunctions count]];
+    self.title = [NSString stringWithFormat:@"Malfunction%@ (%d)", (count == 1) ? @"" : @"s",count];
 }
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self setSelectedMaintenance:nil];
     [self setSelectedWeapon:nil];
     [super viewDidUnload];
 }
@@ -89,7 +101,7 @@
     cell.roundCountLabel.text = [currentMalfunction.round_count stringValue];
     cell.failtureText.text = currentMalfunction.failure;
     cell.fixText.text         = currentMalfunction.fix; 
-    cell.modelLabel.text = (self.selectedWeapon) ? nil : currentMalfunction.weapon.model;
+    cell.modelLabel.text = (self.selectedWeapon) ? nil : currentMalfunction.weapon.description;
     
     return cell;
 }

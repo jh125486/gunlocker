@@ -1,167 +1,95 @@
 Accuracy International:UK
+Advanced Armament Corp.:USA:AAC
 Alexander Arms:USA
-Antonov:Ukraine
-Alliant Techsystems:USA
-Arcus Co.:Bulgaria
+American Tactical Rifles:USA:ATI
 ArmaLite:USA
-Armi Jager:Italy
 Armament Technology:Canada
 Armscor:Philippines
-Arsenal Corporation:Bulgaria
 Arsenal, Inc.:USA
 Astra Arms:Switzerland
-Kiev Arsenal:Ukraine
-ASELSAN:Turkey
-Atlas Elektronik:Germany
-Avibras:Brazil
-BAE Systems:UK
-BAE Systems AB:Sweden
-Baikal:Russia
-Barrett Firearms Manufacturing:USA
-Bazalt:Russia
+Auto-Ordnance:USA
+Barrett Firearms Manufacturing:USA:Barrett
 Benelli:Italy
 Beretta:Italy
-Birmingham Small Arms Company:UK
-Boeing Defense, Space & Security:USA
-Bricett:Turkey
-Browning Arms Company:USA
-Bushmaster Firearms International:USA
+Browning Arms Company:USA:Browning
+Bushmaster Firearms International:USA:Bushmaster
 Caspian Arms Ltd:USA
-Chaiseri Metal & Rubber:Thailand
-Charles Daly:USA
+Century International Arms Inc.:USA:Century
 Charter Arms:USA
 CheyTac:USA
-Colt's Manufacturing Company:USA
-Česká Zbrojovka Uherský Brod:Czech Republic
-Defense Industries Organization:Iran
-Degtyarev Plant:Russia
-Denel:South Africa
+Colt's Manufacturing Company:USA:Colt
+Česká Zbrojovka Uherský Brod:Czech Republic:ČZ
+CMMG:USA
+Dakota Arms:USA
+Daniel Defense:USA
 Detonics:USA
-Diehl BGT Defence:Germany
-Doosan DST:South Korea
-EADS:Europe
-EAS:Greece
-Elbit Systems:Israel
-Embraer:Brazil
-Fábrica de Armas Halcón:Argentina
-Fabrique Nationale (FN):Belgium
-Fabryka Broni "Łucznik" - Radom:Poland
-FAMAE:Chile
-FAMARS:Italy
-Federal Cartridge Company:USA
-Fegyver- és Gépgyár (FEG):Hungary
-Ferfrans:Philippines
-Finmeccanica:Italy
-Floro International Corporation:Philippines
-General Dynamics:USA
-Glock:Austria
+DPMS Panther Arms:USA:DPMS
+European American Armory Inc.:USA:EAA
+Fabrique Nationale d'Herstal:Belgium:FN
+German Sport Guns GmbH:Germany:GSG
+Glock Ges.m.b.H.:Austria:GLOCK
 Grand Power:Slovakia
-Hanwha:South Korea
-Heavy Industries Taxila:Pakistan
-Heckler & Koch:Germany
-Henry Repeating Arms:USA
-Helibras:Brazil
+Heckler & Koch:Germany:HK
+Henry Repeating Arms:USA:Henry
 Hi-Point Firearms:USA
-Hindustan Aeronautics Limited:India
 Holland & Holland:UK
 HS Produkt:Croatia
-Hyundai Rotem:South Korea
-IBRAP:Brazil
-IMBEL:Brazil
-INDEP:Portugal
-Indumil:Colombia
-Innalabs:Russia
-Insys:UK
-Israel Military Industries:Israel
-Israel Weapon Industries (IWI):Israel
-Izhevsk Mechanical Plant:Russia
+Israel Military Industries:Israel:IMI
+Israel Weapon Industries:Israel:IWI
 Izhmash:Russia
-James Purdey and Sons Ltd.:UK
 JP Enterprises Inc:USA
 Kahr Arms:USA
-KBP Instrument Design Bureau:Russia
-Kel-Tec CNC Industries Inc:USA
-Kimber Manufacturing:USA
-Klimovsk Specialized Ammunition Plant:Russia
-Knight's Armament Company (KAC):USA
-Kongsberg Defence & Aerospace:Norway
-Korea Aerospace Industries:South Korea
-KAL-ASD:South Korea
-Krauss-Maffei Wegmann (KMW):Germany
+Kel-Tec CNC Industries Inc:USA:Kel-Tec
+Kimber Manufacturing:USA:Kimber
+Knight's Armament Company:USA:KAC
+LaRue Tactical:USA:LaRue
+Lewis Machine and Tool Company:USA:LMT
+Les Baer Custom:USA:Les Baer
 LWRC:USA
-Les Baer:USA
-LFK:Germany
-LIG nex1:South Korea
 Franchi:Italy
-Lürssen:Germany
-Magnum Research Inc.:Israel
-MKEK:Turkey
-Manroy Engineering Ltd.:UK
-Manroy USA:USA
-MasterPiece Arms:USA
+Magnum Research Inc.:Israel:Magnum Research
 Mauser:Germany
 Marlin Firearms:USA
-Matra BAE Dynamics Alenia (MBDA):France
 McBros Rifles:USA
-Miguel Enrique Manzo Sal (MEMS):Argentina
-Metal Storm:Australia
-Malyshev Factory:Ukraine
-Nammo:Norway
+Mega Arms:USA:Mega
+MKEK:Turkey
 Norinco:China
-Northrop Corporation:USA
-O.F. Mossberg & Sons:USA
-Oerlikon Contraves:Switzerland
+O.F. Mossberg & Sons:USA:Mossberg
 Olympic Arms:USA
-OMI Ordtech Military Industries:Greece
-Ordnance Factories Organisation:India
-Para-Ordnance Manufacturing Inc:Canada
+Palmetto Arms:USA
+Para-Ordnance Manufacturing Inc:Canada:Para-Ordnance
 Patria:Finland
-Productos Mendoza:Mexico
-Pindad:Indonesia
-Rangemaster Precision Arms:UK
+Rangemaster Precision Arms:UK:RPA
 Remington Arms:USA
-Rheinmetall:Germany
 RND Manufacturing:USA
+Robinson Armament:USA:RA
 Rock River Arms:USA
-Romtehnica:Romania
-Rosoboronexport:Russia
-Royal Ordnance:UK
-RPC Fort (Fort):Ukraine
-S&T Daewoo:South Korea
-Saab:Sweden
 SAKO:Finland
-Samsung Techwin:South Korea
-Savage Arms:USA
+Savage Arms:USA:Savage
 Sellier & Bellot:Czech Republic
 Serbu Firearms:USA
-Sharps Rifle Manufacturing Company:USA
-Smith & Wesson (S&W):USA
-Springfield Armory:USA
-Sphinx Systems Ltd.:Switzerland
-Sterling Armaments Company:UK
-Steyr Mannlicher (Steyr):Austria
-ST Engineering:Singapore
+SIG Sauer:Germany
+Smith & Wesson:USA:S&W
+Springfield Armory:USA:SA
+Sphinx Systems Ltd.:Switzerland:Sphinx
+Stag Arms:USA
+Sterling Armaments Company:UK:Sterling
+Steyr Mannlicher:Austria:Steyr
 STI International:USA
 Stoeger Industries:Italy
-Strayer Voigt Inc:USA
-Sturm, Ruger, & Co. (Ruger):USA
-Swiss Arms (SIG Sauer):Switzerland
-Thai Aviation Industry:Thailand
-THOR Global Defense Group:USA
-Thompson:USA
+Strayer Voigt Inc:USA:SVI
+Sturm, Ruger, & Co.:USA:Ruger
+Swiss Arms:Switzerland
 Taser International:USA
-Forjas Taurus (Taurus):Brazil
-TEREM:Bulgaria
-Textron Systems (Textron):USA
-Thompson Center Arms:USA
-Thales Group:France
-ThyssenKrupp:Germany
-U.S. Repeating Arms Company:Belgium
-Uralvagonzavod:Russia
-Winchester Repeating Arms Company:Belgium
-Walther:Germany
-Webley & Scott:UK
+Taurus:Brazil:Taurus
+Thompson/Center Arms:USA
+THOR Global Defense Group:USA:THOR
+Umarex:USA
 W. W. Greener:UK
+Walther:Germany
+Weatherby:USA
+Webley & Scott:UK
+Wilson Combat:USA
+Winchester Repeating Arms Company:Belgium:Winchester
 Valmet:Finland
-Yuzhnoye Design Bureau:Ukraine
 Zastava Arms:Serbia

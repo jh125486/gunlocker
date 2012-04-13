@@ -9,18 +9,12 @@
 #define PIXELS_PER_MIL 9.2
 #import "WhizWheelViewController.h"
 
-@interface WhizWheelViewController ()
-
-@end
-
 @implementation WhizWheelViewController
 @synthesize tableBackgroundImage;
 @synthesize rangesTableView, directionsTableView, speedTableView;
 @synthesize rangeLabel, directionLabel, speedLabel;
-@synthesize dropLabel;
-@synthesize driftLabel;
-@synthesize dropResultLabel;
-@synthesize driftResultLabel;
+@synthesize dropInchesLabel, dropMOALabel, dropMILsLabel;
+@synthesize driftInchesLabel, driftMOALabel, driftMILsLabel;
 @synthesize selectedProfile;
 @synthesize lastSelectedRangeCell, lastSelectedDirectionCell, lastSelectedSpeedCell;
 @synthesize resultBackgroundView;
@@ -29,8 +23,7 @@
 @synthesize nightMode;
 @synthesize speedUnit, speedType;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -40,8 +33,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // TODO change object from NSString to BallisticProfile
-    self.title = (NSString*)self.selectedProfile;
+    
+//    self.title = self.selectedProfile.name;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -70,7 +63,7 @@
             [arrayDirections addObject:@"12 o'clock"];
             for(int clock = 1; clock < 12; clock++)
                 [arrayDirections addObject:[NSString stringWithFormat:@"%d o'clock", clock]];
-            directionLabel.text = @"Clock";
+            directionLabel.text = @"Direction";
             break;
         case 2:          // cardinal  --> Needs compass to be implemented correctly
             [arrayDirections addObject:@"North"];
@@ -110,12 +103,20 @@
     if (nightMode) {
         rangesTableView.backgroundColor = directionsTableView.backgroundColor = speedTableView.backgroundColor = resultBackgroundView.backgroundColor = [UIColor blackColor];
         resultReticleView.image = [UIImage imageNamed:@"mil_dot_reticle_night"];
-        dropLabel.textColor = driftLabel.textColor = dropResultLabel.textColor = driftResultLabel.textColor = rangeLabel.textColor = directionLabel.textColor = speedLabel.textColor = tableBackgroundImage.backgroundColor = [UIColor colorWithRed:0.603 green:0.000 blue:0.000 alpha:1.000];
+        for (UILabel *label in self.view.subviews){
+            if ([label isKindOfClass:[UILabel class]]){
+                label.textColor = tableBackgroundImage.backgroundColor = [UIColor colorWithRed:0.603 green:0.000 blue:0.000 alpha:1.000];
+            }
+        }
         rangeLabel.shadowColor = directionLabel.shadowColor = speedLabel.shadowColor = [UIColor redColor];
     } else {
         rangesTableView.backgroundColor = directionsTableView.backgroundColor = speedTableView.backgroundColor = resultBackgroundView.backgroundColor = [UIColor whiteColor];
         resultReticleView.image = [UIImage imageNamed:@"mil_dot_reticle_day"];
-        dropLabel.textColor = driftLabel.textColor = dropResultLabel.textColor = driftResultLabel.textColor = [UIColor blackColor];
+        for (UILabel *label in self.view.subviews){
+            if ([label isKindOfClass:[UILabel class]]){
+                label.textColor = [UIColor blackColor];
+            }
+        }
         rangeLabel.textColor = directionLabel.textColor = speedLabel.textColor = tableBackgroundImage.backgroundColor = [UIColor lightGrayColor];
         rangeLabel.shadowColor = directionLabel.shadowColor = speedLabel.shadowColor = [UIColor whiteColor];
     }
@@ -138,13 +139,15 @@
     [self setResultBackgroundView:nil];
     [self setResultReticleView:nil];
     [self setTableBackgroundImage:nil];
-    [self setDropLabel:nil];
-    [self setDriftLabel:nil];
-    [self setDropResultLabel:nil];
-    [self setDriftResultLabel:nil];
     [self setResultBulletImpactImage:nil];
     [self setSpeedType:nil];
     [self setSpeedUnit:nil];
+    [self setDropInchesLabel:nil];
+    [self setDropMOALabel:nil];
+    [self setDropMILsLabel:nil];
+    [self setDriftInchesLabel:nil];
+    [self setDriftMOALabel:nil];
+    [self setDriftMILsLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -266,15 +269,35 @@
     int range = [self.lastSelectedRangeCell.textLabel.text intValue];
     int speed = [self.lastSelectedSpeedCell.textLabel.text intValue];
     
+    if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"At Rest"]) {
+        speed = 0;
+    } else if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"Walking"]) {
+        speed = 3;
+    } else if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"Jogging"]) {
+        speed = 6;
+    } else if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"Running"]) {
+        speed = 10;
+    }
+    
+    if ([speedType isEqualToString:@"Leading"]) {
+        speed *= -1;
+    }
+    
+    
     // pseudo random drop
-    float drop_pixels = range/1200.0 * 5 * PIXELS_PER_MIL;
+    float fakeDropMILs = range/1200.0 * 5; 
     
     // pseudo random drift
-    float drift_pixels = range/1200.0 * 5 * speed/25.0 * PIXELS_PER_MIL;
+    float fakeDriftMILs = range/1200.0 * 5 * speed/30.0 ; 
 
-    self.resultBulletImpactImage.center = CGPointMake(160 +drift_pixels, 74 + drop_pixels);
-        
-    NSLog(@"Drop: %f\tDrift: %f", drop_pixels, drift_pixels);
+    self.resultBulletImpactImage.center = CGPointMake(160 + fakeDriftMILs * PIXELS_PER_MIL, 74 + fakeDropMILs * PIXELS_PER_MIL);
+    dropInchesLabel.text = [NSString stringWithFormat:@"%.1f\"", fakeDropMILs * ((3.6)*(range/100))];
+    dropMOALabel.text    = [NSString stringWithFormat:@"%.1f MOA", fakeDropMILs / 3.6];
+    dropMILsLabel.text   = [NSString stringWithFormat:@"%.1f MILs", fakeDropMILs];
+    
+    driftInchesLabel.text = [NSString stringWithFormat:@"%.1f\"", fakeDriftMILs * ((3.6)*(range/100))];
+    driftMOALabel.text    = [NSString stringWithFormat:@"%.1f MOA", fakeDriftMILs / 3.6];
+    driftMILsLabel.text   = [NSString stringWithFormat:@"%.1f MILs", fakeDriftMILs];
 }
 
 @end

@@ -102,74 +102,12 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)configureCell:(WeaponCell *)cell withWeapon:(Weapon *)weapon {
-    cell.manufacturerLabel.text = weapon.manufacturer;
-	cell.modelLabel.text = [NSString stringWithFormat:@"%@", weapon.model];
-    cell.caliberLabel.text =  weapon.caliber ? weapon.caliber : @"";
-    
-    if (weapon.barrel_length && weapon.threaded_barrel_pitch) {
-        cell.barrelInfoLabel.text = [NSString stringWithFormat:@"%@\" barrel threaded %@", weapon.barrel_length, weapon.threaded_barrel_pitch];
-    } else if (weapon.barrel_length) {
-        cell.barrelInfoLabel.text = [NSString stringWithFormat:@"%@\" barrel", weapon.barrel_length];
-    } else if (weapon.threaded_barrel_pitch) {
-        cell.barrelInfoLabel.text = [NSString stringWithFormat:@"Barrel threaded %@", weapon.threaded_barrel_pitch];
-    } else {
-        cell.barrelInfoLabel.text = @"";
-    }
-    
-    cell.finishLabel.text = weapon.finish;
-    
-    cell.serialNumberLabel.text = [weapon.serial_number isEqualToString:@""] ? @"" : [NSString stringWithFormat:@"Serial number %@", weapon.serial_number];
-    
-    cell.purchaseDateLabel.text = weapon.purchased_date ? [NSString stringWithFormat:@"Purchased %@", [[weapon.purchased_date distanceOfTimeInWordsOnlyDate] lowercaseString]] : @""; 
-    
-    cell.malfunctionNumberLabel.text = [NSString stringWithFormat:@"%d", [weapon.malfunctions count]];
-    cell.malfunctionNumberLabel.textColor = ([weapon.malfunctions count] > 0) ? [UIColor redColor] : [UIColor blackColor];
-    
-    cell.roundCountLabel.text = [NSString stringWithFormat:@"%@ rounds fired", weapon.round_count];
-    
-    if (weapon.photo_thumbnail) {
-        [cell.photoImageContainer setHidden:NO];
-        cell.photoImageView.image = [UIImage imageWithData:weapon.photo_thumbnail];
-    } else {
-        [cell.photoImageContainer setHidden:YES];
-    }
-    
-    // add S/N and date onto stamp
-    if (weapon.stamp.stamp_received) {
-        [cell.stampViewContainer setHidden:NO];
-        switch ([weapon.stamp.nfa_type intValue]) {
-            case 5: //AOW
-                [cell.stampViewButton setImage:[UIImage imageNamed:@"Stamp_AOW"] forState:UIControlStateNormal];
-                cell.stampDateLabel.transform = CGAffineTransformMakeRotation(-0.6);
-                cell.stampSerialNumberLabel.frame = CGRectMake(13, 15, 60, 21);
-                cell.stampDateLabel.font = [UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0];
-                break;
-                
-            default:
-                [cell.stampViewButton setImage:[UIImage imageNamed:@"Stamp_NFA"] forState:UIControlStateNormal];
-                cell.stampDateLabel.transform = CGAffineTransformMakeRotation(-0.8);
-                cell.stampDateLabel.font = [UIFont fontWithName:@"AmericanTypewriter-CondensedBold" size:17.0];
-                cell.stampSerialNumberLabel.frame = CGRectMake(14, 11, 58, 21);
-                break;
-        }
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"LLL dd yyyy"];
-        cell.stampDateLabel.text = [[dateFormat stringFromDate:weapon.stamp.stamp_received] uppercaseString];        
-        
-        cell.stampSerialNumberLabel.text = weapon.serial_number;
-    } else {
-        [cell.stampViewContainer setHidden:YES];
-    }
-}
-
-
 -(NSFetchedResultsController *)fetchedResultsController {
     if (fetchedResultsController != nil) {
         return fetchedResultsController;
     }
     NSPredicate *typeFilter = [NSPredicate predicateWithFormat:@"type = %@", self.selectedType];
-    NSFetchRequest *weaponsRequest = [Weapon requestAllSortedBy:@"manufacturer,model" ascending:YES withPredicate:typeFilter];
+    NSFetchRequest *weaponsRequest = [Weapon requestAllSortedBy:@"manufacturer.name,model" ascending:YES withPredicate:typeFilter];
     
     NSFetchedResultsController *aFRC = [[NSFetchedResultsController alloc] initWithFetchRequest:weaponsRequest 
                                                                            managedObjectContext:[NSManagedObjectContext MR_defaultContext] 
@@ -281,8 +219,7 @@
 -(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     
     if(NSFetchedResultsChangeUpdate == type) {
-        [self configureCell:(WeaponCell *)[self.tableView cellForRowAtIndexPath:indexPath] withWeapon:anObject];
-        
+        [((WeaponCell*)[self.tableView cellForRowAtIndexPath:indexPath])configureWithWeapon:anObject];        
     } else if(NSFetchedResultsChangeMove == type) {
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
         
@@ -300,9 +237,8 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     WeaponCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"WeaponCell"];
-        
-    [self configureCell:cell withWeapon:[fetchedResultsController objectAtIndexPath:indexPath]];
-    
+    [cell configureWithWeapon:[fetchedResultsController objectAtIndexPath:indexPath]];
+
     return cell;
 }
 

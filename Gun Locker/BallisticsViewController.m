@@ -21,11 +21,11 @@
 
 @synthesize locationManager, currentLocation, locationTimer;
 @synthesize currentWeather;
+@synthesize weatherIndicator;
 
-@synthesize passedRangeResult, passedRangeResultUnits;
+@synthesize rangeResult, rangeResultUnits;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -59,16 +59,14 @@
                                                         selector:@selector(stopUpdatingLocations) 
                                                         userInfo:nil 
                                                          repeats:NO];
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    if(self.passedRangeResult)
-        self.rangeResultLabel.text = [NSString stringWithFormat:@"%@ %@", self.passedRangeResult, self.passedRangeResultUnits];
     
+    //Register setRange to recieve "setRange" notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];
+
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setBallisticProfilePicker:nil];
     [self setEditProfileButton:nil];
     [self setDropDriftTableButton:nil];
@@ -77,6 +75,7 @@
     [self setDensityAltitudeLabel:nil];
     [self setRangeResultLabel:nil];
     [self setGetWeatherButton:nil];
+    [self setWeatherIndicator:nil];
     [super viewDidUnload];
 }
 
@@ -84,44 +83,45 @@
     [self stopUpdatingLocations];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{    
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return [arrayColors count];
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return [arrayColors objectAtIndex:row];
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSLog(@"Selected Color: %@. Index of selected color: %i", [arrayColors objectAtIndex:row], row);
-}
-
 - (IBAction)getWeather:(id)sender {
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    [weatherIndicator startAnimating];
     
-    dispatch_async(queue, ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         self.currentWeather = [[Weather alloc] initWithLocation:currentLocation];        
         dispatch_sync(dispatch_get_main_queue(), ^{
-            [self logWeather];
+            if(self.currentWeather.goodData) {
+//                NSLog(@"%@", [self.currentWeather description]);
+                self.densityAltitudeLabel.text = [NSString stringWithFormat:@"%.0f ft%", self.currentWeather.densityAltitude];
+                [weatherIndicator stopAnimating];
+            }
         });
     });
 }
 
-- (IBAction)closeModalPopup:(id)sender
-{
+- (IBAction)closeModalPopup:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)setRange:(NSNotification*)notification {
+    NSArray *passedRange = [notification object];
+    rangeResult = [passedRange objectAtIndex:0];
+    rangeResultUnits = [passedRange objectAtIndex:1];
+    self.rangeResultLabel.text = [NSString stringWithFormat:@"%.0f %@", [rangeResult floatValue], rangeResultUnits];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString *segueID = segue.identifier;
+    
+	if ([segueID isEqualToString:@"WhizWheel"]) {
+        WhizWheelViewController *dst = segue.destinationViewController;
+        dst.selectedProfile = [arrayColors objectAtIndex:[self.ballisticProfilePicker selectedRowInComponent:0]];
+    }
+
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Profiles" style:UIBarButtonItemStyleBordered target:nil action:nil];
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -157,22 +157,21 @@
     [locationTimer invalidate]; 
 }
 
-- (void)logWeather {
-    if(self.currentWeather.goodData) {
-        NSLog(@"%@", [self.currentWeather description]);
-        self.densityAltitudeLabel.text = [NSString stringWithFormat:@"%.0f ft%", self.currentWeather.densityAltitude];
-    }
+#pragma mark PickerView
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {    
+    return 1;
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSString *segueID = segue.identifier;
-    
-	if ([segueID isEqualToString:@"WhizWheel"]) {
-        WhizWheelViewController *dst = segue.destinationViewController;
-        dst.selectedProfile = [arrayColors objectAtIndex:[self.ballisticProfilePicker selectedRowInComponent:0]];
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Profiles" style:UIBarButtonItemStyleBordered target:nil action:nil];
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return [arrayColors count];
+}
 
-    }
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return [arrayColors objectAtIndex:row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    NSLog(@"Selected Color: %@. Index of selected color: %i", [arrayColors objectAtIndex:row], row);
 }
 
 @end

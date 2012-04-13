@@ -16,9 +16,6 @@
 		530DDF0C14EEB6D800F1BC7F /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 530DDF0A14EEB6D800F1BC7F /* MainStoryboard.storyboard */; };
 		530DDF1914EECF9400F1BC7F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDF1814EECF9400F1BC7F /* CoreData.framework */; };
 		530DDF3C14EFF74400F1BC7F /* WeaponAddEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530DDF3B14EFF74400F1BC7F /* WeaponAddEditViewController.m */; };
-		530E38C1150C634D0023F8C3 /* Caliber.m in Sources */ = {isa = PBXBuildFile; fileRef = 530E38C0150C634D0023F8C3 /* Caliber.m */; };
-		530E38C7150C634D0023F8C3 /* BallisticProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 530E38C6150C634D0023F8C3 /* BallisticProfiles.m */; };
-		530E38CA150C634D0023F8C3 /* Manufacturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 530E38C9150C634D0023F8C3 /* Manufacturer.m */; };
 		530EA3F914FC3A1600E132FB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 530EA3F814FC3A1600E132FB /* Default@2x.png */; };
 		530EA3FB14FC780000E132FB /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 530EA3FA14FC780000E132FB /* icon.png */; };
 		530EA3FD14FC780300E132FB /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 530EA3FC14FC780300E132FB /* icon@2x.png */; };
@@ -90,8 +87,15 @@
 		53591A331521714600516C4C /* libQuickDialog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53591A30152170DC00516C4C /* libQuickDialog.a */; };
 		53591A40152181A000516C4C /* StampInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 53591A3F152181A000516C4C /* StampInfo.m */; };
 		53713F84152C28D7009B55B8 /* DopeCardsAddEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53713F83152C28D7009B55B8 /* DopeCardsAddEditViewController.m */; };
+		537797201533A8150096BF7A /* LogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377971F1533A8150096BF7A /* LogsViewController.m */; };
+		5377972915362E1A0096BF7A /* icon_calculators@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5377972815362E190096BF7A /* icon_calculators@2x.png */; };
+		5377972C15363FCF0096BF7A /* BallisticProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377972B15363FCF0096BF7A /* BallisticProfileViewController.m */; };
+		5377973B1537660B0096BF7A /* BallisticProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377973A1537660B0096BF7A /* BallisticProfile.m */; };
+		5377973E153798480096BF7A /* Weapon+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377973D153798480096BF7A /* Weapon+Helper.m */; };
+		537797411537D3B70096BF7A /* Manufacturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 537797401537D3B70096BF7A /* Manufacturer.m */; };
+		537797441537D3B90096BF7A /* Caliber.m in Sources */ = {isa = PBXBuildFile; fileRef = 537797431537D3B90096BF7A /* Caliber.m */; };
+		537797471537D3BA0096BF7A /* Weapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 537797461537D3BA0096BF7A /* Weapon.m */; };
 		537B1C5D151EAD6000A85E24 /* MaintenanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 537B1C5C151EAD6000A85E24 /* MaintenanceCell.m */; };
-		537FE56C15315DAE0099CD20 /* Weapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 537FE56B15315DAE0099CD20 /* Weapon.m */; };
 		537FE56F15315DAF0099CD20 /* DopeCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 537FE56E15315DAF0099CD20 /* DopeCard.m */; };
 		5380B3AA1521070600CD099D /* NFAInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5380B3A91521070600CD099D /* NFAInformationViewController.m */; };
 		53859F701501E11C00ABA0B1 /* icon_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 53859F6F1501E11C00ABA0B1 /* icon_settings.png */; };
@@ -199,12 +203,6 @@
 		530DDF1814EECF9400F1BC7F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		530DDF3A14EFF74400F1BC7F /* WeaponAddEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WeaponAddEditViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		530DDF3B14EFF74400F1BC7F /* WeaponAddEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeaponAddEditViewController.m; sourceTree = "<group>"; };
-		530E38BF150C634D0023F8C3 /* Caliber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Caliber.h; sourceTree = "<group>"; };
-		530E38C0150C634D0023F8C3 /* Caliber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Caliber.m; sourceTree = "<group>"; };
-		530E38C5150C634D0023F8C3 /* BallisticProfiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfiles.h; sourceTree = "<group>"; };
-		530E38C6150C634D0023F8C3 /* BallisticProfiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfiles.m; sourceTree = "<group>"; };
-		530E38C8150C634D0023F8C3 /* Manufacturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manufacturer.h; sourceTree = "<group>"; };
-		530E38C9150C634D0023F8C3 /* Manufacturer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Manufacturer.m; sourceTree = "<group>"; };
 		530EA3F814FC3A1600E132FB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		530EA3FA14FC780000E132FB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		530EA3FC14FC780300E132FB /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
@@ -305,10 +303,23 @@
 		53591A3F152181A000516C4C /* StampInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StampInfo.m; sourceTree = "<group>"; };
 		53713F82152C28D7009B55B8 /* DopeCardsAddEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardsAddEditViewController.h; sourceTree = "<group>"; };
 		53713F83152C28D7009B55B8 /* DopeCardsAddEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCardsAddEditViewController.m; sourceTree = "<group>"; };
+		5377971E1533A8150096BF7A /* LogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogsViewController.h; sourceTree = "<group>"; };
+		5377971F1533A8150096BF7A /* LogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogsViewController.m; sourceTree = "<group>"; };
+		5377972815362E190096BF7A /* icon_calculators@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_calculators@2x.png"; sourceTree = "<group>"; };
+		5377972A15363FCF0096BF7A /* BallisticProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfileViewController.h; sourceTree = "<group>"; };
+		5377972B15363FCF0096BF7A /* BallisticProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfileViewController.m; sourceTree = "<group>"; };
+		537797391537660B0096BF7A /* BallisticProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfile.h; sourceTree = "<group>"; };
+		5377973A1537660B0096BF7A /* BallisticProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfile.m; sourceTree = "<group>"; };
+		5377973C153798480096BF7A /* Weapon+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Weapon+Helper.h"; sourceTree = "<group>"; };
+		5377973D153798480096BF7A /* Weapon+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Weapon+Helper.m"; sourceTree = "<group>"; };
+		5377973F1537D3B70096BF7A /* Manufacturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manufacturer.h; sourceTree = "<group>"; };
+		537797401537D3B70096BF7A /* Manufacturer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Manufacturer.m; sourceTree = "<group>"; };
+		537797421537D3B90096BF7A /* Caliber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Caliber.h; sourceTree = "<group>"; };
+		537797431537D3B90096BF7A /* Caliber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Caliber.m; sourceTree = "<group>"; };
+		537797451537D3B90096BF7A /* Weapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weapon.h; sourceTree = "<group>"; };
+		537797461537D3BA0096BF7A /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
 		537B1C5B151EAD6000A85E24 /* MaintenanceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaintenanceCell.h; sourceTree = "<group>"; };
 		537B1C5C151EAD6000A85E24 /* MaintenanceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaintenanceCell.m; sourceTree = "<group>"; };
-		537FE56A15315DAE0099CD20 /* Weapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weapon.h; sourceTree = "<group>"; };
-		537FE56B15315DAE0099CD20 /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
 		537FE56D15315DAF0099CD20 /* DopeCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCard.h; sourceTree = "<group>"; };
 		537FE56E15315DAF0099CD20 /* DopeCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCard.m; sourceTree = "<group>"; };
 		5380B3A81521070600CD099D /* NFAInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFAInformationViewController.h; sourceTree = "<group>"; };
@@ -656,10 +667,7 @@
 		5348C6951506E60A00147AAF /* Weapons */ = {
 			isa = PBXGroup;
 			children = (
-				53D263401531EB5600ECA9EE /* Dope Cards */,
-				5380B3A81521070600CD099D /* NFAInformationViewController.h */,
-				5380B3A91521070600CD099D /* NFAInformationViewController.m */,
-				53D263411531EB7200ECA9EE /* Notes */,
+				53AF064915125253000B9943 /* Subviews */,
 				53D263421531EB8300ECA9EE /* Weapon Add/Edit */,
 				5319C8CD15093FE500795B87 /* WeaponShowViewController.h */,
 				5319C8CE15093FE500795B87 /* WeaponShowViewController.m */,
@@ -667,7 +675,7 @@
 			name = Weapons;
 			sourceTree = "<group>";
 		};
-		5348C6961506E62200147AAF /* Utilities */ = {
+		5348C6961506E62200147AAF /* Calculators */ = {
 			isa = PBXGroup;
 			children = (
 				53B7FF7514FFFB05007B268A /* DistanceCalculationsViewController.h */,
@@ -677,7 +685,7 @@
 				53859F7D1504354A00ABA0B1 /* MillerStabilityViewController.h */,
 				53859F7E1504354A00ABA0B1 /* MillerStabilityViewController.m */,
 			);
-			name = Utilities;
+			name = Calculators;
 			sourceTree = "<group>";
 		};
 		5348C6971506E66F00147AAF /* Ballistics */ = {
@@ -687,6 +695,8 @@
 				53859F7A1504167A00ABA0B1 /* BallisticsViewController.m */,
 				5348C6921506E5EE00147AAF /* WhizWheelViewController.h */,
 				5348C6931506E5EE00147AAF /* WhizWheelViewController.m */,
+				5377972A15363FCF0096BF7A /* BallisticProfileViewController.h */,
+				5377972B15363FCF0096BF7A /* BallisticProfileViewController.m */,
 			);
 			name = Ballistics;
 			sourceTree = "<group>";
@@ -721,6 +731,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		537797211533A82A0096BF7A /* Logs */ = {
+			isa = PBXGroup;
+			children = (
+				5377971E1533A8150096BF7A /* LogsViewController.h */,
+				5377971F1533A8150096BF7A /* LogsViewController.m */,
+			);
+			name = Logs;
+			sourceTree = "<group>";
+		};
+		537797221533A8D00096BF7A /* NFA */ = {
+			isa = PBXGroup;
+			children = (
+				5380B3A81521070600CD099D /* NFAInformationViewController.h */,
+				5380B3A91521070600CD099D /* NFAInformationViewController.m */,
+			);
+			name = NFA;
+			sourceTree = "<group>";
+		};
 		5391B8261526228100582865 /* Maintenance */ = {
 			isa = PBXGroup;
 			children = (
@@ -747,13 +775,16 @@
 			name = Malfunction;
 			sourceTree = "<group>";
 		};
-		53AF064915125253000B9943 /* Weapon Subviews */ = {
+		53AF064915125253000B9943 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				53D263411531EB7200ECA9EE /* Notes */,
+				537797221533A8D00096BF7A /* NFA */,
+				53D263401531EB5600ECA9EE /* Dope Cards */,
 				5391B8261526228100582865 /* Maintenance */,
 				5391B8271526228800582865 /* Malfunction */,
 			);
-			name = "Weapon Subviews";
+			name = Subviews;
 			sourceTree = "<group>";
 		};
 		53AF06601512A605000B9943 /* KKPasscode */ = {
@@ -780,10 +811,10 @@
 				53F272DE150E5BFE005A329F /* DefaultButton.m */,
 				5319C8BF15086F2700795B87 /* IntroSplashViewController.h */,
 				5319C8C015086F2700795B87 /* IntroSplashViewController.m */,
-				5348C6971506E66F00147AAF /* Ballistics */,
 				5348C6981506E69F00147AAF /* Cards */,
-				53AF064915125253000B9943 /* Weapon Subviews */,
-				5348C6961506E62200147AAF /* Utilities */,
+				537797211533A82A0096BF7A /* Logs */,
+				5348C6971506E66F00147AAF /* Ballistics */,
+				5348C6961506E62200147AAF /* Calculators */,
 				5348C6991506E6AC00147AAF /* Settings */,
 			);
 			name = Views;
@@ -792,10 +823,10 @@
 		53B00A1114F32569000A560F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				530E38C5150C634D0023F8C3 /* BallisticProfiles.h */,
-				530E38C6150C634D0023F8C3 /* BallisticProfiles.m */,
-				530E38BF150C634D0023F8C3 /* Caliber.h */,
-				530E38C0150C634D0023F8C3 /* Caliber.m */,
+				537797391537660B0096BF7A /* BallisticProfile.h */,
+				5377973A1537660B0096BF7A /* BallisticProfile.m */,
+				537797421537D3B90096BF7A /* Caliber.h */,
+				537797431537D3B90096BF7A /* Caliber.m */,
 				5333AA8914F9C63C00D62E50 /* calibers.txt */,
 				537FE56D15315DAF0099CD20 /* DopeCard.h */,
 				537FE56E15315DAF0099CD20 /* DopeCard.m */,
@@ -803,15 +834,17 @@
 				53E3148A151E9B1A005B414F /* Maintenance.m */,
 				53E3148C151E9B1A005B414F /* Malfunction.h */,
 				53E3148D151E9B1A005B414F /* Malfunction.m */,
-				530E38C8150C634D0023F8C3 /* Manufacturer.h */,
-				530E38C9150C634D0023F8C3 /* Manufacturer.m */,
+				5377973F1537D3B70096BF7A /* Manufacturer.h */,
+				537797401537D3B70096BF7A /* Manufacturer.m */,
 				532EE03C14F74FFB008A9558 /* manufacturers.txt */,
 				53FBDA0E151D9FA200DD5180 /* Note.h */,
 				53FBDA0F151D9FA200DD5180 /* Note.m */,
 				53591A3E152181A000516C4C /* StampInfo.h */,
 				53591A3F152181A000516C4C /* StampInfo.m */,
-				537FE56A15315DAE0099CD20 /* Weapon.h */,
-				537FE56B15315DAE0099CD20 /* Weapon.m */,
+				5377973C153798480096BF7A /* Weapon+Helper.h */,
+				5377973D153798480096BF7A /* Weapon+Helper.m */,
+				537797451537D3B90096BF7A /* Weapon.h */,
+				537797461537D3BA0096BF7A /* Weapon.m */,
 				53CA98DF150A84E50060A1E8 /* Weather.h */,
 				53CA98E0150A84E50060A1E8 /* Weather.m */,
 			);
@@ -874,6 +907,7 @@
 		53F6AAC814FDE67E0079F613 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				5377972815362E190096BF7A /* icon_calculators@2x.png */,
 				53A92F5C152F975600639A8B /* icon_delink@2x.png */,
 				53A92F5D152F975600639A8B /* icon_link@2x.png */,
 				53A92F5E152F975700639A8B /* icon_settings@2x.png */,
@@ -1044,6 +1078,7 @@
 				53A92F5F152F975700639A8B /* icon_delink@2x.png in Resources */,
 				53A92F60152F975700639A8B /* icon_link@2x.png in Resources */,
 				53A92F61152F975700639A8B /* icon_settings@2x.png in Resources */,
+				5377972915362E1A0096BF7A /* icon_calculators@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1083,9 +1118,6 @@
 				5319C8C115086F2700795B87 /* IntroSplashViewController.m in Sources */,
 				5319C8CF15093FE600795B87 /* WeaponShowViewController.m in Sources */,
 				53CA98E1150A84E50060A1E8 /* Weather.m in Sources */,
-				530E38C1150C634D0023F8C3 /* Caliber.m in Sources */,
-				530E38C7150C634D0023F8C3 /* BallisticProfiles.m in Sources */,
-				530E38CA150C634D0023F8C3 /* Manufacturer.m in Sources */,
 				53F272DF150E5BFE005A329F /* DefaultButton.m in Sources */,
 				53F2735B15112D37005A329F /* NSDate+Formatting.m in Sources */,
 				53F273791511B936005A329F /* MaintenancesTableViewController.m in Sources */,
@@ -1112,10 +1144,16 @@
 				53BC9F49152C06CB00B7D7AD /* DopeCardsTableViewController.m in Sources */,
 				53BC9F4F152C11A700B7D7AD /* DopeCardRowEditCell.m in Sources */,
 				53713F84152C28D7009B55B8 /* DopeCardsAddEditViewController.m in Sources */,
-				537FE56C15315DAE0099CD20 /* Weapon.m in Sources */,
 				537FE56F15315DAF0099CD20 /* DopeCard.m in Sources */,
 				53D2633F1531EB4600ECA9EE /* DopeCardRowCell.m in Sources */,
 				53D263451531EBD000ECA9EE /* DopeCardViewController.m in Sources */,
+				537797201533A8150096BF7A /* LogsViewController.m in Sources */,
+				5377972C15363FCF0096BF7A /* BallisticProfileViewController.m in Sources */,
+				5377973B1537660B0096BF7A /* BallisticProfile.m in Sources */,
+				5377973E153798480096BF7A /* Weapon+Helper.m in Sources */,
+				537797411537D3B70096BF7A /* Manufacturer.m in Sources */,
+				537797441537D3B90096BF7A /* Caliber.m in Sources */,
+				537797471537D3BA0096BF7A /* Weapon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="BallisticProfiles" representedClassName="BallisticProfiles" syncable="YES">
-        <attribute name="caliber" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+    <entity name="BallisticProfile" representedClassName="BallisticProfile" syncable="YES">
+        <attribute name="altitude" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="bc" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="bc_model" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bullet_diameter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bullet_mass" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="density_altitude" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="drag_model" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="muzzle_velocity" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pressure" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="rh" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="100" defaultValueString="0" syncable="YES"/>
+        <attribute name="sight_height" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="temperature" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="zero" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="weapon" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="ballistic_profile" inverseEntity="Weapon" syncable="YES"/>
     </entity>
     <entity name="Caliber" representedClassName="Caliber" syncable="YES">
+        <attribute name="diameter_inches" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="CommercialLoad" parentEntity="Load" syncable="YES">
@@ -52,6 +66,8 @@
     <entity name="Manufacturer" representedClassName="Manufacturer" syncable="YES">
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="short_name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="weapons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Weapon" inverseName="manufacturer" inverseEntity="Weapon" syncable="YES"/>
     </entity>
     <entity name="Note" representedClassName="Note" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
@@ -73,7 +89,6 @@
         <attribute name="barrel_length" optional="YES" attributeType="Float" syncable="YES"/>
         <attribute name="caliber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="finish" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="manufacturer" attributeType="String" syncable="YES"/>
         <attribute name="model" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photo" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
@@ -85,15 +100,17 @@
         <attribute name="threaded_barrel" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="threaded_barrel_pitch" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="ballistic_profile" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BallisticProfile" inverseName="weapon" inverseEntity="BallisticProfile" syncable="YES"/>
         <relationship name="dope_cards" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DopeCard" inverseName="weapon" inverseEntity="DopeCard" syncable="YES"/>
         <relationship name="maintenances" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Maintenance" inverseName="weapon" inverseEntity="Maintenance" syncable="YES"/>
         <relationship name="malfunctions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Malfunction" inverseName="weapon" inverseEntity="Malfunction" syncable="YES"/>
+        <relationship name="manufacturer" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Manufacturer" inverseName="weapons" inverseEntity="Manufacturer" syncable="YES"/>
         <relationship name="notes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Note" inverseName="weapon" inverseEntity="Note" syncable="YES"/>
         <relationship name="preferred_load" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Load" inverseName="weapons" inverseEntity="Load" syncable="YES"/>
         <relationship name="stamp" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="StampInfo" inverseName="weapon" inverseEntity="StampInfo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BallisticProfiles" positionX="160" positionY="192" width="128" height="60"/>
+        <element name="BallisticProfile" positionX="-144" positionY="-108" width="128" height="270"/>
         <element name="Caliber" positionX="160" positionY="192" width="128" height="60"/>
         <element name="CommercialLoad" positionX="63" positionY="240" width="128" height="75"/>
         <element name="DopeCard" positionX="160" positionY="192" width="128" height="135"/>

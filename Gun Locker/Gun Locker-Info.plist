@@ -14,7 +14,6 @@
 		<string>Default@2x.png</string>
 		<string>icon.png</string>
 		<string>icon@2x.png</string>
-		<string>Default.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -28,7 +27,6 @@
 				<string>Default@2x.png</string>
 				<string>icon.png</string>
 				<string>icon@2x.png</string>
-				<string>Default.png</string>
 			</array>
 		</dict>
 	</dict>

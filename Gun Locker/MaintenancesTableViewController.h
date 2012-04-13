@@ -17,6 +17,7 @@
 @interface MaintenancesTableViewController : UITableViewController {
     NSMutableDictionary *maintenances;
     NSMutableArray *sections;
+    int count;
 }
 
 @property (nonatomic, strong) Weapon *selectedWeapon;

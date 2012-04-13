@@ -9,10 +9,6 @@
 #import "CaliberChooserViewController.h"
 
 @implementation CaliberChooserViewController
-{
-	NSMutableArray *calibers;
-	NSUInteger selectedIndex;
-}
 
 @synthesize delegate;
 @synthesize selectedCaliber;

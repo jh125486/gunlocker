@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BallisticProfile.h"
 
 @interface WhizWheelViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     NSMutableArray *arrayRanges;
@@ -30,12 +31,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *rangeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *directionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *speedLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dropLabel;
-@property (weak, nonatomic) IBOutlet UILabel *driftLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dropResultLabel;
-@property (weak, nonatomic) IBOutlet UILabel *driftResultLabel;
 @property (weak, nonatomic) NSString *speedType;
 @property (weak, nonatomic) NSString *speedUnit;
+@property (weak, nonatomic) IBOutlet UILabel *dropInchesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dropMOALabel;
+@property (weak, nonatomic) IBOutlet UILabel *dropMILsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *driftInchesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *driftMOALabel;
+@property (weak, nonatomic) IBOutlet UILabel *driftMILsLabel;
 
-@property (strong, nonatomic) NSObject *selectedProfile;
+
+@property (nonatomic, weak) BallisticProfile *selectedProfile;
 @end

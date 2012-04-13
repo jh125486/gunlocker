@@ -109,7 +109,6 @@
     [defaults setInteger:(int)rangeStart.Current forKey:@"rangeStart"];
     [defaults setInteger:(int)rangeEnd.Current forKey:@"rangeEnd"];
     [defaults setInteger:(int)rangeStep.Current forKey:@"rangeStep"];
-    
 }
 
 - (void)windLeadingTableViewController:(WindLeadingTableViewController *)controller didSelectWindLeading:(NSString *)selectedWindLeading {

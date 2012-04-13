@@ -16,6 +16,7 @@
 @interface MalfunctionsTableViewController : UITableViewController {
     NSMutableDictionary *malfunctions;
     NSMutableArray *sections;
+    int count;
 }
 
 @property (nonatomic, weak) Weapon *selectedWeapon;

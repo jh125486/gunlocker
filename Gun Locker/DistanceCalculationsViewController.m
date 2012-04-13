@@ -68,15 +68,6 @@
     
 }
 
--(void)viewWillDisappear:(BOOL)animated {
-    
-    if ([self.navigationController.topViewController.navigationItem.title isEqualToString:@"Ballistic Profiles"]) {
-        BallisticsViewController *controller = (BallisticsViewController*)self.navigationController.topViewController;
-        controller.passedRangeResult = self.passedResult;
-        controller.passedRangeResultUnits = self.passedResultUnits;
-    }    
-}
-
 - (void)viewDidUnload
 {
     [self.motionManager stopAccelerometerUpdates];
@@ -98,16 +89,14 @@
 
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 
-- (IBAction)showRangeEstimate:(id)sender
-{
+- (IBAction)showRangeEstimate:(id)sender {
     if (([self.targetSizeTextField.text floatValue] > 0) && ([self.targetReadingTextField.text floatValue] > 0)) {
-        float range = 1000 *  [self.targetSizeTextField.text floatValue] / [self.targetReadingTextField.text floatValue];
+        double range = 1000 *  [self.targetSizeTextField.text floatValue] / [self.targetReadingTextField.text floatValue];
         
         // adjust for target size units
         switch (self.targetSizeUnitControl.selectedSegmentIndex) {
@@ -125,15 +114,14 @@
         }
         
         // adjust for reading in MOA
-        if(self.targetReadingUnitControl.selectedSegmentIndex == 0) {
-            range *= ((360*60)/(2000*M_PI));
-        }
+        if(self.targetReadingUnitControl.selectedSegmentIndex == 0) range *= ((360*60)/(2000*M_PI));
+
         // adjust for result in yards
-        if(self.resultRangeUnitControl.selectedSegmentIndex == 0) {
-            range *= 1.0936132983377078;
-        }
+        if(self.resultRangeUnitControl.selectedSegmentIndex == 0) range *= 1.0936132983377078;
         
         self.resultRangeLabel.text = [NSString stringWithFormat:@"%.0f", range];
+        NSArray *passedRange = [NSArray arrayWithObjects:[NSNumber numberWithDouble:range], [resultRangeUnitControl titleForSegmentAtIndex:resultRangeUnitControl.selectedSegmentIndex], nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setRange" object:passedRange];
 
     } else {
         self.resultRangeLabel.text = @"?";
@@ -145,8 +133,11 @@
     float angle = [self.shootingAngleTextField.text floatValue];
 
     if (([self.shootingAngleTextField.text length] >0) && ([self.targetDistanceTextField.text length] >0) && (angle > -90) && (angle < 90)) {
-        float distance = [self.targetDistanceTextField.text floatValue];
+        double distance = [self.targetDistanceTextField.text floatValue];
         self.resultHorizontalRangeLabel.text = [NSString stringWithFormat:@"%0.f", distance * cos(angle* M_PI / 180)];
+        
+        NSArray *passedRange = [NSArray arrayWithObjects:[NSNumber numberWithDouble:distance], self.passedResultUnits, nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setRange" object:passedRange];
     } else {
         self.resultHorizontalRangeLabel.text = @"?";
     }
@@ -190,8 +181,7 @@
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString *segueID = segue.identifier;
     
 	if ([segueID isEqualToString:@"HorizontalRange"]) {
@@ -202,8 +192,7 @@
 }
 
 
-- (CMMotionManager *)motionManager
-{
+- (CMMotionManager *)motionManager {
     CMMotionManager *motionManager = nil;
     id appDelegate = [UIApplication sharedApplication].delegate;
     if ([appDelegate respondsToSelector:@selector(motionManager)]) {

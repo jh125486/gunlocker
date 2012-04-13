@@ -31,14 +31,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    // set title for navigation back button
-    self.title = selectedWeapon.model;
-    [self setTitleView];
-    
     weaponTypeLabel.text = self.selectedWeapon.type;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    // set title for navigation back button
+    self.title = selectedWeapon.model;
+    [self setTitleView];
+    
     nfaCell.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"];
     
     NSArray *nfa_types = [[NSArray alloc] initWithObjects:@"SBR", @"SBS", @"Suppressor", @"Machinegun", @"DD", @"AOW",nil];
@@ -83,7 +83,7 @@
     subtitleView.textColor = [UIColor whiteColor];
     subtitleView.shadowColor = [UIColor darkGrayColor];
     subtitleView.shadowOffset = CGSizeMake(0, -1);
-    subtitleView.text = selectedWeapon.manufacturer;
+    subtitleView.text = selectedWeapon.manufacturer.short_name ? selectedWeapon.manufacturer.short_name : selectedWeapon.manufacturer.name;
     subtitleView.adjustsFontSizeToFitWidth = YES;
     [_headerTitleSubtitleView addSubview:subtitleView];
     

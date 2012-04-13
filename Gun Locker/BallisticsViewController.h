@@ -28,9 +28,10 @@
 @property (strong, nonatomic) NSTimer *locationTimer;
 
 @property (strong, nonatomic) Weather *currentWeather;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *weatherIndicator;
 
-@property (weak, nonatomic) NSString * passedRangeResult;
-@property (weak, nonatomic) NSString *passedRangeResultUnits;
+@property (weak, nonatomic) NSNumber *rangeResult;
+@property (weak, nonatomic) NSString *rangeResultUnits;
 
 
 - (IBAction)getWeather:(id)sender;

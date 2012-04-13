@@ -14,7 +14,10 @@
 - (void)caliberChooserViewController:(CaliberChooserViewController *)controller didSelectCaliber:(NSString *)selectedCaliber;
 @end
 
-@interface CaliberChooserViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate>
+@interface CaliberChooserViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate> {
+	NSMutableArray *calibers;
+	NSUInteger selectedIndex;
+}
 
 @property (nonatomic, weak) id <CaliberChooserViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSString *selectedCaliber;

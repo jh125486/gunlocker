@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "CardsViewController.h"
+#import "Manufacturer.h"
 
 @implementation AppDelegate
 
@@ -16,6 +17,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecordHelpers setupCoreDataStackWithStoreNamed:@"GunLocker.sqlite"];
+    
+    // if no manufacturers, load them from a txt file
+    if([Manufacturer countOfEntities] == 0) {
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"manufacturers" ofType:@"txt"];
+        NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+        NSArray *splitParts;
+        for (NSString *manufacturer in [content componentsSeparatedByString:@"\n"]) {
+            splitParts = [manufacturer componentsSeparatedByString:@":"];
+            
+            Manufacturer *newManufacturer = [Manufacturer createEntity];
+            newManufacturer.name       = [splitParts objectAtIndex:0];
+            newManufacturer.country    = [splitParts objectAtIndex:1];
+            if (splitParts.count > 2) newManufacturer.short_name = [splitParts objectAtIndex:2];
+        }   
+        [[NSManagedObjectContext defaultContext] save];
+    }
+
+    // load defaults
+    
     return YES;
 }
 

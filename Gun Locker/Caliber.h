@@ -2,7 +2,7 @@
 //  Caliber.h
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 3/10/12.
+//  Created by Jacob Hochstetler on 4/12/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -13,5 +13,6 @@
 @interface Caliber : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSNumber * diameter_inches;
 
 @end

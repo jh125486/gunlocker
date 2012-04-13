@@ -50,10 +50,9 @@
     rangeUnitField.inputView = dropUnitField.inputView = driftUnitField.inputView = dopeUnitPickerView;
     windInfoField.inputView  = windInfoPickerView;
     
-    cardNameTextField.delegate = zeroTextField.delegate = windInfoField.delegate = notesTextField.delegate = rangeUnitField.delegate = dropUnitField.delegate = driftUnitField.delegate = self;
-    
     formFields = [[NSMutableArray alloc] initWithObjects:cardNameTextField, zeroTextField, windInfoField, notesTextField, rangeUnitField, dropUnitField, driftUnitField, nil];
-    zeroTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    for(UITextField *field in formFields)
+        field.delegate = self;    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
@@ -284,24 +283,19 @@
     self.currentTextField = nil;
 }
 
-// XXX if last field in dope card row, return key adds new row and move responder?
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {    
-    return YES;
-}
-
 
 - (void) nextPreviousTapped:(id)sender {
+    int index = [formFields indexOfObject:self.currentTextField];
+    
     if (currentTextField == rangeUnitField) {
         [self setDopeUnits];
     } else if (currentTextField == windInfoField) {
         [self setWindInfo];
     }
-
-    int index = [formFields indexOfObject:self.currentTextField];
     
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
-            self.currentTextField = [formFields objectAtIndex:index - 1];
+            index--;
             break;
         case 1: //next            
             if ([dopeFields containsObject:self.currentTextField] && [self.currentTextField isEqual:[dopeFields lastObject]]) {
@@ -314,14 +308,16 @@
                     [dopeCardCellData addObject:cell.driftField.text];
                     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row + 1 inSection:0 ]] 
                                           withRowAnimation:UITableViewRowAnimationBottom];
-                    self.currentTextField = [formFields objectAtIndex:index + 1];
+                    index++;
                 }
             } else {
-                self.currentTextField = [formFields objectAtIndex:index + 1];
+                index++;
             }
             break;
     }
     
+//    [self.currentTextField resignFirstResponder];
+    self.currentTextField = [formFields objectAtIndex:index];
     [self.currentTextField becomeFirstResponder];
 }
 
