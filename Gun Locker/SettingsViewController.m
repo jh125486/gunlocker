@@ -18,7 +18,7 @@
 @synthesize reticleUnitsControl;
 @synthesize windLeadingLabel;
 @synthesize directionControl;
-@synthesize showNFADetailsSwitch;
+@synthesize showNFAInformationSwitch;
 @synthesize passcodeCell;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -34,7 +34,7 @@
     [super viewDidLoad];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    showNFADetailsSwitch.on = [defaults boolForKey:@"showNFADetails"];
+    showNFAInformationSwitch.on = [defaults boolForKey:@"showNFADetails"];
     self.passcodeCell.detailTextLabel.text   = ([[KKPasscodeLock sharedLock] isPasscodeRequired]) ? @"On" : @"Off";
     rangeUnitsControl.selectedSegmentIndex   = [defaults integerForKey:@"rangeUnitsControl"];
     reticleUnitsControl.selectedSegmentIndex = [defaults integerForKey:@"reticleUnitsControl"];
@@ -74,7 +74,7 @@
     [self setRangeStep:nil];
     [self setWindLeadingLabel:nil];
     [self setDirectionControl:nil];
-    [self setShowNFADetailsSwitch:nil];
+    [self setShowNFAInformationSwitch:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -101,7 +101,7 @@
 - (IBAction)saveSettings:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    [defaults setBool:showNFADetailsSwitch.on forKey:@"showNFADetails"];
+    [defaults setBool:showNFAInformationSwitch.on forKey:@"showNFADetails"];
     [defaults setInteger:[nightModeControl selectedSegmentIndex] forKey:@"nightModeControl"];
     [defaults setInteger:[rangeUnitsControl selectedSegmentIndex] forKey:@"rangeUnitsControl"];
     [defaults setInteger:[reticleUnitsControl selectedSegmentIndex] forKey:@"reticleUnitsControl"];
@@ -119,6 +119,18 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"WindLeadingTable"])
         [[segue destinationViewController] setDelegate:self];
+}
+
+- (IBAction)showNFAInformationTapped:(id)sender {
+    if (((UISwitch *)sender).isOn) {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Showing 'NFA Information'"
+                                                          message:@"Look for NFA information in each weapon's 'Details' section."
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        
+        [message show];
+    }
 }
 
 @end

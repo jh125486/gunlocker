@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "CardsViewController.h"
 #import "Manufacturer.h"
+#import "Bullet.h"
 
 @implementation AppDelegate
 
@@ -18,23 +19,81 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecordHelpers setupCoreDataStackWithStoreNamed:@"GunLocker.sqlite"];
     
+//    [Bullet truncateAll];
+//    [Manufacturer truncateAll];
+//    [[NSManagedObjectContext defaultContext] save];
+
     // if no manufacturers, load them from a txt file
     if([Manufacturer countOfEntities] == 0) {
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"manufacturers" ofType:@"txt"];
-        NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-        NSArray *splitParts;
-        for (NSString *manufacturer in [content componentsSeparatedByString:@"\n"]) {
-            splitParts = [manufacturer componentsSeparatedByString:@":"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString* path = [[NSBundle mainBundle] pathForResource:@"manufacturers" ofType:@"txt"];
+            NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+            NSArray *splitParts;
+            for (NSString *manufacturer in [content componentsSeparatedByString:@"\n"]) {
+                splitParts = [manufacturer componentsSeparatedByString:@":"];
+                
+                Manufacturer *newManufacturer = [Manufacturer createEntity];
+                newManufacturer.name       = [splitParts objectAtIndex:0];
+                newManufacturer.country    = [splitParts objectAtIndex:1];
+                if (splitParts.count > 2) newManufacturer.short_name = [splitParts objectAtIndex:2];
+            }   
+            [[NSManagedObjectContext defaultContext] save];
+            NSLog(@"Loaded Manufacturers");
+        });
+       }
+    
+        // if no bullets, load them from a txt file
+    if([Bullet countOfEntities] == 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *bulletDirectory = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Bullets"];
+            NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:bulletDirectory error:nil];
+            NSPredicate *fltr = [NSPredicate predicateWithFormat:@"self ENDSWITH '.csv'"];
             
-            Manufacturer *newManufacturer = [Manufacturer createEntity];
-            newManufacturer.name       = [splitParts objectAtIndex:0];
-            newManufacturer.country    = [splitParts objectAtIndex:1];
-            if (splitParts.count > 2) newManufacturer.short_name = [splitParts objectAtIndex:2];
-        }   
-        [[NSManagedObjectContext defaultContext] save];
-    }
+            for (NSString *bulletCSVFile in [dirContents filteredArrayUsingPredicate:fltr]) {
+                NSString *csvFullPath = [bulletDirectory stringByAppendingPathComponent:bulletCSVFile];
+                NSString* content = [NSString stringWithContentsOfFile:csvFullPath encoding:NSUTF8StringEncoding error:NULL];
 
-    // load defaults
+                for (NSString *bulletRow in [content componentsSeparatedByString:@"\n"]) {
+                    if ([bulletRow isEqualToString:@""]) {
+                         continue;   
+                    }
+
+                    NSArray *splitParts = [bulletRow componentsSeparatedByString:@","];
+                    
+                    Bullet *newBullet  = [Bullet createEntity];
+                    newBullet.category = [bulletCSVFile stringByDeletingPathExtension];
+                    newBullet.diameter_inches = [NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:0]];
+                    newBullet.brand = [splitParts objectAtIndex:1];
+                    newBullet.name = [splitParts objectAtIndex:2];
+                    newBullet.weight_grains = [NSNumber numberWithInt:[[splitParts objectAtIndex:3] intValue]];
+                    // index 4 is Overall Length (OAL)
+                    newBullet.sectional_density_inches = [NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:5]];
+                    NSMutableDictionary *bc = [[NSMutableDictionary alloc] init];
+                
+                    // G1 is array of fps and bc's
+                    NSMutableArray *g1 = [[NSMutableArray alloc] init];
+                    if ([[splitParts objectAtIndex:6] floatValue] > 0 ) {
+                        [g1 addObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:6]]];
+                        for(int index = 7; index <= 10; index++)
+                            if ([[splitParts objectAtIndex:index] floatValue] > 0) {
+                                [g1 addObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:index]]];
+                                [g1 addObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:index + 4]]];
+                            }
+                        [bc setObject:g1 forKey:@"G1"];
+                    }
+                    
+                    if ([[splitParts objectAtIndex:15] floatValue] > 0 )
+                        [bc setObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:15]] forKey:@"G7"];
+
+                    newBullet.ballistic_coefficient = bc;
+                }   
+            }
+            [[NSManagedObjectContext defaultContext] save];
+            NSLog(@"Loaded Bullets");
+        });
+    }
+    
+    // load preference defaults here
     
     return YES;
 }
@@ -90,10 +149,13 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [MagicalRecordHelpers cleanUp];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:NO forKey:@"tempWeaponDirty"];
+    [defaults removeObjectForKey:@"tempWeapon"];
+    [defaults synchronize];
 }
 
-- (CMMotionManager *)motionManager
-{
+- (CMMotionManager *)motionManager {
     if (!motionManager) 
         motionManager = [[CMMotionManager alloc] init];
     return motionManager;

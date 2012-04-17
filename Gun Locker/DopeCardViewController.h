@@ -14,6 +14,7 @@
 
 @interface DopeCardViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
+@property (strong, nonatomic) IBOutlet UIView *dopeCardSectionHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *weaponLabel;
 @property (weak, nonatomic) IBOutlet UILabel *zeroLabel;
 @property (weak, nonatomic) IBOutlet UILabel *windInfoLabel;

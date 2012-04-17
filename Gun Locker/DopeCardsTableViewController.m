@@ -35,7 +35,7 @@
 
 - (void)setTitle {
     int count = self.selectedWeapon ? [self.selectedWeapon.dope_cards count] : [DopeCard countOfEntities];
-    self.title = [NSString stringWithFormat:@"Dope Card%@ (%d)", (count == 1) ? @"" : @"s", count];
+    self.title = [NSString stringWithFormat:@"Dope Cards (%d)", count];
 }
 
 - (void)loadDopeCards {
@@ -140,7 +140,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath { 
-    cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor lightTextColor] : [UIColor clearColor];
+    cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor clearColor] : [UIColor lightTextColor];
 }  
 
 @end

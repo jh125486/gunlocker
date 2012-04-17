@@ -108,7 +108,7 @@
                 label.textColor = tableBackgroundImage.backgroundColor = [UIColor colorWithRed:0.603 green:0.000 blue:0.000 alpha:1.000];
             }
         }
-        rangeLabel.shadowColor = directionLabel.shadowColor = speedLabel.shadowColor = [UIColor redColor];
+        rangeLabel.textColor = directionLabel.textColor = speedLabel.textColor = [UIColor lightGrayColor];
     } else {
         rangesTableView.backgroundColor = directionsTableView.backgroundColor = speedTableView.backgroundColor = resultBackgroundView.backgroundColor = [UIColor whiteColor];
         resultReticleView.image = [UIImage imageNamed:@"mil_dot_reticle_day"];
@@ -117,8 +117,8 @@
                 label.textColor = [UIColor blackColor];
             }
         }
-        rangeLabel.textColor = directionLabel.textColor = speedLabel.textColor = tableBackgroundImage.backgroundColor = [UIColor lightGrayColor];
-        rangeLabel.shadowColor = directionLabel.shadowColor = speedLabel.shadowColor = [UIColor whiteColor];
+        rangeLabel.textColor = directionLabel.textColor = speedLabel.textColor = [UIColor whiteColor];
+        tableBackgroundImage.backgroundColor = [UIColor lightGrayColor];
     }
     
     [self setInitialSelectedCells];

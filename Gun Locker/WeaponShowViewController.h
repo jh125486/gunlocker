@@ -21,6 +21,9 @@
 
 @interface WeaponShowViewController : UITableViewController <WeaponAddViewControllerDelegate, UIActionSheetDelegate>
 
+
+@property (weak, nonatomic) IBOutlet UILabel *modelLabel;
+@property (weak, nonatomic) IBOutlet UILabel *manufacturerLabel;
 @property (weak, nonatomic) IBOutlet UITableViewCell *nfaCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *notesCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *dopeCardsCell;

@@ -18,7 +18,7 @@
 .380 ACP
 9mm Browning Long
 9mm Largo
-9×19mm Parabellum/Luger
+9×19mm Parabellum
 9x18mm Makarov
 9x23mm Win
 .40 S&W
@@ -61,7 +61,8 @@
 .458 SOCOM
 .458 Win Mag
 .480 Ruger
-.50 BMG/12.7×99mm NATO
+.50 BMG
+12.7×99mm NATO
 .50 Beowulf
 5.45x39mm
 5.7x28mm

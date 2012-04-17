@@ -19,7 +19,7 @@
 - (void)WeaponAddViewControllerDidSave:(WeaponAddEditViewController *)controller;
 @end
 
-@interface WeaponAddEditViewController : UITableViewController <UITextFieldDelegate, CaliberChooserViewControllerDelegate, ManufacturerChooserViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+@interface WeaponAddEditViewController : UITableViewController <UITextFieldDelegate, CaliberChooserViewControllerDelegate, ManufacturerChooserViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate> {
     NSMutableArray *formFields;
     NSNumberFormatter* currencyFormatter;
     Manufacturer *selectedManufacturer;
@@ -28,6 +28,7 @@
 @property (nonatomic, weak) id <WeaponAddViewControllerDelegate> delegate;
 
 @property (weak, nonatomic) Weapon *selectedWeapon;
+
 @property (weak, nonatomic) IBOutlet UITextField *manufacturerTextField;
 @property (weak, nonatomic) IBOutlet UITextField *modelTextField;
 @property (weak, nonatomic) IBOutlet UITextField *caliberTextField;
@@ -51,5 +52,6 @@
 - (IBAction)checkData:(id)sender;
 - (IBAction)photoButtonTapped;
 
-- (void)loadTextfieldsFromWeapon;
+- (void)loadTextfieldsFromWeapon:(Weapon*)weapon;
+
 @end

@@ -9,6 +9,7 @@
 #import "DopeCardViewController.h"
 
 @implementation DopeCardViewController
+@synthesize dopeCardSectionHeaderView;
 @synthesize weaponLabel;
 @synthesize zeroLabel;
 @synthesize windInfoLabel;
@@ -55,6 +56,7 @@
     [self setDropLabel:nil];
     [self setDriftLabel:nil];
     [self setWeaponLabel:nil];
+    [self setDopeCardSectionHeaderView:nil];
     [super viewDidUnload];
 }
 
@@ -94,5 +96,13 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath { 
     cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor clearColor] : [UIColor lightTextColor];
 }  
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return self.dopeCardSectionHeaderView;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return CGRectGetHeight(self.dopeCardSectionHeaderView.frame);
+}
 
 @end

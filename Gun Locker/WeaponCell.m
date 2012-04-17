@@ -37,38 +37,41 @@
 
 - (void)configureWithWeapon:(Weapon *)aWeapon {
     self.weapon = aWeapon;
-    self.manufacturerLabel.text = weapon.manufacturer.name;
+    self.manufacturerLabel.text = weapon.manufacturer.short_name ? weapon.manufacturer.short_name : weapon.manufacturer.name;
 	self.modelLabel.text = [NSString stringWithFormat:@"%@", weapon.model];
-    self.caliberLabel.text =  weapon.caliber ? weapon.caliber : @"";
+    self.caliberLabel.text =  weapon.caliber ? weapon.caliber : @"n/a";
     
-    if (weapon.barrel_length && weapon.threaded_barrel_pitch) {
-        self.barrelInfoLabel.text = [NSString stringWithFormat:@"%@\" barrel threaded %@", aWeapon.barrel_length, aWeapon.threaded_barrel_pitch];
-    } else if (weapon.barrel_length) {
-        self.barrelInfoLabel.text = [NSString stringWithFormat:@"%@\" barrel", weapon.barrel_length];
-    } else if (weapon.threaded_barrel_pitch) {
-        self.barrelInfoLabel.text = [NSString stringWithFormat:@"Barrel threaded %@", weapon.threaded_barrel_pitch];
+    if ((weapon.barrel_length > 0) && !([weapon.threaded_barrel_pitch isEqualToString:@""])) {
+        self.barrelInfoLabel.text = [NSString stringWithFormat:@"%@\" threaded %@", aWeapon.barrel_length, aWeapon.threaded_barrel_pitch];
+    } else if (weapon.barrel_length > 0) {
+        self.barrelInfoLabel.text = [NSString stringWithFormat:@"%@\"", weapon.barrel_length];
+    } else if (!([weapon.threaded_barrel_pitch isEqualToString:@""])) {
+        self.barrelInfoLabel.text = [NSString stringWithFormat:@"threaded %@", weapon.threaded_barrel_pitch];
     } else {
-        self.barrelInfoLabel.text = @"";
+        self.barrelInfoLabel.text = @"n/a";
     }
     
     self.finishLabel.text = weapon.finish;
     
-    self.serialNumberLabel.text = [weapon.serial_number isEqualToString:@""] ? @"" : [NSString stringWithFormat:@"Serial # %@", weapon.serial_number];
+    self.serialNumberLabel.text = [weapon.serial_number isEqualToString:@""] ? @"n/a" : weapon.serial_number;
     
     NSNumberFormatter *currencyFormatter = [[NSNumberFormatter alloc] init];
     [currencyFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
     [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     [currencyFormatter setLocale:[NSLocale currentLocale]];
-    NSString *purchasePrice = [weapon.purchased_price compare:[NSDecimalNumber zero]] ? [NSString stringWithFormat:@"for %@ ", [currencyFormatter stringFromNumber:weapon.purchased_price]] : @"";
+    NSString *purchasePrice = [weapon.purchased_price compare:[NSDecimalNumber zero]] ? [NSString stringWithFormat:@"%@ ", [currencyFormatter stringFromNumber:weapon.purchased_price]] : @"";
     NSString *purchaseDate = (weapon.purchased_date) ? [[weapon.purchased_date distanceOfTimeInWordsOnlyDate] lowercaseString] : @"";
     
-    if ((purchasePrice.length > 0) || (purchaseDate.length > 0))
-        self.purchaseInfoLabel.text = [NSString stringWithFormat:@"Purchased %@%@", purchasePrice, purchaseDate]; 
+    if ((purchasePrice.length > 0) || (purchaseDate.length > 0)) {
+        self.purchaseInfoLabel.text = [NSString stringWithFormat:@"%@%@", purchasePrice, purchaseDate];
+    } else {
+        self.purchaseInfoLabel.text = @"n/a";
+    }
     
     self.malfunctionNumberLabel.text = [NSString stringWithFormat:@"%d", [weapon.malfunctions count]];
     self.malfunctionNumberLabel.textColor = ([weapon.malfunctions count] > 0) ? [UIColor redColor] : [UIColor blackColor];
     
-    self.roundCountLabel.text = [NSString stringWithFormat:@"%@ rounds fired", weapon.round_count];
+    self.roundCountLabel.text = [weapon.round_count stringValue];
     
     if (weapon.photo_thumbnail) {
         [self.photoImageContainer setHidden:NO];
@@ -100,7 +103,9 @@
         self.stampDateLabel.text = [[dateFormat stringFromDate:weapon.stamp.stamp_received] uppercaseString];        
         
         self.stampSerialNumberLabel.text = weapon.serial_number;
+        self.photoImageContainer.frame = CGRectMake(5, 50, 169, 157);
     } else {
+        self.photoImageContainer.frame = CGRectMake(74, 50, 169, 157);
         [self.stampViewContainer setHidden:YES];
     }
     

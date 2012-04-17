@@ -11,7 +11,8 @@
 @implementation Weapon (Helper)
 
 - (NSString *)description {
-    NSMutableString *description = [[NSString stringWithFormat:@"%@ %@", self.manufacturer, self.model] mutableCopy];
+    NSString *manufacturer = self.manufacturer.short_name ? self.manufacturer.short_name : self.manufacturer.name;
+    NSMutableString *description = [[NSString stringWithFormat:@"%@ %@", manufacturer, self.model] mutableCopy];
     if (self.barrel_length) [description appendFormat:@" (%@\")", self.barrel_length];
     
     return [NSString stringWithString:description];

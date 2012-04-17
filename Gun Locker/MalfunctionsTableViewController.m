@@ -65,7 +65,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.title = [NSString stringWithFormat:@"Malfunction%@ (%d)", (count == 1) ? @"" : @"s",count];
+    self.title = [NSString stringWithFormat:@"Malfunctions (%d)", count];
 }
 
 - (void)viewDidUnload {
@@ -98,9 +98,9 @@
     MalfunctionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MalfunctionCell"];
 
     Malfunction *currentMalfunction = [[malfunctions objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-    cell.roundCountLabel.text = [currentMalfunction.round_count stringValue];
+    cell.roundCountLabel.text = [NSString stringWithFormat:@"Occurred at %@", currentMalfunction.round_count];
     cell.failtureText.text = currentMalfunction.failure;
-    cell.fixText.text         = currentMalfunction.fix; 
+    cell.fixText.text      = currentMalfunction.fix; 
     cell.modelLabel.text = (self.selectedWeapon) ? nil : currentMalfunction.weapon.description;
     
     return cell;

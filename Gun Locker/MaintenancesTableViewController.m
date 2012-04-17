@@ -60,7 +60,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.title = [NSString stringWithFormat:@"Maintenance item%@ (%d)", (count == 1) ? @"" : @"s", count];
+    self.title = [NSString stringWithFormat:@"Maintenance (%d)", count];
 }
 
 - (void)viewDidUnload {
@@ -159,7 +159,6 @@
     
     NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
 
-    NSLog(@"sections: %@", [sections description]);
     [self.tableView beginUpdates];
     if([sections containsObject:section]) { 
         NSLog(@"adding to section %@", [section description]);
@@ -183,6 +182,7 @@
 // shorten cell for maintenances without relation malfunctions
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Maintenance *currentMaintenance = [[maintenances objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    NSLog(@"%d", [currentMaintenance.malfunctions count]);
     return ([currentMaintenance.malfunctions count] > 0) ? 186 : 108;
 }
 

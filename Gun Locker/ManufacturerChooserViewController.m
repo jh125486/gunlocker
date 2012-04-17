@@ -11,11 +11,8 @@
 @implementation ManufacturerChooserViewController
 @synthesize delegate;
 @synthesize selectedManufacturer;
-@synthesize searchDisplayController;
-@synthesize searchBar;
-@synthesize searchResults;
-@synthesize collation;
-@synthesize sectionsArray;
+@synthesize searchDisplayController, searchBar, searchResults;
+@synthesize collation, sectionsArray;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -46,8 +43,6 @@
 
     [self configureSections];
 }
-
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -161,10 +156,10 @@
 		NSMutableArray *manufacturersForSection = [newSectionsArray objectAtIndex:index];
 		
 		// If the table view or its contents were editable, you would make a mutable copy here.
-		NSArray *sortedmanufacturersForSection = [collation sortedArrayFromArray:manufacturersForSection collationStringSelector:@selector(name)];
+		NSArray *sortedManufacturersForSection = [collation sortedArrayFromArray:manufacturersForSection collationStringSelector:@selector(name)];
 		
 		// Replace the existing array with the sorted array.
-		[newSectionsArray replaceObjectAtIndex:index withObject:sortedmanufacturersForSection];
+		[newSectionsArray replaceObjectAtIndex:index withObject:sortedManufacturersForSection];
 	}
 	
 	self.sectionsArray = newSectionsArray;    

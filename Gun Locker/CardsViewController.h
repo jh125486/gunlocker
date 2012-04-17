@@ -24,6 +24,7 @@
 
 @property (nonatomic, retain) NSFetchedResultsController  *fetchedResultsController;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *segmentedTypeControl;
+@property (weak, nonatomic) IBOutlet UIImageView *noFilesImageView;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSString *selectedType;
 @property BOOL showPasscodeFlag;

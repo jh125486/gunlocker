@@ -2,10 +2,9 @@
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="BallisticProfile" representedClassName="BallisticProfile" syncable="YES">
         <attribute name="altitude" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="bc" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="bc_model" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="bullet_diameter" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="bullet_mass" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bullet_bc" optional="YES" attributeType="Decimal" minValueString="0.001" maxValueString="0.999" syncable="YES"/>
+        <attribute name="bullet_weight" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <attribute name="density_altitude" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="drag_model" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="muzzle_velocity" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,7 +14,19 @@
         <attribute name="sight_height" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="temperature" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="zero" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="bullet" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Bullet" inverseName="ballistic_profile" inverseEntity="Bullet" syncable="YES"/>
         <relationship name="weapon" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="ballistic_profile" inverseEntity="Weapon" syncable="YES"/>
+    </entity>
+    <entity name="Bullet" representedClassName="Bullet" syncable="YES">
+        <attribute name="ballistic_coefficient" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="diameter_inches" optional="YES" attributeType="Decimal" minValueString="0" maxValueString="1" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sectional_density_inches" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="weight_grains" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="ballistic_profile" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BallisticProfile" inverseName="bullet" inverseEntity="BallisticProfile" syncable="YES"/>
     </entity>
     <entity name="Caliber" representedClassName="Caliber" syncable="YES">
         <attribute name="diameter_inches" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
@@ -111,6 +122,7 @@
     </entity>
     <elements>
         <element name="BallisticProfile" positionX="-144" positionY="-108" width="128" height="270"/>
+        <element name="Bullet" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Caliber" positionX="160" positionY="192" width="128" height="60"/>
         <element name="CommercialLoad" positionX="63" positionY="240" width="128" height="75"/>
         <element name="DopeCard" positionX="160" positionY="192" width="128" height="135"/>

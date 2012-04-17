@@ -16,6 +16,7 @@
 @synthesize fetchedResultsController;
 @synthesize firstInsert = _firstInsert;
 @synthesize segmentedTypeControl, selectedType;
+@synthesize noFilesImageView;
 @synthesize tableView;
 @synthesize showPasscodeFlag;
 
@@ -88,6 +89,11 @@
     [self segmentedTypeControlClicked];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.tableView flashScrollIndicators];  
+}
+
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.fetchedResultsController.delegate = nil;
@@ -95,6 +101,7 @@
     [self setSegmentedTypeControl:nil];
     [self setTableView:nil];
     [self setSelectedType:nil];
+    [self setNoFilesImageView:nil];
     [super viewDidUnload];
 }
 
@@ -248,8 +255,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger count = [[[fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
-    self.navigationItem.title = [NSString stringWithFormat:@"%d card%@ in folder", count, (count == 1) ? @"" : @"s"];
+    self.navigationItem.title = [NSString stringWithFormat:@"%d file%@ in folder", count, (count == 1) ? @"" : @"s"];
 
+    self.noFilesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/%@", self.selectedType]];
+    self.noFilesImageView.hidden = (count != 0);
+    
     return count;
 }
 

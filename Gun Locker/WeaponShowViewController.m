@@ -10,6 +10,8 @@
 
 @implementation WeaponShowViewController
 @synthesize notesCell;
+@synthesize modelLabel;
+@synthesize manufacturerLabel;
 @synthesize nfaCell;
 @synthesize dopeCardsCell;
 @synthesize maintenanceCountLabel;
@@ -30,7 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_Background"]];
     weaponTypeLabel.text = self.selectedWeapon.type;
 }
 
@@ -56,38 +58,8 @@
 }
 
 - (void)setTitleView {
-    // replace titleView with a title and subtitle
-    float titleViewWidth = 320 - ([selectedWeapon.type sizeWithFont:[UIFont boldSystemFontOfSize:12]].width + 94);
-    CGRect headerTitleSubtitleFrame = CGRectMake(0, 0, titleViewWidth, 44);    
-    UIView* _headerTitleSubtitleView = [[UILabel alloc] initWithFrame:headerTitleSubtitleFrame];
-    _headerTitleSubtitleView.backgroundColor = [UIColor clearColor];
-    _headerTitleSubtitleView.autoresizesSubviews = YES;
-    
-    CGRect titleFrame = CGRectMake(0, 2, titleViewWidth, 22);  
-    UILabel *titleView = [[UILabel alloc] initWithFrame:titleFrame];
-    titleView.backgroundColor = [UIColor clearColor];
-    titleView.font = [UIFont boldSystemFontOfSize:20];
-    titleView.textAlignment = UITextAlignmentRight;
-    titleView.textColor = [UIColor whiteColor];
-    titleView.shadowColor = [UIColor darkGrayColor];
-    titleView.shadowOffset = CGSizeMake(0, -1);
-    titleView.text = self.title;
-    titleView.adjustsFontSizeToFitWidth = YES;
-    [_headerTitleSubtitleView addSubview:titleView];
-    
-    CGRect subtitleFrame = CGRectMake(0, 22, titleViewWidth, 44-24);   
-    UILabel *subtitleView = [[UILabel alloc] initWithFrame:subtitleFrame];
-    subtitleView.backgroundColor = [UIColor clearColor];
-    subtitleView.font = [UIFont boldSystemFontOfSize:16];
-    subtitleView.textAlignment = UITextAlignmentRight;
-    subtitleView.textColor = [UIColor whiteColor];
-    subtitleView.shadowColor = [UIColor darkGrayColor];
-    subtitleView.shadowOffset = CGSizeMake(0, -1);
-    subtitleView.text = selectedWeapon.manufacturer.short_name ? selectedWeapon.manufacturer.short_name : selectedWeapon.manufacturer.name;
-    subtitleView.adjustsFontSizeToFitWidth = YES;
-    [_headerTitleSubtitleView addSubview:subtitleView];
-    
-    self.navigationItem.titleView = _headerTitleSubtitleView;
+    self.modelLabel.text = self.title;
+    self.manufacturerLabel.text = selectedWeapon.manufacturer.short_name ? selectedWeapon.manufacturer.short_name : selectedWeapon.manufacturer.name;    
 }
 
 - (void)viewDidUnload {
@@ -99,6 +71,8 @@
     [self setQuickCleanButton:nil];
     [self setAdjustRoundCountStepper:nil];
     [self setWeaponTypeLabel:nil];
+    [self setModelLabel:nil];
+    [self setManufacturerLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -124,9 +98,8 @@
 	tableView.sectionHeaderHeight = headerView.frame.size.height;
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, headerView.frame.size.width - 20, 22)];
 	label.text = [self tableView:tableView titleForHeaderInSection:section];
-	label.font = [UIFont fontWithName:@"Futura-Medium" size:26.0];
-	label.shadowOffset = CGSizeMake(1, 1);
-	label.shadowColor = [UIColor whiteColor];
+	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
+	label.shadowColor = [UIColor clearColor];
 	label.backgroundColor = [UIColor clearColor];
     
 	label.textColor = [UIColor blackColor];

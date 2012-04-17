@@ -43,7 +43,6 @@
 		5319C8C115086F2700795B87 /* IntroSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5319C8C015086F2700795B87 /* IntroSplashViewController.m */; };
 		5319C8C9150923EE00795B87 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5319C8C8150923EE00795B87 /* CoreLocation.framework */; };
 		5319C8CF15093FE600795B87 /* WeaponShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5319C8CE15093FE500795B87 /* WeaponShowViewController.m */; };
-		5319C8D1150956E400795B87 /* icon_angle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5319C8D0150956E400795B87 /* icon_angle.png */; };
 		531D85AE1522A8EE004BB3AA /* delete_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 531D85AD1522A8EE004BB3AA /* delete_button.png */; };
 		531D85B21522B259004BB3AA /* add_photo_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 531D85AF1522B259004BB3AA /* add_photo_highlight@2x.png */; };
 		531D85B31522B259004BB3AA /* add_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 531D85B01522B259004BB3AA /* add_photo@2x.png */; };
@@ -89,8 +88,6 @@
 		53713F84152C28D7009B55B8 /* DopeCardsAddEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53713F83152C28D7009B55B8 /* DopeCardsAddEditViewController.m */; };
 		537797201533A8150096BF7A /* LogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377971F1533A8150096BF7A /* LogsViewController.m */; };
 		5377972915362E1A0096BF7A /* icon_calculators@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5377972815362E190096BF7A /* icon_calculators@2x.png */; };
-		5377972C15363FCF0096BF7A /* BallisticProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377972B15363FCF0096BF7A /* BallisticProfileViewController.m */; };
-		5377973B1537660B0096BF7A /* BallisticProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377973A1537660B0096BF7A /* BallisticProfile.m */; };
 		5377973E153798480096BF7A /* Weapon+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377973D153798480096BF7A /* Weapon+Helper.m */; };
 		537797411537D3B70096BF7A /* Manufacturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 537797401537D3B70096BF7A /* Manufacturer.m */; };
 		537797441537D3B90096BF7A /* Caliber.m in Sources */ = {isa = PBXBuildFile; fileRef = 537797431537D3B90096BF7A /* Caliber.m */; };
@@ -109,6 +106,14 @@
 		5390EDE715152B9000746A93 /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390EDE615152B9000746A93 /* compass.png */; };
 		5391B8251526226F00582865 /* MalfunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5391B8241526226F00582865 /* MalfunctionCell.m */; };
 		539DBDF11515B2A300AB97FB /* tableview_skin.png in Resources */ = {isa = PBXBuildFile; fileRef = 539DBDF01515B2A300AB97FB /* tableview_skin.png */; };
+		53A0E66815390F8B00846421 /* BulletChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A0E66715390F8B00846421 /* BulletChooserViewController.m */; };
+		53A0E66B153954F200846421 /* ProfileAddEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A0E66A153954F100846421 /* ProfileAddEditViewController.m */; };
+		53A0E66E153A245C00846421 /* BallisticProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A0E66D153A245C00846421 /* BallisticProfile.m */; };
+		53A0E687153A77FD00846421 /* Bullets in Resources */ = {isa = PBXBuildFile; fileRef = 53A0E686153A77FD00846421 /* Bullets */; };
+		53A0E68A153A80DA00846421 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A0E689153A80DA00846421 /* Bullet.m */; };
+		53A0E695153D3D0500846421 /* tableView_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A0E693153D3D0200846421 /* tableView_background.png */; };
+		53A0E696153D3D0500846421 /* tableView_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A0E694153D3D0300846421 /* tableView_background@2x.png */; };
+		53A0E698153D597000846421 /* Table in Resources */ = {isa = PBXBuildFile; fileRef = 53A0E697153D597000846421 /* Table */; };
 		53A6C86914F498C10045C186 /* ManufacturerChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A6C86814F498C10045C186 /* ManufacturerChooserViewController.m */; };
 		53A6C88414F5B8ED0045C186 /* CaliberChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A6C88314F5B8ED0045C186 /* CaliberChooserViewController.m */; };
 		53A92F5B152CF70D00639A8B /* icon_BDC@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A92F5A152CF70D00639A8B /* icon_BDC@2x.png */; };
@@ -154,7 +159,6 @@
 		53EBBD9815170E5100488E63 /* mil_dot_reticle_day.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9615170E5100488E63 /* mil_dot_reticle_day.png */; };
 		53EBBD9915170E5100488E63 /* mil_dot_reticle_night.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9715170E5100488E63 /* mil_dot_reticle_night.png */; };
 		53EBBD9B15171B1600488E63 /* mil_dot_reticle_bullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9A15171B1600488E63 /* mil_dot_reticle_bullet.png */; };
-		53F272DB150D8D84005A329F /* locker_tableview_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F272DA150D8D84005A329F /* locker_tableview_background.png */; };
 		53F272DF150E5BFE005A329F /* DefaultButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F272DE150E5BFE005A329F /* DefaultButton.m */; };
 		53F27345150E9E75005A329F /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F27344150E9E75005A329F /* button.png */; };
 		53F27347150EB1E4005A329F /* button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F27346150EB1E4005A329F /* button@2x.png */; };
@@ -249,7 +253,6 @@
 		5319C8C8150923EE00795B87 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5319C8CD15093FE500795B87 /* WeaponShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeaponShowViewController.h; sourceTree = "<group>"; };
 		5319C8CE15093FE500795B87 /* WeaponShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeaponShowViewController.m; sourceTree = "<group>"; };
-		5319C8D0150956E400795B87 /* icon_angle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_angle.png; path = "Gun Locker/Images/icon_angle.png"; sourceTree = SOURCE_ROOT; };
 		531D85AD1522A8EE004BB3AA /* delete_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_button.png; sourceTree = "<group>"; };
 		531D85AF1522B259004BB3AA /* add_photo_highlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_photo_highlight@2x.png"; sourceTree = "<group>"; };
 		531D85B01522B259004BB3AA /* add_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_photo@2x.png"; sourceTree = "<group>"; };
@@ -306,10 +309,6 @@
 		5377971E1533A8150096BF7A /* LogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogsViewController.h; sourceTree = "<group>"; };
 		5377971F1533A8150096BF7A /* LogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogsViewController.m; sourceTree = "<group>"; };
 		5377972815362E190096BF7A /* icon_calculators@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_calculators@2x.png"; sourceTree = "<group>"; };
-		5377972A15363FCF0096BF7A /* BallisticProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfileViewController.h; sourceTree = "<group>"; };
-		5377972B15363FCF0096BF7A /* BallisticProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfileViewController.m; sourceTree = "<group>"; };
-		537797391537660B0096BF7A /* BallisticProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfile.h; sourceTree = "<group>"; };
-		5377973A1537660B0096BF7A /* BallisticProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfile.m; sourceTree = "<group>"; };
 		5377973C153798480096BF7A /* Weapon+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Weapon+Helper.h"; sourceTree = "<group>"; };
 		5377973D153798480096BF7A /* Weapon+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Weapon+Helper.m"; sourceTree = "<group>"; };
 		5377973F1537D3B70096BF7A /* Manufacturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manufacturer.h; sourceTree = "<group>"; };
@@ -338,6 +337,18 @@
 		5391B8231526226F00582865 /* MalfunctionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MalfunctionCell.h; sourceTree = "<group>"; };
 		5391B8241526226F00582865 /* MalfunctionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MalfunctionCell.m; sourceTree = "<group>"; };
 		539DBDF01515B2A300AB97FB /* tableview_skin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableview_skin.png; sourceTree = "<group>"; };
+		53A0E66615390F8B00846421 /* BulletChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulletChooserViewController.h; sourceTree = "<group>"; };
+		53A0E66715390F8B00846421 /* BulletChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BulletChooserViewController.m; sourceTree = "<group>"; };
+		53A0E669153954F100846421 /* ProfileAddEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileAddEditViewController.h; sourceTree = "<group>"; };
+		53A0E66A153954F100846421 /* ProfileAddEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileAddEditViewController.m; sourceTree = "<group>"; };
+		53A0E66C153A245C00846421 /* BallisticProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfile.h; sourceTree = "<group>"; };
+		53A0E66D153A245C00846421 /* BallisticProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfile.m; sourceTree = "<group>"; };
+		53A0E686153A77FD00846421 /* Bullets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Bullets; sourceTree = "<group>"; };
+		53A0E688153A80DA00846421 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bullet.h; sourceTree = "<group>"; };
+		53A0E689153A80DA00846421 /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bullet.m; sourceTree = "<group>"; };
+		53A0E693153D3D0200846421 /* tableView_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableView_background.png; sourceTree = "<group>"; };
+		53A0E694153D3D0300846421 /* tableView_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableView_background@2x.png"; sourceTree = "<group>"; };
+		53A0E697153D597000846421 /* Table */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Table; sourceTree = "<group>"; };
 		53A6C86714F498C10045C186 /* ManufacturerChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManufacturerChooserViewController.h; sourceTree = "<group>"; };
 		53A6C86814F498C10045C186 /* ManufacturerChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManufacturerChooserViewController.m; sourceTree = "<group>"; };
 		53A6C88214F5B8ED0045C186 /* CaliberChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaliberChooserViewController.h; sourceTree = "<group>"; };
@@ -400,7 +411,6 @@
 		53EBBD9615170E5100488E63 /* mil_dot_reticle_day.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mil_dot_reticle_day.png; sourceTree = "<group>"; };
 		53EBBD9715170E5100488E63 /* mil_dot_reticle_night.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mil_dot_reticle_night.png; sourceTree = "<group>"; };
 		53EBBD9A15171B1600488E63 /* mil_dot_reticle_bullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mil_dot_reticle_bullet.png; sourceTree = "<group>"; };
-		53F272DA150D8D84005A329F /* locker_tableview_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = locker_tableview_background.png; sourceTree = "<group>"; };
 		53F272DD150E5BFE005A329F /* DefaultButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultButton.h; sourceTree = "<group>"; };
 		53F272DE150E5BFE005A329F /* DefaultButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultButton.m; sourceTree = "<group>"; };
 		53F27344150E9E75005A329F /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
@@ -492,12 +502,15 @@
 		530DDEFF14EEB6D800F1BC7F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				53F2735915112D36005A329F /* NSDate+Formatting.h */,
-				53F2735A15112D37005A329F /* NSDate+Formatting.m */,
+				53A0E686153A77FD00846421 /* Bullets */,
+				5333AA8914F9C63C00D62E50 /* calibers.txt */,
 				530DDF0014EEB6D800F1BC7F /* Gun Locker-Info.plist */,
+				530DDF0614EEB6D800F1BC7F /* Gun Locker-Prefix.pch */,
 				530DDF0114EEB6D800F1BC7F /* InfoPlist.strings */,
 				530DDF0414EEB6D800F1BC7F /* main.m */,
-				530DDF0614EEB6D800F1BC7F /* Gun Locker-Prefix.pch */,
+				532EE03C14F74FFB008A9558 /* manufacturers.txt */,
+				53F2735915112D36005A329F /* NSDate+Formatting.h */,
+				53F2735A15112D37005A329F /* NSDate+Formatting.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -517,7 +530,6 @@
 				531D85AD1522A8EE004BB3AA /* delete_button.png */,
 				531D85B11522B259004BB3AA /* delete_button@2x.png */,
 				53F6AAC814FDE67E0079F613 /* Icons */,
-				53F272DA150D8D84005A329F /* locker_tableview_background.png */,
 				53EBBD9A15171B1600488E63 /* mil_dot_reticle_bullet.png */,
 				53EBBD9615170E5100488E63 /* mil_dot_reticle_day.png */,
 				53EBBD9715170E5100488E63 /* mil_dot_reticle_night.png */,
@@ -541,6 +553,9 @@
 				53AC4E7515242FEB0015A152 /* Stamp_NFA@2x.png */,
 				53BB6031152A227100625CC7 /* sticky_button.png */,
 				53BB6032152A227100625CC7 /* sticky_button@2x.png */,
+				53A0E697153D597000846421 /* Table */,
+				53A0E693153D3D0200846421 /* tableView_background.png */,
+				53A0E694153D3D0300846421 /* tableView_background@2x.png */,
 				53EBBD941516F36C00488E63 /* tableview_header.png */,
 				539DBDF01515B2A300AB97FB /* tableview_skin.png */,
 				530EA40314FC7AE000E132FB /* Tiles */,
@@ -695,8 +710,10 @@
 				53859F7A1504167A00ABA0B1 /* BallisticsViewController.m */,
 				5348C6921506E5EE00147AAF /* WhizWheelViewController.h */,
 				5348C6931506E5EE00147AAF /* WhizWheelViewController.m */,
-				5377972A15363FCF0096BF7A /* BallisticProfileViewController.h */,
-				5377972B15363FCF0096BF7A /* BallisticProfileViewController.m */,
+				53A0E669153954F100846421 /* ProfileAddEditViewController.h */,
+				53A0E66A153954F100846421 /* ProfileAddEditViewController.m */,
+				53A0E66615390F8B00846421 /* BulletChooserViewController.h */,
+				53A0E66715390F8B00846421 /* BulletChooserViewController.m */,
 			);
 			name = Ballistics;
 			sourceTree = "<group>";
@@ -823,11 +840,10 @@
 		53B00A1114F32569000A560F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				537797391537660B0096BF7A /* BallisticProfile.h */,
-				5377973A1537660B0096BF7A /* BallisticProfile.m */,
+				53A0E688153A80DA00846421 /* Bullet.h */,
+				53A0E689153A80DA00846421 /* Bullet.m */,
 				537797421537D3B90096BF7A /* Caliber.h */,
 				537797431537D3B90096BF7A /* Caliber.m */,
-				5333AA8914F9C63C00D62E50 /* calibers.txt */,
 				537FE56D15315DAF0099CD20 /* DopeCard.h */,
 				537FE56E15315DAF0099CD20 /* DopeCard.m */,
 				53E31489151E9B1A005B414F /* Maintenance.h */,
@@ -836,7 +852,6 @@
 				53E3148D151E9B1A005B414F /* Malfunction.m */,
 				5377973F1537D3B70096BF7A /* Manufacturer.h */,
 				537797401537D3B70096BF7A /* Manufacturer.m */,
-				532EE03C14F74FFB008A9558 /* manufacturers.txt */,
 				53FBDA0E151D9FA200DD5180 /* Note.h */,
 				53FBDA0F151D9FA200DD5180 /* Note.m */,
 				53591A3E152181A000516C4C /* StampInfo.h */,
@@ -847,6 +862,8 @@
 				537797461537D3BA0096BF7A /* Weapon.m */,
 				53CA98DF150A84E50060A1E8 /* Weather.h */,
 				53CA98E0150A84E50060A1E8 /* Weather.m */,
+				53A0E66C153A245C00846421 /* BallisticProfile.h */,
+				53A0E66D153A245C00846421 /* BallisticProfile.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -913,7 +930,6 @@
 				53A92F5E152F975700639A8B /* icon_settings@2x.png */,
 				53A92F5A152CF70D00639A8B /* icon_BDC@2x.png */,
 				5390EDE615152B9000746A93 /* compass.png */,
-				5319C8D0150956E400795B87 /* icon_angle.png */,
 				53B7FF6914FEB299007B268A /* icon_BDC.png */,
 				53B7FF6A14FEB299007B268A /* icon_calculators.png */,
 				53B7FF6B14FEB299007B268A /* icon_card_file.png */,
@@ -1022,8 +1038,6 @@
 				53859F741504066100ABA0B1 /* brushed_steel_background.png in Resources */,
 				5348C69B1507188D00147AAF /* picker_overlay.png in Resources */,
 				5348C69D150719A600147AAF /* picker_footer_overlay.png in Resources */,
-				5319C8D1150956E400795B87 /* icon_angle.png in Resources */,
-				53F272DB150D8D84005A329F /* locker_tableview_background.png in Resources */,
 				53F27345150E9E75005A329F /* button.png in Resources */,
 				53F27347150EB1E4005A329F /* button@2x.png in Resources */,
 				53AF066B1512A605000B9943 /* KKPasscodeLock.bundle in Resources */,
@@ -1079,6 +1093,10 @@
 				53A92F60152F975700639A8B /* icon_link@2x.png in Resources */,
 				53A92F61152F975700639A8B /* icon_settings@2x.png in Resources */,
 				5377972915362E1A0096BF7A /* icon_calculators@2x.png in Resources */,
+				53A0E687153A77FD00846421 /* Bullets in Resources */,
+				53A0E695153D3D0500846421 /* tableView_background.png in Resources */,
+				53A0E696153D3D0500846421 /* tableView_background@2x.png in Resources */,
+				53A0E698153D597000846421 /* Table in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1148,12 +1166,14 @@
 				53D2633F1531EB4600ECA9EE /* DopeCardRowCell.m in Sources */,
 				53D263451531EBD000ECA9EE /* DopeCardViewController.m in Sources */,
 				537797201533A8150096BF7A /* LogsViewController.m in Sources */,
-				5377972C15363FCF0096BF7A /* BallisticProfileViewController.m in Sources */,
-				5377973B1537660B0096BF7A /* BallisticProfile.m in Sources */,
 				5377973E153798480096BF7A /* Weapon+Helper.m in Sources */,
 				537797411537D3B70096BF7A /* Manufacturer.m in Sources */,
 				537797441537D3B90096BF7A /* Caliber.m in Sources */,
 				537797471537D3BA0096BF7A /* Weapon.m in Sources */,
+				53A0E66815390F8B00846421 /* BulletChooserViewController.m in Sources */,
+				53A0E66B153954F200846421 /* ProfileAddEditViewController.m in Sources */,
+				53A0E66E153A245C00846421 /* BallisticProfile.m in Sources */,
+				53A0E68A153A80DA00846421 /* Bullet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

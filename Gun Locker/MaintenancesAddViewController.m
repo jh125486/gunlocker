@@ -67,7 +67,9 @@
         malfunctionElement.onImage  = [UIImage imageNamed:@"icon_link"];
         malfunctionElement.offImage = [UIImage imageNamed:@"icon_delink"];
         malfunctionElement.key = [NSString stringWithFormat:@"%d", [malfunctions indexOfObject:malfunction]];
+//        malfunctionElement.onSelected
         [malfunctionSection addElement:malfunctionElement];
+        NSLog(@"%@", malfunctionElement.controllerAction);
     }
     
     [_root addSection:infoSection];
@@ -105,6 +107,7 @@
     newMaintenance.round_count  = [dict valueForKey:@"round_count"];
     newMaintenance.action_performed = [dict valueForKey:@"action_performed"];
     newMaintenance.malfunctions = linkedMalfunctions;
+    NSLog(@"linked %@", linkedMalfunctions);
     [[NSManagedObjectContext defaultContext] save];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"newMaintenance" object:newMaintenance];
@@ -119,9 +122,10 @@
     }   
 }
 
-- (void)linkedMalfunctionChanged:(QBooleanElement *)element {
-    (element.boolValue) ? [linkedMalfunctions addObject:[malfunctions objectAtIndex:[element.key intValue]]] : 
-                          [linkedMalfunctions removeObject:[malfunctions objectAtIndex:[element.key intValue]]];
+- (void)linkedMalfunctionChanged:(QElement *)element {
+    NSLog(@"%d hit", __LINE__);
+//    (element.boolValue) ? [linkedMalfunctions addObject:[malfunctions objectAtIndex:[element.key intValue]]] : 
+//                          [linkedMalfunctions removeObject:[malfunctions objectAtIndex:[element.key intValue]]];
 }
 
 @end

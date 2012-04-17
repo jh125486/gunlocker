@@ -215,7 +215,7 @@
     
     editController.navigationItem.leftBarButtonItem = cancelButton;
     editController.navigationItem.rightBarButtonItem = doneButton;   
-    editController.navigationItem.title=@"Editing";
+    editController.navigationItem.title=@"Edit Details";
 
     [self presentModalViewController:navigationController animated:NO];
 }
