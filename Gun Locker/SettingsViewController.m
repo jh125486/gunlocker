@@ -34,6 +34,7 @@
     [super viewDidLoad];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
     showNFAInformationSwitch.on = [defaults boolForKey:@"showNFADetails"];
     self.passcodeCell.detailTextLabel.text   = ([[KKPasscodeLock sharedLock] isPasscodeRequired]) ? @"On" : @"Off";
     rangeUnitsControl.selectedSegmentIndex   = [defaults integerForKey:@"rangeUnitsControl"];
@@ -63,8 +64,7 @@
     [super viewWillDisappear:animated];
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [self setNightModeControl:nil];
     [self setRangeUnitsControl:nil];
     [self setReticleUnitsControl:nil];
@@ -76,11 +76,9 @@
     [self setDirectionControl:nil];
     [self setShowNFAInformationSwitch:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 

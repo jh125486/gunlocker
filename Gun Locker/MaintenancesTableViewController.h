@@ -21,5 +21,6 @@
 }
 
 @property (nonatomic, strong) Weapon *selectedWeapon;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @end

@@ -10,6 +10,7 @@
 
 @implementation MaintenancesTableViewController
 @synthesize selectedWeapon;
+@synthesize titleLabel;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -21,8 +22,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     maintenances = [[NSMutableDictionary alloc] init];
     sections = [[NSMutableArray alloc] init];
+
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
 
     //Register addNewMaintenanceToArray to recieve "newMaintenance" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewMaintenanceToArray:) name:@"newMaintenance" object:nil];
@@ -60,12 +64,13 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.title = [NSString stringWithFormat:@"Maintenance (%d)", count];
+    self.titleLabel.text = [NSString stringWithFormat:@"Maintenance items (%d)", count];
 }
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setSelectedWeapon:nil];
+    [self setTitleLabel:nil];
     [super viewDidUnload];
 }
 

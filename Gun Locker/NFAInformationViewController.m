@@ -9,8 +9,10 @@
 #import "NFAInformationViewController.h"
 
 @implementation NFAInformationViewController
-@synthesize editRoot;
+@synthesize line1Label;
+@synthesize line2Label;
 @synthesize selectedWeapon;
+@synthesize timeLineFooterLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -21,107 +23,110 @@
 }
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
     if (!self.root) {
+        DataManager *dataManager = [DataManager sharedManager];
+        
+        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 31)];
+        footerView.backgroundColor = [UIColor clearColor];
+        footerView.autoresizesSubviews = YES;
+        self.timeLineFooterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 31)];
+        self.timeLineFooterLabel.backgroundColor = [UIColor clearColor];
+        self.timeLineFooterLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0];
+        self.timeLineFooterLabel.textAlignment = UITextAlignmentCenter;
+        self.timeLineFooterLabel.textColor = [UIColor colorWithRed:0.298039 green:0.337255 blue:0.423529 alpha:1];
+        self.timeLineFooterLabel.shadowColor = [UIColor whiteColor];
+        self.timeLineFooterLabel.shadowOffset = CGSizeMake(0, 1);
+        self.timeLineFooterLabel.text = @"";
+        self.timeLineFooterLabel.adjustsFontSizeToFitWidth = YES;
+        [footerView addSubview:self.timeLineFooterLabel];
+        
         // replace titleView with a title and subtitle
         // dont show if coming from weapon controller
         if (![self.navigationController.navigationBar.topItem.title isEqualToString:selectedWeapon.model]) {
-            float titleViewWidth = 226 - ([self.navigationController.navigationBar.topItem.title sizeWithFont:[UIFont boldSystemFontOfSize:12]].width);
-            CGRect headerTitleSubtitleFrame = CGRectMake(0, 0, titleViewWidth, 44);    
-            UIView* _headerTitleSubtitleView = [[UILabel alloc] initWithFrame:headerTitleSubtitleFrame];
-            _headerTitleSubtitleView.backgroundColor = [UIColor clearColor];
-            _headerTitleSubtitleView.autoresizesSubviews = YES;
-            
-            CGRect titleFrame = CGRectMake(0, 2, titleViewWidth, 22);  
-            UILabel *titleView = [[UILabel alloc] initWithFrame:titleFrame];
-            titleView.backgroundColor = [UIColor clearColor];
-            titleView.font = [UIFont boldSystemFontOfSize:20];
-            titleView.textAlignment = UITextAlignmentRight;
-            titleView.textColor = [UIColor whiteColor];
-            titleView.shadowColor = [UIColor darkGrayColor];
-            titleView.shadowOffset = CGSizeMake(0, -1);
-            titleView.text = self.title;
-            titleView.adjustsFontSizeToFitWidth = YES;
-            [_headerTitleSubtitleView addSubview:titleView];
-            
-            CGRect subtitleFrame = CGRectMake(0, 22, titleViewWidth, 44-24);   
-            UILabel *subtitleView = [[UILabel alloc] initWithFrame:subtitleFrame];
-            subtitleView.backgroundColor = [UIColor clearColor];
-            subtitleView.font = [UIFont boldSystemFontOfSize:16];
-            subtitleView.textAlignment = UITextAlignmentRight;
-            subtitleView.textColor = [UIColor whiteColor];
-            subtitleView.shadowColor = [UIColor darkGrayColor];
-            subtitleView.shadowOffset = CGSizeMake(0, -1);
-            subtitleView.text = selectedWeapon.model;
-            subtitleView.adjustsFontSizeToFitWidth = YES;
-            [_headerTitleSubtitleView addSubview:subtitleView];
-            
-            self.navigationItem.titleView = _headerTitleSubtitleView;
+            self.line1Label.text = @"NFA Information";
+            self.line2Label.text = selectedWeapon.model;
+        } else {
+            self.line1Label.text = @"NFA";
+            self.line2Label.text = @"Information";
         }
         
         StampInfo *stamp = self.selectedWeapon.stamp;
-
-        nfa_types  = [[NSArray alloc] initWithObjects:@"SBR", @"SBS", @"Suppressor", @"Machinegun", @"DD", @"AOW",nil];
-        transfer_types = [[NSArray alloc] initWithObjects:@"Form 1", @"Form 4", nil];
         
         QRootElement *_root = [[QRootElement alloc] init];
         
         _root.grouped = YES;
-        _root.title = @"NFA Details";
         
         QSection *infoSection = [[QSection alloc] init];
-        QSection *timelineSection = [[QSection alloc] initWithTitle:@"Process Timeline"];
+        QSection *timeLineSection = [[QSection alloc] initWithTitle:@"Process Timeline"];
+        timeLineSection.footerView = footerView;
         
-        QLabelElement *nfaType = [[QLabelElement alloc] initWithTitle:@"NFA type" 
-                                                        Value:stamp.nfa_type ? [nfa_types objectAtIndex:[stamp.nfa_type intValue]] : @"∅"];
+        QRadioElement *nfaType = [[QRadioElement alloc] initWithItems:dataManager.nfaTypes
+                                                             selected:stamp.nfa_type ? [stamp.nfa_type intValue] : -1
+                                                                title:@"NFA Type"];
+        
         nfaType.key = @"nfa_type";
         
-        QLabelElement *transferType = [[QLabelElement alloc] initWithTitle:@"Transfer type" 
-                                                Value:stamp.transfer_type ? [transfer_types objectAtIndex:[stamp.transfer_type intValue]] : @"∅"];
+        QRadioElement *transferType = [[QRadioElement alloc] initWithItems:dataManager.transferTypes
+                                                                  selected:stamp.transfer_type ? [stamp.transfer_type intValue] : -1
+                                                                     title:@"Transfer Type"];
         transferType.key = @"transfer_type";
+        
+        QDateTimeInlineElement *formSentDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Form Sent" date:stamp.form_sent];
+        formSentDate.key = @"form_sent";
+        
+        QDateTimeInlineElement *checkCashedDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Check Cashed" date:stamp.check_cashed];
+        checkCashedDate.key = @"check_cashed";
+        
+        QDateTimeInlineElement *wentPendingDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Went Pending" date:stamp.went_pending];
+        wentPendingDate.key = @"went_pending";
+        
+        QDateTimeInlineElement *stampReceivedDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Stamp Received" date:stamp.stamp_received];
+        stampReceivedDate.key = @"stamp_received";
 
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateStyle:NSDateFormatterMediumStyle];
-
-        QLabelElement *formSent = [[QLabelElement alloc] initWithTitle:@"Form sent" 
-                                                                 Value:stamp.form_sent ? [dateFormat stringFromDate:stamp.form_sent] : @"∅"];
-        formSent.key = @"form_sent";
-        
-        QLabelElement *checkCashed = [[QLabelElement alloc] initWithTitle:@"Check cashed" 
-                                                            Value:stamp.check_cashed ? [dateFormat stringFromDate:stamp.check_cashed] : @"∅"];
-        checkCashed.key = @"check_cashed";
-        
-        QLabelElement *wentPending = [[QLabelElement alloc] initWithTitle:@"Went pending" 
-                                                            Value:stamp.went_pending ? [dateFormat stringFromDate:stamp.went_pending] : @"∅"];
-        wentPending.key = @"went_pending";
-        
-        QLabelElement *stampReceived = [[QLabelElement alloc] initWithTitle:@"Stamp received" 
-                                                              Value:stamp.stamp_received ? [dateFormat stringFromDate:stamp.stamp_received] : @"∅"];
-        stampReceived.key = @"stamp_received";
+        stampReceivedDate.onValueChanged = formSentDate.onValueChanged = ^{[self setTimeLineFooter];};
+        formSentDate.maximumDate = checkCashedDate.maximumDate = wentPendingDate.maximumDate = stampReceivedDate.maximumDate = [NSDate date];
+        formSentDate.mode = checkCashedDate.mode = wentPendingDate.mode = stampReceivedDate.mode = UIDatePickerModeDate;
         
         [infoSection addElement:nfaType];
         [infoSection addElement:transferType];
         
-        [timelineSection addElement:formSent];
-        [timelineSection addElement:checkCashed];
-        [timelineSection addElement:wentPending];
-        [timelineSection addElement:stampReceived];
+        [timeLineSection addElement:formSentDate];
+        [timeLineSection addElement:checkCashedDate];
+        [timeLineSection addElement:wentPendingDate];
+        [timeLineSection addElement:stampReceivedDate];
+        timeLineSection.key = @"timeLineSection";
+                
+        QSection *buttonSection = [[QSection alloc] init];
+        QButtonElement *button = [[QButtonElement alloc] initWithTitle:@"Clear NFA Information"];
+        button.onSelected = ^{
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                     delegate:self
+                                                            cancelButtonTitle:@"Cancel"
+                                                       destructiveButtonTitle:@"Clear"
+                                                            otherButtonTitles:nil];
+            [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
+        };
         
-        if (stamp.form_sent && stamp.stamp_received)
-            timelineSection.footer = [NSString stringWithFormat:@"%.0f day wait", [stamp.stamp_received timeIntervalSinceDate:stamp.form_sent] / (60*60*24.0)];
-            
+        [buttonSection addElement:button];
+        
         [_root addSection:infoSection];
-        [_root addSection:timelineSection];
-            
-        self.root = _root;
+        [_root addSection:timeLineSection];
+        [_root addSection:buttonSection];
 
-        [self loadView];
-    }
-    [super viewDidLoad];
+        self.root = _root;
+                
+        [self setTimeLineFooter];
+    }    
+    [self loadView];
 }
 
 - (void)viewDidUnload {
-    [self setEditRoot:nil];
     [self setSelectedWeapon:nil];
+    [self setLine1Label:nil];
+    [self setLine2Label:nil];
+    [self setTimeLineFooterLabel:nil];
     [super viewDidUnload];
 }
 
@@ -129,141 +134,18 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
-- (QRootElement *)editNFA {
-    StampInfo *stamp = self.selectedWeapon.stamp;
-    editRoot = [[QRootElement alloc] init];
-    
-    editRoot.grouped = YES;
-    editRoot.title = @"NFA Details";
-    
-    QSection *infoSection = [[QSection alloc] init];
-    QSection *timelineSection = [[QSection alloc] initWithTitle:@"Process Timeline"];
-    
-    QRadioElement *nfaType = [[QRadioElement alloc] initWithItems:nfa_types 
-                                                         selected:stamp.nfa_type ? [stamp.nfa_type intValue] : -1
-                                                            title:@"NFA type"];
-    
-	nfaType.key = @"nfa_type";
-
-    QRadioElement *transferType = [[QRadioElement alloc] initWithItems:transfer_types
-                                                              selected:stamp.transfer_type ? [stamp.transfer_type intValue] : -1
-                                                                 title:@"Transfer type"];
-	transferType.key = @"transfer_type";
-    
-    QDateTimeInlineElement *formSentDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Form sent" 
-                                                                                    date:stamp.form_sent];
-    formSentDate.mode = UIDatePickerModeDate;
-    formSentDate.key = @"form_sent";
-    
-    QDateTimeInlineElement *checkCashedDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Check cashed" 
-                                                                                       date:stamp.check_cashed];
-    checkCashedDate.mode = UIDatePickerModeDate;
-    checkCashedDate.key = @"check_cashed";
-    
-    QDateTimeInlineElement *wentPendingDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Went pending" 
-                                                                                       date:stamp.went_pending];
-    wentPendingDate.mode = UIDatePickerModeDate;
-    wentPendingDate.key = @"went_pending";
-    
-    QDateTimeInlineElement *stampReceivedDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Stamp received" 
-                                                                                         date:stamp.stamp_received];
-    stampReceivedDate.mode = UIDatePickerModeDate;
-    stampReceivedDate.key = @"stamp_received";
-    
-    [infoSection addElement:nfaType];
-    [infoSection addElement:transferType];
-    
-    [timelineSection addElement:formSentDate];
-    [timelineSection addElement:checkCashedDate];
-    [timelineSection addElement:wentPendingDate];
-    [timelineSection addElement:stampReceivedDate];
-    
-    [editRoot addSection:infoSection];
-    [editRoot addSection:timelineSection];
-
-    QSection *buttonSection = [[QSection alloc] init];
-    QButtonElement *button = [[QButtonElement alloc] initWithTitle:@"Delete NFA Details"];
-	button.onSelected = ^{
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                 delegate:self
-                                                        cancelButtonTitle:@"Cancel"
-                                                   destructiveButtonTitle:@"Delete"
-                                                        otherButtonTitles:nil];
-        [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
-	};
-    
-    [buttonSection addElement:button];
-    [editRoot addSection:buttonSection];
-    
-    return editRoot;
-}
-- (IBAction)editButtonTapped:(id)sender {
-    QuickDialogController *editController = [[NFAInformationViewController alloc] initWithRoot:[self editNFA]];
-    [editController loadView];
-    
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:editController];
-    
-    UIBarButtonItem *doneButton=[[UIBarButtonItem alloc] initWithTitle:@"Done" 
-                                                                 style:UIBarButtonItemStyleDone
-                                                                target:self 
-                                                                action:@selector(doneTapped:)];  
-    UIBarButtonItem *cancelButton=[[UIBarButtonItem alloc] initWithTitle:@"Cancel" 
-                                                                   style:UIBarButtonSystemItemCancel
-                                                                  target:self 
-                                                                  action:@selector(dismissEditView:)];  
-    
-    editController.navigationItem.leftBarButtonItem = cancelButton;
-    editController.navigationItem.rightBarButtonItem = doneButton;   
-    editController.navigationItem.title=@"Edit Details";
-
-    [self presentModalViewController:navigationController animated:NO];
-}
-
-
-- (void)doneTapped:(id)sender {
-    StampInfo *stamp =  (self.selectedWeapon.stamp) ? self.selectedWeapon.stamp: [StampInfo createEntity];
-    [editRoot fetchValueIntoObject:stamp];
-    
-    self.selectedWeapon.stamp = stamp;
-    
-    [[NSManagedObjectContext defaultContext] save];
-    
-    [self reloadTableWith:stamp];
-    [self dismissEditView:nil];
-}
-
-- (void)dismissEditView:(id)sender {
-    [self dismissModalViewControllerAnimated:NO];    
-}
-
-- (void)reloadTableWith:(StampInfo *)stamp {
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateStyle:NSDateFormatterMediumStyle];
-
-    ((QLabelElement *)[self.root elementWithKey:@"nfa_type"]).value = stamp.nfa_type ? [nfa_types objectAtIndex:[stamp.nfa_type intValue]] : nil;
-    ((QLabelElement *)[self.root elementWithKey:@"transfer_type"]).value = stamp.transfer_type ? [transfer_types objectAtIndex:[stamp.transfer_type intValue]] : nil;
-    ((QLabelElement *)[self.root elementWithKey:@"form_sent"]).value        = [dateFormat stringFromDate:stamp.form_sent];
-    ((QLabelElement *)[self.root elementWithKey:@"check_cashed"]).value     = [dateFormat stringFromDate:stamp.check_cashed];
-    ((QLabelElement *)[self.root elementWithKey:@"went_pending"]).value     = [dateFormat stringFromDate:stamp.went_pending];
-    ((QLabelElement *)[self.root elementWithKey:@"stamp_received"]).value   = [dateFormat stringFromDate:stamp.stamp_received];
-
-    QSection *timeLineSecton = [[self.root sections] objectAtIndex:1];
-    if (stamp.form_sent && stamp.stamp_received) {
-        timeLineSecton.footer = [NSString stringWithFormat:@"%.0f day wait", [stamp.stamp_received timeIntervalSinceDate:stamp.form_sent] / (60*60*24.0)];
-    } else {
-        timeLineSecton.footer = @"";
-    }
-        
-    [self.quickDialogTableView reloadData];
+- (void)setTimeLineFooter {
+    NSDate *formSent = ((QDateTimeInlineElement*)[self.root elementWithKey:@"form_sent"]).dateValue;
+    NSDate *stampReceived = ((QDateTimeInlineElement*)[self.root elementWithKey:@"stamp_received"]).dateValue;
+    self.timeLineFooterLabel.text = (formSent && stampReceived) ? [NSString stringWithFormat:@"%.0f day wait", [stampReceived timeIntervalSinceDate:formSent] / (60*60*24.0)] : @"";
 }
 
 - (void)actionSheet:(UIActionSheet *)sender clickedButtonAtIndex:(int)index {
     if (index == sender.destructiveButtonIndex) {
         [self.selectedWeapon.stamp deleteEntity];
+        NSLog(@"got here");
         [[NSManagedObjectContext defaultContext] save];
-        [self reloadTableWith:self.selectedWeapon.stamp];
-        [self dismissEditView:nil];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -288,12 +170,23 @@
 - (void)setQuickDialogTableView:(QuickDialogTableView *)aQuickDialogTableView {
     [super setQuickDialogTableView:aQuickDialogTableView];
     if (self.root.grouped) {
-        self.quickDialogTableView.backgroundColor = [UIColor colorWithRed:0.757 green:0.710 blue:0.588 alpha:1.000];
+        self.quickDialogTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
     } else {
         self.quickDialogTableView.backgroundColor = [UIColor whiteColor];
     }
-    self.quickDialogTableView.bounces = NO;
+    self.quickDialogTableView.bounces = YES;
     self.quickDialogTableView.styleProvider = self;
+}
+
+- (IBAction)saveButtonTapped:(id)sender {
+    StampInfo *stamp =  (self.selectedWeapon.stamp) ? self.selectedWeapon.stamp: [StampInfo createEntity];
+    [self.root fetchValueIntoObject:stamp];
+    
+    self.selectedWeapon.stamp = stamp;
+    
+    [[NSManagedObjectContext defaultContext] save];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

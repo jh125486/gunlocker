@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		530C390D153E237B005C0AB6 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C390C153E237B005C0AB6 /* DataManager.m */; };
+		530C3910153E7AE9005C0AB6 /* CalculatorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C390F153E7AE9005C0AB6 /* CalculatorsViewController.m */; };
 		530DDEF914EEB6D800F1BC7F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDEF814EEB6D800F1BC7F /* UIKit.framework */; };
 		530DDEFB14EEB6D800F1BC7F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDEFA14EEB6D800F1BC7F /* Foundation.framework */; };
 		530DDEFD14EEB6D800F1BC7F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDEFC14EEB6D800F1BC7F /* CoreGraphics.framework */; };
@@ -193,6 +195,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		530C390B153E237B005C0AB6 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		530C390C153E237B005C0AB6 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		530C390E153E7AE9005C0AB6 /* CalculatorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorsViewController.h; sourceTree = "<group>"; };
+		530C390F153E7AE9005C0AB6 /* CalculatorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorsViewController.m; sourceTree = "<group>"; };
 		530DDEF414EEB6D800F1BC7F /* Gun Locker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gun Locker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		530DDEF814EEB6D800F1BC7F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		530DDEFA14EEB6D800F1BC7F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -491,7 +497,7 @@
 				5356120C14F5B93600EC1ED4 /* DataModel.xcdatamodeld */,
 				53CA990D150AA4BD0060A1E8 /* ExtraLibs */,
 				53B00A1114F32569000A560F /* Models */,
-				532EE03514F6C072008A9558 /* App Delegate */,
+				532EE03514F6C072008A9558 /* Application */,
 				53B00A1014F3255A000A560F /* Views */,
 				530EA40214FC7AE000E132FB /* Images */,
 				530DDEFF14EEB6D800F1BC7F /* Supporting Files */,
@@ -639,13 +645,15 @@
 			path = segmented_control;
 			sourceTree = "<group>";
 		};
-		532EE03514F6C072008A9558 /* App Delegate */ = {
+		532EE03514F6C072008A9558 /* Application */ = {
 			isa = PBXGroup;
 			children = (
 				530DDF0714EEB6D800F1BC7F /* AppDelegate.h */,
 				530DDF0814EEB6D800F1BC7F /* AppDelegate.m */,
+				530C390B153E237B005C0AB6 /* DataManager.h */,
+				530C390C153E237B005C0AB6 /* DataManager.m */,
 			);
-			name = "App Delegate";
+			name = Application;
 			sourceTree = "<group>";
 		};
 		53405CA2151936A200C7D84F /* UIControl */ = {
@@ -693,6 +701,8 @@
 		5348C6961506E62200147AAF /* Calculators */ = {
 			isa = PBXGroup;
 			children = (
+				530C390E153E7AE9005C0AB6 /* CalculatorsViewController.h */,
+				530C390F153E7AE9005C0AB6 /* CalculatorsViewController.m */,
 				53B7FF7514FFFB05007B268A /* DistanceCalculationsViewController.h */,
 				53B7FF7614FFFB05007B268A /* DistanceCalculationsViewController.m */,
 				5348C6A6150824C900147AAF /* EnergyFormulasViewController.h */,
@@ -1174,6 +1184,8 @@
 				53A0E66B153954F200846421 /* ProfileAddEditViewController.m in Sources */,
 				53A0E66E153A245C00846421 /* BallisticProfile.m in Sources */,
 				53A0E68A153A80DA00846421 /* Bullet.m in Sources */,
+				530C390D153E237B005C0AB6 /* DataManager.m in Sources */,
+				530C3910153E7AE9005C0AB6 /* CalculatorsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

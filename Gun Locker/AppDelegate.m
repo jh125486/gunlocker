@@ -19,6 +19,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecordHelpers setupCoreDataStackWithStoreNamed:@"GunLocker.sqlite"];
     
+    [self loadDefaultsOnFirstLoad];
+    
 //    [Bullet truncateAll];
 //    [Manufacturer truncateAll];
 //    [[NSManagedObjectContext defaultContext] save];
@@ -159,6 +161,30 @@
     if (!motionManager) 
         motionManager = [[CMMotionManager alloc] init];
     return motionManager;
+}
+
+- (void)loadDefaultsOnFirstLoad {
+    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+    if (![preferences boolForKey:@"defaultPreferencesSet"]) {
+        DataManager *dataManager = [DataManager sharedManager];
+        NSArray *windageLeading = [dataManager.windageLeading objectForKey:[dataManager.speedTypes objectAtIndex:0]];
+        
+        [preferences setBool:NO forKey:@"showNFADetails"];
+        [preferences setInteger:0 forKey:@"nightModeControl"];
+        [preferences setInteger:0 forKey:@"rangeUnitsControl"];
+        [preferences setInteger:0 forKey:@"reticleUnitsControl"];
+        [preferences setInteger:0 forKey:@"directionControl"];
+        [preferences setInteger:100 forKey:@"rangeStart"];
+        [preferences setInteger:600 forKey:@"rangeEnd"];
+        [preferences setInteger:50 forKey:@"rangeStep"];
+        [preferences setObject:[dataManager.speedTypes objectAtIndex:0] forKey:@"speedType"];
+        [preferences setObject:[windageLeading objectAtIndex:0] forKey:@"speedUnit"];
+        [preferences setInteger:0 forKey:@"speedIndexPathRow"];
+        [preferences setInteger:0 forKey:@"speedIndexPathSection"];
+        
+        [preferences setBool:YES forKey:@"defaultPreferencesSet"];
+        [preferences synchronize];
+    }
 }
 
 @end

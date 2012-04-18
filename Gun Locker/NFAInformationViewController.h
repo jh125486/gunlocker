@@ -16,8 +16,11 @@
 }
 
 @property (nonatomic, weak) Weapon *selectedWeapon;
-@property (nonatomic, strong) QRootElement *editRoot;
-           
-- (IBAction)editButtonTapped:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *line1Label;
+@property (weak, nonatomic) IBOutlet UILabel *line2Label;
+@property (strong, nonatomic) UILabel *timeLineFooterLabel;
+
+- (IBAction)saveButtonTapped:(id)sender;
 
 @end

@@ -32,7 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_Background"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
     weaponTypeLabel.text = self.selectedWeapon.type;
 }
 
@@ -49,7 +49,7 @@
     self.adjustRoundCountStepper.Step = 1;
     self.adjustRoundCountStepper.NumDecimals = 0;
     self.notesCell.detailTextLabel.text     = [NSString stringWithFormat:@"%d",[self.selectedWeapon.notes count]];
-    self.nfaCell.detailTextLabel.text       = self.selectedWeapon.stamp.nfa_type ? [nfa_types objectAtIndex:[self.selectedWeapon.stamp.nfa_type integerValue]] : nil;
+    self.nfaCell.detailTextLabel.text       = self.selectedWeapon.stamp.nfa_type ? [nfa_types objectAtIndex:[self.selectedWeapon.stamp.nfa_type integerValue]] : @"n/a";
     self.dopeCardsCell.detailTextLabel.text = [NSString stringWithFormat:@"%d",[self.selectedWeapon.dope_cards count]];
     self.maintenanceCountLabel.text         = [NSString stringWithFormat:@"%d",[self.selectedWeapon.maintenances count]];
     self.malfunctionCountLabel.text         = [NSString stringWithFormat:@"%d",[self.selectedWeapon.malfunctions count]];

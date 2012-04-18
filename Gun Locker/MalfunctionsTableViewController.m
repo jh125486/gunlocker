@@ -28,6 +28,8 @@
     malfunctions = [[NSMutableDictionary alloc] init];
     sections = [[NSMutableArray alloc] init];
     
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    
     //Register addNewMalfunctionToArray to recieve "newMalfunction" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewMalfunctionToArray:) name:@"newMalfunction" object:nil];
     

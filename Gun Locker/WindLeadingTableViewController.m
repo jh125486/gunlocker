@@ -28,7 +28,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -65,7 +64,9 @@
 	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 	cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
-    NSString *speedType = (indexPath.section == 0) ? @"Wind" : @"Leading";
+    DataManager *dataManager = [DataManager sharedManager];
+
+    NSString *speedType = [dataManager.speedTypes objectAtIndex:indexPath.section];
     NSString *speedUnit = cell.textLabel.text;
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

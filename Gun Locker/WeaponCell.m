@@ -59,11 +59,11 @@
     [currencyFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
     [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     [currencyFormatter setLocale:[NSLocale currentLocale]];
-    NSString *purchasePrice = [weapon.purchased_price compare:[NSDecimalNumber zero]] ? [NSString stringWithFormat:@"%@ ", [currencyFormatter stringFromNumber:weapon.purchased_price]] : @"";
+    NSString *purchasePrice = [weapon.purchased_price compare:[NSDecimalNumber zero]] ? [NSString stringWithFormat:@" for %@", [currencyFormatter stringFromNumber:weapon.purchased_price]] : @"";
     NSString *purchaseDate = (weapon.purchased_date) ? [[weapon.purchased_date distanceOfTimeInWordsOnlyDate] lowercaseString] : @"";
     
     if ((purchasePrice.length > 0) || (purchaseDate.length > 0)) {
-        self.purchaseInfoLabel.text = [NSString stringWithFormat:@"%@%@", purchasePrice, purchaseDate];
+        self.purchaseInfoLabel.text = [NSString stringWithFormat:@"%@%@", purchaseDate, purchasePrice];
     } else {
         self.purchaseInfoLabel.text = @"n/a";
     }
