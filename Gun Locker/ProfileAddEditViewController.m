@@ -9,22 +9,21 @@
 #import "ProfileAddEditViewController.h"
 
 @implementation ProfileAddEditViewController
-@synthesize bulletInfoLabel;
-@synthesize dragModelControl;
-@synthesize muzzleVelocityTextField;
-@synthesize muzzleVelocityUnitControl;
-@synthesize siteHeightTextField;
-@synthesize siteHeightUnitControl;
-@synthesize zeroDistanceTextField;
-@synthesize zeroDistanceUnitControl;
-@synthesize temperatureTextField;
-@synthesize temperatureUnitControl;
-@synthesize pressureTextfield;
-@synthesize pressureUnitControl;
+@synthesize bulletWeightLabel;
+@synthesize dragModelLabel;
+@synthesize bcLabel;
+@synthesize bulletTypePromptLabel;
+@synthesize bulletTypeLabel;
+@synthesize bulletWeightPromptLabel;
+@synthesize nameTextField;
+@synthesize muzzleVelocityTextField, muzzleVelocityUnitControl;
+@synthesize siteHeightTextField, siteHeightUnitControl;
+@synthesize zeroDistanceTextField, zeroDistanceUnitControl;
+@synthesize temperatureTextField, temperatureUnitControl;
+@synthesize pressureTextfield, pressureUnitControl;
 @synthesize relativeHumidityTextField;
-@synthesize altitudeTextField;
-@synthesize altitudeUnitControl;
-@synthesize selectedBullet;
+@synthesize altitudeTextField, altitudeUnitControl;
+@synthesize selectedProfile, selectedBullet;
 @synthesize currentTextField;
 
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -36,26 +35,26 @@
 }
 
 - (void)viewDidLoad {
-    //Register self to recieve "selectedBullet" notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectBullet:) name:@"selectedBullet" object:nil];
-    //Register self to recieve "manuallyEnteredBullet" notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(manuallyEnteredBulletInfo:) name:@"manuallyEnteredBullet" object:nil];
+    [super viewDidLoad];
 
-    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+
+    //Register self to recieve notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectBullet:) name:@"selectedBullet" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(manuallyEnteredBulletInfo:) name:@"manuallyEnteredBullet" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectDragModel:) name:@"selectedDragModel" object:nil];
+
     formFields = [[NSMutableArray alloc] initWithObjects:muzzleVelocityTextField, siteHeightTextField, zeroDistanceTextField, temperatureTextField, pressureTextfield, relativeHumidityTextField, altitudeTextField, nil];
     
     for(UITextField *field in formFields)
         field.delegate = self;    
-
     
-    if (selectedBullet) [self loadTextFieldsFromBullet];
-    
-    [super viewDidLoad];
+    if (selectedProfile) [self loadTextFieldsFromProfile];    
 }
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setBulletInfoLabel:nil];
+    [self setBulletWeightLabel:nil];
     [self setSelectedBullet:nil];
     [self setMuzzleVelocityTextField:nil];
     [self setSiteHeightTextField:nil];
@@ -70,7 +69,12 @@
     [self setTemperatureUnitControl:nil];
     [self setPressureUnitControl:nil];
     [self setAltitudeUnitControl:nil];
-    [self setDragModelControl:nil];
+    [self setDragModelLabel:nil];
+    [self setBcLabel:nil];
+    [self setNameTextField:nil];
+    [self setBulletTypePromptLabel:nil];
+    [self setBulletTypeLabel:nil];
+    [self setBulletWeightPromptLabel:nil];
     [super viewDidUnload];
 }
 
@@ -78,47 +82,76 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)loadTextFieldsFromBullet {
+- (void)loadTextFieldsFromProfile {
+
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString *segueID = segue.identifier;
     
+	if ([segueID isEqualToString:@"BulletChooser"]) {
+        UINavigationController *destinationController = segue.destinationViewController;
+		BulletChooserViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
+        dst.selectedBullet = self.selectedBullet;
+    } else if ([segueID isEqualToString:@"ManualBulletEntry"]) {
+        UINavigationController *destinationController = segue.destinationViewController;
+		BulletEntryManualViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
+        dst.passedBulletBC = manually_entered_bc;
+        dst.passedBulletWeight = bullet_weight;
+        dst.selectedDragModel = drag_model;
+    }   
 }
 
-// trying to size up segment controls
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    for (UISegmentedControl *control in cell.subviews){
-        if ([control isKindOfClass:[UISegmentedControl class]]) {
-            NSLog(@"%@", control);
-            [control setFrame: CGRectMake(control.frame.origin.x, control.frame.origin.y, control.frame.size.width, 43.0)];
-        }
-    }
-}
-
-# pragma NS notifiers
+# pragma mark NS notifiers
 - (void)didSelectBullet:(NSNotification*) notification  {
     self.selectedBullet = [notification object];
-    // if only have G1 or G7 drag model, disable segment on dragModelControl
-    if (![self.selectedBullet.ballistic_coefficient objectForKey:@"G1"]) {
-        [self.dragModelControl setEnabled:NO forSegmentAtIndex:0];
-        [self.dragModelControl setSelectedSegmentIndex:1];
-    } else {
-        [self.dragModelControl setEnabled:YES forSegmentAtIndex:0];
-    }
-
-    if (![self.selectedBullet.ballistic_coefficient objectForKey:@"G7"]) {
-        [self.dragModelControl setEnabled:NO forSegmentAtIndex:1];
-        [self.dragModelControl setSelectedSegmentIndex:0];
-    } else {
-        [self.dragModelControl setEnabled:YES forSegmentAtIndex:1];
-    }
+    NSArray *bc = [self.selectedBullet.ballistic_coefficient objectForKey:self.dragModelLabel.text];
+    NSMutableString *bcText = [[NSMutableString alloc] initWithFormat:@"%@", [bc objectAtIndex:0]];
+    for (int i = 1; i < bc.count; i += 2)
+        [bcText appendFormat:@" \n %@ below %@ fps", [bc objectAtIndex:i], [bc objectAtIndex:i+1]];
     
-    self.bulletInfoLabel.text = [NSString stringWithFormat:@"%@ %@", self.selectedBullet.brand, self.selectedBullet.name];
+    self.bulletTypePromptLabel.text = @"Name";
+    NSMutableString *type = [[NSMutableString alloc] initWithFormat:@"%@ %@", self.selectedBullet.brand, self.selectedBullet.name];
+    if (![self.selectedBullet.brand isEqualToString:self.selectedBullet.category]) [type appendFormat:@" (%@)", self.selectedBullet.category];
+    
+    self.bulletTypeLabel.text = type;
+    self.bulletTypeLabel.adjustsFontSizeToFitWidth = YES;
+    self.bulletTypeLabel.minimumFontSize = 12.0f;
+    self.bulletWeightPromptLabel.text = @"Caliber\nWeight";
+    self.bulletWeightPromptLabel.numberOfLines = 2;
+    self.bulletWeightLabel.text = [NSString stringWithFormat:@"%.3f caliber\n%@ grains", [self.selectedBullet.diameter_inches doubleValue], self.selectedBullet.weight_grains];
+    self.bulletWeightLabel.numberOfLines = 2;
+    self.bcLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    self.bcLabel.numberOfLines = 2;
+    self.bcLabel.text = bcText;
+}   
+
+- (void)didSelectDragModel:(NSNotification*) notification  {
+    self.dragModelLabel.text = [notification object];
+    drag_model = self.dragModelLabel.text;
 }
 
-- (void)manuallyEnteredBulletInfo:(NSNotification*) notification  {
+- (void)manuallyEnteredBulletInfo:(NSNotification*) notification {
     NSArray *manuallyEnteredBulletInfo = [notification object];
+
+    manually_entered_bc = [manuallyEnteredBulletInfo objectAtIndex:1];
+    NSMutableString *bcText = [[NSMutableString alloc] initWithFormat:@"%@", [manually_entered_bc objectAtIndex:0]];
+    for (int i = 1; i < manually_entered_bc.count; i += 2)
+        [bcText appendFormat:@" \n %@ below %@ fps", [manually_entered_bc objectAtIndex:i], [manually_entered_bc objectAtIndex:i+1]];
+        
+    self.bulletTypePromptLabel.text = @"Type";
+    self.bulletTypeLabel.text = @"manually entered";
     bullet_weight = [manuallyEnteredBulletInfo objectAtIndex:0];
-    bullet_bc = [manuallyEnteredBulletInfo objectAtIndex:1];
-    
-    self.bulletInfoLabel.text = [NSString stringWithFormat:@"%@ gr / BC %@\n(manually entered)", bullet_weight, bullet_bc]; 
+    self.bulletWeightPromptLabel.text = @"Weight";
+    self.bulletWeightLabel.text = [NSString stringWithFormat:@"%@ grains", bullet_weight]; 
+    self.bcLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    self.bcLabel.numberOfLines = 2;
+    self.bcLabel.text = bcText;
+}
+
+# pragma mark Button Actions
+- (IBAction)bulletControlTapped:(UISegmentedControl *)sender {
+    [self performSegueWithIdentifier:(sender.selectedSegmentIndex == 0) ? @"BulletChooser" : @"ManualBulletEntry" sender:nil];
 }
 
 - (IBAction)cancelTapped:(id)sender {

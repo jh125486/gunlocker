@@ -66,7 +66,7 @@
     purchaseDatePickerView.maximumDate = [NSDate date];
     self.purchaseDateTextField.inputView = purchaseDatePickerView;
     
-    formFields = [[NSMutableArray alloc] initWithObjects:self.manufacturerTextField,
+    formFields = [[NSArray alloc] initWithObjects:self.manufacturerTextField,
                                                          self.modelTextField,
                                                          self.caliberTextField,
                                                          self.finishTextField,

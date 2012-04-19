@@ -87,6 +87,7 @@
 		5356120E14F5B93600EC1ED4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5356120C14F5B93600EC1ED4 /* DataModel.xcdatamodeld */; };
 		53591A331521714600516C4C /* libQuickDialog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53591A30152170DC00516C4C /* libQuickDialog.a */; };
 		53591A40152181A000516C4C /* StampInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 53591A3F152181A000516C4C /* StampInfo.m */; };
+		53617979153F565E00F921A9 /* BulletEntryManualViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53617978153F565E00F921A9 /* BulletEntryManualViewController.m */; };
 		53713F84152C28D7009B55B8 /* DopeCardsAddEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53713F83152C28D7009B55B8 /* DopeCardsAddEditViewController.m */; };
 		537797201533A8150096BF7A /* LogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377971F1533A8150096BF7A /* LogsViewController.m */; };
 		5377972915362E1A0096BF7A /* icon_calculators@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5377972815362E190096BF7A /* icon_calculators@2x.png */; };
@@ -310,6 +311,8 @@
 		53591A24152170DB00516C4C /* QuickDialog.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QuickDialog.xcodeproj; path = QuickDialog/QuickDialog.xcodeproj; sourceTree = "<group>"; };
 		53591A3E152181A000516C4C /* StampInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StampInfo.h; sourceTree = "<group>"; };
 		53591A3F152181A000516C4C /* StampInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StampInfo.m; sourceTree = "<group>"; };
+		53617977153F565E00F921A9 /* BulletEntryManualViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulletEntryManualViewController.h; sourceTree = "<group>"; };
+		53617978153F565E00F921A9 /* BulletEntryManualViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BulletEntryManualViewController.m; sourceTree = "<group>"; };
 		53713F82152C28D7009B55B8 /* DopeCardsAddEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardsAddEditViewController.h; sourceTree = "<group>"; };
 		53713F83152C28D7009B55B8 /* DopeCardsAddEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCardsAddEditViewController.m; sourceTree = "<group>"; };
 		5377971E1533A8150096BF7A /* LogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogsViewController.h; sourceTree = "<group>"; };
@@ -718,12 +721,14 @@
 			children = (
 				53859F791504167A00ABA0B1 /* BallisticsViewController.h */,
 				53859F7A1504167A00ABA0B1 /* BallisticsViewController.m */,
-				5348C6921506E5EE00147AAF /* WhizWheelViewController.h */,
-				5348C6931506E5EE00147AAF /* WhizWheelViewController.m */,
-				53A0E669153954F100846421 /* ProfileAddEditViewController.h */,
-				53A0E66A153954F100846421 /* ProfileAddEditViewController.m */,
 				53A0E66615390F8B00846421 /* BulletChooserViewController.h */,
 				53A0E66715390F8B00846421 /* BulletChooserViewController.m */,
+				53617977153F565E00F921A9 /* BulletEntryManualViewController.h */,
+				53617978153F565E00F921A9 /* BulletEntryManualViewController.m */,
+				53A0E669153954F100846421 /* ProfileAddEditViewController.h */,
+				53A0E66A153954F100846421 /* ProfileAddEditViewController.m */,
+				5348C6921506E5EE00147AAF /* WhizWheelViewController.h */,
+				5348C6931506E5EE00147AAF /* WhizWheelViewController.m */,
 			);
 			name = Ballistics;
 			sourceTree = "<group>";
@@ -1186,6 +1191,7 @@
 				53A0E68A153A80DA00846421 /* Bullet.m in Sources */,
 				530C390D153E237B005C0AB6 /* DataManager.m in Sources */,
 				530C3910153E7AE9005C0AB6 /* CalculatorsViewController.m in Sources */,
+				53617979153F565E00F921A9 /* BulletEntryManualViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,7 +20,7 @@
 @end
 
 @interface WeaponAddEditViewController : UITableViewController <UITextFieldDelegate, CaliberChooserViewControllerDelegate, ManufacturerChooserViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate> {
-    NSMutableArray *formFields;
+    NSArray *formFields;
     NSNumberFormatter* currencyFormatter;
     Manufacturer *selectedManufacturer;
 }

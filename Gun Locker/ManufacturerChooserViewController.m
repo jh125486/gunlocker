@@ -138,18 +138,8 @@
 		[sectionManufacturers addObject:manufacturer];
 	}
     
-//    // add the selected manufacturer to the collation if not empty and not found in manufacturers
-//    if([self.selectedManufacturer length] != 0) {
-//        if([[manufacturers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@", self.selectedManufacturer]] count] == 0) {
-//            NSLog(@"Manufacturer not found");            
-//            Manufacturer *tManufacturer = [Manufacturer createEntity];
-//            tManufacturer.name = self.selectedManufacturer;
-//
-//            NSInteger sectionNumber = [collation sectionForObject:tManufacturer collationStringSelector:@selector(name)];		
-//            [[newSectionsArray objectAtIndex:sectionNumber] addObject:tManufacturer];
-//        }
-//    }
     
+    // XXX possible not needed since data is already sorted from fetch
     // Now that all the data's in place, each section array needs to be sorted.
 	for (index = 0; index < sectionTitlesCount; index++) {
 		

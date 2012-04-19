@@ -85,7 +85,7 @@
                     }
                     
                     if ([[splitParts objectAtIndex:15] floatValue] > 0 )
-                        [bc setObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:15]] forKey:@"G7"];
+                        [bc setObject:[NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:15]]] forKey:@"G7"];
 
                     newBullet.ballistic_coefficient = bc;
                 }   

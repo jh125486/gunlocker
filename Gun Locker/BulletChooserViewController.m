@@ -11,7 +11,8 @@
 @implementation BulletChooserViewController
 @synthesize selectedBullet;
 @synthesize searchDisplayController, searchBar, searchResults;
-@synthesize collation, sectionsArray;
+@synthesize collation;
+@synthesize selectedCategory;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil  {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -23,22 +24,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Bullet List";
     
-    bullets = [Bullet findAllSortedBy:@"diameter_inches" ascending:YES];
-    
-    selectedIndex = [bullets indexOfObject:self.selectedBullet];
+    if (!self.selectedCategory) {
+        self.title = @"Bullet Categories";
+        categories = [[NSCountedSet alloc] init];
+        for(Bullet *b in [Bullet findAllSortedBy:@"diameter_inches" ascending:YES])
+            [categories addObject:b.category];
+        items = [[categories allObjects] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    } else {
+        self.title = self.selectedCategory;
+        items = [Bullet findAllSortedBy:@"diameter_inches" ascending:YES withPredicate:[NSPredicate predicateWithFormat:@"category == %@", self.selectedCategory]];
+        selectedIndex = [items indexOfObject:self.selectedBullet];
+    }
     
     [self configureSections];
 }
 
 - (void)viewDidUnload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setSearchBar:nil];
     [self setSearchResults:nil];
     [self setCollation:nil];
-    [self setSectionsArray:nil];
     [self setSearchDisplayController:nil];
     [self setSelectedBullet:nil];
+    [self setSelectedCategory:nil];
     [super viewDidUnload];
 }
 
@@ -46,17 +55,28 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma Tableview delegates
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"BulletChooserLoopBack"]) {
+        BulletChooserViewController* section = segue.destinationViewController;
+        NSIndexPath *indexPath = (NSIndexPath*)sender;
+        NSString *category = (self.tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [[sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        section.selectedCategory = category;
+        section.selectedBullet = self.selectedBullet;
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Categories" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    }
+}
+
+#pragma mark Tableview delegates
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return (tableView == self.searchDisplayController.searchResultsTableView) ? 1 : [[collation sectionTitles] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults count] : [[sectionsArray objectAtIndex:section] count];
+    return (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults count] : [[sections objectAtIndex:section] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if(([[self.sectionsArray objectAtIndex:section] count] == 0) || (tableView == self.searchDisplayController.searchResultsTableView)) {
+    if(([[sections objectAtIndex:section] count] == 0) || (tableView == self.searchDisplayController.searchResultsTableView)) {
         return nil;
     } else {
         return [[collation sectionTitles] objectAtIndex:section];
@@ -67,6 +87,7 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return nil;
     } else {
+        // prepends a Search icon to all indexTitles
         return [[NSArray arrayWithObject:UITableViewIndexSearch] arrayByAddingObjectsFromArray:[[UILocalizedIndexedCollation currentCollation] sectionIndexTitles]];
     }        
 }
@@ -77,38 +98,37 @@
         [tableView scrollRectToVisible:searchBarFrame animated:YES];
         return -1;
     } else {
-        UILocalizedIndexedCollation *currentCollation = [UILocalizedIndexedCollation currentCollation];
-        return [currentCollation sectionForSectionIndexTitleAtIndex:index - 1];
+        return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index - 1];
     }
-    
-    //    if(tableView == self.searchDisplayController.searchResultsTableView)
-    //        return -1;
-    //    
-    //    return [collation sectionForSectionIndexTitleAtIndex:index];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"BulletChooserCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
     if (cell == nil)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
 
-    Bullet *bullet = (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [[sectionsArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    if (self.selectedCategory) {
+        Bullet *bullet = (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [[sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
 
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ (%@)", bullet.brand, bullet.name, bullet.category];
-    [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
-    NSMutableString *bc = [[NSMutableString alloc] init];
-    if ([bullet.ballistic_coefficient objectForKey:@"G1"])
-        [bc appendFormat:@"G1 %@ ", [[bullet.ballistic_coefficient objectForKey:@"G1"] objectAtIndex:0]];
-    
-    if ([bullet.ballistic_coefficient objectForKey:@"G7"])
-        [bc appendFormat:@"G7 %@ ", [bullet.ballistic_coefficient objectForKey:@"G7"]];
-    
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@\" %@ gr (BC %@)", bullet.diameter_inches, bullet.weight_grains, bc];
-    [cell.detailTextLabel setAdjustsFontSizeToFitWidth:YES];    
-    cell.accessoryType = ([bullet isEqual:self.selectedBullet]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", bullet.brand, bullet.name];
+        [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
+        NSMutableString *bc = [[NSMutableString alloc] init];
+        if ([bullet.ballistic_coefficient objectForKey:@"G1"])
+            [bc appendFormat:@"G1 %@ ", [[bullet.ballistic_coefficient objectForKey:@"G1"] objectAtIndex:0]];
+        
+        if ([bullet.ballistic_coefficient objectForKey:@"G7"])
+            [bc appendFormat:@"G7 %@ ", [[bullet.ballistic_coefficient objectForKey:@"G7"] objectAtIndex:0]];
+        
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@\" %@ gr (BC %@)", bullet.diameter_inches, bullet.weight_grains, bc];
+        [cell.detailTextLabel setAdjustsFontSizeToFitWidth:YES];    
+        cell.accessoryType = ([bullet isEqual:self.selectedBullet]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    } else {
+        NSString *category = (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [[sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        cell.textLabel.text = category;
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d Bullets", [categories countForObject:category]];
+    }
+        
     return cell;
 }
 
@@ -116,23 +136,36 @@
     self.collation = [UILocalizedIndexedCollation currentCollation];
     NSInteger index, sectionTitlesCount = [[collation sectionTitles] count];
 	NSMutableArray *newSectionsArray = [[NSMutableArray alloc] initWithCapacity:sectionTitlesCount];
-    
-    // Set up the sections array: elements are mutable arrays that will contain the manufacturers for that section.
+
+    // Set up the sections array: elements are mutable arrays that will contain the categories/bullets for that section.
 	for (index = 0; index < sectionTitlesCount; index++)
 		[newSectionsArray addObject:[[NSMutableArray alloc] init]];
+
+    // Segregate the categories/bullets into the appropriate arrays.
+    if (self.selectedCategory) {
+        for (Bullet *bullet in items) {
+            // Ask the collation which section number the time zone belongs in, based on its locale name.
+            NSInteger sectionNumber = [collation sectionForObject:bullet collationStringSelector:@selector(brand)];
+            
+            // Get the array for the section.
+            NSMutableArray *sectionBullets = [newSectionsArray objectAtIndex:sectionNumber];
+            
+            //  Add the bullet to the section.
+            [sectionBullets addObject:bullet];
+        }
+    } else {
+        for (NSString *category in items) {
+            // Ask the collation which section number the object belongs in, based on its locale name.
+            NSInteger sectionNumber = [collation sectionForObject:category collationStringSelector:@selector(description)];
+            
+            // Get the array for the section.
+            NSMutableArray *sectionBullets = [newSectionsArray objectAtIndex:sectionNumber];
+            
+            //  Add the bullet to the section.
+            [sectionBullets addObject:category];
+        }
+    }
     
-    // Segregate the manufacturers into the appropriate arrays.
-	for (NSString *bullet in bullets) {
-		// Ask the collation which section number the time zone belongs in, based on its locale name.
-		NSInteger sectionNumber = [collation sectionForObject:bullet collationStringSelector:@selector(category)];
-		
-		// Get the array for the section.
-		NSMutableArray *sectionBullets = [newSectionsArray objectAtIndex:sectionNumber];
-		
-		//  Add the manufacturer to the section.
-		[sectionBullets addObject:bullet];
-	}
-        
 //// no need to sort because of the findAllSortedby 
 //	for (index = 0; index < sectionTitlesCount; index++) {
 //		
@@ -145,28 +178,52 @@
 //		[newSectionsArray replaceObjectAtIndex:index withObject:sortedBulletsForSection];
 //	}
 	
-	self.sectionsArray = newSectionsArray;    
+	sections = newSectionsArray;    
+}
+
+- (IBAction)cancelTapped:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)filterContentForSearchText:(NSString*)searchText  scope:(NSString*)scope { 
-    self.searchResults = [bullets filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(name contains[cd] %@)", searchText]];
+    self.searchResults = [items filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(name contains[cd] %@)", searchText]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-	if (selectedIndex != NSNotFound) {
-		UITableViewCell *cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedIndex inSection:0]];
-		cell.accessoryType = UITableViewCellAccessoryNone;
-	}
-	selectedIndex = indexPath.row;
-	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-	cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    
-    Bullet *bullet = (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [[sectionsArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    if (self.selectedCategory) { 
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        if (selectedIndex != NSNotFound) {
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedIndex inSection:0]];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        selectedIndex = indexPath.row;
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        selectedBullet = (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [[sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];        
 
-    // notify profileAddEdit of selected bullet
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedBullet" object:bullet];
-    [self.navigationController popViewControllerAnimated:YES];
+        if ([self.selectedBullet.ballistic_coefficient objectForKey:@"G1"] && [self.selectedBullet.ballistic_coefficient objectForKey:@"G7"]) {
+            [[[UIActionSheet alloc] initWithTitle:@"Choose Drag Model"
+                                         delegate:self
+                                cancelButtonTitle:nil
+                           destructiveButtonTitle:nil
+                                otherButtonTitles:@"G7", @"G1", nil] showInView:[UIApplication sharedApplication].keyWindow];
+        } else if ([self.selectedBullet.ballistic_coefficient objectForKey:@"G1"]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedDragModel" object:@"G1"];
+            [self bulletChosen];            
+        } else if ([self.selectedBullet.ballistic_coefficient objectForKey:@"G7"]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedDragModel" object:@"G7"];
+            [self bulletChosen];
+        }
+        
+    } else {
+        [self performSegueWithIdentifier:@"BulletChooserLoopBack" sender:indexPath];
+    }
+}
+
+- (void)bulletChosen {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedBullet" object:selectedBullet];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - UISearchDisplayController delegate methods
@@ -203,44 +260,10 @@
     return YES;
 }
 
-#pragma mark AlertView
-
-- (void) manuallyEnterBulletTapped:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Manual Bullet Entry"
-                                                    message:@"\n\n\n"
-                                                   delegate:self 
-                                          cancelButtonTitle:@"Cancel"
-                                          otherButtonTitles:@"OK", nil];
-
-    weightField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 30.0)];
-    ballisticCoefficientField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 80.0, 260.0, 30.0)];
-    weightField.placeholder = @"Weight in grains";
-    ballisticCoefficientField.placeholder = @"Ballistic coefficient";
-    weightField.contentVerticalAlignment = ballisticCoefficientField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    
-    weightField.backgroundColor = ballisticCoefficientField.backgroundColor = [UIColor whiteColor];
-    ballisticCoefficientField.keyboardType = UIKeyboardTypeDecimalPad;
-    weightField.keyboardType = UIKeyboardTypeNumberPad;
-    weightField.keyboardAppearance = ballisticCoefficientField.keyboardAppearance = UIKeyboardAppearanceAlert;
-    weightField.clearButtonMode = ballisticCoefficientField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    [alert addSubview:weightField];
-    [alert addSubview:ballisticCoefficientField];
-
-    [weightField becomeFirstResponder];
-        
-    [alert show];
-}
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-    } else if (([weightField.text intValue] == 0) || ([ballisticCoefficientField.text floatValue]) == 0.0) {
-        [self manuallyEnterBulletTapped:nil];
-    } else {
-        // nsnotify manually entered bullet info
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"manuallyEnteredBullet" object:[NSArray arrayWithObjects:[NSNumber numberWithInt:weightField.text.intValue], [NSDecimalNumber decimalNumberWithString:ballisticCoefficientField.text], nil]];
-
-        [self.navigationController popViewControllerAnimated:YES];
-    }    
+#pragma mark ActionSheet
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedDragModel" object:(buttonIndex == 0) ? @"G7" : @"G1"];
+    [self bulletChosen];
 }
 
 @end

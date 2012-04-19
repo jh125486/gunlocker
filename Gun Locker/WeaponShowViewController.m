@@ -37,19 +37,20 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    DataManager *dataManager = [DataManager sharedManager];
     // set title for navigation back button
     self.title = selectedWeapon.model;
     [self setTitleView];
     
-    nfaCell.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"];
+    // doesnt do anything
+//    nfaCell.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"];
     
-    NSArray *nfa_types = [[NSArray alloc] initWithObjects:@"SBR", @"SBS", @"Suppressor", @"Machinegun", @"DD", @"AOW",nil];
     self.adjustRoundCountStepper.Current = [self.selectedWeapon.round_count floatValue];
     self.adjustRoundCountStepper.Minimum = 0;
     self.adjustRoundCountStepper.Step = 1;
     self.adjustRoundCountStepper.NumDecimals = 0;
     self.notesCell.detailTextLabel.text     = [NSString stringWithFormat:@"%d",[self.selectedWeapon.notes count]];
-    self.nfaCell.detailTextLabel.text       = self.selectedWeapon.stamp.nfa_type ? [nfa_types objectAtIndex:[self.selectedWeapon.stamp.nfa_type integerValue]] : @"n/a";
+    self.nfaCell.detailTextLabel.text       = self.selectedWeapon.stamp.nfa_type ? [[dataManager nfaTypes] objectAtIndex:[self.selectedWeapon.stamp.nfa_type integerValue]] : @"n/a";
     self.dopeCardsCell.detailTextLabel.text = [NSString stringWithFormat:@"%d",[self.selectedWeapon.dope_cards count]];
     self.maintenanceCountLabel.text         = [NSString stringWithFormat:@"%d",[self.selectedWeapon.maintenances count]];
     self.malfunctionCountLabel.text         = [NSString stringWithFormat:@"%d",[self.selectedWeapon.malfunctions count]];
@@ -96,7 +97,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
 	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
 	tableView.sectionHeaderHeight = headerView.frame.size.height;
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, headerView.frame.size.width - 20, 22)];
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 24)];
 	label.text = [self tableView:tableView titleForHeaderInSection:section];
 	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
 	label.shadowColor = [UIColor clearColor];

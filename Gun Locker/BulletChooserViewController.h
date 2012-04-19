@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "Bullet.h"
 
-@interface BulletChooserViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate> {
-    UITextField *weightField;
-    UITextField *ballisticCoefficientField;
+@interface BulletChooserViewController : UITableViewController <UIActionSheetDelegate, UISearchDisplayDelegate, UISearchBarDelegate> {
     UILocalizedIndexedCollation *collation;
-    NSArray *bullets;
+    NSArray *items;
+    NSCountedSet *categories;
+    NSArray *sections;
     NSUInteger selectedIndex;
 }
 
@@ -21,11 +21,11 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;
 @property (nonatomic, copy) NSArray *searchResults;
-@property (nonatomic, retain) NSMutableArray *sectionsArray;
+@property (nonatomic, weak) NSString *selectedCategory;
 
 @property (nonatomic, retain) UILocalizedIndexedCollation *collation;
 
 - (void)configureSections;
-- (IBAction)manuallyEnterBulletTapped:(id)sender;
+- (IBAction)cancelTapped:(id)sender;
 
 @end

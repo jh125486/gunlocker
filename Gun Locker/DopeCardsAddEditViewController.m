@@ -79,6 +79,7 @@
 }
 
 - (void)viewDidUnload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setScrollView:nil];
     [self setCardNameTextField:nil];
     [self setRangeUnitField:nil];

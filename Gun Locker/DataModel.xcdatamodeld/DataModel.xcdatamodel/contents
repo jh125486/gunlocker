@@ -2,11 +2,10 @@
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="BallisticProfile" representedClassName="BallisticProfile" syncable="YES">
         <attribute name="altitude" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="bc_model" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="bullet_bc" optional="YES" attributeType="Decimal" minValueString="0.001" maxValueString="0.999" syncable="YES"/>
         <attribute name="bullet_weight" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <attribute name="density_altitude" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="drag_model" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="manually_entered_bc" optional="YES" attributeType="Transformable" minValueString="0.001" maxValueString="0.999" syncable="YES"/>
         <attribute name="muzzle_velocity" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pressure" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -121,7 +120,7 @@
         <relationship name="stamp" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="StampInfo" inverseName="weapon" inverseEntity="StampInfo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BallisticProfile" positionX="-144" positionY="-108" width="128" height="270"/>
+        <element name="BallisticProfile" positionX="-144" positionY="-108" width="128" height="255"/>
         <element name="Bullet" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Caliber" positionX="160" positionY="192" width="128" height="60"/>
         <element name="CommercialLoad" positionX="63" positionY="240" width="128" height="75"/>
