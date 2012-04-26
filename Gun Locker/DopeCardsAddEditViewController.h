@@ -18,6 +18,7 @@
     NSMutableArray *dopeFields;
     NSMutableArray *formFields;
     NSMutableArray *dopeCardCellData;
+    DataManager *dataManager;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

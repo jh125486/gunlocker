@@ -89,7 +89,7 @@
         [arraySpeeds addObject:@"Walking"];
         [arraySpeeds addObject:@"Jogging"];
         [arraySpeeds addObject:@"Running"];        
-    } else { // MPH KPH MPS Knots
+    } else { // MPH km/h MPS Knots
         for (int speed = 0; speed < 25; speed++)
             [arraySpeeds addObject:[NSString stringWithFormat:@"%d %@", speed, speedUnit]];
         speedLabel.text = speedType;

@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BallisticProfile.h"
+#import "Trajectory.h"
 #import "Weather.h"
 #import "WhizWheelViewController.h"
 

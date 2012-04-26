@@ -40,6 +40,8 @@
         [self setBackgroundImage:buttonImage forState:UIControlStateNormal];
 
         [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        self.titleLabel.shadowColor = [UIColor whiteColor];
+        self.titleLabel.shadowOffset = CGSizeMake(0, 1);
 //        self.titleLabel.font = [UIFont boldSystemFontOfSize:18];        
     }
     return self;

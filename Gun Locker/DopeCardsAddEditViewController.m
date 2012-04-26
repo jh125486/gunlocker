@@ -29,9 +29,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    range_units = [[NSArray alloc] initWithObjects:@"Meters", @"Yards", @"Feet", nil];
-    dope_units  = [[NSArray alloc] initWithObjects:@"MILs", @"MOA", @"Inches", @"cm", nil];
-    wind_units  = [[NSArray alloc] initWithObjects:@"MPH", @"KPH", @"MPS", @"Knots", nil];
+    dataManager = [DataManager sharedManager];
+    range_units = dataManager.rangeUnits;
+    dope_units  = dataManager.dopeUnits;
+    wind_units  = dataManager.windUnits;
     wind_directions = [[NSMutableArray alloc] initWithObjects:@"12 o'clock", nil];
     for (int i = 1; i < 12; i++)
         [wind_directions addObject:[NSString stringWithFormat:@"%d o'clock", i]];

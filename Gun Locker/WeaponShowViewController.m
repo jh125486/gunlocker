@@ -43,7 +43,7 @@
     [self setTitleView];
     
     // doesnt do anything
-//    nfaCell.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"];
+    nfaCell.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"];
     
     self.adjustRoundCountStepper.Current = [self.selectedWeapon.round_count floatValue];
     self.adjustRoundCountStepper.Minimum = 0;
@@ -102,7 +102,6 @@
 	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
 	label.shadowColor = [UIColor clearColor];
 	label.backgroundColor = [UIColor clearColor];
-    
 	label.textColor = [UIColor blackColor];
     
 	[headerView addSubview:label];

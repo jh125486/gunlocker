@@ -28,8 +28,8 @@
     if (!self.selectedCategory) {
         self.title = @"Bullet Categories";
         categories = [[NSCountedSet alloc] init];
-        for(Bullet *b in [Bullet findAllSortedBy:@"diameter_inches" ascending:YES])
-            [categories addObject:b.category];
+        for(Bullet *bullet in [Bullet findAllSortedBy:@"diameter_inches" ascending:YES])
+            [categories addObject:bullet.category];
         items = [[categories allObjects] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     } else {
         self.title = self.selectedCategory;
@@ -57,12 +57,39 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"BulletChooserLoopBack"]) {
-        BulletChooserViewController* section = segue.destinationViewController;
-        NSIndexPath *indexPath = (NSIndexPath*)sender;
-        NSString *category = (self.tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [[sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-        section.selectedCategory = category;
-        section.selectedBullet = self.selectedBullet;
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Categories" style:UIBarButtonItemStyleBordered target:nil action:nil];
+        if (self.selectedCategory) {
+            NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+            if (selectedIndex != NSNotFound) {
+                UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedIndex inSection:0]];
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            selectedIndex = indexPath.row;
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            
+            selectedBullet = (self.tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [[sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];        
+            
+            if ([self.selectedBullet.ballistic_coefficient objectForKey:@"G1"] && [self.selectedBullet.ballistic_coefficient objectForKey:@"G7"]) {
+                [[[UIActionSheet alloc] initWithTitle:@"Choose Drag Model"
+                                             delegate:self
+                                    cancelButtonTitle:nil
+                               destructiveButtonTitle:nil
+                                    otherButtonTitles:@"G7", @"G1", nil] showInView:[UIApplication sharedApplication].keyWindow];
+            } else if ([self.selectedBullet.ballistic_coefficient objectForKey:@"G1"]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedDragModel" object:@"G1"];
+                [self bulletChosen];            
+            } else if ([self.selectedBullet.ballistic_coefficient objectForKey:@"G7"]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedDragModel" object:@"G7"];
+                [self bulletChosen];
+            }
+        } else {
+            BulletChooserViewController* section = segue.destinationViewController;
+            UITableViewCell* cell = (UITableViewCell*)sender;
+            section.selectedCategory = cell.textLabel.text;
+            section.selectedBullet = self.selectedBullet;
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Categories" style:UIBarButtonItemStyleBordered target:nil action:nil];
+        }
     }
 }
 
@@ -111,7 +138,10 @@
     if (self.selectedCategory) {
         Bullet *bullet = (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [[sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
 
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", bullet.brand, bullet.name];
+        NSMutableString *cellText = [[NSMutableString alloc] init];
+        if (![bullet.brand isEqualToString:bullet.category]) [cellText appendFormat:@"%@ ", bullet.brand];
+        [cellText appendString:bullet.name];
+        cell.textLabel.text = cellText;
         [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
         NSMutableString *bc = [[NSMutableString alloc] init];
         if ([bullet.ballistic_coefficient objectForKey:@"G1"])
@@ -142,27 +172,20 @@
 		[newSectionsArray addObject:[[NSMutableArray alloc] init]];
 
     // Segregate the categories/bullets into the appropriate arrays.
+    // Ask the collation which section number the object belongs in, based on its locale name.
+    // Get the array for the section.            
+    //  Add the bullet to the section.
     if (self.selectedCategory) {
         for (Bullet *bullet in items) {
-            // Ask the collation which section number the time zone belongs in, based on its locale name.
-            NSInteger sectionNumber = [collation sectionForObject:bullet collationStringSelector:@selector(brand)];
-            
-            // Get the array for the section.
-            NSMutableArray *sectionBullets = [newSectionsArray objectAtIndex:sectionNumber];
-            
-            //  Add the bullet to the section.
-            [sectionBullets addObject:bullet];
+            if ([bullet.brand isEqualToString:bullet.category]) {
+                [[newSectionsArray objectAtIndex:[collation sectionForObject:bullet collationStringSelector:@selector(name)]] addObject:bullet];            
+            } else {
+                [[newSectionsArray objectAtIndex:[collation sectionForObject:bullet collationStringSelector:@selector(brand)]] addObject:bullet];
+            }
         }
     } else {
         for (NSString *category in items) {
-            // Ask the collation which section number the object belongs in, based on its locale name.
-            NSInteger sectionNumber = [collation sectionForObject:category collationStringSelector:@selector(description)];
-            
-            // Get the array for the section.
-            NSMutableArray *sectionBullets = [newSectionsArray objectAtIndex:sectionNumber];
-            
-            //  Add the bullet to the section.
-            [sectionBullets addObject:category];
+            [[newSectionsArray objectAtIndex:[collation sectionForObject:category collationStringSelector:@selector(description)]] addObject:category];
         }
     }
     
@@ -185,39 +208,11 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)filterContentForSearchText:(NSString*)searchText  scope:(NSString*)scope { 
-    self.searchResults = [items filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(name contains[cd] %@)", searchText]];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.selectedCategory) { 
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        if (selectedIndex != NSNotFound) {
-            UITableViewCell *cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedIndex inSection:0]];
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-        selectedIndex = indexPath.row;
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        
-        selectedBullet = (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [[sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];        
-
-        if ([self.selectedBullet.ballistic_coefficient objectForKey:@"G1"] && [self.selectedBullet.ballistic_coefficient objectForKey:@"G7"]) {
-            [[[UIActionSheet alloc] initWithTitle:@"Choose Drag Model"
-                                         delegate:self
-                                cancelButtonTitle:nil
-                           destructiveButtonTitle:nil
-                                otherButtonTitles:@"G7", @"G1", nil] showInView:[UIApplication sharedApplication].keyWindow];
-        } else if ([self.selectedBullet.ballistic_coefficient objectForKey:@"G1"]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedDragModel" object:@"G1"];
-            [self bulletChosen];            
-        } else if ([self.selectedBullet.ballistic_coefficient objectForKey:@"G7"]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedDragModel" object:@"G7"];
-            [self bulletChosen];
-        }
-        
-    } else {
-        [self performSegueWithIdentifier:@"BulletChooserLoopBack" sender:indexPath];
+- (void)filterContentForSearchText:(NSString*)searchText  scope:(NSString*)scope {
+    if (self.selectedCategory) {
+        self.searchResults = [items filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(name contains[cd] %@)", searchText]];
+    } else{
+        self.searchResults = [items filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(SELF contains[cd] %@)", searchText]];
     }
 }
 

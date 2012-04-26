@@ -13,6 +13,7 @@
 @synthesize dragModelLabel;
 @synthesize bcLabel;
 @synthesize bulletTypePromptLabel;
+@synthesize bulletDiameterLabel;
 @synthesize bulletTypeLabel;
 @synthesize bulletWeightPromptLabel;
 @synthesize nameTextField;
@@ -75,6 +76,7 @@
     [self setBulletTypePromptLabel:nil];
     [self setBulletTypeLabel:nil];
     [self setBulletWeightPromptLabel:nil];
+    [self setBulletDiameterLabel:nil];
     [super viewDidUnload];
 }
 
@@ -117,6 +119,7 @@
     self.bulletTypeLabel.text = type;
     self.bulletTypeLabel.adjustsFontSizeToFitWidth = YES;
     self.bulletTypeLabel.minimumFontSize = 12.0f;
+    self.bulletDiameterLabel.text = [NSString stringWithFormat:@"%@\"", self.selectedBullet.diameter_inches];
     self.bulletWeightPromptLabel.text = @"Caliber\nWeight";
     self.bulletWeightPromptLabel.numberOfLines = 2;
     self.bulletWeightLabel.text = [NSString stringWithFormat:@"%.3f caliber\n%@ grains", [self.selectedBullet.diameter_inches doubleValue], self.selectedBullet.weight_grains];
@@ -124,6 +127,7 @@
     self.bcLabel.lineBreakMode = UILineBreakModeTailTruncation;
     self.bcLabel.numberOfLines = 2;
     self.bcLabel.text = bcText;
+    manually_entered_bc = nil;
 }   
 
 - (void)didSelectDragModel:(NSNotification*) notification  {
@@ -134,11 +138,12 @@
 - (void)manuallyEnteredBulletInfo:(NSNotification*) notification {
     NSArray *manuallyEnteredBulletInfo = [notification object];
 
-    manually_entered_bc = [manuallyEnteredBulletInfo objectAtIndex:1];
+    manually_entered_bc = [manuallyEnteredBulletInfo objectAtIndex:2];
     NSMutableString *bcText = [[NSMutableString alloc] initWithFormat:@"%@", [manually_entered_bc objectAtIndex:0]];
-    for (int i = 1; i < manually_entered_bc.count; i += 2)
+    for (int i = 2; i < manually_entered_bc.count; i += 2)
         [bcText appendFormat:@" \n %@ below %@ fps", [manually_entered_bc objectAtIndex:i], [manually_entered_bc objectAtIndex:i+1]];
-        
+    
+    self.bulletDiameterLabel.text = [NSString stringWithFormat:@"%@\"", [manuallyEnteredBulletInfo objectAtIndex:1]];
     self.bulletTypePromptLabel.text = @"Type";
     self.bulletTypeLabel.text = @"manually entered";
     bullet_weight = [manuallyEnteredBulletInfo objectAtIndex:0];
@@ -147,6 +152,7 @@
     self.bcLabel.lineBreakMode = UILineBreakModeTailTruncation;
     self.bcLabel.numberOfLines = 2;
     self.bcLabel.text = bcText;
+    self.selectedBullet = nil;
 }
 
 # pragma mark Button Actions
@@ -159,6 +165,7 @@
 }
 
 - (IBAction)saveTapped:(id)sender {
+    
 // either save the manually entered bullet data, or link selectedBullet to the profile
 }
 

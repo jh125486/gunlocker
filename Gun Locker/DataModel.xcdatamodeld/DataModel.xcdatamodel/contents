@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="BallisticProfile" representedClassName="BallisticProfile" syncable="YES">
-        <attribute name="altitude" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="bullet_bc" optional="YES" attributeType="Transformable" minValueString="0.001" maxValueString="0.999" syncable="YES"/>
+        <attribute name="bullet_diameter_inches" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="bullet_weight" optional="YES" attributeType="Integer 16" syncable="YES"/>
-        <attribute name="density_altitude" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="drag_model" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="manually_entered_bc" optional="YES" attributeType="Transformable" minValueString="0.001" maxValueString="0.999" syncable="YES"/>
-        <attribute name="muzzle_velocity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="muzzle_velocity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="pressure" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="rh" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="100" defaultValueString="0" syncable="YES"/>
-        <attribute name="sight_height" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="temperature" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="zero" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sight_height_inches" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="zero" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="bullet" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Bullet" inverseName="ballistic_profile" inverseEntity="Bullet" syncable="YES"/>
+        <relationship name="trajectories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trajectory" inverseName="ballistic_profile" inverseEntity="Trajectory" syncable="YES"/>
         <relationship name="weapon" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="ballistic_profile" inverseEntity="Weapon" syncable="YES"/>
     </entity>
     <entity name="Bullet" representedClassName="Bullet" syncable="YES">
@@ -95,6 +92,30 @@
         <attribute name="went_pending" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="weapon" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="stamp" inverseEntity="Weapon" syncable="YES"/>
     </entity>
+    <entity name="Trajectory" representedClassName="Trajectory" syncable="YES">
+        <attribute name="altitude_m" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="density_altitude" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="lead_angle" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="359" defaultValueString="90" syncable="YES"/>
+        <attribute name="lead_speed" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="25" defaultValueString="0" syncable="YES"/>
+        <attribute name="pressure_inhg" optional="YES" attributeType="Float" defaultValueString="29.92" syncable="YES"/>
+        <attribute name="range_increment" optional="YES" attributeType="Integer 16" minValueString="1" maxValueString="500" defaultValueString="100" syncable="YES"/>
+        <attribute name="range_max" optional="YES" attributeType="Integer 16" minValueString="100" maxValueString="2000" defaultValueString="2000" syncable="YES"/>
+        <attribute name="range_min" optional="YES" attributeType="Integer 16" minValueString="25" maxValueString="1950" defaultValueString="100" syncable="YES"/>
+        <attribute name="relative_humidity" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="100" defaultValueString="0" syncable="YES"/>
+        <attribute name="temp_c" optional="YES" attributeType="Float" defaultValueString="15" syncable="YES"/>
+        <relationship name="ballistic_profile" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="BallisticProfile" inverseName="trajectories" inverseEntity="BallisticProfile" syncable="YES"/>
+        <relationship name="ranges" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrajectoryRange" inverseName="trajectory" inverseEntity="TrajectoryRange" syncable="YES"/>
+    </entity>
+    <entity name="TrajectoryRange" representedClassName="TrajectoryRange" syncable="YES">
+        <attribute name="drop" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="energy_ftlbs" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="lead" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="range_m" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="velocity_mps" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="windage" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="trajectory" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Trajectory" inverseName="ranges" inverseEntity="Trajectory" syncable="YES"/>
+    </entity>
     <entity name="Weapon" representedClassName="Weapon" syncable="YES">
         <attribute name="barrel_length" optional="YES" attributeType="Float" syncable="YES"/>
         <attribute name="caliber" optional="YES" attributeType="String" syncable="YES"/>
@@ -133,5 +154,7 @@
         <element name="Note" positionX="-549" positionY="333" width="128" height="105"/>
         <element name="StampInfo" positionX="-603" positionY="63" width="128" height="165"/>
         <element name="Weapon" positionX="-324" positionY="-111" width="128" height="360"/>
+        <element name="Trajectory" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="TrajectoryRange" positionX="160" positionY="192" width="128" height="165"/>
     </elements>
 </model>

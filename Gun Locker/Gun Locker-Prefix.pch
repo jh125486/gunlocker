@@ -17,5 +17,6 @@
     #import "CoreData+MagicalRecord.h"
     #import <QuickDialog/QuickDialog.h>
     #import "NSDate+Formatting.h"
+    #import "Model+Helpers.h"
     #import "DataManager.h"
 #endif

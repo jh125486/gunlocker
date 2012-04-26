@@ -61,8 +61,35 @@
                                                          repeats:NO];
     
     //Register setRange to recieve "setRange" notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];    
+}
 
+-(void)viewDidAppear:(BOOL)animated {
+    //wait for weather to update
+    
+    // TESTING Trajectory
+    BallisticProfile *bc = [BallisticProfile findFirst];
+    if (bc == Nil) bc = [BallisticProfile createEntity];
+    
+    bc.bullet_weight = [NSNumber numberWithInt:55.0];
+    bc.drag_model = @"G7";
+    bc.muzzle_velocity = [NSNumber numberWithInt:3240];
+    bc.zero = [NSNumber numberWithInt:100];
+    bc.sight_height_inches = [NSNumber numberWithDouble:1.5];
+    bc.name = @"M16";
+    bc.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.272"]];
+    bc.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
+    
+    Trajectory *trajectory = [Trajectory createEntity];
+    trajectory.range_min = [NSNumber numberWithInt:100];
+    trajectory.range_max = [NSNumber numberWithInt:1000];
+    trajectory.range_increment = [NSNumber numberWithInt:100];
+    trajectory.relative_humidity = [NSNumber numberWithDouble:0.0];
+    trajectory.pressure_inhg = [NSNumber numberWithDouble:29.92];
+    trajectory.temp_c = [NSNumber numberWithDouble:15];
+    [bc addTrajectoriesObject:trajectory];
+    
+    [trajectory calculateTrajectory];
 }
 
 - (void)viewDidUnload {
@@ -88,15 +115,17 @@
 }
 
 - (IBAction)getWeather:(id)sender {
+    self.densityAltitudeLabel.hidden = YES;
     [weatherIndicator startAnimating];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         self.currentWeather = [[Weather alloc] initWithLocation:currentLocation];        
         dispatch_sync(dispatch_get_main_queue(), ^{
             if(self.currentWeather.goodData) {
-//                NSLog(@"%@", [self.currentWeather description]);
+                NSLog(@"%@", [self.currentWeather description]);
                 self.densityAltitudeLabel.text = [NSString stringWithFormat:@"%.0f ft%", self.currentWeather.densityAltitude];
                 [weatherIndicator stopAnimating];
+                self.densityAltitudeLabel.hidden = NO;
             }
         });
     });

@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *bulletTypePromptLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bulletTypeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *bulletDiameterLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bulletWeightPromptLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bulletWeightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dragModelLabel;
