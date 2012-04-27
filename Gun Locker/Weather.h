@@ -19,7 +19,7 @@
 @property float relativeHumidity;
 @property float altitude_m;
 @property float air_density;
-@property float kilometersFromStation;
+@property float kmFromStation;
 @property float densityAltitude;
 @property (assign, nonatomic)  NSString *stationID;
 @property BOOL  goodData;
@@ -34,4 +34,5 @@
 -(void)calculateDensityAltitude;
 -(double)calculateSpeedOfSound;
 -(float)temp_f;
+-(NSString *)cardinalDirectionFromDegrees:(float)degrees;
 @end

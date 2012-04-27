@@ -1,71 +1,34 @@
 //
-//  BallisticsViewController.m
+//  Ballistics2ViewController.m
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 3/4/12.
+//  Created by Jacob Hochstetler on 4/25/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "BallisticsViewController.h"
 
 @implementation BallisticsViewController
-
-@synthesize ballisticProfilePicker;
-@synthesize editProfileButton;
-@synthesize dropDriftTableButton;
-@synthesize dopeCardButton;
-@synthesize whizWheelButton;
-@synthesize getWeatherButton;
-@synthesize densityAltitudeLabel;
-@synthesize rangeResultLabel;
+@synthesize rangeLabel, rangeResult, rangeResultUnits;
+@synthesize tempLabel, windLabel, altitudeLabel, densityAltitudeLabel, rhLabel;
+@synthesize wxButton, wxStationLabel, wxIndicator, wxTimestampLabel;
+@synthesize chooseProfileButton, selectedProfileTextField, selectedProfilePickerView;
+@synthesize dopeCardsButton, whizWheelButton;
 
 @synthesize locationManager, currentLocation, locationTimer;
 @synthesize currentWeather;
-@synthesize weatherIndicator;
 
-@synthesize rangeResult, rangeResultUnits;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)initWithStyle:(UITableViewStyle)style {
+    self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    arrayColors = [[NSMutableArray alloc] init];
-    [arrayColors addObject:@"Red"];
-    [arrayColors addObject:@"Orange"];
-    [arrayColors addObject:@"Yellow"];
-    [arrayColors addObject:@"Green"];
-    [arrayColors addObject:@"Blue"];
-    [arrayColors addObject:@"Indigo"];
-    [arrayColors addObject:@"Violet"];
     
-
-    
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-//    locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    locationManager.distanceFilter = 3000.0f;
-    [locationManager startUpdatingLocation];
-    [locationManager startMonitoringSignificantLocationChanges];
-    self.locationTimer = [NSTimer scheduledTimerWithTimeInterval:300.0 
-                                                          target:self 
-                                                        selector:@selector(stopUpdatingLocations) 
-                                                        userInfo:nil 
-                                                         repeats:NO];
-    
-    //Register setRange to recieve "setRange" notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];    
-}
-
--(void)viewDidAppear:(BOOL)animated {
-    //wait for weather to update
     
     // TESTING Trajectory
     BallisticProfile *bc = [BallisticProfile findFirst];
@@ -90,83 +53,159 @@
     [bc addTrajectoriesObject:trajectory];
     
     [trajectory calculateTrajectory];
+    // TESTING trajectory
+    
+    
+    self.title = @"Ballistics";
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    
+    selectedProfilePickerView = [[UIPickerView alloc] init];
+    selectedProfilePickerView.delegate = self;
+    selectedProfilePickerView.dataSource = self;
+    [selectedProfilePickerView setShowsSelectionIndicator:YES];
+    self.selectedProfileTextField.inputView = selectedProfilePickerView;
+    UIToolbar* textFieldToolBarView = [[UIToolbar alloc] init];
+    textFieldToolBarView.barStyle = UIBarStyleBlack;
+    textFieldToolBarView.translucent = YES;
+    textFieldToolBarView.tintColor = nil;
+    [textFieldToolBarView sizeToFit];
+    UIBarButtonItem *space  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+                                                                           target:self action:@selector(profileCancel:)];
+    UIBarButtonItem *done   = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+                                                                           target:self action:@selector(profileSelected:)];
+    [textFieldToolBarView setItems:[NSArray arrayWithObjects:cancel, space, done, nil]];
+    self.selectedProfileTextField.inputAccessoryView = textFieldToolBarView;
+    
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    //    locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    locationManager.distanceFilter = 3000.0f;
+    [locationManager startUpdatingLocation];
+    [locationManager startMonitoringSignificantLocationChanges];
+    self.locationTimer = [NSTimer scheduledTimerWithTimeInterval:300.0 
+                                                          target:self 
+                                                        selector:@selector(stopUpdatingLocations) 
+                                                        userInfo:nil 
+                                                         repeats:NO];
+    
+    profiles = [[BallisticProfile findAll] mutableCopy];
+    if (profiles.count == 0) self.chooseProfileButton.enabled = NO;
+    
+    //Register setRange to recieve "setRange" notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];    
 }
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setBallisticProfilePicker:nil];
-    [self setEditProfileButton:nil];
-    [self setDropDriftTableButton:nil];
-    [self setDopeCardButton:nil];
-    [self setWhizWheelButton:nil];
+    [self setWxButton:nil];
+    [self setTempLabel:nil];
+    [self setWindLabel:nil];
+    [self setAltitudeLabel:nil];
     [self setDensityAltitudeLabel:nil];
-    [self setRangeResultLabel:nil];
-    [self setGetWeatherButton:nil];
-    [self setWeatherIndicator:nil];
-    [super viewDidUnload];
-}
-
--(void)viewWillDisappear:(BOOL)animated {
+    [self setWxStationLabel:nil];
+    [self setRhLabel:nil];
+    [self setChooseProfileButton:nil];
+    [self setDopeCardsButton:nil];
+    [self setWhizWheelButton:nil];
+    [self setRangeLabel:nil];
+    [self setSelectedProfileTextField:nil];
     [self stopUpdatingLocations];
+    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)getWeather:(id)sender {
-    self.densityAltitudeLabel.hidden = YES;
-    [weatherIndicator startAnimating];
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString *segueID = segue.identifier;
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        self.currentWeather = [[Weather alloc] initWithLocation:currentLocation];        
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            if(self.currentWeather.goodData) {
-                NSLog(@"%@", [self.currentWeather description]);
-                self.densityAltitudeLabel.text = [NSString stringWithFormat:@"%.0f ft%", self.currentWeather.densityAltitude];
-                [weatherIndicator stopAnimating];
-                self.densityAltitudeLabel.hidden = NO;
-            }
-        });
-    });
-}
+	if ([segueID isEqualToString:@"WhizWheel"]) {
+        ((WhizWheelViewController *)segue.destinationViewController).selectedProfile = selectedProfile;
+    } else if ([segueID isEqualToString:@"WhizWheel"]) {
+        ((DopeCardsViewController *)segue.destinationViewController).selectedProfile = selectedProfile;
+    }
 
-- (IBAction)closeModalPopup:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)setRange:(NSNotification*)notification {
     NSArray *passedRange = [notification object];
     rangeResult = [passedRange objectAtIndex:0];
     rangeResultUnits = [passedRange objectAtIndex:1];
-    self.rangeResultLabel.text = [NSString stringWithFormat:@"%.0f %@", [rangeResult floatValue], rangeResultUnits];
+    self.rangeLabel.text = [NSString stringWithFormat:@"%.0f %@", [rangeResult floatValue], rangeResultUnits];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSString *segueID = segue.identifier;
+- (IBAction)getWX:(id)sender {
+    self.wxStationLabel.hidden = YES;
+    [self.wxIndicator startAnimating];
+    self.wxButton.enabled = NO;
     
-	if ([segueID isEqualToString:@"WhizWheel"]) {
-        WhizWheelViewController *dst = segue.destinationViewController;
-        dst.selectedProfile = [arrayColors objectAtIndex:[self.ballisticProfilePicker selectedRowInComponent:0]];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        self.currentWeather = [[Weather alloc] initWithLocation:currentLocation];        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            if(self.currentWeather.goodData) {
+                self.tempLabel.text = [NSString stringWithFormat:@"%.0fº F", TEMP_C_to_TEMP_F(self.currentWeather.temp_c)];
+                self.rhLabel.text   = [NSString stringWithFormat:@"%.0f%%", self.currentWeather.relativeHumidity];
+                self.windLabel.text = [NSString stringWithFormat:@"%.0f knots from %@", self.currentWeather.wind_speed_kt, 
+                                                     [self.currentWeather cardinalDirectionFromDegrees:self.currentWeather.wind_dir_degrees]];
+                self.altitudeLabel.text = [NSString stringWithFormat:@"%.0f'%", METERS_to_FEET(self.currentWeather.altitude_m)];
+                self.densityAltitudeLabel.text = [NSString stringWithFormat:@"%.0f'%", self.currentWeather.densityAltitude];
+                self.wxStationLabel.text = [NSString stringWithFormat:@"%@ (%.0f km)", self.currentWeather.stationID, self.currentWeather.kmFromStation];
+                self.wxStationLabel.hidden = NO;
+                [self.wxIndicator stopAnimating];
+                self.wxButton.enabled = YES;
+                self.wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", [[self.currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
+                self.wxButton.titleLabel.text = @"↻ WX";
+            }
+        });
+    });
+}
 
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Profiles" style:UIBarButtonItemStyleBordered target:nil action:nil];
+- (IBAction)chooseProfileTapped:(id)sender {
+    if(selectedProfile) {
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                             destructiveButtonTitle:nil
+                                                  otherButtonTitles:@"View Selected Profile", @"Choose a Different Profile", nil];
+        sheet.actionSheetStyle = UIActionSheetStyleAutomatic;
+        [sheet showInView:[UIApplication sharedApplication].keyWindow];
+    } else {
+        [self.selectedProfileTextField becomeFirstResponder];
+    }
+}
+
+- (void)profileSelected:(id)sender {
+    selectedProfile = [profiles objectAtIndex:[self.selectedProfilePickerView selectedRowInComponent:0]];
+    [chooseProfileButton setTitle:selectedProfile.name forState:UIControlStateNormal];
+    [chooseProfileButton setTitle:selectedProfile.name forState:UIControlStateHighlighted];
+    [chooseProfileButton setTitle:selectedProfile.name forState:UIControlStateSelected];
+    chooseProfileButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    dopeCardsButton.enabled = YES;
+    whizWheelButton.enabled = YES;
+    [self.selectedProfileTextField resignFirstResponder];
+}
+
+- (void)profileCancel:(id)sender {
+    [self.selectedProfileTextField resignFirstResponder];
 }
 
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     self.currentLocation = newLocation;
-
+    
     if(newLocation.horizontalAccuracy <= 100.0f)
         [self stopUpdatingLocations];
-    [self getWeather:nil];
+    [self getWX:nil];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     if(error.code == kCLErrorDenied) {
         [self stopUpdatingLocations];
-        self.getWeatherButton.hidden = TRUE;
+        self.wxButton.titleLabel.text = @"⇣ WX";
     } else if(error.code == kCLErrorLocationUnknown) {
         // retry
     } else {
@@ -186,21 +225,54 @@
     [locationTimer invalidate]; 
 }
 
-#pragma mark PickerView
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {    
-    return 1;
+# pragma mark tableview
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    if (section != 0) return nil;
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    [view addSubview:self.wxTimestampLabel];
+    return view;
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return [arrayColors count];
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 30.0f;
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [arrayColors objectAtIndex:row];
+#pragma mark Pickerview
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;    
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return [profiles count];
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    BallisticProfile *profile = [profiles objectAtIndex:row];
+    return profile.name;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSLog(@"Selected Color: %@. Index of selected color: %i", [arrayColors objectAtIndex:row], row);
+    
+    NSLog(@"Selected profile: %@. Index of selected profile: %i", [profiles objectAtIndex:row], row);
+}
+
+#pragma mark UIActionSheet
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            // perform segue to ViewProfile
+            break;
+            
+        case 1:
+            
+            [self.selectedProfileTextField becomeFirstResponder];
+            break;
+        default:
+            break;
+    }
 }
 
 @end

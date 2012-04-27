@@ -100,9 +100,9 @@
 		5380B3AA1521070600CD099D /* NFAInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5380B3A91521070600CD099D /* NFAInformationViewController.m */; };
 		53859F701501E11C00ABA0B1 /* icon_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 53859F6F1501E11C00ABA0B1 /* icon_settings.png */; };
 		53859F741504066100ABA0B1 /* brushed_steel_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 53859F731504066100ABA0B1 /* brushed_steel_background.png */; };
-		53859F7B1504167A00ABA0B1 /* BallisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53859F7A1504167A00ABA0B1 /* BallisticsViewController.m */; };
 		53859F7F1504354A00ABA0B1 /* MillerStabilityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53859F7E1504354A00ABA0B1 /* MillerStabilityViewController.m */; };
 		53859F811505687F00ABA0B1 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53859F801505687F00ABA0B1 /* CoreMotion.framework */; };
+		538EACAA1549E628009B796B /* DopeCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EACA91549E628009B796B /* DopeCardsViewController.m */; };
 		53908949151BB30C0048D5AE /* add_photo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 53908948151BB30C0048D5AE /* add_photo_highlight.png */; };
 		5390EDE715152B9000746A93 /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390EDE615152B9000746A93 /* compass.png */; };
 		5391B8251526226F00582865 /* MalfunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5391B8241526226F00582865 /* MalfunctionCell.m */; };
@@ -141,6 +141,7 @@
 		53B5E18915489BD1000D3A8C /* BallisticProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5E18815489BD1000D3A8C /* BallisticProfile.m */; };
 		53B5E18C1548A214000D3A8C /* Trajectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5E18B1548A214000D3A8C /* Trajectory.m */; };
 		53B5E18F1548C068000D3A8C /* TrajectoryRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5E18E1548C068000D3A8C /* TrajectoryRange.m */; };
+		53B5E19515490C04000D3A8C /* BallisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5E19415490C03000D3A8C /* BallisticsViewController.m */; };
 		53B7FF6D14FEB299007B268A /* icon_BDC.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B7FF6914FEB299007B268A /* icon_BDC.png */; };
 		53B7FF6E14FEB299007B268A /* icon_calculators.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B7FF6A14FEB299007B268A /* icon_calculators.png */; };
 		53B7FF6F14FEB299007B268A /* icon_card_file.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B7FF6B14FEB299007B268A /* icon_card_file.png */; };
@@ -334,11 +335,11 @@
 		5380B3A91521070600CD099D /* NFAInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFAInformationViewController.m; sourceTree = "<group>"; };
 		53859F6F1501E11C00ABA0B1 /* icon_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_settings.png; sourceTree = "<group>"; };
 		53859F731504066100ABA0B1 /* brushed_steel_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brushed_steel_background.png; sourceTree = "<group>"; };
-		53859F791504167A00ABA0B1 /* BallisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticsViewController.h; sourceTree = "<group>"; };
-		53859F7A1504167A00ABA0B1 /* BallisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticsViewController.m; sourceTree = "<group>"; };
 		53859F7D1504354A00ABA0B1 /* MillerStabilityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MillerStabilityViewController.h; sourceTree = "<group>"; };
 		53859F7E1504354A00ABA0B1 /* MillerStabilityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MillerStabilityViewController.m; sourceTree = "<group>"; };
 		53859F801505687F00ABA0B1 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		538EACA81549E628009B796B /* DopeCardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardsViewController.h; sourceTree = "<group>"; };
+		538EACA91549E628009B796B /* DopeCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCardsViewController.m; sourceTree = "<group>"; };
 		53908948151BB30C0048D5AE /* add_photo_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_photo_highlight.png; sourceTree = "<group>"; };
 		5390EDE615152B9000746A93 /* compass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compass.png; sourceTree = "<group>"; };
 		5391B8231526226F00582865 /* MalfunctionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MalfunctionCell.h; sourceTree = "<group>"; };
@@ -396,6 +397,8 @@
 		53B5E18B1548A214000D3A8C /* Trajectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trajectory.m; sourceTree = "<group>"; };
 		53B5E18D1548C068000D3A8C /* TrajectoryRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrajectoryRange.h; sourceTree = "<group>"; };
 		53B5E18E1548C068000D3A8C /* TrajectoryRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrajectoryRange.m; sourceTree = "<group>"; };
+		53B5E19315490C02000D3A8C /* BallisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticsViewController.h; sourceTree = "<group>"; };
+		53B5E19415490C03000D3A8C /* BallisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticsViewController.m; sourceTree = "<group>"; };
 		53B7FF6914FEB299007B268A /* icon_BDC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_BDC.png; sourceTree = "<group>"; };
 		53B7FF6A14FEB299007B268A /* icon_calculators.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_calculators.png; sourceTree = "<group>"; };
 		53B7FF6B14FEB299007B268A /* icon_card_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_card_file.png; sourceTree = "<group>"; };
@@ -723,12 +726,14 @@
 		5348C6971506E66F00147AAF /* Ballistics */ = {
 			isa = PBXGroup;
 			children = (
-				53859F791504167A00ABA0B1 /* BallisticsViewController.h */,
-				53859F7A1504167A00ABA0B1 /* BallisticsViewController.m */,
+				53B5E19315490C02000D3A8C /* BallisticsViewController.h */,
+				53B5E19415490C03000D3A8C /* BallisticsViewController.m */,
 				53A0E66615390F8B00846421 /* BulletChooserViewController.h */,
 				53A0E66715390F8B00846421 /* BulletChooserViewController.m */,
 				53617977153F565E00F921A9 /* BulletEntryManualViewController.h */,
 				53617978153F565E00F921A9 /* BulletEntryManualViewController.m */,
+				538EACA81549E628009B796B /* DopeCardsViewController.h */,
+				538EACA91549E628009B796B /* DopeCardsViewController.m */,
 				53A0E669153954F100846421 /* ProfileAddEditViewController.h */,
 				53A0E66A153954F100846421 /* ProfileAddEditViewController.m */,
 				5348C6921506E5EE00147AAF /* WhizWheelViewController.h */,
@@ -1140,7 +1145,6 @@
 				53A6C86914F498C10045C186 /* ManufacturerChooserViewController.m in Sources */,
 				53A6C88414F5B8ED0045C186 /* CaliberChooserViewController.m in Sources */,
 				5356120E14F5B93600EC1ED4 /* DataModel.xcdatamodeld in Sources */,
-				53859F7B1504167A00ABA0B1 /* BallisticsViewController.m in Sources */,
 				53859F7F1504354A00ABA0B1 /* MillerStabilityViewController.m in Sources */,
 				5348C6911506A9AB00147AAF /* SettingsViewController.m in Sources */,
 				5348C6941506E5EF00147AAF /* WhizWheelViewController.m in Sources */,
@@ -1208,6 +1212,8 @@
 				53B5E18915489BD1000D3A8C /* BallisticProfile.m in Sources */,
 				53B5E18C1548A214000D3A8C /* Trajectory.m in Sources */,
 				53B5E18F1548C068000D3A8C /* TrajectoryRange.m in Sources */,
+				53B5E19515490C04000D3A8C /* BallisticsViewController.m in Sources */,
+				538EACAA1549E628009B796B /* DopeCardsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

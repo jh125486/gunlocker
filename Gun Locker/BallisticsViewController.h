@@ -1,8 +1,8 @@
 //
-//  BallisticsViewController.h
+//  Ballistics2ViewController.h
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 3/4/12.
+//  Created by Jacob Hochstetler on 4/25/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,32 +11,42 @@
 #import "Trajectory.h"
 #import "Weather.h"
 #import "WhizWheelViewController.h"
+#import "DopeCardsViewController.h"
 
-@interface BallisticsViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, CLLocationManagerDelegate> {
-    NSMutableArray *arrayColors;
+@interface BallisticsViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate, UIActionSheetDelegate> {
+    NSMutableArray *profiles;
+    BallisticProfile *selectedProfile;
 }
 
-@property (weak, nonatomic) IBOutlet UIPickerView *ballisticProfilePicker;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editProfileButton;
-@property (weak, nonatomic) IBOutlet UIButton *dropDriftTableButton;
-@property (weak, nonatomic) IBOutlet UIButton *dopeCardButton;
-@property (weak, nonatomic) IBOutlet UIButton *whizWheelButton;
-@property (weak, nonatomic) IBOutlet UIButton *getWeatherButton;
+
+@property (weak, nonatomic) IBOutlet UILabel *rangeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *wxButton;
+@property (weak, nonatomic) IBOutlet UILabel *tempLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rhLabel;
+@property (weak, nonatomic) IBOutlet UILabel *windLabel;
+@property (weak, nonatomic) IBOutlet UILabel *altitudeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *densityAltitudeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *rangeResultLabel;
+@property (weak, nonatomic) IBOutlet UILabel *wxStationLabel;
+@property (strong, nonatomic) IBOutlet UILabel *wxTimestampLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *chooseProfileButton;
+@property (weak, nonatomic) IBOutlet UITextField *selectedProfileTextField;
+@property (strong, nonatomic) UIPickerView *selectedProfilePickerView;
+
+@property (weak, nonatomic) IBOutlet UIButton *dopeCardsButton;
+@property (weak, nonatomic) IBOutlet UIButton *whizWheelButton;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLLocation *currentLocation;
 @property (strong, nonatomic) NSTimer *locationTimer;
 
 @property (strong, nonatomic) Weather *currentWeather;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *weatherIndicator;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *wxIndicator;
 
 @property (weak, nonatomic) NSNumber *rangeResult;
 @property (weak, nonatomic) NSString *rangeResultUnits;
 
+- (IBAction)getWX:(id)sender;
+- (IBAction)chooseProfileTapped:(id)sender;
 
-- (IBAction)getWeather:(id)sender;
-
-- (IBAction)closeModalPopup:(id)sender;
 @end

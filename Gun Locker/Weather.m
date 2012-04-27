@@ -10,7 +10,7 @@
 
 @implementation Weather
 
-@synthesize timestamp, temp_c, dewpoint_c, wind_speed_kt, wind_dir_degrees, altim_in_hg, relativeHumidity, kilometersFromStation, densityAltitude;
+@synthesize timestamp, temp_c, dewpoint_c, wind_speed_kt, wind_dir_degrees, altim_in_hg, relativeHumidity, kmFromStation, densityAltitude;
 @synthesize altitude_m, air_density;
 @synthesize stationID, goodData;
 
@@ -42,7 +42,7 @@
         
         NSArray *stationWeather;
         int closestStationIndex = -1;
-        self.kilometersFromStation = MAXFLOAT;
+        self.kmFromStation = MAXFLOAT;
         float distanceKM;
         
         // rolls through returned stations and find closest station
@@ -52,9 +52,9 @@
                                                                      longitude:[[stationWeather objectAtIndex:4] floatValue]];
             distanceKM = [location distanceFromLocation:stationLocation] / 1000.0f;
             
-            if(distanceKM < self.kilometersFromStation) {
+            if(distanceKM < self.kmFromStation) {
                 closestStationIndex = index;
-                self.kilometersFromStation = distanceKM;
+                self.kmFromStation = distanceKM;
             }
         }
         
@@ -115,7 +115,7 @@
 
 -(NSString*)description {
     return [NSString stringWithFormat:@"\nStation: %@ @%@ (distance of %.f km)\nTemp: %.0f C\nDew point: %.0f C\nWind: %.0f knots from %.0f degrees\nAltimPressure: %.2f inHg\nRel . Hum.: %.0f%%\nDensity Altitude: %.0f\nPressure Altitude:\t%.0f'\nSpeed of Sound:\t%.0fm/s (%.0fft/s)",
-                                      self.stationID, self.timestamp, self.kilometersFromStation,
+                                      self.stationID, self.timestamp, self.kmFromStation,
                                       self.temp_c, 
                                       self.dewpoint_c, 
                                       self.wind_speed_kt, 
@@ -165,5 +165,42 @@
     return (0.603055*self.temp_c + 331.5024 - pow(self.temp_c,2) * 5.28 * pow(10,-4) + (0.1495874 * self.temp_c + 51.471935 - pow(self.temp_c,2)*7.82 * pow(10,-4))*Xw) + ((-1.82 * pow(10,-7) + 3.73 * pow(10,-8) * self.temp_c - pow(self.temp_c,2) * 2.93 * pow(10,-10)) * self.altim_in_pa + (-85.20931-0.228525 * self.temp_c + pow(self.temp_c,2)*5.91*pow(10,-5))*Xc) - (pow(Xw,2) * 2.835149 - pow(self.altim_in_pa,2) * 2.15 * pow(10,-13) + pow(Xc,2) * 29.179762 + 4.86 * pow(10,-4) * Xw * self.altim_in_pa * Xc);
 }
 
+-(NSString *)cardinalDirectionFromDegrees:(float)degrees {
+    if(degrees <= 11.25) {
+        return @"N";
+    } else if (degrees <= 33.75) {
+        return @"NNE";
+    } else if (degrees <= 56.75) {
+        return @"NE";
+    } else if (degrees <= 78.75) {
+        return @"ENE";
+    } else if (degrees <= 101.75) {
+        return @"E";  
+    } else if (degrees <= 123.75) {
+        return @"ESE";
+    } else if (degrees <= 146.75) {
+        return @"SE"; 
+    } else if (degrees <= 168.75) {
+        return @"SSE";
+    } else if (degrees <= 191.75) {
+        return @"S";  
+    } else if (degrees <= 213.75) {
+        return @"SSW";
+    } else if  (degrees <= 236.75) {
+        return @"SW"; 
+    } else if  (degrees <= 258.75) {
+        return @"WSW";
+    } else if  (degrees <= 281.75) {
+        return @"W";  
+    } else if  (degrees <= 303.75) {
+        return @"WNW";
+    } else if  (degrees <= 326.25) {
+        return @"NW"; 
+    } else if  (degrees <= 348.75) {
+        return @"NNW";
+    } else {
+        return @"N";
+    }
+}
 
 @end
