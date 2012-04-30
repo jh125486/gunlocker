@@ -30,14 +30,12 @@
 - (id) initWithCoder:(NSCoder *)coder
 {
     if (self = [super initWithCoder:coder]) {
-        [self setTintColor:[UIColor greenColor]];
-//        [self setFrame: CGRectMake(self.frame.origin.x,
-//                                   self.frame.origin.y,
-//                                   self.frame.size.width, 
-//                                   44)];
-        
-        UIImage *buttonImage = [[UIImage imageNamed:@"button.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 20, 12, 20)];
-        [self setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [self setBackgroundImage:[[UIImage imageNamed:@"DefaultButton_Normal"] 
+                                  resizableImageWithCapInsets:UIEdgeInsetsMake(21, 21, 21, 21)] forState:UIControlStateNormal];
+        [self setBackgroundImage:[[UIImage imageNamed:@"DefaultButton_Highlighted"] 
+                                  resizableImageWithCapInsets:UIEdgeInsetsMake(21, 21, 21, 21)] forState:UIControlStateHighlighted];
+        [self setBackgroundImage:[[UIImage imageNamed:@"DefaultButton_Disabled"] 
+                                  resizableImageWithCapInsets:UIEdgeInsetsMake(21, 21, 21, 21)] forState:UIControlStateDisabled];
 
         [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];

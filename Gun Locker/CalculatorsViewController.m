@@ -31,4 +31,8 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+}
+
 @end

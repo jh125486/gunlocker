@@ -17,13 +17,10 @@
 @synthesize bulletTypeLabel;
 @synthesize bulletWeightPromptLabel;
 @synthesize nameTextField;
+@synthesize weaponTextField, weaponPicker;
 @synthesize muzzleVelocityTextField, muzzleVelocityUnitControl;
 @synthesize siteHeightTextField, siteHeightUnitControl;
 @synthesize zeroDistanceTextField, zeroDistanceUnitControl;
-@synthesize temperatureTextField, temperatureUnitControl;
-@synthesize pressureTextfield, pressureUnitControl;
-@synthesize relativeHumidityTextField;
-@synthesize altitudeTextField, altitudeUnitControl;
 @synthesize selectedProfile, selectedBullet;
 @synthesize currentTextField;
 
@@ -45,12 +42,19 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(manuallyEnteredBulletInfo:) name:@"manuallyEnteredBullet" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectDragModel:) name:@"selectedDragModel" object:nil];
 
-    formFields = [[NSMutableArray alloc] initWithObjects:muzzleVelocityTextField, siteHeightTextField, zeroDistanceTextField, temperatureTextField, pressureTextfield, relativeHumidityTextField, altitudeTextField, nil];
+    formFields = [[NSMutableArray alloc] initWithObjects:self.muzzleVelocityTextField, self.siteHeightTextField, self.zeroDistanceTextField, nil];
+    
+    self.weaponPicker = [[UIPickerView alloc] init];
+    self.weaponPicker.delegate = self;
+    self.weaponPicker.showsSelectionIndicator = YES;
+    self.weaponTextField.inputView = self.weaponPicker;
     
     for(UITextField *field in formFields)
         field.delegate = self;    
     
-    if (selectedProfile) [self loadTextFieldsFromProfile];    
+    if (selectedProfile) [self loadTextFieldsFromProfile];
+    
+    weapons = [Weapon findAll];
 }
 
 - (void)viewDidUnload {
@@ -60,16 +64,9 @@
     [self setMuzzleVelocityTextField:nil];
     [self setSiteHeightTextField:nil];
     [self setZeroDistanceTextField:nil];
-    [self setTemperatureTextField:nil];
-    [self setPressureTextfield:nil];
-    [self setRelativeHumidityTextField:nil];
-    [self setAltitudeTextField:nil];
     [self setMuzzleVelocityUnitControl:nil];
     [self setSiteHeightUnitControl:nil];
     [self setZeroDistanceUnitControl:nil];
-    [self setTemperatureUnitControl:nil];
-    [self setPressureUnitControl:nil];
-    [self setAltitudeUnitControl:nil];
     [self setDragModelLabel:nil];
     [self setBcLabel:nil];
     [self setNameTextField:nil];
@@ -77,6 +74,7 @@
     [self setBulletTypeLabel:nil];
     [self setBulletWeightPromptLabel:nil];
     [self setBulletDiameterLabel:nil];
+    [self setWeaponTextField:nil];
     [super viewDidUnload];
 }
 
@@ -156,6 +154,10 @@
 }
 
 # pragma mark Button Actions
+- (IBAction)selectWeaponTapped:(id)sender {
+    [self.weaponTextField becomeFirstResponder];
+}
+
 - (IBAction)bulletControlTapped:(UISegmentedControl *)sender {
     [self performSegueWithIdentifier:(sender.selectedSegmentIndex == 0) ? @"BulletChooser" : @"ManualBulletEntry" sender:nil];
 }
@@ -229,7 +231,48 @@
 }
 
 - (void) doneTyping:(id)sender {
+    if (self.currentTextField = self.weaponTextField) {
+        selectedWeapon = [weapons objectAtIndex:[weaponPicker selectedRowInComponent:0]];
+        self.weaponTextField.text = [NSString stringWithFormat:@"%@", selectedWeapon];
+    }
+    
     [self.currentTextField resignFirstResponder];
+}
+
+# pragma mark pickerview delegates
+
+-(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    if (view == nil) {
+        Weapon *weapon = [weapons objectAtIndex:row];
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        view.backgroundColor = [UIColor clearColor];
+        UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(16, 1, 56, 42)];
+        thumbNail.image = [UIImage imageWithData:weapon.photo_thumbnail];
+        UILabel *firstLine  = [[UILabel alloc] initWithFrame:CGRectMake(75, 0, 230, 22)];
+        UILabel *secondLine = [[UILabel alloc] initWithFrame:CGRectMake(75, 22, 230, 22)];
+        firstLine.backgroundColor = [UIColor clearColor];
+        secondLine.backgroundColor = [UIColor clearColor];
+        firstLine.font  = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22];
+        secondLine.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:18];
+        firstLine.textColor = [UIColor blackColor];
+        secondLine.textColor = [UIColor darkGrayColor];
+        firstLine.adjustsFontSizeToFitWidth = YES;
+        firstLine.text  = [NSString stringWithFormat:@"%@", weapon];
+        secondLine.text = [NSString stringWithFormat:@"%@ - %@", weapon.caliber, weapon.finish];
+        [view addSubview:thumbNail];
+        [view addSubview:firstLine];
+        [view addSubview:secondLine];
+    }
+    
+    return view;    
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return [weapons count];
+}
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
 }
 
 @end

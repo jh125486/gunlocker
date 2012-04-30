@@ -11,7 +11,6 @@
 #import "Weapon.h"
 #import "Manufacturer.h"
 #import "Trajectory.h"
-#import "TrajectoryRange.h"
 #import "BallisticProfile.h"
 #import "Weather.h"
 #import "Bullet.h"
@@ -25,26 +24,26 @@
 #define MOA_to_MIL(x)       (x / ((360*60)/(2000*M_PI)))
 #define METERS_to_FEET(x)   (x*3.28083989501312)
 #define FEET_to_METERS(x)   (x/3.28083989501312)
-#define FEET_to_YARDS(x)    (x/3)
+#define FEET_to_YARDS(x)    (x/3.0)
 #define YARDS_to_FEET(x)    (x*3)
 #define INCHES_to_FEET(x)   (x/12.0)
 #define FEET_to_INCHES(x)   (x*12.0)
+
+#define INHG_to_PA(x)       (x*3386.389)
+
 #define TEMP_C_to_TEMP_F(x) (x * (9/5.0) + 32.0)
 #define TEMP_C_to_TEMP_K(x) (x + 273.15)
 #define TEMP_F_to_TEMP_C(x) ((x - 32.0) * (5/9.0))
 #define TEMP_F_to_TEMP_R(x) (x + 459.67)
 
+#define KNOTS_to_MPH(x)     (x * (1.852/1.609344))
+
+#define CLOCK_to_DEGREES(x) (x * 30)
+
 #define GRAVITY_FPS (-32.1740486)
 
 @interface Weapon (helper)
 - (NSString *)description;
-@end
-
-@interface Trajectory (helper)
-
--(void)calculateTrajectory;
--(double)calculateSpeedOfSoundInMPS;
-
 @end
 
 @interface BallisticProfile (helper)

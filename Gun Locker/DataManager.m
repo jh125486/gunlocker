@@ -21,6 +21,7 @@ static DataManager *sharedMyManager = nil;
 @synthesize transferTypes;
 @synthesize windageLeading;
 @synthesize speedTypes;
+@synthesize currentWeather;
 
 #pragma mark Singleton Methods
 + (id)sharedManager {

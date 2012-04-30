@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		530A008A154BB5130023FBE7 /* TrajectoryRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 530A0089154BB5130023FBE7 /* TrajectoryRange.m */; };
 		530C390D153E237B005C0AB6 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C390C153E237B005C0AB6 /* DataManager.m */; };
 		530C3910153E7AE9005C0AB6 /* CalculatorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C390F153E7AE9005C0AB6 /* CalculatorsViewController.m */; };
+		530D7B6D154B26E300536281 /* DopeTableGeneratedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D7B6C154B26E300536281 /* DopeTableGeneratedTableViewController.m */; };
+		530D7B70154B473900536281 /* DopeTableGeneratedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D7B6F154B473900536281 /* DopeTableGeneratedCell.m */; };
+		530D7B73154B57D300536281 /* BallisticProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D7B72154B57D300536281 /* BallisticProfile.m */; };
 		530DDEF914EEB6D800F1BC7F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDEF814EEB6D800F1BC7F /* UIKit.framework */; };
 		530DDEFB14EEB6D800F1BC7F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDEFA14EEB6D800F1BC7F /* Foundation.framework */; };
 		530DDEFD14EEB6D800F1BC7F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDEFC14EEB6D800F1BC7F /* CoreGraphics.framework */; };
@@ -28,6 +32,12 @@
 		530EA40E14FD358100E132FB /* photo_tape_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 530EA40C14FD358100E132FB /* photo_tape_bottom.png */; };
 		530EA40F14FD358100E132FB /* photo_tape_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 530EA40D14FD358100E132FB /* photo_tape_top.png */; };
 		530EA41114FD38B900E132FB /* photo_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 530EA41014FD38B900E132FB /* photo_back.png */; };
+		5314B9ED154DC54200FED997 /* DefaultButton_Disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 5314B9E7154DC54200FED997 /* DefaultButton_Disabled.png */; };
+		5314B9EE154DC54200FED997 /* DefaultButton_Disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5314B9E8154DC54200FED997 /* DefaultButton_Disabled@2x.png */; };
+		5314B9EF154DC54200FED997 /* DefaultButton_Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 5314B9E9154DC54200FED997 /* DefaultButton_Highlighted.png */; };
+		5314B9F0154DC54200FED997 /* DefaultButton_Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5314B9EA154DC54200FED997 /* DefaultButton_Highlighted@2x.png */; };
+		5314B9F1154DC54200FED997 /* DefaultButton_Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5314B9EB154DC54200FED997 /* DefaultButton_Normal.png */; };
+		5314B9F2154DC54200FED997 /* DefaultButton_Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5314B9EC154DC54200FED997 /* DefaultButton_Normal@2x.png */; };
 		5319C8A71508680A00795B87 /* NSAttributeDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5319C88A1508680A00795B87 /* NSAttributeDescription+MagicalDataImport.m */; };
 		5319C8A81508680A00795B87 /* NSEntityDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5319C88C1508680A00795B87 /* NSEntityDescription+MagicalDataImport.m */; };
 		5319C8A91508680A00795B87 /* NSNumber+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5319C88E1508680A00795B87 /* NSNumber+MagicalDataImport.m */; };
@@ -102,7 +112,8 @@
 		53859F741504066100ABA0B1 /* brushed_steel_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 53859F731504066100ABA0B1 /* brushed_steel_background.png */; };
 		53859F7F1504354A00ABA0B1 /* MillerStabilityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53859F7E1504354A00ABA0B1 /* MillerStabilityViewController.m */; };
 		53859F811505687F00ABA0B1 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53859F801505687F00ABA0B1 /* CoreMotion.framework */; };
-		538EACAA1549E628009B796B /* DopeCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EACA91549E628009B796B /* DopeCardsViewController.m */; };
+		538DA6F5154F444D0066F74A /* Test in Resources */ = {isa = PBXBuildFile; fileRef = 538DA6F4154F444D0066F74A /* Test */; };
+		538EACAA1549E628009B796B /* DopeTableTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EACA91549E628009B796B /* DopeTableTableViewController.m */; };
 		53908949151BB30C0048D5AE /* add_photo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 53908948151BB30C0048D5AE /* add_photo_highlight.png */; };
 		5390EDE715152B9000746A93 /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390EDE615152B9000746A93 /* compass.png */; };
 		5391B8251526226F00582865 /* MalfunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5391B8241526226F00582865 /* MalfunctionCell.m */; };
@@ -138,9 +149,7 @@
 		53B5E16115413158000D3A8C /* RangingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5E16015413158000D3A8C /* RangingViewController.m */; };
 		53B5E16415422585000D3A8C /* ConversionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5E16315422585000D3A8C /* ConversionsViewController.m */; };
 		53B5E167154369DE000D3A8C /* RangingSamplesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5E166154369DE000D3A8C /* RangingSamplesViewController.m */; };
-		53B5E18915489BD1000D3A8C /* BallisticProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5E18815489BD1000D3A8C /* BallisticProfile.m */; };
 		53B5E18C1548A214000D3A8C /* Trajectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5E18B1548A214000D3A8C /* Trajectory.m */; };
-		53B5E18F1548C068000D3A8C /* TrajectoryRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5E18E1548C068000D3A8C /* TrajectoryRange.m */; };
 		53B5E19515490C04000D3A8C /* BallisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5E19415490C03000D3A8C /* BallisticsViewController.m */; };
 		53B7FF6D14FEB299007B268A /* icon_BDC.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B7FF6914FEB299007B268A /* icon_BDC.png */; };
 		53B7FF6E14FEB299007B268A /* icon_calculators.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B7FF6A14FEB299007B268A /* icon_calculators.png */; };
@@ -164,8 +173,6 @@
 		53EBBD9915170E5100488E63 /* mil_dot_reticle_night.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9715170E5100488E63 /* mil_dot_reticle_night.png */; };
 		53EBBD9B15171B1600488E63 /* mil_dot_reticle_bullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9A15171B1600488E63 /* mil_dot_reticle_bullet.png */; };
 		53F272DF150E5BFE005A329F /* DefaultButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F272DE150E5BFE005A329F /* DefaultButton.m */; };
-		53F27345150E9E75005A329F /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F27344150E9E75005A329F /* button.png */; };
-		53F27347150EB1E4005A329F /* button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F27346150EB1E4005A329F /* button@2x.png */; };
 		53F2735B15112D37005A329F /* NSDate+Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2735A15112D37005A329F /* NSDate+Formatting.m */; };
 		53F273791511B936005A329F /* MaintenancesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F273781511B936005A329F /* MaintenancesTableViewController.m */; };
 		53F2737C1511B969005A329F /* MalfunctionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2737B1511B969005A329F /* MalfunctionsTableViewController.m */; };
@@ -197,10 +204,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		530A0088154BB5130023FBE7 /* TrajectoryRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrajectoryRange.h; sourceTree = "<group>"; };
+		530A0089154BB5130023FBE7 /* TrajectoryRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrajectoryRange.m; sourceTree = "<group>"; };
 		530C390B153E237B005C0AB6 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		530C390C153E237B005C0AB6 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		530C390E153E7AE9005C0AB6 /* CalculatorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorsViewController.h; sourceTree = "<group>"; };
 		530C390F153E7AE9005C0AB6 /* CalculatorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorsViewController.m; sourceTree = "<group>"; };
+		530D7B6B154B26E300536281 /* DopeTableGeneratedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeTableGeneratedTableViewController.h; sourceTree = "<group>"; };
+		530D7B6C154B26E300536281 /* DopeTableGeneratedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeTableGeneratedTableViewController.m; sourceTree = "<group>"; };
+		530D7B6E154B473900536281 /* DopeTableGeneratedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeTableGeneratedCell.h; sourceTree = "<group>"; };
+		530D7B6F154B473900536281 /* DopeTableGeneratedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeTableGeneratedCell.m; sourceTree = "<group>"; };
+		530D7B71154B57D300536281 /* BallisticProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfile.h; sourceTree = "<group>"; };
+		530D7B72154B57D300536281 /* BallisticProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfile.m; sourceTree = "<group>"; };
 		530DDEF414EEB6D800F1BC7F /* Gun Locker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gun Locker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		530DDEF814EEB6D800F1BC7F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		530DDEFA14EEB6D800F1BC7F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -226,6 +241,12 @@
 		530EA40C14FD358100E132FB /* photo_tape_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_tape_bottom.png; sourceTree = "<group>"; };
 		530EA40D14FD358100E132FB /* photo_tape_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_tape_top.png; sourceTree = "<group>"; };
 		530EA41014FD38B900E132FB /* photo_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_back.png; sourceTree = "<group>"; };
+		5314B9E7154DC54200FED997 /* DefaultButton_Disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultButton_Disabled.png; sourceTree = "<group>"; };
+		5314B9E8154DC54200FED997 /* DefaultButton_Disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DefaultButton_Disabled@2x.png"; sourceTree = "<group>"; };
+		5314B9E9154DC54200FED997 /* DefaultButton_Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultButton_Highlighted.png; sourceTree = "<group>"; };
+		5314B9EA154DC54200FED997 /* DefaultButton_Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DefaultButton_Highlighted@2x.png"; sourceTree = "<group>"; };
+		5314B9EB154DC54200FED997 /* DefaultButton_Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultButton_Normal.png; sourceTree = "<group>"; };
+		5314B9EC154DC54200FED997 /* DefaultButton_Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DefaultButton_Normal@2x.png"; sourceTree = "<group>"; };
 		5319C8891508680A00795B87 /* NSAttributeDescription+MagicalDataImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributeDescription+MagicalDataImport.h"; sourceTree = "<group>"; };
 		5319C88A1508680A00795B87 /* NSAttributeDescription+MagicalDataImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributeDescription+MagicalDataImport.m"; sourceTree = "<group>"; };
 		5319C88B1508680A00795B87 /* NSEntityDescription+MagicalDataImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEntityDescription+MagicalDataImport.h"; sourceTree = "<group>"; };
@@ -338,8 +359,9 @@
 		53859F7D1504354A00ABA0B1 /* MillerStabilityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MillerStabilityViewController.h; sourceTree = "<group>"; };
 		53859F7E1504354A00ABA0B1 /* MillerStabilityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MillerStabilityViewController.m; sourceTree = "<group>"; };
 		53859F801505687F00ABA0B1 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		538EACA81549E628009B796B /* DopeCardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardsViewController.h; sourceTree = "<group>"; };
-		538EACA91549E628009B796B /* DopeCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCardsViewController.m; sourceTree = "<group>"; };
+		538DA6F4154F444D0066F74A /* Test */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Test; path = "Gun Locker/Test"; sourceTree = "<group>"; };
+		538EACA81549E628009B796B /* DopeTableTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeTableTableViewController.h; sourceTree = "<group>"; };
+		538EACA91549E628009B796B /* DopeTableTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeTableTableViewController.m; sourceTree = "<group>"; };
 		53908948151BB30C0048D5AE /* add_photo_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_photo_highlight.png; sourceTree = "<group>"; };
 		5390EDE615152B9000746A93 /* compass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compass.png; sourceTree = "<group>"; };
 		5391B8231526226F00582865 /* MalfunctionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MalfunctionCell.h; sourceTree = "<group>"; };
@@ -391,12 +413,8 @@
 		53B5E16315422585000D3A8C /* ConversionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversionsViewController.m; sourceTree = "<group>"; };
 		53B5E165154369DE000D3A8C /* RangingSamplesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RangingSamplesViewController.h; path = Bullets/RangingSamplesViewController.h; sourceTree = "<group>"; };
 		53B5E166154369DE000D3A8C /* RangingSamplesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RangingSamplesViewController.m; path = Bullets/RangingSamplesViewController.m; sourceTree = "<group>"; };
-		53B5E18715489BD1000D3A8C /* BallisticProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfile.h; sourceTree = "<group>"; };
-		53B5E18815489BD1000D3A8C /* BallisticProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfile.m; sourceTree = "<group>"; };
 		53B5E18A1548A214000D3A8C /* Trajectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trajectory.h; sourceTree = "<group>"; };
 		53B5E18B1548A214000D3A8C /* Trajectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trajectory.m; sourceTree = "<group>"; };
-		53B5E18D1548C068000D3A8C /* TrajectoryRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrajectoryRange.h; sourceTree = "<group>"; };
-		53B5E18E1548C068000D3A8C /* TrajectoryRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrajectoryRange.m; sourceTree = "<group>"; };
 		53B5E19315490C02000D3A8C /* BallisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticsViewController.h; sourceTree = "<group>"; };
 		53B5E19415490C03000D3A8C /* BallisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticsViewController.m; sourceTree = "<group>"; };
 		53B7FF6914FEB299007B268A /* icon_BDC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_BDC.png; sourceTree = "<group>"; };
@@ -429,8 +447,6 @@
 		53EBBD9A15171B1600488E63 /* mil_dot_reticle_bullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mil_dot_reticle_bullet.png; sourceTree = "<group>"; };
 		53F272DD150E5BFE005A329F /* DefaultButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultButton.h; sourceTree = "<group>"; };
 		53F272DE150E5BFE005A329F /* DefaultButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultButton.m; sourceTree = "<group>"; };
-		53F27344150E9E75005A329F /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
-		53F27346150EB1E4005A329F /* button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button@2x.png"; sourceTree = "<group>"; };
 		53F2735915112D36005A329F /* NSDate+Formatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Formatting.h"; sourceTree = "<group>"; };
 		53F2735A15112D37005A329F /* NSDate+Formatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Formatting.m"; sourceTree = "<group>"; };
 		53F273771511B936005A329F /* MaintenancesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaintenancesTableViewController.h; sourceTree = "<group>"; };
@@ -465,6 +481,7 @@
 		530DDEE914EEB6D800F1BC7F = {
 			isa = PBXGroup;
 			children = (
+				538DA6F4154F444D0066F74A /* Test */,
 				530EA3FE14FC783900E132FB /* Default.png */,
 				530EA3F814FC3A1600E132FB /* Default@2x.png */,
 				530EA3FA14FC780000E132FB /* icon.png */,
@@ -534,13 +551,17 @@
 		530EA40214FC7AE000E132FB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5314B9E7154DC54200FED997 /* DefaultButton_Disabled.png */,
+				5314B9E8154DC54200FED997 /* DefaultButton_Disabled@2x.png */,
+				5314B9E9154DC54200FED997 /* DefaultButton_Highlighted.png */,
+				5314B9EA154DC54200FED997 /* DefaultButton_Highlighted@2x.png */,
+				5314B9EB154DC54200FED997 /* DefaultButton_Normal.png */,
+				5314B9EC154DC54200FED997 /* DefaultButton_Normal@2x.png */,
 				53405CC6151AA04500C7D84F /* add_photo.png */,
 				531D85B01522B259004BB3AA /* add_photo@2x.png */,
 				53908948151BB30C0048D5AE /* add_photo_highlight.png */,
 				531D85AF1522B259004BB3AA /* add_photo_highlight@2x.png */,
 				53859F731504066100ABA0B1 /* brushed_steel_background.png */,
-				53F27344150E9E75005A329F /* button.png */,
-				53F27346150EB1E4005A329F /* button@2x.png */,
 				531D85AD1522A8EE004BB3AA /* delete_button.png */,
 				531D85B11522B259004BB3AA /* delete_button@2x.png */,
 				53F6AAC814FDE67E0079F613 /* Icons */,
@@ -732,8 +753,12 @@
 				53A0E66715390F8B00846421 /* BulletChooserViewController.m */,
 				53617977153F565E00F921A9 /* BulletEntryManualViewController.h */,
 				53617978153F565E00F921A9 /* BulletEntryManualViewController.m */,
-				538EACA81549E628009B796B /* DopeCardsViewController.h */,
-				538EACA91549E628009B796B /* DopeCardsViewController.m */,
+				530D7B6E154B473900536281 /* DopeTableGeneratedCell.h */,
+				530D7B6F154B473900536281 /* DopeTableGeneratedCell.m */,
+				530D7B6B154B26E300536281 /* DopeTableGeneratedTableViewController.h */,
+				530D7B6C154B26E300536281 /* DopeTableGeneratedTableViewController.m */,
+				538EACA81549E628009B796B /* DopeTableTableViewController.h */,
+				538EACA91549E628009B796B /* DopeTableTableViewController.m */,
 				53A0E669153954F100846421 /* ProfileAddEditViewController.h */,
 				53A0E66A153954F100846421 /* ProfileAddEditViewController.m */,
 				5348C6921506E5EE00147AAF /* WhizWheelViewController.h */,
@@ -894,12 +919,12 @@
 		53B5E16815460EAC000D3A8C /* Ballistics */ = {
 			isa = PBXGroup;
 			children = (
-				53B5E18D1548C068000D3A8C /* TrajectoryRange.h */,
-				53B5E18E1548C068000D3A8C /* TrajectoryRange.m */,
+				530D7B71154B57D300536281 /* BallisticProfile.h */,
+				530D7B72154B57D300536281 /* BallisticProfile.m */,
 				53B5E18A1548A214000D3A8C /* Trajectory.h */,
 				53B5E18B1548A214000D3A8C /* Trajectory.m */,
-				53B5E18715489BD1000D3A8C /* BallisticProfile.h */,
-				53B5E18815489BD1000D3A8C /* BallisticProfile.m */,
+				530A0088154BB5130023FBE7 /* TrajectoryRange.h */,
+				530A0089154BB5130023FBE7 /* TrajectoryRange.m */,
 			);
 			name = Ballistics;
 			sourceTree = "<group>";
@@ -1073,8 +1098,6 @@
 				53859F741504066100ABA0B1 /* brushed_steel_background.png in Resources */,
 				5348C69B1507188D00147AAF /* picker_overlay.png in Resources */,
 				5348C69D150719A600147AAF /* picker_footer_overlay.png in Resources */,
-				53F27345150E9E75005A329F /* button.png in Resources */,
-				53F27347150EB1E4005A329F /* button@2x.png in Resources */,
 				53AF066B1512A605000B9943 /* KKPasscodeLock.bundle in Resources */,
 				5390EDE715152B9000746A93 /* compass.png in Resources */,
 				539DBDF11515B2A300AB97FB /* tableview_skin.png in Resources */,
@@ -1129,6 +1152,13 @@
 				53A0E695153D3D0500846421 /* tableView_background.png in Resources */,
 				53A0E696153D3D0500846421 /* tableView_background@2x.png in Resources */,
 				53A0E698153D597000846421 /* Table in Resources */,
+				5314B9ED154DC54200FED997 /* DefaultButton_Disabled.png in Resources */,
+				5314B9EE154DC54200FED997 /* DefaultButton_Disabled@2x.png in Resources */,
+				5314B9EF154DC54200FED997 /* DefaultButton_Highlighted.png in Resources */,
+				5314B9F0154DC54200FED997 /* DefaultButton_Highlighted@2x.png in Resources */,
+				5314B9F1154DC54200FED997 /* DefaultButton_Normal.png in Resources */,
+				5314B9F2154DC54200FED997 /* DefaultButton_Normal@2x.png in Resources */,
+				538DA6F5154F444D0066F74A /* Test in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1209,11 +1239,13 @@
 				53B5E16115413158000D3A8C /* RangingViewController.m in Sources */,
 				53B5E16415422585000D3A8C /* ConversionsViewController.m in Sources */,
 				53B5E167154369DE000D3A8C /* RangingSamplesViewController.m in Sources */,
-				53B5E18915489BD1000D3A8C /* BallisticProfile.m in Sources */,
 				53B5E18C1548A214000D3A8C /* Trajectory.m in Sources */,
-				53B5E18F1548C068000D3A8C /* TrajectoryRange.m in Sources */,
 				53B5E19515490C04000D3A8C /* BallisticsViewController.m in Sources */,
-				538EACAA1549E628009B796B /* DopeCardsViewController.m in Sources */,
+				538EACAA1549E628009B796B /* DopeTableTableViewController.m in Sources */,
+				530D7B6D154B26E300536281 /* DopeTableGeneratedTableViewController.m in Sources */,
+				530D7B70154B473900536281 /* DopeTableGeneratedCell.m in Sources */,
+				530D7B73154B57D300536281 /* BallisticProfile.m in Sources */,
+				530A008A154BB5130023FBE7 /* TrajectoryRange.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

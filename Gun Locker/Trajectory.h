@@ -7,31 +7,45 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+#import "BallisticProfile.h"
+#import "Weather.h"
+#import "TrajectoryRange.h"
 
-@class BallisticProfile, TrajectoryRange;
+@interface Trajectory : NSObject {
+    double yAtScope;
+    double vInitial;
+    double yAtX;
+    double vAtX;
+    double tAtX; 
+    double xAtZero;
+    double vAtZero;
+    double tAtZero;
+    double windXspeed;
+    double windZSpeed;
+    double leadZSpeed;
+    double mass;
+    double sectionalArea;
+    double speedOfSound;
+    double airDensity;
+    double c;
+}
 
-@interface Trajectory : NSManagedObject
+@property (nonatomic, assign) double pressureInhg;
+@property (nonatomic, assign) double relativeHumidity;
+@property (nonatomic, assign) double tempC;
+@property (nonatomic, assign) double altitudeM;
+@property (nonatomic, assign) int rangeIncrement;
+@property (nonatomic, assign) int rangeMax;
+@property (nonatomic, assign) int rangeMin;
+@property (nonatomic, assign) double leadSpeed;
+@property (nonatomic, assign) double leadAngle;
+@property (nonatomic, assign) double windSpeed;
+@property (nonatomic, assign) double windAngle;
+@property (nonatomic, assign) double thetaInitial;
+@property (nonatomic, retain) NSMutableArray *ranges;
+@property (nonatomic, retain) BallisticProfile *ballisticProfile;
 
-@property (nonatomic, retain) NSNumber * density_altitude;
-@property (nonatomic, retain) NSNumber * pressure_inhg;
-@property (nonatomic, retain) NSNumber * relative_humidity;
-@property (nonatomic, retain) NSNumber * temp_c;
-@property (nonatomic, retain) NSNumber * range_increment;
-@property (nonatomic, retain) NSNumber * range_max;
-@property (nonatomic, retain) NSNumber * range_min;
-@property (nonatomic, retain) NSNumber * altitude_m;
-@property (nonatomic, retain) NSNumber * lead_speed;
-@property (nonatomic, retain) NSNumber * lead_angle;
-@property (nonatomic, retain) NSSet *ranges;
-@property (nonatomic, retain) BallisticProfile *ballistic_profile;
+-(void)calculateTrajectory;
+-(void)calculateThetaAngle;
 @end
 
-@interface Trajectory (CoreDataGeneratedAccessors)
-
-- (void)addRangesObject:(TrajectoryRange *)value;
-- (void)removeRangesObject:(TrajectoryRange *)value;
-- (void)addRanges:(NSSet *)values;
-- (void)removeRanges:(NSSet *)values;
-
-@end

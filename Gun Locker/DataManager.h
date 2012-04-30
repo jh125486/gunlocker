@@ -7,18 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Weather.h"
 
-@interface DataManager : NSObject {
-    NSArray *directionTypes;
-    NSArray *rangeUnits;
-    NSArray *dopeUnits;
-    NSArray *windUnits;
-    NSArray *leadUnits;
-    NSArray *nfaTypes;
-    NSArray *transferTypes;
-    NSDictionary *windageLeading;
-    NSArray *speedTypes;
-}
+@interface DataManager : NSObject
 
 @property (nonatomic, retain) NSArray *directionTypes;
 @property (nonatomic, retain) NSArray *rangeUnits;
@@ -29,6 +20,7 @@
 @property (nonatomic, retain) NSArray *transferTypes;
 @property (nonatomic, retain) NSDictionary *windageLeading;
 @property (nonatomic, retain) NSArray *speedTypes;
+@property (nonatomic, retain) Weather *currentWeather;
 
 + (id)sharedManager;
 @end

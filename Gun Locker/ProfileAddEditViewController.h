@@ -11,17 +11,22 @@
 #import "Bullet.h"
 #import "BulletChooserViewController.h"
 #import "BulletEntryManualViewController.h"
+#import "Weapon.h"
 
-@interface ProfileAddEditViewController : UITableViewController <UITextFieldDelegate> {
+@interface ProfileAddEditViewController : UITableViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
+    Weapon *selectedWeapon;
+    NSArray *weapons;
     NSArray *manually_entered_bc;
     NSNumber *bullet_weight;
     NSString *drag_model;
     NSMutableArray *formFields;
 }
 
-@property (nonatomic, weak) BallisticProfile *selectedProfile;
-@property (nonatomic, strong) Bullet *selectedBullet;
+@property (weak, nonatomic) BallisticProfile *selectedProfile;
+@property (strong, nonatomic) Bullet *selectedBullet;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *weaponTextField;
+@property (retain, nonatomic) UIPickerView *weaponPicker;
 @property (weak, nonatomic) IBOutlet UILabel *bulletTypePromptLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bulletTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bulletDiameterLabel;
@@ -35,16 +40,11 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *siteHeightUnitControl;
 @property (weak, nonatomic) IBOutlet UITextField *zeroDistanceTextField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *zeroDistanceUnitControl;
-@property (weak, nonatomic) IBOutlet UITextField *temperatureTextField;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *temperatureUnitControl;
-@property (weak, nonatomic) IBOutlet UITextField *pressureTextfield;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *pressureUnitControl;
-@property (weak, nonatomic) IBOutlet UITextField *relativeHumidityTextField;
-@property (weak, nonatomic) IBOutlet UITextField *altitudeTextField;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *altitudeUnitControl;
 
 @property (weak, nonatomic) UITextField *currentTextField;
 
+
+- (IBAction)selectWeaponTapped:(id)sender;
 - (IBAction)bulletControlTapped:(UISegmentedControl *)sender;
 - (IBAction)cancelTapped:(id)sender;
 - (IBAction)saveTapped:(id)sender;

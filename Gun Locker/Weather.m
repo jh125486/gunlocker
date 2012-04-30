@@ -82,7 +82,7 @@
 }
 
 
--(float)saturationVaporPressureFromTemperatureInCelsius:(float)t {
++(float)saturationVaporPressureFromTemperatureInCelsius:(float)t {
     float eso = 6.1078;
     float c0 =  0.99999683;
     float c1 = -0.90826951E-02;
@@ -145,6 +145,11 @@
 }
 
 -(double)calculateSpeedOfSound {
+    return [Weather calculateSpeedOfSoundFromTempC:self.temp_c andRH:self.relativeHumidity andPressurePa:self.altim_in_pa];
+}
+
++(double)calculateSpeedOfSoundFromTempC:(double)tempC andRH:(int)rh andPressurePa:(double)pressurePa {
+    double tempK = TEMP_C_to_TEMP_K(tempC);
     
     // Code from: Dr Richard Lord - http://www.npl.co.uk/acoustics/techguides/speedair
     // Based on the approximate formula found in
@@ -154,15 +159,15 @@
     // Richard S. Davis, "Equation for the Determination of the Density of Moist Air (1981/91)", Metrologia, 29, p. 67-70, 1992,
     // and a mole fraction of carbon dioxide of 0.0004.
     // The mole fraction is simply an expression of the number of moles of a compound divided by the total number of moles of all the compounds present in the gas.
-
+    
     double Xc, Xw;// Mole fraction of carbon dioxide and water vapour
-
+    
     // Molecular concentration of water vapour calculated from Rh using Giacomos method by Davis (1991) as implemented in DTU report 11b-1997
-    double psv = exp(pow(self.temp_k,2) *1.2378847 * pow(10,-5) -1.9121316 *pow(10,-2) * self.temp_k)*exp(33.93711047-6.3431645*pow(10,3)/self.temp_k);
-    Xw = (self.relativeHumidity * 3.14 *pow(10,-8) * self.altim_in_pa + 1.00062 + pow(self.temp_c, 2) * 5.6 * pow(10,-7) * psv/self.altim_in_pa)/100.0;
+    double psv = exp(pow(tempK,2) *1.2378847 * pow(10,-5) -1.9121316 *pow(10,-2) * tempK)*exp(33.93711047-6.3431645*pow(10,3)/tempK);
+    Xw = (rh * 3.14 *pow(10,-8) * pressurePa + 1.00062 + pow(tempC, 2) * 5.6 * pow(10,-7) * psv/pressurePa)/100.0;
     Xc = 400.0 * pow(10,-6);
     // Speed calculated using the method of Cramer from JASA vol 93 p. 2510
-    return (0.603055*self.temp_c + 331.5024 - pow(self.temp_c,2) * 5.28 * pow(10,-4) + (0.1495874 * self.temp_c + 51.471935 - pow(self.temp_c,2)*7.82 * pow(10,-4))*Xw) + ((-1.82 * pow(10,-7) + 3.73 * pow(10,-8) * self.temp_c - pow(self.temp_c,2) * 2.93 * pow(10,-10)) * self.altim_in_pa + (-85.20931-0.228525 * self.temp_c + pow(self.temp_c,2)*5.91*pow(10,-5))*Xc) - (pow(Xw,2) * 2.835149 - pow(self.altim_in_pa,2) * 2.15 * pow(10,-13) + pow(Xc,2) * 29.179762 + 4.86 * pow(10,-4) * Xw * self.altim_in_pa * Xc);
+    return (0.603055*tempC + 331.5024 - pow(tempC,2) * 5.28 * pow(10,-4) + (0.1495874 * tempC + 51.471935 - pow(tempC,2)*7.82 * pow(10,-4))*Xw) + ((-1.82 * pow(10,-7) + 3.73 * pow(10,-8) * tempC - pow(tempC,2) * 2.93 * pow(10,-10)) * pressurePa + (-85.20931-0.228525 * tempC + pow(tempC,2)*5.91*pow(10,-5))*Xc) - (pow(Xw,2) * 2.835149 - pow(pressurePa,2) * 2.15 * pow(10,-13) + pow(Xc,2) * 29.179762 + 4.86 * pow(10,-4) * Xw * pressurePa * Xc);
 }
 
 -(NSString *)cardinalDirectionFromDegrees:(float)degrees {
@@ -201,6 +206,15 @@
     } else {
         return @"N";
     }
+}
+
++(double)airDensityFromTempC:(double)tempC andRH:(double)rh andPressurePa:(double)pressurePa {
+    // from http://wahiduddin.net/calc/density_altitude.htm
+    double pv = [self saturationVaporPressureFromTemperatureInCelsius:tempC] * (rh /100.0f) * 100;
+    double pd = pressurePa - pv;
+    double tempK = TEMP_C_to_TEMP_K(tempC);
+    
+    return ((pd/(tempK * 287.05)) + (pv/(tempK * 461.495))) / 16.018463;
 }
 
 @end

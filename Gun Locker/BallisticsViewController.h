@@ -10,8 +10,9 @@
 #import "BallisticProfile.h"
 #import "Trajectory.h"
 #import "Weather.h"
+#import "Weapon.h"
 #import "WhizWheelViewController.h"
-#import "DopeCardsViewController.h"
+#import "DopeTableTableViewController.h"
 
 @interface BallisticsViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate, UIActionSheetDelegate> {
     NSMutableArray *profiles;
@@ -30,11 +31,16 @@
 @property (strong, nonatomic) IBOutlet UILabel *wxTimestampLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *chooseProfileButton;
+
+@property (weak, nonatomic) IBOutlet UILabel *selectedProfileWeaponLabel;
+@property (weak, nonatomic) IBOutlet UILabel *selectedProfileNameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *selectedProfileTextField;
 @property (strong, nonatomic) UIPickerView *selectedProfilePickerView;
 
 @property (weak, nonatomic) IBOutlet UIButton *dopeCardsButton;
 @property (weak, nonatomic) IBOutlet UIButton *whizWheelButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *addNewProfileButton;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLLocation *currentLocation;

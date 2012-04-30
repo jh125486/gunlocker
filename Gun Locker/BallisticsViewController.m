@@ -9,10 +9,11 @@
 #import "BallisticsViewController.h"
 
 @implementation BallisticsViewController
+@synthesize addNewProfileButton;
 @synthesize rangeLabel, rangeResult, rangeResultUnits;
 @synthesize tempLabel, windLabel, altitudeLabel, densityAltitudeLabel, rhLabel;
 @synthesize wxButton, wxStationLabel, wxIndicator, wxTimestampLabel;
-@synthesize chooseProfileButton, selectedProfileTextField, selectedProfilePickerView;
+@synthesize chooseProfileButton, selectedProfileTextField, selectedProfilePickerView, selectedProfileWeaponLabel, selectedProfileNameLabel;
 @synthesize dopeCardsButton, whizWheelButton;
 
 @synthesize locationManager, currentLocation, locationTimer;
@@ -30,30 +31,30 @@
     [super viewDidLoad];
     
     
-    // TESTING Trajectory
-    BallisticProfile *bc = [BallisticProfile findFirst];
-    if (bc == Nil) bc = [BallisticProfile createEntity];
+// TESTING Trajectory
+    BallisticProfile *ballisticProfile = [BallisticProfile findFirst];
+    if (ballisticProfile == Nil) ballisticProfile = [BallisticProfile createEntity];
     
-    bc.bullet_weight = [NSNumber numberWithInt:55.0];
-    bc.drag_model = @"G7";
-    bc.muzzle_velocity = [NSNumber numberWithInt:3240];
-    bc.zero = [NSNumber numberWithInt:100];
-    bc.sight_height_inches = [NSNumber numberWithDouble:1.5];
-    bc.name = @"M16";
-    bc.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.272"]];
-    bc.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
+    ballisticProfile.bullet_weight = [NSNumber numberWithInt:55.0];
+    ballisticProfile.drag_model = @"G7";
+    ballisticProfile.muzzle_velocity = [NSNumber numberWithInt:3240];
+    ballisticProfile.zero = [NSNumber numberWithInt:100];
+    ballisticProfile.sight_height_inches = [NSNumber numberWithDouble:1.5];
+    ballisticProfile.name = @"55 grain SS109";
+    ballisticProfile.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.272"]];
+    ballisticProfile.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
+    ballisticProfile.weapon = [Weapon findFirst];
     
-    Trajectory *trajectory = [Trajectory createEntity];
-    trajectory.range_min = [NSNumber numberWithInt:100];
-    trajectory.range_max = [NSNumber numberWithInt:1000];
-    trajectory.range_increment = [NSNumber numberWithInt:100];
-    trajectory.relative_humidity = [NSNumber numberWithDouble:0.0];
-    trajectory.pressure_inhg = [NSNumber numberWithDouble:29.92];
-    trajectory.temp_c = [NSNumber numberWithDouble:15];
-    [bc addTrajectoriesObject:trajectory];
-    
-    [trajectory calculateTrajectory];
-    // TESTING trajectory
+//    Trajectory *trajectory = [[Trajectory alloc] init];
+//    trajectory.rangeMin = [NSNumber numberWithInt:100];
+//    trajectory.rangeMax = [NSNumber numberWithInt:1000];
+//    trajectory.rangeIncrement = [NSNumber numberWithInt:100];
+//    trajectory.relativeHumidity = [NSNumber numberWithDouble:0.0];
+//    trajectory.pressureInhg = [NSNumber numberWithDouble:29.92];
+//    trajectory.tempC = [NSNumber numberWithDouble:15];
+//    trajectory.BallisticProfile = ballisticProfile;
+
+// TESTING trajectory
     
     
     self.title = @"Ballistics";
@@ -61,7 +62,6 @@
     
     selectedProfilePickerView = [[UIPickerView alloc] init];
     selectedProfilePickerView.delegate = self;
-    selectedProfilePickerView.dataSource = self;
     [selectedProfilePickerView setShowsSelectionIndicator:YES];
     self.selectedProfileTextField.inputView = selectedProfilePickerView;
     UIToolbar* textFieldToolBarView = [[UIToolbar alloc] init];
@@ -91,10 +91,15 @@
                                                          repeats:NO];
     
     profiles = [[BallisticProfile findAll] mutableCopy];
-    if (profiles.count == 0) self.chooseProfileButton.enabled = NO;
     
     //Register setRange to recieve "setRange" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];    
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    self.chooseProfileButton.enabled = (profiles.count != 0);
+    
+    self.addNewProfileButton.enabled = ([Weapon countOfEntities] != 0);
 }
 
 - (void)viewDidUnload {
@@ -112,6 +117,9 @@
     [self setRangeLabel:nil];
     [self setSelectedProfileTextField:nil];
     [self stopUpdatingLocations];
+    [self setAddNewProfileButton:nil];
+    [self setSelectedProfileWeaponLabel:nil];
+    [self setSelectedProfileNameLabel:nil];
     [super viewDidUnload];
 }
 
@@ -122,10 +130,13 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString *segueID = segue.identifier;
     
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
 	if ([segueID isEqualToString:@"WhizWheel"]) {
         ((WhizWheelViewController *)segue.destinationViewController).selectedProfile = selectedProfile;
-    } else if ([segueID isEqualToString:@"WhizWheel"]) {
-        ((DopeCardsViewController *)segue.destinationViewController).selectedProfile = selectedProfile;
+    } else if ([segueID isEqualToString:@"DopeTable"]) {
+        ((DopeTableTableViewController *)segue.destinationViewController).currentWeather = currentWeather;
+        ((DopeTableTableViewController *)segue.destinationViewController).selectedProfile = selectedProfile;
     }
 
 }
@@ -179,10 +190,13 @@
 
 - (void)profileSelected:(id)sender {
     selectedProfile = [profiles objectAtIndex:[self.selectedProfilePickerView selectedRowInComponent:0]];
-    [chooseProfileButton setTitle:selectedProfile.name forState:UIControlStateNormal];
-    [chooseProfileButton setTitle:selectedProfile.name forState:UIControlStateHighlighted];
-    [chooseProfileButton setTitle:selectedProfile.name forState:UIControlStateSelected];
-    chooseProfileButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    self.selectedProfileWeaponLabel.text = [selectedProfile.weapon description];
+    self.selectedProfileNameLabel.text = selectedProfile.name;
+    
+    [chooseProfileButton setTitle:@"" forState:UIControlStateNormal];
+    [chooseProfileButton setTitle:@"" forState:UIControlStateHighlighted];
+    [chooseProfileButton setTitle:@"" forState:UIControlStateSelected];
+//    chooseProfileButton.titleLabel.textAlignment = UITextAlignmentCenter;
     dopeCardsButton.enabled = YES;
     whizWheelButton.enabled = YES;
     [self.selectedProfileTextField resignFirstResponder];
@@ -248,9 +262,30 @@
     return [profiles count];
 }
 
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    BallisticProfile *profile = [profiles objectAtIndex:row];
-    return profile.name;
+-(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    if (view == nil) {
+        BallisticProfile *profile = [profiles objectAtIndex:row];
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        view.backgroundColor = [UIColor clearColor];
+        UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(16, 1, 56, 42)];
+        thumbNail.image = [UIImage imageWithData:profile.weapon.photo_thumbnail];
+        UILabel *firstLine  = [[UILabel alloc] initWithFrame:CGRectMake(75, 0, 230, 22)];
+        UILabel *secondLine = [[UILabel alloc] initWithFrame:CGRectMake(75, 22, 230, 22)];
+        firstLine.backgroundColor = [UIColor clearColor];
+        secondLine.backgroundColor = [UIColor clearColor];
+        firstLine.font  = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22];
+        secondLine.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:18];
+        firstLine.textColor = [UIColor blackColor];
+        secondLine.textColor = [UIColor darkGrayColor];
+        firstLine.adjustsFontSizeToFitWidth = YES;
+        firstLine.text  = [NSString stringWithFormat:@"%@", profile.weapon];
+        secondLine.text = [NSString stringWithFormat:@"%@", profile.name];
+        [view addSubview:thumbNail];
+        [view addSubview:firstLine];
+        [view addSubview:secondLine];
+    }
+    
+    return view;    
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {

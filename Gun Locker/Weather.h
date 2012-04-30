@@ -28,11 +28,14 @@
 
 -(NSString*)description;
 
--(float)saturationVaporPressureFromTemperatureInCelsius:(float)temp_c;
 -(float)absoluteAirPressureFromBarometricPressureInMB:(float)pressure altitudeInMeters:(float)altitude;
 -(float)pressureAltitudeinFeetFromBarometricPressureinMB:(float)pressure;
 -(void)calculateDensityAltitude;
 -(double)calculateSpeedOfSound;
 -(float)temp_f;
 -(NSString *)cardinalDirectionFromDegrees:(float)degrees;
+
++(float)saturationVaporPressureFromTemperatureInCelsius:(float)temp_c;
++(double)calculateSpeedOfSoundFromTempC:(double)tempC andRH:(int)rh andPressurePa:(double)pressurePa;
++(double)airDensityFromTempC:(double)tempC andRH:(double)rh andPressurePa:(double)pressurePa;
 @end

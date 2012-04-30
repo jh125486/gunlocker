@@ -20,98 +20,6 @@
 
 @end
 
-
-@implementation Trajectory (helper)
-
--(NSNumber*)energyAtVelocity:(float)v {
-    return [NSNumber numberWithDouble:0.5 * (([self.ballistic_profile.bullet_weight intValue]/7000) /(-GRAVITY_FPS)) * pow(v, 2)]; 
-}
-
--(void)calculateTrajectory {    
-    double yAtX, vAtX, tAtX, thetaAtX;
-    //set values that don't change
-        
-    double yAtScope = INCHES_to_FEET([self.ballistic_profile.sight_height_inches doubleValue]);
-    double vInitial = [self.ballistic_profile.muzzle_velocity doubleValue];
-    double mass = [self.ballistic_profile.bullet_weight doubleValue] / 7000;
-    double sectionalArea = (M_PI / 4) * pow([self.ballistic_profile.bullet_diameter_inches doubleValue] / 12, 2);
-    double speedOfSound = METERS_to_FEET(self.calculateSpeedOfSoundInMPS);
-    
-    double xAtZero = [self.ballistic_profile.zero doubleValue];
-    double airDensity = 0.076474;
-    double c = [self.ballistic_profile getBCWithSpeedOfSound:speedOfSound andVelocity:vInitial];
-//    double c = 0.584;
-    double vAtZero = pow((sqrt(vInitial) - (0.5 * (airDensity * sectionalArea * c * sqrt(speedOfSound) / (2*mass)) * (YARDS_to_FEET((xAtZero))))), 2);
-    double tAtZero = (YARDS_to_FEET(xAtZero) / vInitial) * sqrt(vInitial / vAtZero);
-    double thetaIntial = atan((yAtScope + (0.5 * -GRAVITY_FPS * pow(tAtZero, 2) * ((1.0/3)*(1+(2*sqrt(vAtZero/vInitial)))))) / YARDS_to_FEET(xAtZero));
-    NSLog(@"atan((%f + (0.5 * %f * %f * ((1.0/3)*(1+(2*sqrt(%f)))))) / %f)",  yAtScope, -GRAVITY_FPS, pow(tAtZero, 2), vAtZero/ vInitial, YARDS_to_FEET(xAtZero));
-    vAtX = vInitial;
-    
-    NSLog(@"K %f", (airDensity * sectionalArea * c * sqrt(speedOfSound) / (2*mass)));
-    NSLog(@"initial v %f", vInitial);
-    NSLog(@"speed of sound %f m/s %f ft/s", speedOfSound, METERS_to_FEET(speedOfSound));
-    NSLog(@"S  %f", sectionalArea);
-    NSLog(@"mass %f", mass);
-    NSLog(@"initial xAtZero %f", xAtZero);
-    NSLog(@"initial vAtZero %f", vAtZero);
-    NSLog(@"initial tAtZero %f", tAtZero);
-    NSLog(@"initial angle %f", thetaIntial * (180 / M_PI));
-    
-    NSLog(@"X\tDrop \"\tMOA\t\tMILs\tVelocity\tMach\tE\tTime");
-    
-    for (int x = [self.range_min intValue]; x <= [self.range_max intValue]; x += [self.range_increment intValue]) {
-        TrajectoryRange *range = [TrajectoryRange createEntity];
-        [self addRangesObject:range];
-        double c = [self.ballistic_profile getBCWithSpeedOfSound:speedOfSound andVelocity:vInitial];
-//        double c = 0.584;
-        
-        vAtX = pow((sqrt(vInitial) - (0.5 * (airDensity * sectionalArea * c * sqrt(speedOfSound) / (2*mass)) * (YARDS_to_FEET(x)))), 2);
-        tAtX = (YARDS_to_FEET(x) / vInitial) * sqrt(vInitial / vAtX);
-        thetaAtX = atan(tan(thetaIntial) - (((-GRAVITY_FPS * tAtX)/vInitial)*((1.0/3)*(1+sqrt(vInitial/vAtX) + (vInitial/vAtX))))) * (180/M_PI);
-        yAtX = -yAtScope + (YARDS_to_FEET(x) * tan(thetaIntial)) - (0.5 * -GRAVITY_FPS * pow(tAtX, 2)*((1.0/3)*(1+(2*sqrt(vAtX/vInitial)))));
-
-        range.range_m = [[NSDecimalNumber alloc] initWithDouble:FEET_to_METERS(x)];
-        range.velocity_mps = [[NSDecimalNumber alloc] initWithDouble:FEET_to_METERS(vAtX)];
-        range.drop = [[NSDecimalNumber alloc] initWithDouble:FEET_to_INCHES(yAtX)];
-        range.energy_ftlbs = [[NSDecimalNumber alloc] initWithDouble:0.5 * ((mass) / (-GRAVITY_FPS)) * pow(vAtX, 2)];
-//        range.windage = [NSNumber numberWithDouble:XXX];
-//        range.lead = [NSNumber numberWithDouble:(sin(t)*self.lead_angle*self.lead_speed)];
-        range.time = [[NSDecimalNumber alloc] initWithDouble:tAtX];
-
-        double dropMOA = (atan2(yAtX, YARDS_to_FEET(x)) * (180 / M_PI)) * 60.0;
-//        NSLog(@"%@", [NSString stringWithFormat:@"%d\t\t%0.1f\t%0.5f\t%0.5f\t%0.2f", x, vAtX, tAtX, thetaAtX * 60, FEET_to_INCHES(yAtX)]);
-        double dropMILs = MOA_to_MIL(dropMOA);
-        
-        NSLog(@"%@", [NSString stringWithFormat:@"%d\t%0.1f\t%0.1f\t%0.1f\t%0.1f\t\t%0.3f\t%0.1f\t%0.3f", x, FEET_to_INCHES(yAtX), dropMOA, dropMILs, vAtX, (vAtX/speedOfSound), [range.energy_ftlbs doubleValue], tAtX]);        
-    }
-    
-}
-
-
--(double)calculateSpeedOfSoundInMPS {
-    
-    // Code from: Dr Richard Lord - http://www.npl.co.uk/acoustics/techguides/speedair
-    // Based on the approximate formula found in
-    // Owen Cramer, "The variation of the specific heat ratio and the speed of sound in air with temperature, pressure, humidity, and CO2 concentration",
-    // The Journal of the Acoustical Society of America (JASA), J. Acoust. Soc. Am. 93(5) p. 2510-2516; formula at p. 2514.
-    // Saturation vapour pressure found in 
-    // Richard S. Davis, "Equation for the Determination of the Density of Moist Air (1981/91)", Metrologia, 29, p. 67-70, 1992,
-    // and a mole fraction of carbon dioxide of 0.0004.
-    // The mole fraction is simply an expression of the number of moles of a compound divided by the total number of moles of all the compounds present in the gas.
-    
-    double Xc, Xw;// Mole fraction of carbon dioxide and water vapour
-    double temp_k = TEMP_C_to_TEMP_K([self.temp_c doubleValue]);
-    
-    // Molecular concentration of water vapour calculated from Rh using Giacomos method by Davis (1991) as implemented in DTU report 11b-1997
-    double psv = exp(pow(temp_k, 2) *1.2378847 * pow(10,-5) -1.9121316 *pow(10,-2) * temp_k)*exp(33.93711047-6.3431645*pow(10,3)/temp_k);
-    Xw = ([self.relative_humidity doubleValue] * 3.14 *pow(10,-8) * ([self.pressure_inhg doubleValue]*3386.389) + 1.00062 + pow([self.temp_c doubleValue], 2) * 5.6 * pow(10,-7) * psv/([self.pressure_inhg doubleValue] * 3386.389) )/100.0;
-    Xc = 400.0 * pow(10,-6); 
-    // Speed calculated using the method of Cramer from JASA vol 93 p. 2510
-    return (0.603055*[self.temp_c doubleValue] + 331.5024 - pow([self.temp_c doubleValue],2) * 5.28 * pow(10,-4) + (0.1495874 * [self.temp_c doubleValue]+ 51.471935 - pow([self.temp_c doubleValue],2)*7.82 * pow(10,-4))*Xw) + ((-1.82 * pow(10,-7) + 3.73 * pow(10,-8) * [self.temp_c doubleValue] - pow([self.temp_c doubleValue],2) * 2.93 * pow(10,-10)) * ([self.pressure_inhg doubleValue] * 3386.389) + (-85.20931-0.228525 * [self.temp_c doubleValue] + pow([self.temp_c doubleValue],2)*5.91*pow(10,-5))*Xc) - (pow(Xw,2) * 2.835149 - pow([self.pressure_inhg doubleValue] * 3386.389,2) * 2.15 * pow(10,-13) + pow(Xc,2) * 29.179762 + 4.86 * pow(10,-4) * Xw * ([self.pressure_inhg doubleValue] * 3386.389) * Xc);
-}
-
-@end
-
 @implementation BallisticProfile (helper)
 
 -(double)ballisticCoefficientWithVelocity:(double)velocity {
@@ -126,7 +34,7 @@
 }
 
 -(double)getBCWithSpeedOfSound:(double)speedOfSound andVelocity:(double)velocity{
-    double multiplier;
+    double multiplier = 0;
     double mach = velocity / speedOfSound;
     
     if ([self.drag_model isEqualToString:@"G1"]) {
