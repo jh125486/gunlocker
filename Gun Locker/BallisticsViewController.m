@@ -32,28 +32,30 @@
     
     
 // TESTING Trajectory
-    BallisticProfile *ballisticProfile = [BallisticProfile findFirst];
-    if (ballisticProfile == Nil) ballisticProfile = [BallisticProfile createEntity];
-    
-    ballisticProfile.bullet_weight = [NSNumber numberWithInt:55.0];
-    ballisticProfile.drag_model = @"G7";
-    ballisticProfile.muzzle_velocity = [NSNumber numberWithInt:3240];
-    ballisticProfile.zero = [NSNumber numberWithInt:100];
-    ballisticProfile.sight_height_inches = [NSNumber numberWithDouble:1.5];
-    ballisticProfile.name = @"55 grain SS109";
-    ballisticProfile.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.272"]];
-    ballisticProfile.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
-    ballisticProfile.weapon = [Weapon findFirst];
-    
-//    Trajectory *trajectory = [[Trajectory alloc] init];
-//    trajectory.rangeMin = [NSNumber numberWithInt:100];
-//    trajectory.rangeMax = [NSNumber numberWithInt:1000];
-//    trajectory.rangeIncrement = [NSNumber numberWithInt:100];
-//    trajectory.relativeHumidity = [NSNumber numberWithDouble:0.0];
-//    trajectory.pressureInhg = [NSNumber numberWithDouble:29.92];
-//    trajectory.tempC = [NSNumber numberWithDouble:15];
-//    trajectory.BallisticProfile = ballisticProfile;
+    if ([BallisticProfile countOfEntities] == 0) {
+        BallisticProfile *ballisticProfile1 = [BallisticProfile createEntity];
+        ballisticProfile1.bullet_weight = [NSNumber numberWithInt:55.0];
+        ballisticProfile1.drag_model = @"G7";
+        ballisticProfile1.muzzle_velocity = [NSNumber numberWithInt:3240];
+        ballisticProfile1.zero = [NSNumber numberWithInt:100];
+        ballisticProfile1.sight_height_inches = [NSNumber numberWithDouble:1.5];
+        ballisticProfile1.name = @"55 grain M193 ";
+        ballisticProfile1.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.272"]];
+        ballisticProfile1.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
+        ballisticProfile1.weapon = [[Weapon findAll] objectAtIndex:2];
+        
+        BallisticProfile *ballisticProfile2 = [BallisticProfile createEntity];
 
+        ballisticProfile2.bullet_weight = [NSNumber numberWithInt:62.0f];
+        ballisticProfile2.drag_model = @"G7";
+        ballisticProfile2.muzzle_velocity = [NSNumber numberWithInt:2900];
+        ballisticProfile2.zero = [NSNumber numberWithInt:100];
+        ballisticProfile2.sight_height_inches = [NSNumber numberWithDouble:2.6];
+        ballisticProfile2.name = @"62 grain SS109";
+        ballisticProfile2.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.151"]];
+        ballisticProfile2.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
+        ballisticProfile2.weapon = [[Weapon findAll] objectAtIndex:0];
+    }
 // TESTING trajectory
     
     

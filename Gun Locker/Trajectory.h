@@ -14,6 +14,7 @@
 @interface Trajectory : NSObject {
     double yAtScope;
     double vInitial;
+    double gravity;
     double yAtX;
     double vAtX;
     double tAtX; 
@@ -27,7 +28,7 @@
     double sectionalArea;
     double speedOfSound;
     double airDensity;
-    double c;
+    double k;
 }
 
 @property (nonatomic, assign) double pressureInhg;

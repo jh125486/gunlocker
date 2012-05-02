@@ -106,6 +106,17 @@
     [self performSegueWithIdentifier:@"CalculateTrajectory" sender:self];
 }
 
+- (IBAction)setToDefaultEnvironmentTapped:(id)sender {
+    self.tempTextField.text = @"59";
+    self.tempUnitControl.selectedSegmentIndex = 0;
+    self.pressureTextField.text = @"29.92";
+    self.pressureUnitControl.selectedSegmentIndex = 0;
+    self.rhTextField.text = @"0";
+    self.altitudeTextField.text = @"0";
+    self.windSpeedTextField.text = @"0";
+    self.windDirectionTextField.text = @"0";
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     DopeTableGeneratedTableViewController *dst =[[segue.destinationViewController viewControllers] objectAtIndex:0];
 

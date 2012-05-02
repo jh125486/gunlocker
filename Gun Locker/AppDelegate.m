@@ -26,9 +26,9 @@
 //    [[NSManagedObjectContext defaultContext] save];
 
     if([Manufacturer countOfEntities] == 0) [self loadManufacturers];
-    
+
     if([Bullet countOfEntities] == 0) [self loadBullets];
-    
+  
     [self loadDefaultPreferencesOnFirstLoad];
     
     if([Weapon countOfEntities] == 0) [self loadTestWeapons];
@@ -127,6 +127,7 @@
         NSString* path = [[NSBundle mainBundle] pathForResource:@"manufacturers" ofType:@"txt"];
         NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
         NSArray *splitParts;
+        NSLog(@"loaded manu");
         for (NSString *manufacturer in [content componentsSeparatedByString:@"\n"]) {
             splitParts = [manufacturer componentsSeparatedByString:@":"];
             
@@ -191,90 +192,93 @@
 }
 
 -(void)loadTestWeapons {
-    [Weapon truncateAll];
-    [[NSManagedObjectContext defaultContext] save];
-    
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"calibers" ofType:@"txt"];
-    NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-    
-    NSArray *calibers = [content componentsSeparatedByString:@"\n"];
-    
-    NSLog(@"Creating Test Weapon 1");
-    Weapon *newWeapon = [Weapon createEntity];
-    newWeapon.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
-    newWeapon.model = @"Test Model 1";
-    newWeapon.caliber = [calibers objectAtIndex:arc4random() % [calibers count]];
-    newWeapon.type = @"Rifles";
-    newWeapon.barrel_length = [NSNumber numberWithDouble:16.0f];
-    newWeapon.finish = @"FDE";
-    newWeapon.threaded_barrel_pitch = @"5/8 x 24 LH";
-    newWeapon.serial_number = [self randomStringWithLength:12];
-    newWeapon.purchased_price = [NSDecimalNumber decimalNumberWithString:@"1800.00"];
-    newWeapon.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
-    
-    UIImage *photo = [UIImage imageNamed:@"Test/test1.jpg"];
-    newWeapon.photo = UIImagePNGRepresentation(photo);
-    // Create a thumbnail version of the image for the object.
-    CGSize size = photo.size;
-    CGFloat ratio = 0;
-    ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
-    CGRect rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
-    UIGraphicsBeginImageContext(rect.size);
-    [photo drawInRect:rect];
-    newWeapon.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
-    UIGraphicsEndImageContext();   
+    dispatch_async(dispatch_get_main_queue(), ^{
 
-    NSLog(@"Creating Test Weapon 2");
-    Weapon *newWeapon1 = [Weapon createEntity];
-    newWeapon1.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
-    newWeapon1.model = @"Test Model 2";
-    newWeapon1.caliber = [calibers objectAtIndex:arc4random() % [calibers count]];
-    newWeapon1.type = @"Rifles";
-    newWeapon1.barrel_length = [NSNumber numberWithDouble:24.0f];
-    newWeapon1.finish = @"Wood Furniture";
-    newWeapon1.threaded_barrel_pitch = @"1/2 x 28 LH";
-    newWeapon1.serial_number = [self randomStringWithLength:12];
-    newWeapon1.purchased_price = [NSDecimalNumber decimalNumberWithString:@"900.00"];
-    newWeapon1.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
-    
-    photo = [UIImage imageNamed:@"Test/test2.jpg"];
-    newWeapon1.photo = UIImagePNGRepresentation(photo);
-    // Create a thumbnail version of the image for the object.
-    size = photo.size;
-    ratio = 0;
-    ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
-    rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
-    UIGraphicsBeginImageContext(rect.size);
-    [photo drawInRect:rect];
-    newWeapon1.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
-    UIGraphicsEndImageContext();
-    
-    NSLog(@"Creating Test Weapon 3");
-    Weapon *newWeapon2 = [Weapon createEntity];
-    newWeapon2.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
-    newWeapon2.model = @"Test Model 3";
-    newWeapon2.caliber = [calibers objectAtIndex:arc4random() % [calibers count]];
-    newWeapon2.type = @"Rifles";
-    newWeapon2.barrel_length = [NSNumber numberWithDouble:10.3f];
-    newWeapon2.finish = @"Stainless/Black";
-    newWeapon2.threaded_barrel_pitch = @"3 lug";
-    newWeapon2.serial_number = [self randomStringWithLength:12];
-    newWeapon2.purchased_price = [NSDecimalNumber decimalNumberWithString:@"13000.00"];
-    newWeapon2.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
-    
-    photo = [UIImage imageNamed:@"Test/test3.jpg"];
-    newWeapon2.photo = UIImagePNGRepresentation(photo);
-    // Create a thumbnail version of the image for the object.
-    size = photo.size;
-    ratio = 0;
-    ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
-    rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
-    UIGraphicsBeginImageContext(rect.size);
-    [photo drawInRect:rect];
-    newWeapon2.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
-    UIGraphicsEndImageContext();
-    
-    [[NSManagedObjectContext defaultContext] save];
+        [Weapon truncateAll];
+        [[NSManagedObjectContext defaultContext] save];
+        
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"calibers" ofType:@"txt"];
+        NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+        
+        NSArray *calibers = [content componentsSeparatedByString:@"\n"];
+        
+        NSLog(@"Creating Test Weapon 1");
+        Weapon *newWeapon = [Weapon createEntity];
+        newWeapon.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
+        newWeapon.model = @"Test Model 1";
+        newWeapon.caliber = [calibers objectAtIndex:arc4random() % [calibers count]];
+        newWeapon.type = @"Rifles";
+        newWeapon.barrel_length = [NSNumber numberWithDouble:16.0f];
+        newWeapon.finish = @"FDE";
+        newWeapon.threaded_barrel_pitch = @"5/8 x 24 LH";
+        newWeapon.serial_number = [self randomStringWithLength:12];
+        newWeapon.purchased_price = [NSDecimalNumber decimalNumberWithString:@"1800.00"];
+        newWeapon.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
+        
+        UIImage *photo = [UIImage imageNamed:@"Test/test1.jpg"];
+        newWeapon.photo = UIImagePNGRepresentation(photo);
+        // Create a thumbnail version of the image for the object.
+        CGSize size = photo.size;
+        CGFloat ratio = 0;
+        ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
+        CGRect rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
+        UIGraphicsBeginImageContext(rect.size);
+        [photo drawInRect:rect];
+        newWeapon.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
+        UIGraphicsEndImageContext();   
+
+        NSLog(@"Creating Test Weapon 2");
+        Weapon *newWeapon1 = [Weapon createEntity];
+        newWeapon1.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
+        newWeapon1.model = @"Test Model 2";
+        newWeapon1.caliber = [calibers objectAtIndex:arc4random() % [calibers count]];
+        newWeapon1.type = @"Rifles";
+        newWeapon1.barrel_length = [NSNumber numberWithDouble:24.0f];
+        newWeapon1.finish = @"Wood Furniture";
+        newWeapon1.threaded_barrel_pitch = @"1/2 x 28 LH";
+        newWeapon1.serial_number = [self randomStringWithLength:12];
+        newWeapon1.purchased_price = [NSDecimalNumber decimalNumberWithString:@"900.00"];
+        newWeapon1.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
+        
+        photo = [UIImage imageNamed:@"Test/test2.jpg"];
+        newWeapon1.photo = UIImagePNGRepresentation(photo);
+        // Create a thumbnail version of the image for the object.
+        size = photo.size;
+        ratio = 0;
+        ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
+        rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
+        UIGraphicsBeginImageContext(rect.size);
+        [photo drawInRect:rect];
+        newWeapon1.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
+        UIGraphicsEndImageContext();
+        
+        NSLog(@"Creating Test Weapon 3");
+        Weapon *newWeapon2 = [Weapon createEntity];
+        newWeapon2.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
+        newWeapon2.model = @"Test Model 3";
+        newWeapon2.caliber = [calibers objectAtIndex:arc4random() % [calibers count]];
+        newWeapon2.type = @"Rifles";
+        newWeapon2.barrel_length = [NSNumber numberWithDouble:10.3f];
+        newWeapon2.finish = @"Stainless/Black";
+        newWeapon2.threaded_barrel_pitch = @"3 lug";
+        newWeapon2.serial_number = [self randomStringWithLength:12];
+        newWeapon2.purchased_price = [NSDecimalNumber decimalNumberWithString:@"13000.00"];
+        newWeapon2.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
+        
+        photo = [UIImage imageNamed:@"Test/test3.jpg"];
+        newWeapon2.photo = UIImagePNGRepresentation(photo);
+        // Create a thumbnail version of the image for the object.
+        size = photo.size;
+        ratio = 0;
+        ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
+        rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
+        UIGraphicsBeginImageContext(rect.size);
+        [photo drawInRect:rect];
+        newWeapon2.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
+        UIGraphicsEndImageContext();
+        
+        [[NSManagedObjectContext defaultContext] save];
+    });
 }
 
 

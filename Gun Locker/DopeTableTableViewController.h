@@ -43,5 +43,6 @@
 @property (weak, nonatomic) UITextField *currentTextField;
 
 - (IBAction)calculate:(id)sender;
+- (IBAction)setToDefaultEnvironmentTapped:(id)sender;
 
 @end

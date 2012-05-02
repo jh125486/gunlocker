@@ -128,7 +128,7 @@
     newDopeCard.weapon = trajectory.ballisticProfile.weapon;
     
     newDopeCard.name = trajectory.ballisticProfile.name;
-    newDopeCard.zero = self.zeroLabel.text;
+    newDopeCard.zero = [trajectory.ballisticProfile.zero stringValue];
     newDopeCard.wind_info = self.windInfoLabel.text;
     newDopeCard.range_unit = self.rangeUnit;
     newDopeCard.drop_unit = newDopeCard.drift_unit = self.dropDriftUnit;

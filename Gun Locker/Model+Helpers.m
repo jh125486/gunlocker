@@ -35,6 +35,7 @@
 
 -(double)getBCWithSpeedOfSound:(double)speedOfSound andVelocity:(double)velocity{
     double multiplier = 0;
+    double power = 0;
     double mach = velocity / speedOfSound;
     
     if ([self.drag_model isEqualToString:@"G1"]) {
@@ -86,16 +87,16 @@
         else
             multiplier = 0.264481 + mach*(-0.157237 + mach*0.117441);
     } else if ([self.drag_model isEqualToString:@"G7"]) {
-        if (mach > 1.9)
-            multiplier = 0.439493 + mach*(-0.0793543 + mach*0.00448477);
-        else if (mach > 1.05)
-            multiplier = 0.642743 + mach*(-0.2725450 + mach*0.049247500);
-        else if (mach > 0.90)
-            multiplier = -1.69655 + mach*2.03557;
-        else if (mach >= 0.60)
-            multiplier = 0.353384 + mach*(-0.69240600 + mach*0.50946900);
-        else
-            multiplier = 0.119775 + mach*(-0.00231118 + mach*0.00286712);
+        if      (mach > 3.75 ) {multiplier = 1.29081656775919e-09; power = 3.24121295355962; }
+        else if (mach > 2.69 ) {multiplier = 0.0171422231434847  ; power = 1.27107168025204; }
+        else if (mach > 1.60 ) {multiplier = 8.33355948302505e-04; power = 1.52693913274526; }
+        else if (mach > 1.20 ) {multiplier = 7.97592111627665e-04; power = 1.67688974440324; }
+        else if (mach > 1.00 ) {multiplier = 5.71086414289273e-12; power = 4.3212826264889 ; }
+        else if (mach > 0.85 ) {multiplier = 3.02865108244904e-17; power = 5.99074203776707; }
+        else if (mach > 0.60 ) {multiplier = 7.52285155782535e-06; power = 2.1738019851075 ; }
+        else if (mach > 0.48 ) {multiplier = 1.31766281225189e-05; power = 2.08774690257991; }
+        else if (mach >    0 ) {multiplier = 1.34504843776525e-05; power = 2.08702306738884; }
+
     } else if ([self.drag_model isEqualToString:@"G8"]) {
         if (mach > 1.1)
             multiplier = 0.639096 + mach*(-0.197471 + mach*0.0216221);
@@ -120,8 +121,9 @@
         else
             multiplier = 0.2282;
     }
-    
-    return (multiplier * 0.267978) / [self ballisticCoefficientWithVelocity:velocity];
+    NSLog(@"v: %.1f\tMach %.2f\t\tMultiplier: %.3f\tPower: %.3f", velocity, mach, multiplier, power);
+
+    return  multiplier * pow(mach, power)/ [self ballisticCoefficientWithVelocity:velocity];
 }
 
 @end
