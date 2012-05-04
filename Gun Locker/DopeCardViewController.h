@@ -17,7 +17,10 @@
 @property (strong, nonatomic) IBOutlet UIView *dopeCardSectionHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *weaponLabel;
 @property (weak, nonatomic) IBOutlet UILabel *zeroLabel;
+@property (weak, nonatomic) IBOutlet UILabel *mvLabel;
+@property (weak, nonatomic) IBOutlet UILabel *weatherLabel;
 @property (weak, nonatomic) IBOutlet UILabel *windInfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *leadInfoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *notesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rangeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dropLabel;

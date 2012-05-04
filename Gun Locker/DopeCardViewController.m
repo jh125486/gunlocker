@@ -12,7 +12,10 @@
 @synthesize dopeCardSectionHeaderView;
 @synthesize weaponLabel;
 @synthesize zeroLabel;
+@synthesize mvLabel;
+@synthesize weatherLabel;
 @synthesize windInfoLabel;
+@synthesize leadInfoLabel;
 @synthesize notesLabel;
 @synthesize rangeLabel;
 @synthesize dropLabel;
@@ -36,10 +39,11 @@
     [super viewWillAppear:animated];
     self.title = selectedDopeCard.name;
     self.weaponLabel.text = selectedDopeCard.weapon.description;
-    NSString *zero_unit = selectedDopeCard.range_unit;
-    zero_unit = ([zero_unit isEqualToString:@"Feet"]) ? @"foot": [[zero_unit substringToIndex:[zero_unit length] -1] lowercaseString];
-    self.zeroLabel.text = [NSString stringWithFormat:@"%@ %@ zero", selectedDopeCard.zero, zero_unit];
+    self.zeroLabel.text = [NSString stringWithFormat:@"%@ %@", selectedDopeCard.zero, selectedDopeCard.range_unit];
+    self.mvLabel.text   = [NSString stringWithFormat:@"%@ fps",selectedDopeCard.muzzle_velocity];
+    self.weatherLabel.text = selectedDopeCard.weather_info;
     self.windInfoLabel.text = selectedDopeCard.wind_info;
+    self.leadInfoLabel.text = selectedDopeCard.lead_info;
     self.notesLabel.text = selectedDopeCard.notes;
     self.rangeLabel.text = selectedDopeCard.range_unit;
     self.dropLabel.text  = selectedDopeCard.drop_unit;
@@ -48,15 +52,19 @@
 }
 
 - (void)viewDidUnload {
+    [self setWeaponLabel:nil];
     [self setZeroLabel:nil];
+    [self setMvLabel:nil];
+    [self setWeatherLabel:nil];
     [self setWindInfoLabel:nil];
+    [self setLeadInfoLabel:nil];
     [self setNotesLabel:nil];
     [self setTableView:nil];
     [self setRangeLabel:nil];
     [self setDropLabel:nil];
     [self setDriftLabel:nil];
-    [self setWeaponLabel:nil];
     [self setDopeCardSectionHeaderView:nil];
+    [self setWeatherLabel:nil];
     [super viewDidUnload];
 }
 

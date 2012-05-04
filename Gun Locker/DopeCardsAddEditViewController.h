@@ -21,15 +21,22 @@
     DataManager *dataManager;
 }
 
+@property (strong, nonatomic) IBOutlet UIView *sectionHeader;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *cardNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *zeroTextField;
+@property (weak, nonatomic) IBOutlet UITextField *muzzleVelocityTextField;
+@property (weak, nonatomic) IBOutlet UITextField *weatherInfoField;
 @property (weak, nonatomic) IBOutlet UITextField *rangeUnitField;
 @property (weak, nonatomic) IBOutlet UITextField *dropUnitField;
 @property (weak, nonatomic) IBOutlet UITextField *driftUnitField;
 @property (retain, nonatomic) UIPickerView *dopeUnitPickerView;
+
 @property (weak, nonatomic) IBOutlet UITextField *windInfoField;
+@property (weak, nonatomic) IBOutlet UITextField *leadInfoField;
 @property (retain, nonatomic) UIPickerView *windInfoPickerView;
+@property (retain, nonatomic) UIPickerView *leadInfoPickerView;
+
 @property (weak, nonatomic) IBOutlet UITextField *notesTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) UITextField *currentTextField;

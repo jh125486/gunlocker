@@ -109,11 +109,9 @@
     DopeCard *dopeCard = (self.selectedWeapon) ? [sections objectAtIndex:indexPath.row] : [[dopeCards objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
 
     cell.textLabel.text = dopeCard.name;
-    NSString *zero_unit = dopeCard.range_unit;
-    zero_unit = ([zero_unit isEqualToString:@"Feet"]) ? @"foot": [[zero_unit substringToIndex:[zero_unit length] -1] lowercaseString];
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:20];
     cell.textLabel.textColor = [UIColor blackColor];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@ zero / Wind %@", dopeCard.zero, zero_unit, dopeCard.wind_info];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Zero: %@ %@ / Wind: %@", dopeCard.zero, [dopeCard.range_unit lowercaseString], dopeCard.wind_info];
     cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
     cell.detailTextLabel.textColor = [UIColor darkGrayColor];
     cell.selectionStyle = UITableViewCellSelectionStyleGray;

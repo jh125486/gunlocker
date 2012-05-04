@@ -106,7 +106,6 @@
 		537797441537D3B90096BF7A /* Caliber.m in Sources */ = {isa = PBXBuildFile; fileRef = 537797431537D3B90096BF7A /* Caliber.m */; };
 		537797471537D3BA0096BF7A /* Weapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 537797461537D3BA0096BF7A /* Weapon.m */; };
 		537B1C5D151EAD6000A85E24 /* MaintenanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 537B1C5C151EAD6000A85E24 /* MaintenanceCell.m */; };
-		537FE56F15315DAF0099CD20 /* DopeCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 537FE56E15315DAF0099CD20 /* DopeCard.m */; };
 		5380B3AA1521070600CD099D /* NFAInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5380B3A91521070600CD099D /* NFAInformationViewController.m */; };
 		53859F701501E11C00ABA0B1 /* icon_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 53859F6F1501E11C00ABA0B1 /* icon_settings.png */; };
 		53859F741504066100ABA0B1 /* brushed_steel_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 53859F731504066100ABA0B1 /* brushed_steel_background.png */; };
@@ -168,6 +167,7 @@
 		53E31488151E8405005B414F /* icon_delink.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E31487151E8405005B414F /* icon_delink.png */; };
 		53E3148B151E9B1A005B414F /* Maintenance.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E3148A151E9B1A005B414F /* Maintenance.m */; };
 		53E3148E151E9B1A005B414F /* Malfunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E3148D151E9B1A005B414F /* Malfunction.m */; };
+		53E8309C1553931C0062893B /* DopeCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E8309B1553931C0062893B /* DopeCard.m */; };
 		53EBBD951516F36C00488E63 /* tableview_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD941516F36C00488E63 /* tableview_header.png */; };
 		53EBBD9815170E5100488E63 /* mil_dot_reticle_day.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9615170E5100488E63 /* mil_dot_reticle_day.png */; };
 		53EBBD9915170E5100488E63 /* mil_dot_reticle_night.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9715170E5100488E63 /* mil_dot_reticle_night.png */; };
@@ -350,8 +350,6 @@
 		537797461537D3BA0096BF7A /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
 		537B1C5B151EAD6000A85E24 /* MaintenanceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaintenanceCell.h; sourceTree = "<group>"; };
 		537B1C5C151EAD6000A85E24 /* MaintenanceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaintenanceCell.m; sourceTree = "<group>"; };
-		537FE56D15315DAF0099CD20 /* DopeCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCard.h; sourceTree = "<group>"; };
-		537FE56E15315DAF0099CD20 /* DopeCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCard.m; sourceTree = "<group>"; };
 		5380B3A81521070600CD099D /* NFAInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFAInformationViewController.h; sourceTree = "<group>"; };
 		5380B3A91521070600CD099D /* NFAInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFAInformationViewController.m; sourceTree = "<group>"; };
 		53859F6F1501E11C00ABA0B1 /* icon_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_settings.png; sourceTree = "<group>"; };
@@ -441,6 +439,8 @@
 		53E3148A151E9B1A005B414F /* Maintenance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Maintenance.m; sourceTree = "<group>"; };
 		53E3148C151E9B1A005B414F /* Malfunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Malfunction.h; sourceTree = "<group>"; };
 		53E3148D151E9B1A005B414F /* Malfunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Malfunction.m; sourceTree = "<group>"; };
+		53E8309A1553931C0062893B /* DopeCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCard.h; sourceTree = "<group>"; };
+		53E8309B1553931C0062893B /* DopeCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCard.m; sourceTree = "<group>"; };
 		53EBBD941516F36C00488E63 /* tableview_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableview_header.png; sourceTree = "<group>"; };
 		53EBBD9615170E5100488E63 /* mil_dot_reticle_day.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mil_dot_reticle_day.png; sourceTree = "<group>"; };
 		53EBBD9715170E5100488E63 /* mil_dot_reticle_night.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mil_dot_reticle_night.png; sourceTree = "<group>"; };
@@ -894,20 +894,20 @@
 				53A0E689153A80DA00846421 /* Bullet.m */,
 				537797421537D3B90096BF7A /* Caliber.h */,
 				537797431537D3B90096BF7A /* Caliber.m */,
-				537FE56D15315DAF0099CD20 /* DopeCard.h */,
-				537FE56E15315DAF0099CD20 /* DopeCard.m */,
+				53E8309A1553931C0062893B /* DopeCard.h */,
+				53E8309B1553931C0062893B /* DopeCard.m */,
 				53E31489151E9B1A005B414F /* Maintenance.h */,
 				53E3148A151E9B1A005B414F /* Maintenance.m */,
 				53E3148C151E9B1A005B414F /* Malfunction.h */,
 				53E3148D151E9B1A005B414F /* Malfunction.m */,
 				5377973F1537D3B70096BF7A /* Manufacturer.h */,
 				537797401537D3B70096BF7A /* Manufacturer.m */,
+				5377973C153798480096BF7A /* Model+Helpers.h */,
+				5377973D153798480096BF7A /* Model+Helpers.m */,
 				53FBDA0E151D9FA200DD5180 /* Note.h */,
 				53FBDA0F151D9FA200DD5180 /* Note.m */,
 				53591A3E152181A000516C4C /* StampInfo.h */,
 				53591A3F152181A000516C4C /* StampInfo.m */,
-				5377973C153798480096BF7A /* Model+Helpers.h */,
-				5377973D153798480096BF7A /* Model+Helpers.m */,
 				537797451537D3B90096BF7A /* Weapon.h */,
 				537797461537D3BA0096BF7A /* Weapon.m */,
 				53CA98DF150A84E50060A1E8 /* Weather.h */,
@@ -1222,7 +1222,6 @@
 				53BC9F49152C06CB00B7D7AD /* DopeCardsTableViewController.m in Sources */,
 				53BC9F4F152C11A700B7D7AD /* DopeCardRowEditCell.m in Sources */,
 				53713F84152C28D7009B55B8 /* DopeCardsAddEditViewController.m in Sources */,
-				537FE56F15315DAF0099CD20 /* DopeCard.m in Sources */,
 				53D2633F1531EB4600ECA9EE /* DopeCardRowCell.m in Sources */,
 				53D263451531EBD000ECA9EE /* DopeCardViewController.m in Sources */,
 				537797201533A8150096BF7A /* LogsViewController.m in Sources */,
@@ -1246,6 +1245,7 @@
 				530D7B70154B473900536281 /* DopeTableGeneratedCell.m in Sources */,
 				530D7B73154B57D300536281 /* BallisticProfile.m in Sources */,
 				530A008A154BB5130023FBE7 /* TrajectoryRange.m in Sources */,
+				53E8309C1553931C0062893B /* DopeCard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

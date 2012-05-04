@@ -1,9 +1,9 @@
 //
-//  Model+Helpers.m
+//  exponentodel+Helpers.m
 //  Gun Locker
 //
 //  Created by Jacob Hochstetler on 4/12/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 __exponentyCompanyName__. multiplierll rights reserved.
 //
 
 #import <Model+Helpers.h>
@@ -33,97 +33,100 @@
     return value;
 }
 
--(double)getBCWithSpeedOfSound:(double)speedOfSound andVelocity:(double)velocity{
-    double multiplier = 0;
-    double power = 0;
-    double mach = velocity / speedOfSound;
-    
-    if ([self.drag_model isEqualToString:@"G1"]) {
-        if (mach > 2.0)
-            multiplier = 0.9482590 + mach*(-0.248367 + mach*0.0344343);
-        else if (mach > 1.40)
-            multiplier = 0.6796810 + mach*(0.0705311 - mach*0.0570628);
-        else if (mach > 1.10)
-            multiplier = -1.471970 + mach*(3.1652900 - mach*1.1728200);
-        else if (mach > 0.85)
-            multiplier = -0.647392 + mach*(0.9421060 + mach*0.1806040);
-        else if (mach >= 0.55)
-            multiplier = 0.6224890 + mach*(-1.426820 + mach*1.2094500);
-        else
-            multiplier = 0.2637320 + mach*(-0.165665 + mach*0.0852214);
+-(double)getBCWithSpeedOfSound:(double)speed andVelocity:(double)velocity{
+//    double mach = velocity / speed;
+        
+    double multiplier = -1;
+    double exponent   = -1;
+    if ([self.drag_model isEqualToString:@"G1"]) { 
+        if      (velocity > 4230) {multiplier = 1.477404177730177e-04; exponent = 1.9565;}
+        else if (velocity > 3680) {multiplier = 1.920339268755614e-04; exponent = 1.925 ;}
+        else if (velocity > 3450) {multiplier = 2.894751026819746e-04; exponent = 1.875 ;}
+        else if (velocity > 3295) {multiplier = 4.349905111115636e-04; exponent = 1.825 ;}
+        else if (velocity > 3130) {multiplier = 6.520421871892662e-04; exponent = 1.775 ;}
+        else if (velocity > 2960) {multiplier = 9.748073694078696e-04; exponent = 1.725 ;}
+        else if (velocity > 2830) {multiplier = 1.453721560187286e-03; exponent = 1.675 ;}
+        else if (velocity > 2680) {multiplier = 2.162887202930376e-03; exponent = 1.625 ;}
+        else if (velocity > 2460) {multiplier = 3.209559783129881e-03; exponent = 1.575 ;}
+        else if (velocity > 2225) {multiplier = 3.904368218691249e-03; exponent = 1.55  ;}
+        else if (velocity > 2015) {multiplier = 3.222942271262336e-03; exponent = 1.575 ;}
+        else if (velocity > 1890) {multiplier = 2.203329542297809e-03; exponent = 1.625 ;}
+        else if (velocity > 1810) {multiplier = 1.511001028891904e-03; exponent = 1.675 ;}
+        else if (velocity > 1730) {multiplier = 8.609957592468259e-04; exponent = 1.75  ;}
+        else if (velocity > 1595) {multiplier = 4.086146797305117e-04; exponent = 1.85  ;}
+        else if (velocity > 1520) {multiplier = 1.954473210037398e-04; exponent = 1.95  ;}
+        else if (velocity > 1420) {multiplier = 5.431896266462351e-05; exponent = 2.125 ;}
+        else if (velocity > 1360) {multiplier = 8.847742581674416e-06; exponent = 2.375 ;}
+        else if (velocity > 1315) {multiplier = 1.456922328720298e-06; exponent = 2.625 ;}
+        else if (velocity > 1280) {multiplier = 2.419485191895565e-07; exponent = 2.875 ;}
+        else if (velocity > 1220) {multiplier = 1.657956321067612e-08; exponent = 3.25  ;}
+        else if (velocity > 1185) {multiplier = 4.745469537157371e-10; exponent = 3.75  ;}
+        else if (velocity > 1150) {multiplier = 1.379746590025088e-11; exponent = 4.25  ;}
+        else if (velocity > 1100) {multiplier = 4.070157961147882e-13; exponent = 4.75  ;}
+        else if (velocity > 1060) {multiplier = 2.938236954847331e-14; exponent = 5.125 ;}
+        else if (velocity > 1025) {multiplier = 1.228597370774746e-14; exponent = 5.25  ;}
+        else if (velocity >  980) {multiplier = 2.916938264100495e-14; exponent = 5.125 ;}
+        else if (velocity >  945) {multiplier = 3.855099424807451e-13; exponent = 4.75  ;}
+        else if (velocity >  905) {multiplier = 1.185097045689854e-11; exponent = 4.25  ;}
+        else if (velocity >  860) {multiplier = 3.566129470974951e-10; exponent = 3.75  ;}
+        else if (velocity >  810) {multiplier = 1.045513263966272e-08; exponent = 3.25  ;}
+        else if (velocity >  780) {multiplier = 1.291159200846216e-07; exponent = 2.875 ;}
+        else if (velocity >  750) {multiplier = 6.824429329105383e-07; exponent = 2.625 ;}
+        else if (velocity >  700) {multiplier = 3.569169672385163e-06; exponent = 2.375 ;}
+        else if (velocity >  640) {multiplier = 1.839015095899579e-05; exponent = 2.125 ;}
+        else if (velocity >  600) {multiplier = 5.71117468873424e-05 ; exponent = 1.950 ;}
+        else if (velocity >  550) {multiplier = 9.226557091973427e-05; exponent = 1.875 ;}
+        else if (velocity >  250) {multiplier = 9.337991957131389e-05; exponent = 1.875 ;}
+        else if (velocity >  100) {multiplier = 7.225247327590413e-05; exponent = 1.925 ;}
+        else if (velocity >   65) {multiplier = 5.792684957074546e-05; exponent = 1.975 ;}
+        else if (velocity >    0) {multiplier = 5.206214107320588e-05; exponent = 2.000 ;}
     } else if ([self.drag_model isEqualToString:@"G2"]) {
-        if (mach > 2.5)
-            multiplier = 0.4465610 + mach*(-0.0958548 + mach*0.00799645);
-        else if (mach > 1.2)
-            multiplier = 0.7016110 + mach*(-0.3075100 + mach*0.05192560);
-        else if (mach > 1.0)
-            multiplier = -1.105010 + mach*(2.77195000 - mach*1.26667000);
-        else if (mach > 0.9)
-            multiplier = -2.240370 + mach*2.63867000;
-        else if (mach >= 0.7)
-            multiplier = 0.9099690 + mach*(-1.9017100 + mach*1.21524000);
-        else
-            multiplier = 0.2302760 + mach*(0.000210564 - mach*0.1275050);
+        if      (velocity > 1674) {multiplier = .0079470052136733   ;  exponent = 1.36999902851493;}
+        else if (velocity > 1172) {multiplier = 1.00419763721974e-03;  exponent = 1.65392237010294;}
+        else if (velocity > 1060) {multiplier = 7.15571228255369e-23;  exponent = 7.91913562392361;}
+        else if (velocity >  949) {multiplier = 1.39589807205091e-10;  exponent = 3.81439537623717;}
+        else if (velocity >  670) {multiplier = 2.34364342818625e-04;  exponent = 1.71869536324748;}
+        else if (velocity >  335) {multiplier = 1.77962438921838e-04;  exponent = 1.76877550388679;}
+        else if (velocity >    0) {multiplier = 5.18033561289704e-05;  exponent = 1.98160270524632;}
     } else if ([self.drag_model isEqualToString:@"G5"]) {
-        if (mach > 2.0)
-            multiplier = 0.671388 + mach*(-0.185208 + mach*0.0204508);
-        else if (mach > 1.1)
-            multiplier = 0.134374 + mach*(0.4378330 - mach*0.1570190);
-        else if (mach > 0.9)
-            multiplier = -0.924258 + mach*1.24904;
-        else if (mach >= 0.6)
-            multiplier = 0.654405 + mach*(-1.4275000 + mach*0.998463);
-        else
-            multiplier = 0.186386 + mach*(-0.0342136 - mach*0.035691);
+        if      (velocity > 1730) {multiplier = 7.24854775171929e-03; exponent = 1.41538574492812;}
+        else if (velocity > 1228) {multiplier = 3.50563361516117e-05; exponent = 2.13077307854948;}
+        else if (velocity > 1116) {multiplier = 1.84029481181151e-13; exponent = 4.81927320350395;}
+        else if (velocity > 1004) {multiplier = 1.34713064017409e-22; exponent = 7.8100555281422 ;}
+        else if (velocity >  837) {multiplier = 1.03965974081168e-07; exponent = 2.84204791809926;}
+        else if (velocity >  335) {multiplier = 1.09301593869823e-04; exponent = 1.81096361579504;}
+        else if (velocity >    0) {multiplier = 3.51963178524273e-05; exponent = 2.00477856801111;}	
     } else if ([self.drag_model isEqualToString:@"G6"]) {
-        if (mach > 2.0)
-            multiplier = 0.746228 + mach*(-0.255926 + mach*0.0291726);
-        else if (mach > 1.1)
-            multiplier = 0.513638 + mach*(-0.015269 - mach*0.0331221);
-        else if (mach > 0.9)
-            multiplier = -0.908802 + mach*1.25814;
-        else if (mach >= 0.6)
-            multiplier = 0.366723 + mach*(-0.458435 + mach*0.337906);
-        else
-            multiplier = 0.264481 + mach*(-0.157237 + mach*0.117441);
+        if      (velocity > 3236) {multiplier = 0.0455384883480781   ; exponent = 1.15997674041274;}
+        else if (velocity > 2065) {multiplier = 7.167261849653769e-02; exponent = 1.10704436538885;}
+        else if (velocity > 1311) {multiplier = 1.66676386084348e-03 ; exponent = 1.60085100195952;}
+        else if (velocity > 1144) {multiplier = 1.01482730119215e-07 ; exponent = 2.9569674731838 ;}
+        else if (velocity > 1004) {multiplier = 4.31542773103552e-18 ; exponent = 6.34106317069757;}
+        else if (velocity >  670) {multiplier = 2.04835650496866e-05 ; exponent = 2.11688446325998;}
+        else if (velocity >    0) {multiplier = 7.50912466084823e-05 ; exponent = 1.92031057847052;}
     } else if ([self.drag_model isEqualToString:@"G7"]) {
-        if      (mach > 3.75 ) {multiplier = 1.29081656775919e-09; power = 3.24121295355962; }
-        else if (mach > 2.69 ) {multiplier = 0.0171422231434847  ; power = 1.27107168025204; }
-        else if (mach > 1.60 ) {multiplier = 8.33355948302505e-04; power = 1.52693913274526; }
-        else if (mach > 1.20 ) {multiplier = 7.97592111627665e-04; power = 1.67688974440324; }
-        else if (mach > 1.00 ) {multiplier = 5.71086414289273e-12; power = 4.3212826264889 ; }
-        else if (mach > 0.85 ) {multiplier = 3.02865108244904e-17; power = 5.99074203776707; }
-        else if (mach > 0.60 ) {multiplier = 7.52285155782535e-06; power = 2.1738019851075 ; }
-        else if (mach > 0.48 ) {multiplier = 1.31766281225189e-05; power = 2.08774690257991; }
-        else if (mach >    0 ) {multiplier = 1.34504843776525e-05; power = 2.08702306738884; }
-
+		if      (velocity > 4200) {multiplier = 1.29081656775919e-09; exponent = 3.24121295355962;}
+		else if (velocity > 3000) {multiplier = 0.0171422231434847  ; exponent = 1.27907168025204;}
+		else if (velocity > 1470) {multiplier = 2.33355948302505e-03; exponent = 1.52693913274526;}
+		else if (velocity > 1260) {multiplier = 7.97592111627665e-04; exponent = 1.67688974440324;}
+		else if (velocity > 1110) {multiplier = 5.71086414289273e-12; exponent = 4.3212826264889 ;}
+		else if (velocity >  960) {multiplier = 3.02865108244904e-17; exponent = 5.99074203776707;}
+		else if (velocity >  670) {multiplier = 7.52285155782535e-06; exponent = 2.1738019851075 ;}
+		else if (velocity >  540) {multiplier = 1.31766281225189e-05; exponent = 2.08774690257991;}
+		else if (velocity >    0) {multiplier = 1.34504843776525e-05; exponent = 2.08702306738884;}
     } else if ([self.drag_model isEqualToString:@"G8"]) {
-        if (mach > 1.1)
-            multiplier = 0.639096 + mach*(-0.197471 + mach*0.0216221);
-        else if (mach >= 0.925)
-            multiplier = -12.9053 + mach*(24.9181 - mach*11.6191);
-        else
-            multiplier = 0.210589 + mach*(-0.00184895 + mach*0.00211107);
-    } else if ([self.drag_model isEqualToString:@"Gl"]) {
-        if (mach > 1.0)
-            multiplier = 0.286629 + mach*(0.3588930 - mach*0.0610598);
-        else if (mach >= 0.8)
-            multiplier = 1.59969 + mach*(-3.9465500 + mach*2.831370);
-        else
-            multiplier = 0.333118 + mach*(-0.498448 + mach*0.474774);
-    } else if ([self.drag_model isEqualToString:@"Gi"]) {
-        if (mach > 1.65)
-            multiplier = 0.845362 + mach*(-0.143989 + mach*0.0113272);
-        else if (mach > 1.2)
-            multiplier = 0.630556 + mach*0.00701308;
-        else if (mach >= 0.7)
-            multiplier = 0.531976 + mach*(-1.28079 + mach*1.17628);
-        else
-            multiplier = 0.2282;
+		if      (velocity > 3571) {multiplier = .0112263766252305   ; exponent = 1.33207346655961;}
+		else if (velocity > 1841) {multiplier = .0167252613732636   ; exponent = 1.28662041261785;}
+		else if (velocity > 1120) {multiplier = 2.20172456619625e-03; exponent = 1.55636358091189;}
+		else if (velocity > 1088) {multiplier = 2.0538037167098e-16 ; exponent = 5.80410776994789;}
+		else if (velocity >  976) {multiplier = 5.92182174254121e-12; exponent = 4.29275576134191;}
+		else if (velocity >    0) {multiplier = 4.3917343795117e-05 ; exponent = 1.99978116283334;}
+	}
+        
+    if (multiplier!=-1 && exponent!=-1 && velocity>0 && velocity<10000){
+        return multiplier * pow(velocity, exponent) / [self ballisticCoefficientWithVelocity:velocity];
     }
-    NSLog(@"v: %.1f\tMach %.2f\t\tMultiplier: %.3f\tPower: %.3f", velocity, mach, multiplier, power);
-
-    return  multiplier * pow(mach, power)/ [self ballisticCoefficientWithVelocity:velocity];
+    else return -1;
 }
 
 @end

@@ -14,6 +14,7 @@
 @interface Trajectory : NSObject {
     double yAtScope;
     double vInitial;
+    double yInitial;
     double gravity;
     double yAtX;
     double vAtX;
@@ -21,13 +22,15 @@
     double xAtZero;
     double vAtZero;
     double tAtZero;
-    double windXspeed;
+    double windXSpeed;
     double windZSpeed;
     double leadZSpeed;
     double mass;
     double sectionalArea;
     double speedOfSound;
     double airDensity;
+    double bulletMass;
+    double thetaInitial;
     double k;
 }
 
@@ -42,11 +45,12 @@
 @property (nonatomic, assign) double leadAngle;
 @property (nonatomic, assign) double windSpeed;
 @property (nonatomic, assign) double windAngle;
-@property (nonatomic, assign) double thetaInitial;
+@property (nonatomic, assign) double shootingAngle;
 @property (nonatomic, retain) NSMutableArray *ranges;
+@property (nonatomic, assign) BOOL setupCompleted;
 @property (nonatomic, retain) BallisticProfile *ballisticProfile;
 
+-(void)setup;
 -(void)calculateTrajectory;
--(void)calculateThetaAngle;
 @end
 

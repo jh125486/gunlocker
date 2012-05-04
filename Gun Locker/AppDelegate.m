@@ -127,7 +127,6 @@
         NSString* path = [[NSBundle mainBundle] pathForResource:@"manufacturers" ofType:@"txt"];
         NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
         NSArray *splitParts;
-        NSLog(@"loaded manu");
         for (NSString *manufacturer in [content componentsSeparatedByString:@"\n"]) {
             splitParts = [manufacturer componentsSeparatedByString:@":"];
             
