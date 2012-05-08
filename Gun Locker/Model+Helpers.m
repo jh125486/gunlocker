@@ -22,6 +22,79 @@
 
 @implementation BallisticProfile (helper)
 
+-(void)calculateTheta{
+    int vInitial = [self.muzzle_velocity integerValue];
+    double yInitial = -INCHES_to_FEET([self.sight_height_inches doubleValue]);
+    double gravity = -32.174;
+
+    // Numerical Integration variables
+    double t = 0;
+    double dt = 1 / vInitial; // The solution accuracy generally doesn't suffer if its within a foot for each second of time.
+    double y=0, x=0;
+    
+    // State variables for each integration loop.
+    double v=0, vx=0, vy=0; // velocity
+    
+    double vx1=0, vy1=0;// Last frame's velocity, used for computing average velocity.
+    
+    double dv=0, dvx=0, dvy=0; // acceleration
+    double gx=0, gy=0; // Gravitational acceleration
+    double theta = 0; // The actual angle of the bore.
+    double zero = YARDS_to_FEET([self.zero doubleValue]);
+    
+    BOOL thetaFound = FALSE; // We know it's time to quit our successive approximation loop when this is true.
+    
+    /* The change in the bore angle used to iterate in on the correct zero angle.
+     Start with a very coarse angular change, to quickly solve even large launch angle problems. */
+    double dtheta = DEGREES_to_RAD(5);
+    
+    /* The general idea here is to start at 0 degrees elevation, and increase the elevation by 14 degrees until we are above the correct elevation. Then reduce the angular change by half, and begin reducing the angle.  Once we are again below the correct angle, reduce the angular change by half again, and go back up.  This allows for a fast successive approximation of the correct elevation, usually within less than 20 iterations.    */
+    while(!thetaFound) {
+        vy = vInitial * sin(theta);
+        vx = vInitial * cos(theta);
+        gx = gravity * sin(theta);
+        gy = gravity * cos(theta);
+        
+        t = 0;
+        x = 0;
+        y = yInitial;
+        while (x <= zero) {
+            vy1 = vy;
+            vx1 = vx;
+            v = VECTOR_LENGTH(vx, vy);
+            dt=1/v;
+            
+            dv =  [self getBCWithSpeedOfSound:1116.45 andVelocity:v];
+            dv += [self extraDragRetardationWithVelocity:v];
+            dvy = -dv*vy/v*dt;
+            dvx = -dv*vx/v*dt;
+            
+            vx += dvx;
+            vy += dvy;
+            vy += dt*gy;
+            vx += dt*gx;
+            
+            x += dt * (vx + vx1)/2.0;
+            y += dt * (vy + vy1)/2.0;
+            
+            // Break early to save CPU time if there is no solution
+            if ((vy < 0 && y < 0) || (vy > (3 * vx))) break;
+            
+            t += dt;
+        }
+        
+        if ((y > 0 && dtheta > 0) || (y < 0 && dtheta < 0))
+            dtheta = -dtheta/2;
+        
+        // stop approximating or exceed the 45 degree launch angle
+        if ((fabs(dtheta) < MOA_to_RAD(0.001))  || (theta > DEGREES_to_RAD(45))) thetaFound = TRUE;
+        
+        theta += dtheta;
+    }
+    self.zero_theta = [NSNumber numberWithDouble:theta]; // angle in radians
+    NSLog(@"theta angle: %f", theta);
+}
+
 -(double)ballisticCoefficientWithVelocity:(double)velocity {
     NSArray *bc = self.bullet_bc;
     double value = [(NSDecimalNumber *)[bc objectAtIndex:0] doubleValue];
@@ -127,6 +200,10 @@
         return multiplier * pow(velocity, exponent) / [self ballisticCoefficientWithVelocity:velocity];
     }
     else return -1;
+}
+
+-(double)extraDragRetardationWithVelocity:(double)v {
+    return (0.07647 * (M_PI_4) * pow(INCHES_to_FEET([self.bullet_diameter_inches doubleValue]), 2) / (4*[self.bullet_weight doubleValue]/7000.0)) * v * pow([self.muzzle_velocity intValue]/v, 4) * pow(v/1116.45, 2.5);
 }
 
 @end

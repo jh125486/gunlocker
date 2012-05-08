@@ -16,6 +16,7 @@
     NSMutableDictionary *dopeCards;
     NSMutableArray *sections;
 }
+@property (weak, nonatomic) IBOutlet UIImageView *noDopeCardsImageView;
 
 @property (nonatomic, weak) Weapon *selectedWeapon;
 

@@ -20,7 +20,7 @@
 @synthesize caliberLabel;
 @synthesize purchaseInfoLabel;
 @synthesize photoImageContainer;
-@synthesize photoImageView;
+@synthesize photoButton;
 @synthesize stampViewButton;
 @synthesize stampViewContainer;
 @synthesize stampSerialNumberLabel;
@@ -75,7 +75,7 @@
     
     if (weapon.photo_thumbnail) {
         [self.photoImageContainer setHidden:NO];
-        self.photoImageView.image = [UIImage imageWithData:weapon.photo_thumbnail];
+        [self.photoButton setImage:[UIImage imageWithData:weapon.photo_thumbnail] forState:UIControlStateNormal];
     } else {
         [self.photoImageContainer setHidden:YES];
     }

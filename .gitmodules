@@ -7,3 +7,6 @@
 [submodule "QuickDialog"]
 	path = QuickDialog
 	url = git@github.com:escoz/QuickDialog.git
+[submodule "MKNetworkKit"]
+	path = MKNetworkKit
+	url = https://github.com/MugunthKumar/MKNetworkKit.git

@@ -9,6 +9,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sight_height_inches" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="zero" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="zero_theta" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="bullet" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Bullet" inverseName="ballistic_profile" inverseEntity="Bullet" syncable="YES"/>
         <relationship name="weapon" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="ballistic_profile" inverseEntity="Weapon" syncable="YES"/>
     </entity>
@@ -119,7 +120,7 @@
         <relationship name="stamp" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="StampInfo" inverseName="weapon" inverseEntity="StampInfo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BallisticProfile" positionX="-144" positionY="-108" width="128" height="195"/>
+        <element name="BallisticProfile" positionX="-144" positionY="-108" width="128" height="210"/>
         <element name="Bullet" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Caliber" positionX="160" positionY="192" width="128" height="60"/>
         <element name="CommercialLoad" positionX="63" positionY="240" width="128" height="75"/>

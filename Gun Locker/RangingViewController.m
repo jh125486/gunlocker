@@ -33,7 +33,6 @@
     self.angleTextField.rightViewMode = UITextFieldViewModeAlways;
     self.angleTextField.rightView = label;
 
-    
     sizeUnits  = [NSArray arrayWithObjects:@"inches", @"feet", @"yards", @"meters", nil];
     spansUnits = [NSArray arrayWithObjects:@"MOA", @"Mils", nil];
     
@@ -142,9 +141,9 @@
                                                              if (angleInRadians < 0.0)
                                                                  angleInRadians += (2.0 * M_PI);
                                                              angleInRadians -= M_PI;
-                                                             int angleInDegrees = angleInRadians * (180/M_PI);
+                                                             int angleInDegrees = RAD_to_DEGREES(angleInRadians * (180/M_PI));
                                                              if ((angleInDegrees % 5) == 0) {
-                                                                 self.angleTextField.text = [NSString stringWithFormat:@"%d", angleInDegrees]; 
+                                                                 self.angleTextField.text = [NSString stringWithFormat:@"%d", fabs(angleInDegrees)];                                                                 
                                                                  [self showRangeEstimate:nil];
                                                              }
                                                              
@@ -218,7 +217,7 @@
     
     if ([formFields indexOfObject:textField] == 0) {
         [control setEnabled:NO forSegmentAtIndex:0];
-    } else if ([formFields indexOfObject:textField] == ([formFields count] -1)) {
+    } else if ([formFields lastObject]== textField) {
         [control setEnabled:NO forSegmentAtIndex:1];
     }
     
@@ -238,7 +237,7 @@
 }
 
 - (void) nextPreviousTapped:(id)sender {
-    int index = [formFields indexOfObject:currentTextField];
+    int index = [formFields indexOfObject:self.currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
             if (index > 0) index--;

@@ -9,6 +9,7 @@
 #import "DopeCardsTableViewController.h"
 
 @implementation DopeCardsTableViewController
+@synthesize noDopeCardsImageView;
 @synthesize selectedWeapon;
 
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -65,6 +66,7 @@
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setSelectedWeapon:nil];
+    [self setNoDopeCardsImageView:nil];
     [super viewDidUnload];
 }
 
@@ -96,7 +98,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return (self.selectedWeapon) ? [sections count] : [[dopeCards objectForKey:[sections objectAtIndex:section]] count];
+    NSInteger count = (self.selectedWeapon) ? [sections count] : [[dopeCards objectForKey:[sections objectAtIndex:section]] count];
+    
+    self.noDopeCardsImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/DopeCards"]];
+    self.noDopeCardsImageView.hidden = (count != 0);
+
+    return count;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -138,7 +145,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath { 
-    cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor clearColor] : [UIColor lightTextColor];
+    cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor clearColor] : [UIColor colorWithRed:0.855 green:0.812 blue:0.682 alpha:1.000];
 }  
 
 @end

@@ -56,5 +56,5 @@
 
 -(double)ballisticCoefficientWithVelocity:(double)velocity;
 -(double)getBCWithSpeedOfSound:(double)speed andVelocity:(double)velocity;
-
+-(void)calculateTheta;
 @end

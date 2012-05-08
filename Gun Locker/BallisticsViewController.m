@@ -42,7 +42,9 @@
         ballisticProfile1.name = @"55 grain M193 ";
         ballisticProfile1.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.272"]];
         ballisticProfile1.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
-        ballisticProfile1.weapon = [[Weapon findAll] objectAtIndex:2];
+        ballisticProfile1.weapon = [[Weapon findAll] objectAtIndex:1];
+        [ballisticProfile1 calculateTheta];
+        NSLog(@"angle %@", ballisticProfile1.zero_theta);
         
         BallisticProfile *ballisticProfile2 = [BallisticProfile createEntity];
 
@@ -55,6 +57,8 @@
         ballisticProfile2.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.151"]];
         ballisticProfile2.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
         ballisticProfile2.weapon = [[Weapon findAll] objectAtIndex:0];
+        [ballisticProfile2 calculateTheta];
+        NSLog(@"angle %@", ballisticProfile2.zero_theta);
     }
 // TESTING trajectory
     
@@ -95,13 +99,29 @@
     profiles = [[BallisticProfile findAll] mutableCopy];
     
     //Register setRange to recieve "setRange" notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];
+    
+    [self setUpPickerData];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     self.chooseProfileButton.enabled = (profiles.count != 0);
     
     self.addNewProfileButton.enabled = ([Weapon countOfEntities] != 0);
+    
+    [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
+}
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    //crash for some reason
+//    if (self.currentWeather && self.currentWeather.goodData) {
+//        self.wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", [[self.currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
+//    } else {
+//        self.wxTimestampLabel.text = @"";
+//    }
 }
 
 - (void)viewDidUnload {
@@ -139,8 +159,9 @@
     } else if ([segueID isEqualToString:@"DopeTable"]) {
         ((DopeTableTableViewController *)segue.destinationViewController).currentWeather = currentWeather;
         ((DopeTableTableViewController *)segue.destinationViewController).selectedProfile = selectedProfile;
+    }  else if ([segueID isEqualToString:@"ShowProfile"]) {
+        ((ProfileViewTableViewController *)segue.destinationViewController).profile = selectedProfile;
     }
-
 }
 
 - (void)setRange:(NSNotification*)notification {
@@ -261,13 +282,40 @@
 }
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return [profiles count];
+    return [profilePickerData count];
 }
 
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-    if (view == nil) {
-        BallisticProfile *profile = [profiles objectAtIndex:row];
-        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+//    if (view == nil) {
+//        BallisticProfile *profile = [profiles objectAtIndex:row];
+//        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+//        view.backgroundColor = [UIColor clearColor];
+//        UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(16, 1, 56, 42)];
+//        thumbNail.image = [UIImage imageWithData:profile.weapon.photo_thumbnail];
+//        UILabel *firstLine  = [[UILabel alloc] initWithFrame:CGRectMake(75, 0, 230, 22)];
+//        UILabel *secondLine = [[UILabel alloc] initWithFrame:CGRectMake(75, 22, 230, 22)];
+//        firstLine.backgroundColor = [UIColor clearColor];
+//        secondLine.backgroundColor = [UIColor clearColor];
+//        firstLine.font  = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22];
+//        secondLine.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:18];
+//        firstLine.textColor = [UIColor blackColor];
+//        secondLine.textColor = [UIColor darkGrayColor];
+//        firstLine.adjustsFontSizeToFitWidth = YES;
+//        firstLine.text  = [NSString stringWithFormat:@"%@", profile.weapon];
+//        secondLine.text = [NSString stringWithFormat:@"%@", profile.name];
+//        [view addSubview:thumbNail];
+//        [view addSubview:firstLine];
+//        [view addSubview:secondLine];
+//    }
+//    return view;    
+    return [profilePickerData objectAtIndex:row];
+}
+
+- (void)setUpPickerData {
+    profilePickerData = [[NSMutableArray alloc] init];
+    
+    for(BallisticProfile *profile in profiles) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
         view.backgroundColor = [UIColor clearColor];
         UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(16, 1, 56, 42)];
         thumbNail.image = [UIImage imageWithData:profile.weapon.photo_thumbnail];
@@ -285,9 +333,8 @@
         [view addSubview:thumbNail];
         [view addSubview:firstLine];
         [view addSubview:secondLine];
+        [profilePickerData addObject:view];
     }
-    
-    return view;    
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
@@ -301,6 +348,7 @@
     switch (buttonIndex) {
         case 0:
             // perform segue to ViewProfile
+            [self performSegueWithIdentifier:@"ShowProfile" sender:nil];
             break;
             
         case 1:

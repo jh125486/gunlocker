@@ -10,21 +10,15 @@
 
 @implementation ConversionsViewController
 
-@synthesize length1UnitTextField;
-@synthesize length2UnitTextField;
+@synthesize length1UnitTextField, length2UnitTextField;
+@synthesize length1UnitButton, length1TextField;
+@synthesize length2UnitButton, length2TextField;
 @synthesize lengthUnitPicker;
-@synthesize length1UnitButton;
-@synthesize length1TextField;
-@synthesize length2UnitButton;
-@synthesize length2TextField;
 
-@synthesize weight1UnitTextField;
-@synthesize weight2UnitTextField;
+@synthesize weight1UnitTextField, weight2UnitTextField;
+@synthesize weight1UnitButton, weight1TextField;
+@synthesize weight2UnitButton, weight2TextField;
 @synthesize weightUnitPicker;
-@synthesize weight1UnitButton;
-@synthesize weight1TextField;
-@synthesize weight2UnitButton;
-@synthesize weight2TextField;
 
 @synthesize currentTextField;
 

@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "BallisticProfile.h"
+#import "Trajectory.h"
+#import "TrajectoryRange.h"
 
 @interface WhizWheelViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     NSMutableArray *arrayRanges;
     NSMutableArray *arrayDirections;
     NSMutableArray *arraySpeeds;
+    Trajectory *trajectory;
+    int rangeIndex;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *tableBackgroundImage;

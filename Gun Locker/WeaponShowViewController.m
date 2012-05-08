@@ -39,11 +39,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     DataManager *dataManager = [DataManager sharedManager];
     // set title for navigation back button
-    self.title = selectedWeapon.model;
+    self.title = self.selectedWeapon.model;
     [self setTitleView];
     
     // doesnt do anything
-    nfaCell.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"];
+    self.nfaCell.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"];
     
     self.adjustRoundCountStepper.Current = [self.selectedWeapon.round_count floatValue];
     self.adjustRoundCountStepper.Minimum = 0;
@@ -60,7 +60,7 @@
 
 - (void)setTitleView {
     self.modelLabel.text = self.title;
-    self.manufacturerLabel.text = selectedWeapon.manufacturer.short_name ? selectedWeapon.manufacturer.short_name : selectedWeapon.manufacturer.name;    
+    self.manufacturerLabel.text = self.selectedWeapon.manufacturer.short_name ? self.selectedWeapon.manufacturer.short_name : self.selectedWeapon.manufacturer.name;    
 }
 
 - (void)viewDidUnload {
@@ -75,7 +75,6 @@
     [self setModelLabel:nil];
     [self setManufacturerLabel:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -118,7 +117,7 @@
         return 0;
     } 
     
-    return 40.0;
+    return 44.0;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

@@ -32,6 +32,9 @@
                                                                     error:&error];
         
         NSMutableArray *weatherArray = [NSMutableArray arrayWithArray:[weatherString componentsSeparatedByString:@"\n"]];
+        
+        if (weatherString == nil) return nil;
+        
         int numberOfResults = [[[[weatherArray objectAtIndex:4] componentsSeparatedByString:@" "] objectAtIndex:0] intValue];
                 
         // METAR timestamp format 2012-03-10T19:23:00Z

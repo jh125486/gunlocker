@@ -2,7 +2,7 @@
 //  BallisticProfile.m
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 4/27/12.
+//  Created by Jacob Hochstetler on 5/8/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -21,6 +21,7 @@
 @dynamic name;
 @dynamic sight_height_inches;
 @dynamic zero;
+@dynamic zero_theta;
 @dynamic bullet;
 @dynamic weapon;
 

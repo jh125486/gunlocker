@@ -1,41 +1,36 @@
 //
-//  MillerStabilityViewController.m
+//  ThornileyViewController.m
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 3/4/12.
+//  Created by Jacob Hochstetler on 5/6/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "MillerStabilityViewController.h"
+#import "ThornileyViewController.h"
 
-@implementation MillerStabilityViewController
-@synthesize bulletCaliberTextField, bulletLengthTextField, bulletWeightTextField, mvTextField, twistRateTextField;
+@implementation ThornileyViewController
+@synthesize bulletCaliberTextField, bulletWeightTextField, mvTextField;
 @synthesize resultLabel;
 @synthesize currentTextField;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)initWithStyle:(UITableViewStyle)style {
+    self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
     }
     return self;
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
-    
-    behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:0 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-    
-    formFields = [NSArray arrayWithObjects:self.bulletCaliberTextField, self.bulletLengthTextField, self.bulletWeightTextField, self.mvTextField, self.twistRateTextField, nil];
-     
-    for (UITextField *field in formFields) {
-        field.delegate = self;
-        field.keyboardType = UIKeyboardTypeDecimalPad;
-    }
-    self.bulletWeightTextField.keyboardType = self.mvTextField.keyboardType = self.twistRateTextField.keyboardType = UIKeyboardTypeNumberPad;
 
+    behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:0 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+
+    formFields = [NSArray arrayWithObjects:self.bulletCaliberTextField, self.bulletWeightTextField, self.mvTextField, nil];
+    for (UITextField *field in formFields)
+        field.delegate = self;
+    self.bulletCaliberTextField.keyboardType = UIKeyboardTypeDecimalPad;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -45,10 +40,8 @@
 
 - (void)viewDidUnload {
     [self setBulletCaliberTextField:nil];
-    [self setBulletLengthTextField:nil];
     [self setBulletWeightTextField:nil];
     [self setMvTextField:nil];
-    [self setTwistRateTextField:nil];
     [self setResultLabel:nil];
     [self setCurrentTextField:nil];
     [super viewDidUnload];
@@ -58,30 +51,21 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-# pragma mark result
+#pragma mark result
 - (IBAction)showResult:(id)sender {
-    float caliber = [bulletCaliberTextField.text floatValue];
-    float length  = [bulletLengthTextField.text floatValue];
-    float twist   = [twistRateTextField.text floatValue];
-    float weight  = [bulletWeightTextField.text floatValue];
-    float tempFahrenheit = 59.0;
-    float pressureHg = 29.92;
-    int   mv      = [mvTextField.text intValue];
-    
-    if((caliber>0) && (length>0) && (twist>0) && (weight>0) && (mv>0)) {
-        float lengthInCalibers = length / caliber;
-        float correctiveFactor = sqrt(pow(mv/2800.0, 1/3.0) * ((tempFahrenheit+460) / (59+460) * pressureHg/29.92));
+    if(([self.bulletCaliberTextField.text length]>0) && ([self.bulletWeightTextField.text length]>0) && ([self.mvTextField.text length] >0)) {
         
-        float s = (30*weight)/(pow(twist/caliber, 2)*pow(caliber, 3) * lengthInCalibers * (1+pow(lengthInCalibers,2))) * correctiveFactor;
+        NSDecimalNumber *caliber = [[NSDecimalNumber alloc] initWithDouble:sqrt([self.bulletCaliberTextField.text doubleValue])];
+        NSDecimalNumber *weight  = [NSDecimalNumber decimalNumberWithString:self.bulletWeightTextField.text];
+        NSDecimalNumber *mv      = [NSDecimalNumber decimalNumberWithString:self.mvTextField.text];
+        NSDecimalNumber *multipier = [NSDecimalNumber decimalNumberWithString:@"2.866"];
+        NSDecimalNumber *divisor = [NSDecimalNumber decimalNumberWithString:@"7000"];
         
-        self.resultLabel.text = [NSString stringWithFormat:@"%.2f", s];        
-        self.resultLabel.textColor = ((s >= 1.3) && (s <= 2.0)) ? [UIColor greenColor] : [UIColor redColor];
+        weight = [weight decimalNumberByDividingBy:divisor];
+        self.resultLabel.text = [[[[[multipier decimalNumberByMultiplyingBy:mv] decimalNumberByMultiplyingBy:weight] decimalNumberByMultiplyingBy:caliber] decimalNumberByRoundingAccordingToBehavior:behavior] stringValue];
     } else {
         self.resultLabel.text = @"n/a";
-        self.resultLabel.textColor = [UIColor whiteColor];
-        
     }
-    
 }
 
 #pragma mark TextField delegates

@@ -45,8 +45,10 @@
     [trajectory setup];
 }
 
--(void)viewWillAppear:(BOOL)animated {
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [trajectory calculateTrajectory];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidUnload {
@@ -108,7 +110,7 @@
 
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath { 
-    cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor clearColor] : [UIColor lightTextColor];
+    cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor clearColor] : [UIColor colorWithRed:0.855 green:0.812 blue:0.682 alpha:1.000];
 }  
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -149,7 +151,7 @@
     NSLog(@"Saved dopecard %@ for %@", newDopeCard, newDopeCard.weapon);
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Dope Card Saved" 
-                                                    message:[NSString stringWithFormat:@"Dope card for\n'%@' saved with name\n'%@'", newDopeCard.weapon, newDopeCard.name]
+                                                    message:[NSString stringWithFormat:@"Dope card for weapon\n'%@' saved with name\n'%@'", newDopeCard.weapon, newDopeCard.name]
                                                    delegate:nil 
                                           cancelButtonTitle:nil 
                                           otherButtonTitles:@"Ok", nil];

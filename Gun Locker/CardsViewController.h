@@ -13,6 +13,7 @@
 #import "WeaponAddEditViewController.h"
 #import "WeaponShowViewController.h"
 #import "NFAInformationViewController.h"
+#import "PhotoViewController.h"
 
 @interface CardsViewController : UIViewController <WeaponAddViewControllerDelegate, 
                                                    NSFetchedResultsControllerDelegate, 

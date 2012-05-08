@@ -13,10 +13,12 @@
 #import "Weapon.h"
 #import "WhizWheelViewController.h"
 #import "DopeTableTableViewController.h"
+#import "ProfileViewTableViewController.h"
 
 @interface BallisticsViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate, UIActionSheetDelegate> {
     NSMutableArray *profiles;
     BallisticProfile *selectedProfile;
+    NSMutableArray *profilePickerData;
 }
 
 

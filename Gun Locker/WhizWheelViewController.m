@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 #define CIRCULAR_TABLE_SIZE 1000
-#define PIXELS_PER_MIL 9.2
+#define PIXELS_PER_MIL -9.2
 #import "WhizWheelViewController.h"
 
 @implementation WhizWheelViewController
@@ -33,14 +33,37 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.title = self.selectedProfile.name;
+    self.title = self.selectedProfile.name;
+
+//    trajectory.windSpeed = (self.windSpeedUnitControl.selectedSegmentIndex == 0) ? KNOTS_to_MPH([self.windSpeedTextField.text doubleValue]) : [self.windSpeedTextField.text doubleValue];
+//    trajectory.windAngle = (self.windDirectionUnitControl.selectedSegmentIndex == 0) ? [self.windDirectionTextField.text doubleValue] : CLOCK_to_DEGREES([self.windDirectionTextField.text doubleValue]);
+//    
+//    trajectory.leadSpeed = (self.leadingSpeedUnitControl.selectedSegmentIndex == 0) ? KNOTS_to_MPH([self.leadingSpeedTextField.text doubleValue]) : [self.leadingSpeedTextField.text doubleValue];
+//    trajectory.leadAngle = (self.leadingDirectionUnitControl.selectedSegmentIndex == 0) ? [self.leadingDirectionTextField.text doubleValue] : CLOCK_to_DEGREES([self.leadingDirectionTextField.text doubleValue]);
+  
+    rangeIndex = 0;
 }
 
--(void)viewWillAppear:(BOOL)animated {
+-(void)viewWillAppear:(BOOL)animated {    
+    [super viewWillAppear:animated];
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    int rangeStart       = [defaults integerForKey:@"rangeStart"] ? [defaults integerForKey:@"rangeStart"] : 100;
-    int rangeEnd         = [defaults integerForKey:@"rangeEnd"]   ? [defaults integerForKey:@"rangeEnd"]   : 1200;
-    int rangeStep        = [defaults integerForKey:@"rangeStep"]  ? [defaults integerForKey:@"rangeStep"]  : 25;
+    
+    trajectory = [[Trajectory alloc] init];
+    
+    // XXX do all conversions for UnitControls
+    trajectory.rangeMin = [defaults integerForKey:@"rangeStart"];
+    trajectory.rangeMax =  [defaults integerForKey:@"rangeEnd"];
+    trajectory.rangeIncrement = [defaults integerForKey:@"rangeStep"];
+    trajectory.tempC = 15;
+    trajectory.relativeHumidity = 0;
+    trajectory.pressureInhg = 29.92;
+    trajectory.altitudeM = 0;
+    trajectory.ballisticProfile = selectedProfile;
+    
+    int rangeStart       = [defaults integerForKey:@"rangeStart"];
+    int rangeEnd         = [defaults integerForKey:@"rangeEnd"];
+    int rangeStep        = [defaults integerForKey:@"rangeStep"];
     self.rangeLabel.text = [defaults integerForKey:@"rangeUnitsControl"] == 0 ? @"Yards" : @"Meters";
         
     // array of Ranges:  pad front and bad to get proper pickerview from tableview
@@ -54,7 +77,7 @@
     arrayDirections = [[NSMutableArray alloc] init];
     switch ([defaults integerForKey:@"directionControl"]) {
         case 0:          // degrees
-            for(int degree = 0; degree < 360; degree += 10)
+            for(int degree = 0; degree < 360; degree += 30)
                 [arrayDirections addObject:[NSString stringWithFormat:@"%d°", degree]];
             directionLabel.text = @"Degree";
             break;
@@ -122,8 +145,7 @@
     
     [self setInitialSelectedCells];
     [self highlightSelectedCells];
-
-    [super viewWillAppear:animated];
+    [self showTrajectoryWithRecalc:YES];
 }
 
 - (void)viewDidUnload {
@@ -211,21 +233,26 @@
         // 'quantitize' scrolling to rows
         [rangesTableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
         self.lastSelectedRangeCell =  [rangesTableView cellForRowAtIndexPath:index];
+        rangeIndex = index.row - 2;
+        [self showTrajectoryWithRecalc:NO];
     } else if (scrollView == directionsTableView) {
         index = [directionsTableView indexPathForRowAtPoint:CGPointMake([directionsTableView contentOffset].x, 100+[directionsTableView contentOffset].y)];
         // 'quantitize' scrolling to rows
         [directionsTableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
         self.lastSelectedDirectionCell =  [directionsTableView cellForRowAtIndexPath:index];
+        [self showTrajectoryWithRecalc:YES];
     } else if (scrollView == speedTableView) {
         index = [speedTableView indexPathForRowAtPoint:CGPointMake([speedTableView contentOffset].x, 100+[speedTableView contentOffset].y)];
         // 'quantitize' scrolling to rows
         [speedTableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
         self.lastSelectedSpeedCell =  [speedTableView cellForRowAtIndexPath:index];
+        [self showTrajectoryWithRecalc:YES];
     }
 
-    [self highlightSelectedCells];
+
     
-    [self calculateBallistics];
+    
+    [self highlightSelectedCells];
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -260,43 +287,56 @@
     self.lastSelectedDirectionCell = [directionsTableView cellForRowAtIndexPath:initialDirection];
     [speedTableView scrollToRowAtIndexPath:initialSpeed atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
     self.lastSelectedSpeedCell = [speedTableView cellForRowAtIndexPath:initialSpeed];
-    
-    [self calculateBallistics];
 }
 
-- (void)calculateBallistics {
-    int range = [self.lastSelectedRangeCell.textLabel.text intValue];
-    int speed = [self.lastSelectedSpeedCell.textLabel.text intValue];
-    
-    if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"At Rest"]) {
-        speed = 0;
-    } else if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"Walking"]) {
-        speed = 3;
-    } else if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"Jogging"]) {
-        speed = 6;
-    } else if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"Running"]) {
-        speed = 10;
+- (void)showTrajectoryWithRecalc:(BOOL)recalc {
+    if(recalc) {
+        // set up wind/leading speed
+        // set up wind/leading direction
+        trajectory.windSpeed = [self.lastSelectedSpeedCell.textLabel.text intValue];
+        trajectory.windAngle = [self.lastSelectedDirectionCell.textLabel.text intValue];
+        
+        [trajectory setup];
+        [trajectory calculateTrajectory];
+        NSLog(@"recalced");    
     }
-    
-    if ([speedType isEqualToString:@"Leading"]) {
-        speed *= -1;
-    }
-    
-    
-    // pseudo random drop
-    float fakeDropMILs = range/1200.0 * 5; 
-    
-    // pseudo random drift
-    float fakeDriftMILs = range/1200.0 * 5 * speed/30.0 ; 
+        
+    TrajectoryRange *range = [trajectory.ranges objectAtIndex:rangeIndex];
+    NSLog(@"row %d\trange: %@\tdrop: %@", rangeIndex, range.range_yards, range.drop_inches);
 
-    self.resultBulletImpactImage.center = CGPointMake(160 + fakeDriftMILs * PIXELS_PER_MIL, 74 + fakeDropMILs * PIXELS_PER_MIL);
-    dropInchesLabel.text = [NSString stringWithFormat:@"%.1f\"", fakeDropMILs * ((3.6)*(range/100))];
-    dropMOALabel.text    = [NSString stringWithFormat:@"%.1f MOA", fakeDropMILs / 3.6];
-    dropMILsLabel.text   = [NSString stringWithFormat:@"%.1f MILs", fakeDropMILs];
-    
-    driftInchesLabel.text = [NSString stringWithFormat:@"%.1f\"", fakeDriftMILs * ((3.6)*(range/100))];
-    driftMOALabel.text    = [NSString stringWithFormat:@"%.1f MOA", fakeDriftMILs / 3.6];
-    driftMILsLabel.text   = [NSString stringWithFormat:@"%.1f MILs", fakeDriftMILs];
+//    int range = [self.lastSelectedRangeCell.textLabel.text intValue];
+//    int speed = [self.lastSelectedSpeedCell.textLabel.text intValue];
+//    
+//    if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"At Rest"]) {
+//        speed = 0;
+//    } else if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"Walking"]) {
+//        speed = 3;
+//    } else if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"Jogging"]) {
+//        speed = 6;
+//    } else if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"Running"]) {
+//        speed = 10;
+//    }
+//    
+//    if ([speedType isEqualToString:@"Leading"]) {
+//        speed *= -1;
+//    }
+//    
+//    
+//    // pseudo random drop
+//    float fakeDropMILs = range/1200.0 * 5; 
+//    
+//    // pseudo random drift
+//    float fakeDriftMILs = range/1200.0 * 5 * speed/30.0 ; 
+//
+    self.resultBulletImpactImage.center = CGPointMake(160 + [range.drift_mils floatValue] * PIXELS_PER_MIL, 
+                                                      74 + [range.drop_mils floatValue] * PIXELS_PER_MIL);
+    dropInchesLabel.text  = [range.drop_inches stringByAppendingString:@"\""];
+    dropMOALabel.text     = [range.drop_moa stringByAppendingString:@" MOA"];
+    dropMILsLabel.text    = [range.drop_mils stringByAppendingString:@" MILs"];
+
+    driftInchesLabel.text = [range.drift_inches stringByAppendingString:@"\""];
+    driftMOALabel.text    = [range.drift_moa stringByAppendingString:@" MOA"];
+    driftMILsLabel.text   = [range.drift_mils stringByAppendingString:@" MILs"];
 }
 
 @end

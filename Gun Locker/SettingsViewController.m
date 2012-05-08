@@ -40,9 +40,9 @@
     rangeUnitsControl.selectedSegmentIndex   = [defaults integerForKey:@"rangeUnitsControl"];
     reticleUnitsControl.selectedSegmentIndex = [defaults integerForKey:@"reticleUnitsControl"];
 
-    rangeStart.Current = [defaults integerForKey:@"rangeStart"] ? [defaults integerForKey:@"rangeStart"] : 50;
-    rangeEnd.Current   = [defaults integerForKey:@"rangeEnd"]   ? [defaults integerForKey:@"rangeEnd"]   : 1200;
-    rangeStep.Current  = [defaults integerForKey:@"rangeStep"]  ? [defaults integerForKey:@"rangeStep"]  : 25;
+    rangeStart.Current = [defaults integerForKey:@"rangeStart"];
+    rangeEnd.Current   = [defaults integerForKey:@"rangeEnd"];
+    rangeStep.Current  = [defaults integerForKey:@"rangeStep"];
     rangeStart.Minimum = 5;
     rangeStart.Maximum = 500;
     rangeEnd.Minimum   = 100;

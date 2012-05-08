@@ -89,11 +89,6 @@
     [self segmentedTypeControlClicked];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self.tableView flashScrollIndicators];  
-}
-
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.fetchedResultsController.delegate = nil;
@@ -142,12 +137,17 @@
         dst.selectedWeapon = [self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
         [dst setCardsViewController:self];
     } else if ([segueID isEqualToString:@"NFADetails"]) {
-        UIButton *button = (UIButton *)sender;
-        NSIndexPath *index = [self.tableView indexPathForRowAtPoint:CGPointMake(button.frame.origin.x, button.frame.origin.y)];
+        CGPoint point = [sender convertPoint:CGPointZero toView:self.tableView]; 
+        NSIndexPath *index = [self.tableView indexPathForRowAtPoint:point];
         self.navigationItem.title = self.selectedType;
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:self.selectedType style:UIBarButtonItemStyleBordered target:nil action:nil];
         NFAInformationViewController *dst = segue.destinationViewController;
-        dst.selectedWeapon = [self.fetchedResultsController objectAtIndexPath:index];;        
+        dst.selectedWeapon = [self.fetchedResultsController objectAtIndexPath:index];
+    } else if ([segueID isEqualToString:@"ShowPhoto"]) {
+        CGPoint point = [sender convertPoint:CGPointZero toView:self.tableView]; 
+        NSIndexPath *index = [self.tableView indexPathForRowAtPoint:point];
+        PhotoViewController *dst = segue.destinationViewController;
+        dst.selectedWeapon = [self.fetchedResultsController objectAtIndexPath:index];
     }
 }
 
@@ -173,6 +173,7 @@
     }
     
     [self.tableView reloadData];
+    [self.tableView flashScrollIndicators];
 }
 
 # pragma mark - KKPasscodeViewControllerDelegate
