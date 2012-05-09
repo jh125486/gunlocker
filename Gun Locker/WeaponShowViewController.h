@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "Weapon.h"
 #import "WeaponAddEditViewController.h"
-#import "MaintenancesTableViewController.h"
-#import "MalfunctionsTableViewController.h"
+#import "MaintenancesViewController.h"
+#import "MalfunctionsViewController.h"
 #import "NFAInformationViewController.h"
 #import "NotesTableViewController.h"
 #import "TextStepperField.h"
-#import "DopeCardsTableViewController.h"
+#import "DopeCardsViewController.h"
 #import "CardsViewController.h"
 
 @class CardsViewController;

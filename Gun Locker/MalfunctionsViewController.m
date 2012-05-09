@@ -6,13 +6,15 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "MalfunctionsTableViewController.h"
+#import "MalfunctionsViewController.h"
 
-@implementation MalfunctionsTableViewController
+@implementation MalfunctionsViewController
+@synthesize noMalfunctionsImageView;
+@synthesize tableView;
 @synthesize selectedWeapon, selectedMaintenance;
 
-- (id)initWithStyle:(UITableViewStyle)style {
-    self = [super initWithStyle:style];
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -27,9 +29,7 @@
     [super viewDidLoad];
     malfunctions = [[NSMutableDictionary alloc] init];
     sections = [[NSMutableArray alloc] init];
-    
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
-    
+        
     //Register addNewMalfunctionToArray to recieve "newMalfunction" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewMalfunctionToArray:) name:@"newMalfunction" object:nil];
     
@@ -67,13 +67,21 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.title = [NSString stringWithFormat:@"Malfunctions (%d)", count];
+    [self setTitle];
+}
+
+- (void)setTitle {
+    self.title = [NSString stringWithFormat:@"Malfunctions (%d)", count];    
+    self.noMalfunctionsImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Malfunctions"]];
+    self.noMalfunctionsImageView.hidden = (count != 0);
 }
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setSelectedMaintenance:nil];
     [self setSelectedWeapon:nil];
+    [self setNoMalfunctionsImageView:nil];
+    [self setTableView:nil];
     [super viewDidUnload];
 }
 
@@ -81,6 +89,16 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString *segueID = segue.identifier;
+    
+	if ([segueID isEqualToString:@"AddNewMalfunction"]) {
+        UINavigationController *destinationController = segue.destinationViewController;
+        // dig past navigationcontroller to get to AddViewController
+        MalfunctionsAddViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
+        [dst setSelectedWeapon:self.selectedWeapon];
+    }
+}
 
 #pragma mark - Table view data source
 
@@ -97,7 +115,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MalfunctionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MalfunctionCell"];
+    MalfunctionCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"MalfunctionCell"];
 
     Malfunction *currentMalfunction = [[malfunctions objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     cell.roundCountLabel.text = [NSString stringWithFormat:@"Occurred at %@", currentMalfunction.round_count];
@@ -125,8 +143,9 @@
             [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
         [self.tableView endUpdates];
-        
-    }    
+        count--;
+    }
+    [self setTitle];
     [[NSManagedObjectContext defaultContext] save];    
 }
 
@@ -151,22 +170,14 @@
         
         [malfunctions setObject:[NSMutableArray arrayWithObject:newMalfunction] forKey:section];
         [self.tableView insertSections:[NSIndexSet indexSetWithIndex:[sections indexOfObject:section]] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }    
+    } 
+    count++;
+    [self setTitle];
+    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[[malfunctions objectForKey:section] indexOfObject:newMalfunction] inSection:[sections indexOfObject:section]];
     
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];    
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSString *segueID = segue.identifier;
-    
-	if ([segueID isEqualToString:@"AddNewMalfunction"]) {
-        UINavigationController *destinationController = segue.destinationViewController;
-        // dig past navigationcontroller to get to AddViewController
-        MalfunctionsAddViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
-        [dst setSelectedWeapon:self.selectedWeapon];
-    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

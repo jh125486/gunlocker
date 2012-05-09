@@ -105,9 +105,8 @@
 }
 
 -(NSFetchedResultsController *)fetchedResultsController {
-    if (fetchedResultsController != nil) {
-        return fetchedResultsController;
-    }
+    if (fetchedResultsController != nil) return fetchedResultsController;
+    
     NSPredicate *typeFilter = [NSPredicate predicateWithFormat:@"type = %@", self.selectedType];
     NSFetchRequest *weaponsRequest = [Weapon requestAllSortedBy:@"manufacturer.name,model" ascending:YES withPredicate:typeFilter];
     

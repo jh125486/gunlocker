@@ -157,7 +157,7 @@
 		53BB6030152A157100625CC7 /* notecard_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BB602E152A157100625CC7 /* notecard_bottom@2x.png */; };
 		53BB6033152A227100625CC7 /* sticky_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BB6031152A227100625CC7 /* sticky_button.png */; };
 		53BB6034152A227100625CC7 /* sticky_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BB6032152A227100625CC7 /* sticky_button@2x.png */; };
-		53BC9F49152C06CB00B7D7AD /* DopeCardsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC9F48152C06CB00B7D7AD /* DopeCardsTableViewController.m */; };
+		53BC9F49152C06CB00B7D7AD /* DopeCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC9F48152C06CB00B7D7AD /* DopeCardsViewController.m */; };
 		53BC9F4F152C11A700B7D7AD /* DopeCardRowEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC9F4E152C11A700B7D7AD /* DopeCardRowEditCell.m */; };
 		53CA98E1150A84E50060A1E8 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CA98E0150A84E50060A1E8 /* Weather.m */; };
 		53D2633F1531EB4600ECA9EE /* DopeCardRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2633E1531EB4600ECA9EE /* DopeCardRowCell.m */; };
@@ -196,8 +196,8 @@
 		53EBBD9B15171B1600488E63 /* mil_dot_reticle_bullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9A15171B1600488E63 /* mil_dot_reticle_bullet.png */; };
 		53F272DF150E5BFE005A329F /* DefaultButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F272DE150E5BFE005A329F /* DefaultButton.m */; };
 		53F2735B15112D37005A329F /* NSDate+Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2735A15112D37005A329F /* NSDate+Formatting.m */; };
-		53F273791511B936005A329F /* MaintenancesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F273781511B936005A329F /* MaintenancesTableViewController.m */; };
-		53F2737C1511B969005A329F /* MalfunctionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2737B1511B969005A329F /* MalfunctionsTableViewController.m */; };
+		53F273791511B936005A329F /* MaintenancesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F273781511B936005A329F /* MaintenancesViewController.m */; };
+		53F2737C1511B969005A329F /* MalfunctionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2737B1511B969005A329F /* MalfunctionsViewController.m */; };
 		53FBDA10151D9FA200DD5180 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FBDA0F151D9FA200DD5180 /* Note.m */; };
 /* End PBXBuildFile section */
 
@@ -450,8 +450,8 @@
 		53BB602E152A157100625CC7 /* notecard_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notecard_bottom@2x.png"; sourceTree = "<group>"; };
 		53BB6031152A227100625CC7 /* sticky_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sticky_button.png; sourceTree = "<group>"; };
 		53BB6032152A227100625CC7 /* sticky_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sticky_button@2x.png"; sourceTree = "<group>"; };
-		53BC9F47152C06CB00B7D7AD /* DopeCardsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardsTableViewController.h; sourceTree = "<group>"; };
-		53BC9F48152C06CB00B7D7AD /* DopeCardsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DopeCardsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		53BC9F47152C06CB00B7D7AD /* DopeCardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardsViewController.h; sourceTree = "<group>"; };
+		53BC9F48152C06CB00B7D7AD /* DopeCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DopeCardsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53BC9F4D152C11A700B7D7AD /* DopeCardRowEditCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardRowEditCell.h; sourceTree = "<group>"; };
 		53BC9F4E152C11A700B7D7AD /* DopeCardRowEditCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCardRowEditCell.m; sourceTree = "<group>"; };
 		53CA98DF150A84E50060A1E8 /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weather.h; sourceTree = "<group>"; };
@@ -516,10 +516,10 @@
 		53F272DE150E5BFE005A329F /* DefaultButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultButton.m; sourceTree = "<group>"; };
 		53F2735915112D36005A329F /* NSDate+Formatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Formatting.h"; sourceTree = "<group>"; };
 		53F2735A15112D37005A329F /* NSDate+Formatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Formatting.m"; sourceTree = "<group>"; };
-		53F273771511B936005A329F /* MaintenancesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaintenancesTableViewController.h; sourceTree = "<group>"; };
-		53F273781511B936005A329F /* MaintenancesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaintenancesTableViewController.m; sourceTree = "<group>"; };
-		53F2737A1511B969005A329F /* MalfunctionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MalfunctionsTableViewController.h; sourceTree = "<group>"; };
-		53F2737B1511B969005A329F /* MalfunctionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MalfunctionsTableViewController.m; sourceTree = "<group>"; };
+		53F273771511B936005A329F /* MaintenancesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = MaintenancesViewController.h; sourceTree = "<group>"; };
+		53F273781511B936005A329F /* MaintenancesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaintenancesViewController.m; sourceTree = "<group>"; };
+		53F2737A1511B969005A329F /* MalfunctionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MalfunctionsViewController.h; sourceTree = "<group>"; };
+		53F2737B1511B969005A329F /* MalfunctionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MalfunctionsViewController.m; sourceTree = "<group>"; };
 		53FBDA0E151D9FA200DD5180 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		53FBDA0F151D9FA200DD5180 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -902,8 +902,8 @@
 				537B1C5C151EAD6000A85E24 /* MaintenanceCell.m */,
 				53AF0643151251EC000B9943 /* MaintenancesAddViewController.h */,
 				53AF0644151251EC000B9943 /* MaintenancesAddViewController.m */,
-				53F273771511B936005A329F /* MaintenancesTableViewController.h */,
-				53F273781511B936005A329F /* MaintenancesTableViewController.m */,
+				53F273771511B936005A329F /* MaintenancesViewController.h */,
+				53F273781511B936005A329F /* MaintenancesViewController.m */,
 			);
 			name = Maintenance;
 			sourceTree = "<group>";
@@ -915,8 +915,8 @@
 				5391B8241526226F00582865 /* MalfunctionCell.m */,
 				53AF064615125217000B9943 /* MalfunctionsAddViewController.h */,
 				53AF064715125217000B9943 /* MalfunctionsAddViewController.m */,
-				53F2737A1511B969005A329F /* MalfunctionsTableViewController.h */,
-				53F2737B1511B969005A329F /* MalfunctionsTableViewController.m */,
+				53F2737A1511B969005A329F /* MalfunctionsViewController.h */,
+				53F2737B1511B969005A329F /* MalfunctionsViewController.m */,
 			);
 			name = Malfunction;
 			sourceTree = "<group>";
@@ -1031,8 +1031,8 @@
 				53BC9F4E152C11A700B7D7AD /* DopeCardRowEditCell.m */,
 				53713F82152C28D7009B55B8 /* DopeCardsAddEditViewController.h */,
 				53713F83152C28D7009B55B8 /* DopeCardsAddEditViewController.m */,
-				53BC9F47152C06CB00B7D7AD /* DopeCardsTableViewController.h */,
-				53BC9F48152C06CB00B7D7AD /* DopeCardsTableViewController.m */,
+				53BC9F47152C06CB00B7D7AD /* DopeCardsViewController.h */,
+				53BC9F48152C06CB00B7D7AD /* DopeCardsViewController.m */,
 				53D263431531EBD000ECA9EE /* DopeCardViewController.h */,
 				53D263441531EBD000ECA9EE /* DopeCardViewController.m */,
 			);
@@ -1387,8 +1387,8 @@
 				53CA98E1150A84E50060A1E8 /* Weather.m in Sources */,
 				53F272DF150E5BFE005A329F /* DefaultButton.m in Sources */,
 				53F2735B15112D37005A329F /* NSDate+Formatting.m in Sources */,
-				53F273791511B936005A329F /* MaintenancesTableViewController.m in Sources */,
-				53F2737C1511B969005A329F /* MalfunctionsTableViewController.m in Sources */,
+				53F273791511B936005A329F /* MaintenancesViewController.m in Sources */,
+				53F2737C1511B969005A329F /* MalfunctionsViewController.m in Sources */,
 				53AF06421512493A000B9943 /* WeaponCell.m in Sources */,
 				53AF0645151251EC000B9943 /* MaintenancesAddViewController.m in Sources */,
 				53AF064815125217000B9943 /* MalfunctionsAddViewController.m in Sources */,
@@ -1408,7 +1408,7 @@
 				5391B8251526226F00582865 /* MalfunctionCell.m in Sources */,
 				532845F1152B863800F75828 /* NotesTableViewController.m in Sources */,
 				532845F4152B9C2B00F75828 /* NoteAddEditTableViewController.m in Sources */,
-				53BC9F49152C06CB00B7D7AD /* DopeCardsTableViewController.m in Sources */,
+				53BC9F49152C06CB00B7D7AD /* DopeCardsViewController.m in Sources */,
 				53BC9F4F152C11A700B7D7AD /* DopeCardRowEditCell.m in Sources */,
 				53713F84152C28D7009B55B8 /* DopeCardsAddEditViewController.m in Sources */,
 				53D2633F1531EB4600ECA9EE /* DopeCardRowCell.m in Sources */,

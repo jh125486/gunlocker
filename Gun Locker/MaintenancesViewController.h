@@ -12,13 +12,15 @@
 #import "Maintenance.h"
 #import "MaintenanceCell.h"
 #import "MaintenancesAddViewController.h"
-#import "MalfunctionsTableViewController.h"
+#import "MalfunctionsViewController.h"
 
-@interface MaintenancesTableViewController : UITableViewController {
+@interface MaintenancesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     NSMutableDictionary *maintenances;
     NSMutableArray *sections;
     int count;
 }
+@property (weak, nonatomic) IBOutlet UIImageView *noMaintenancesImageView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, strong) Weapon *selectedWeapon;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;

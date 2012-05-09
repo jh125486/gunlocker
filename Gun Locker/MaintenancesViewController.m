@@ -6,14 +6,16 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "MaintenancesTableViewController.h"
+#import "MaintenancesViewController.h"
 
-@implementation MaintenancesTableViewController
+@implementation MaintenancesViewController
+@synthesize noMaintenancesImageView;
+@synthesize tableView;
 @synthesize selectedWeapon;
 @synthesize titleLabel;
 
-- (id)initWithStyle:(UITableViewStyle)style {
-    self = [super initWithStyle:style];
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -25,8 +27,6 @@
     
     maintenances = [[NSMutableDictionary alloc] init];
     sections = [[NSMutableArray alloc] init];
-
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
 
     //Register addNewMaintenanceToArray to recieve "newMaintenance" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewMaintenanceToArray:) name:@"newMaintenance" object:nil];
@@ -64,13 +64,22 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.titleLabel.text = [NSString stringWithFormat:@"Maintenance items (%d)", count];
+    [self setTitle];
+}
+
+- (void)setTitle {
+    self.title = [NSString stringWithFormat:@"Maintenance (%d)", count];    
+    self.noMaintenancesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Maintenance"]];
+    self.noMaintenancesImageView.hidden = (count != 0);
+    NSLog(@"%@", self.noMaintenancesImageView.image);
 }
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setSelectedWeapon:nil];
     [self setTitleLabel:nil];
+    [self setNoMaintenancesImageView:nil];
+    [self setTableView:nil];
     [super viewDidUnload];
 }
 
@@ -90,7 +99,7 @@
         
         NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell*)[[button superview] superview]];        
         Maintenance *currentMaintenance = [[maintenances objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-        MalfunctionsTableViewController *dst = segue.destinationViewController;
+        MalfunctionsViewController *dst = segue.destinationViewController;
         dst.selectedWeapon = self.selectedWeapon;
         dst.selectedMaintenance = currentMaintenance;
     }
@@ -111,7 +120,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MaintenanceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintenanceCell"];
+    MaintenanceCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"MaintenanceCell"];
 
     Maintenance *currentMaintenance = [[maintenances objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     cell.roundCountLabel.text = [currentMaintenance.round_count stringValue];
@@ -150,8 +159,9 @@
             [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
         [self.tableView endUpdates];
-        
+        count--;
     }    
+    [self setTitle];
     [[NSManagedObjectContext defaultContext] save];      
 }
 
@@ -178,6 +188,9 @@
         [maintenances setObject:[NSMutableArray arrayWithObject:newMaintenance] forKey:section];
         [self.tableView insertSections:[NSIndexSet indexSetWithIndex:[sections indexOfObject:section]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }    
+    count++;
+    [self setTitle];
+    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[[maintenances objectForKey:section] indexOfObject:newMaintenance] inSection:[sections indexOfObject:section]];
     
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];

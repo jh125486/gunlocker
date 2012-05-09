@@ -99,7 +99,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="#" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" id="0kK-Xh-ohu" userLabel="Malfunctions #">
-                                                    <rect key="frame" x="117" y="228" width="28" height="26"/>
+                                                    <rect key="frame" x="117" y="229" width="28" height="26"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="20"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1988,8 +1988,8 @@
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Maintenance Items" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K67-4U-43R">
-                                                    <rect key="frame" x="10" y="11" width="153" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Maintenance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K67-4U-43R">
+                                                    <rect key="frame" x="10" y="11" width="103" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2006,7 +2006,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <segue destination="MGU-uR-bFx" kind="push" identifier="MaintenanceList" id="ppy-nl-Hs4"/>
+                                            <segue destination="0co-Ra-Tbo" kind="push" identifier="MaintenanceList" id="Xax-8e-kYg"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="uOc-SQ-hFO" detailTextLabel="x8Y-i9-7Sc" style="IBUITableViewCellStyleValue1" id="qBa-H3-fQl">
@@ -2034,7 +2034,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <segue destination="SOx-Xy-ZYV" kind="push" identifier="MalfunctionList" id="hIg-Xc-E7e"/>
+                                            <segue destination="mPU-Il-9xS" kind="push" identifier="MalfunctionList" id="qrX-kN-oby"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Imj-ZT-ryV" detailTextLabel="PA5-kC-rPR" style="IBUITableViewCellStyleValue1" id="Jb0-8M-fQu">
@@ -2062,7 +2062,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <segue destination="p5c-Bd-14B" kind="push" identifier="DopeCardList" id="D5h-OG-EB2"/>
+                                            <segue destination="rxg-wM-cCR" kind="push" identifier="DopeCardList" id="Zff-G8-jkO"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -3251,6 +3251,77 @@
             </objects>
             <point key="canvasLocation" x="162" y="235"/>
         </scene>
+        <!--Dope Cards View Controller - Dope Cards-->
+        <scene sceneID="sr6-Nj-Lfd">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DcN-WM-Vti" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="rxg-wM-cCR" customClass="DopeCardsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ncf-LB-QFs">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="JeQ-Kw-jKN" userLabel="no Dope Cards">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="3Jn-xa-4y5">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" red="0.65306122448979598" green="0.61363244608750356" blue="0.51264209876295286" alpha="1" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DopeCardSummaryCell" textLabel="xRo-fJ-7rJ" detailTextLabel="nKb-KN-QmM" style="IBUITableViewCellStyleSubtitle" id="VG1-1w-tw0">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xRo-fJ-7rJ">
+                                                    <rect key="frame" x="10" y="-1" width="35" height="26"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="20"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nKb-KN-QmM">
+                                                    <rect key="frame" x="10" y="25" width="55" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <connections>
+                                            <segue destination="dLm-U7-ztS" kind="push" identifier="ShowDopeCard" id="cjl-tf-Nsg"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="rxg-wM-cCR" id="f8a-PL-qLx"/>
+                                    <outlet property="delegate" destination="rxg-wM-cCR" id="7yE-6T-J9o"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.80000000000000004" green="0.75294117650000003" blue="0.66274509800000003" alpha="1" colorSpace="deviceRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Dope Cards" id="iFE-6x-PtI">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cdx-UT-NdU">
+                            <connections>
+                                <segue destination="bT2-7j-s8O" kind="modal" identifier="NewDopeCard" id="ddl-y7-aqM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="noDopeCardsImageView" destination="JeQ-Kw-jKN" id="WFh-hF-neC"/>
+                        <outlet property="tableView" destination="3Jn-xa-4y5" id="unW-Ee-waF"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="2022" y="-4818"/>
+        </scene>
         <!--Notes Table View Controller - Notes-->
         <scene sceneID="oVu-90-zr1">
             <objects>
@@ -3306,76 +3377,13 @@
             </objects>
             <point key="canvasLocation" x="2022" y="-4238"/>
         </scene>
-        <!--Dope Cards Table View Controller - Dope Cards-->
-        <scene sceneID="df0-Iy-12K">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LyF-cO-ynY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="p5c-Bd-14B" customClass="DopeCardsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="3Jn-xa-4y5">
-                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.75686274509999996" green="0.70980392160000005" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="separatorColor" red="0.65306122448979598" green="0.61363244608750356" blue="0.51264209876295286" alpha="1" colorSpace="calibratedRGB"/>
-                        <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="center" id="5hJ-ln-VYy" userLabel="no dope cards">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="332"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DopeCardSummaryCell" textLabel="xRo-fJ-7rJ" detailTextLabel="nKb-KN-QmM" style="IBUITableViewCellStyleSubtitle" id="VG1-1w-tw0">
-                                <rect key="frame" x="0.0" y="354" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xRo-fJ-7rJ">
-                                            <rect key="frame" x="10" y="-1" width="35" height="26"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="20"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nKb-KN-QmM">
-                                            <rect key="frame" x="10" y="25" width="55" height="20"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <connections>
-                                    <segue destination="dLm-U7-ztS" kind="push" identifier="ShowDopeCard" id="cjl-tf-Nsg"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="p5c-Bd-14B" id="3d9-nF-3Vm"/>
-                            <outlet property="delegate" destination="p5c-Bd-14B" id="B4R-1B-Rbn"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Dope Cards" id="QEv-eV-tR1">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cdx-UT-NdU">
-                            <connections>
-                                <segue destination="bT2-7j-s8O" kind="modal" identifier="NewDopeCard" id="ddl-y7-aqM"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="noDopeCardsImageView" destination="5hJ-ln-VYy" id="HNj-0e-mCm"/>
-                    </connections>
-                </tableViewController>
-            </objects>
-            <point key="canvasLocation" x="2022" y="-4818"/>
-        </scene>
         <!--Dope Card View Controller-->
         <scene sceneID="Z8l-39-cCn">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wvr-vK-4tZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="dLm-U7-ztS" customClass="DopeCardViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GoL-hy-c9c">
-                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Weapon:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="GyH-Fb-XmI" userLabel="Weapon">
@@ -3477,7 +3485,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="25" sectionHeaderHeight="22" sectionFooterHeight="22" id="WIJ-JV-Fvn" userLabel="dope card rows">
-                                <rect key="frame" x="0.0" y="140" width="320" height="240"/>
+                                <rect key="frame" x="0.0" y="140" width="320" height="235"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.75686274509999996" green="0.70980392160000005" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -3960,16 +3968,16 @@
                             <rect key="frame" x="5" y="0.0" width="253" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Line 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="U1s-AB-wru">
-                                    <rect key="frame" x="0.0" y="0.0" width="253" height="21"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="NFA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="U1s-AB-wru">
+                                    <rect key="frame" x="0.0" y="0.0" width="253" height="25"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                     <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                 </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Line 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="krh-0r-Ewk">
-                                    <rect key="frame" x="0.0" y="20" width="253" height="21"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Model" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="krh-0r-Ewk">
+                                    <rect key="frame" x="0.0" y="20" width="253" height="25"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -3991,160 +3999,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="2022" y="-3655"/>
-        </scene>
-        <!--Maintenances Table View Controller-->
-        <scene sceneID="nRx-bJ-442">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cbW-sl-5UM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="MGU-uR-bFx" customClass="MaintenancesTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="186" sectionHeaderHeight="22" sectionFooterHeight="22" id="zbs-FQ-Scx">
-                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.75686274509999996" green="0.70980392160000005" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="separatorColor" red="0.75686274509999996" green="0.70980392160000005" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MaintenanceCell" rowHeight="186" id="b1m-Vp-Jdt" userLabel="MaintenanceCell" customClass="MaintenanceCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="186"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="185"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="TopLeft" image="Notecard_short.png" id="dH4-N4-d7C" userLabel="short notecard background">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="186"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" text="" lineBreakMode="tailTruncation" minimumFontSize="12" id="ZaV-43-7g7" userLabel="rounds">
-                                            <rect key="frame" x="15" y="10" width="177" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Action" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="YOC-dw-0ZN" userLabel="action performed header">
-                                            <rect key="frame" x="0.0" y="45" width="97" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="AmericanTypewriter-CondensedBold" family="American Typewriter" pointSize="22"/>
-                                            <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                            <size key="shadowOffset" width="0.0" height="1"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Performed" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="4WC-qM-ygS" userLabel="action performed header">
-                                            <rect key="frame" x="0.0" y="60" width="97" height="28"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="AmericanTypewriter-CondensedBold" family="American Typewriter" pointSize="22"/>
-                                            <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                            <size key="shadowOffset" width="0.0" height="1"/>
-                                        </label>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="TopLeft" alwaysBounceVertical="YES" pagingEnabled="YES" indicatorStyle="black" editable="NO" id="m0C-9b-GSF" userLabel="fix text">
-                                            <rect key="frame" x="94" y="20" width="226" height="83"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <string key="text">Performed correction action on double feed. Marked magazine for replacement. magazine for replacement. magazine for replacement.</string>
-                                            <color key="textColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        </textView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="3000 rounds" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="RgB-26-mtn" userLabel="round count">
-                                            <rect key="frame" x="200" y="10" width="50" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
-                                            <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="rounds" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="xJZ-ct-E2p" userLabel="rounds">
-                                            <rect key="frame" x="251" y="10" width="61" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
-                                            <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="TopLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="wordWrap" id="1MS-Ip-gWP" userLabel="view malfunctions button">
-                                            <rect key="frame" x="58" y="106" width="248" height="76"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                            <state key="normal" backgroundImage="sticky_button.png">
-                                                <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <state key="highlighted">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <connections>
-                                                <segue destination="SOx-Xy-ZYV" kind="push" identifier="ViewRelatedMalfunctions" id="MGd-6I-9CP"/>
-                                            </connections>
-                                        </button>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="#" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="iQl-Un-awC" userLabel="malfunction count label">
-                                            <rect key="frame" x="242" y="123" width="42" height="42"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="24"/>
-                                            <color key="textColor" red="0.27335995439999999" green="0.42722198369999997" blue="0.90956956150000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="shadowColor" cocoaTouchSystemColor="lightTextColor"/>
-                                            <size key="shadowOffset" width="0.0" height="1"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Related Malfunctions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="zO2-fr-DeV" userLabel="malfunction label">
-                                            <rect key="frame" x="66" y="130" width="175" height="28"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="AmericanTypewriter-Condensed" family="American Typewriter" pointSize="23"/>
-                                            <color key="textColor" red="0.27335995439999999" green="0.42722198369999997" blue="0.90956956150000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="shadowColor" cocoaTouchSystemColor="lightTextColor"/>
-                                            <size key="shadowOffset" width="0.0" height="1"/>
-                                        </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="TopLeft" image="notecard_bottom.png" id="C7w-aS-2vD" userLabel="notecard bottom">
-                                            <rect key="frame" x="0.0" y="183" width="320" height="3"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                        </imageView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <connections>
-                                    <outlet property="actionPerformedText" destination="m0C-9b-GSF" id="bCu-Ur-hSs"/>
-                                    <outlet property="malfunctionCountLabel" destination="iQl-Un-awC" id="L1Y-G6-IXD"/>
-                                    <outlet property="malfunctionLabel" destination="zO2-fr-DeV" id="UXM-gE-IoQ"/>
-                                    <outlet property="modelLabel" destination="ZaV-43-7g7" id="v9I-lr-1sZ"/>
-                                    <outlet property="roundCountLabel" destination="RgB-26-mtn" id="8q4-Cu-Qib"/>
-                                    <outlet property="viewMalfunctions" destination="1MS-Ip-gWP" id="HJN-aU-4Y9"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="MGU-uR-bFx" id="F5U-4H-aa1"/>
-                            <outlet property="delegate" destination="MGU-uR-bFx" id="Ajd-yI-3FL"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="krR-TH-fi7">
-                        <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="c98-or-Xc2">
-                            <rect key="frame" x="5" y="0.0" width="269" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Maintenance Items" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="9kG-Cv-QBz">
-                                    <rect key="frame" x="0.0" y="0.0" width="260" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                    <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
-                                    <size key="shadowOffset" width="0.0" height="1"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </view>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="yVf-Dw-Kb4">
-                            <connections>
-                                <segue destination="6Vl-qV-cHU" kind="modal" identifier="AddNewMalfunction" id="kCX-38-3UV"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="titleLabel" destination="9kG-Cv-QBz" id="mCD-bl-udj"/>
-                    </connections>
-                </tableViewController>
-            </objects>
-            <point key="canvasLocation" x="2022" y="-3079"/>
+            <point key="canvasLocation" x="2123" y="-3660"/>
         </scene>
         <!--Malfunctions Add View Controller - New Malfunction-->
         <scene sceneID="AGv-wT-IhT">
@@ -4197,14 +4052,14 @@
                 <viewController id="Cjv-60-3nA" customClass="PhotoViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="f9Q-YV-RRZ">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="doi-gX-m5t">
-                                <rect key="frame" x="0.0" y="-20" width="320" height="480"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" id="doi-gX-m5t">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" id="sMI-fM-pxG">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <gestureRecognizers/>
                                         <connections>
@@ -4227,11 +4082,11 @@
                                     <navigationItem id="QYR-IY-HYg">
                                         <nil key="title"/>
                                         <view key="titleView" contentMode="scaleToFill" id="pwf-I2-6Iv">
-                                            <rect key="frame" x="5" y="0.0" width="252" height="44"/>
+                                            <rect key="frame" x="62" y="0.0" width="195" height="44"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Model" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="fLU-J5-WAa">
-                                                    <rect key="frame" x="0.0" y="2" width="254" height="21"/>
+                                                    <rect key="frame" x="0.0" y="2" width="197" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -4240,7 +4095,7 @@
                                                     <size key="shadowOffset" width="0.0" height="1"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Manufacturer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="HNP-hs-w0x">
-                                                    <rect key="frame" x="0.0" y="21" width="254" height="21"/>
+                                                    <rect key="frame" x="0.0" y="21" width="197" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -4387,7 +4242,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <segue destination="p5c-Bd-14B" kind="push" identifier="DopeCards" id="3T9-l8-OC5"/>
+                                            <segue destination="rxg-wM-cCR" kind="push" identifier="DopeCards" id="v4O-3O-IBy"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -4419,7 +4274,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <segue destination="MGU-uR-bFx" kind="push" identifier="Maintenances" id="1aM-N2-SHm"/>
+                                            <segue destination="0co-Ra-Tbo" kind="push" identifier="Maintenances" id="5Rg-4E-xmM"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="aum-pr-mRN" detailTextLabel="e84-3R-jfK" style="IBUITableViewCellStyleValue1" id="ba0-sD-uHP">
@@ -4447,7 +4302,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <segue destination="SOx-Xy-ZYV" kind="push" identifier="Malfunctions" id="Tbc-pA-A98"/>
+                                            <segue destination="mPU-Il-9xS" kind="push" identifier="Malfunctions" id="Vt3-cf-MsD"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -4603,108 +4458,6 @@
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="1578" y="-2508"/>
-        </scene>
-        <!--Malfunctions Table View Controller - Malfunctions-->
-        <scene sceneID="59O-zv-PFY">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lmt-Sf-bIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="SOx-Xy-ZYV" customClass="MalfunctionsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="186" sectionHeaderHeight="22" sectionFooterHeight="22" id="zfg-uB-peC">
-                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.75686274509999996" green="0.70980392160000005" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="2" indentationWidth="16" reuseIdentifier="MalfunctionCell" rowHeight="186" id="eS7-br-Dbf" userLabel="Malfunction Cell" customClass="MalfunctionCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="186"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="185"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Notecard_short.png" id="bTV-6l-v3c" userLabel="short notecard background">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="186"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Failure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="eJL-B3-UWi" userLabel="Failure header">
-                                            <rect key="frame" x="5" y="64" width="80" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="AmericanTypewriter-CondensedBold" family="American Typewriter" pointSize="22"/>
-                                            <color key="textColor" red="0.71372549019999998" green="0.26241263815897009" blue="0.31600616231333428" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="shadowColor" cocoaTouchSystemColor="lightTextColor"/>
-                                            <size key="shadowOffset" width="0.0" height="1"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Fix" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="m8Z-Ov-8P0" userLabel="Fix header">
-                                            <rect key="frame" x="5" y="125" width="56" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="AmericanTypewriter-CondensedBold" family="American Typewriter" pointSize="22"/>
-                                            <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="shadowColor" cocoaTouchSystemColor="lightTextColor"/>
-                                            <size key="shadowOffset" width="0.0" height="1"/>
-                                        </label>
-                                        <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="TopLeft" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="black" editable="NO" text="Double feed jam with number four PMag magazine Test test test. blarhg  test. blarhg  test. blarhg  test. blarhg" id="Xrn-gs-hma" userLabel="fix text">
-                                            <rect key="frame" x="56" y="100" width="264" height="86"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="textColor" red="0.098039217293262482" green="0.098039217293262482" blue="0.098039217293262482" alpha="1" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        </textView>
-                                        <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="TopLeft" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" id="pIa-ii-bl9" userLabel="failure text">
-                                            <rect key="frame" x="83" y="20" width="237" height="83"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <string key="text">Performed correction action on double feed. Marked magazine for replacement. magazine for replacement. magazine for replacement.</string>
-                                            <color key="textColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        </textView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="3000 rounds" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="UD9-tW-PDp" userLabel="round count">
-                                            <rect key="frame" x="200" y="10" width="50" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
-                                            <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="rounds" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="ncU-Gf-zRW" userLabel="rounds">
-                                            <rect key="frame" x="251" y="10" width="61" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
-                                            <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" text="" lineBreakMode="tailTruncation" minimumFontSize="12" id="CxY-Lk-YvS" userLabel="make/model">
-                                            <rect key="frame" x="15" y="10" width="177" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <connections>
-                                    <outlet property="failtureText" destination="pIa-ii-bl9" id="H97-iN-0Eb"/>
-                                    <outlet property="fixText" destination="Xrn-gs-hma" id="7O1-JV-Tjc"/>
-                                    <outlet property="modelLabel" destination="CxY-Lk-YvS" id="Z32-FP-aLY"/>
-                                    <outlet property="roundCountLabel" destination="UD9-tW-PDp" id="TcX-V5-uar"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="SOx-Xy-ZYV" id="yOg-ZC-3Dl"/>
-                            <outlet property="delegate" destination="SOx-Xy-ZYV" id="2Gu-Ub-4i8"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Malfunctions" id="Z9M-YB-orV">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="x2h-xw-zDz">
-                            <connections>
-                                <segue destination="O5s-zN-ZBe" kind="modal" identifier="AddNewMalfunction" id="BGq-TX-HgV"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-            </objects>
-            <point key="canvasLocation" x="2022" y="-2508"/>
         </scene>
         <!--Manufacturer Chooser View Controller - Manufacturers-->
         <scene sceneID="qmh-W0-dUz">
@@ -6712,6 +6465,123 @@
             </objects>
             <point key="canvasLocation" x="1755" y="1650"/>
         </scene>
+        <!--Malfunctions View Controller - Malfunctions-->
+        <scene sceneID="tsW-Hx-8eQ">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jE0-4m-e7d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="mPU-Il-9xS" customClass="MalfunctionsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CHa-CO-KMJ">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="lJW-AT-bWN" userLabel="no malfunctions">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="327"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="186" sectionHeaderHeight="22" sectionFooterHeight="22" id="RDg-6q-12M">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="2" indentationWidth="16" reuseIdentifier="MalfunctionCell" rowHeight="186" id="zrP-a9-Ia1" userLabel="Malfunction Cell" customClass="MalfunctionCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="186"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="185"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Notecard_short.png" id="SaF-I3-qoP" userLabel="short notecard background">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="186"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Failure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="QBz-F1-Z8b" userLabel="Failure header">
+                                                    <rect key="frame" x="5" y="64" width="80" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-CondensedBold" family="American Typewriter" pointSize="22"/>
+                                                    <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="shadowColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Fix" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="noR-EI-sSI" userLabel="Fix header">
+                                                    <rect key="frame" x="5" y="125" width="56" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-CondensedBold" family="American Typewriter" pointSize="22"/>
+                                                    <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="shadowColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                                <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="TopLeft" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="black" editable="NO" text="Double feed jam with number four PMag magazine Test test test. blarhg  test. blarhg  test. blarhg  test. blarhg" id="J8J-hK-N66" userLabel="fix text">
+                                                    <rect key="frame" x="56" y="100" width="264" height="86"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="textColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="TopLeft" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" id="VWc-cO-5os" userLabel="failure text">
+                                                    <rect key="frame" x="83" y="20" width="237" height="83"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <string key="text">Performed correction action on double feed. Marked magazine for replacement. magazine for replacement. magazine for replacement.</string>
+                                                    <color key="textColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="3000 rounds" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="vj6-ea-J1n" userLabel="round count">
+                                                    <rect key="frame" x="200" y="10" width="50" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
+                                                    <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="rounds" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="iAG-BE-ReP" userLabel="rounds">
+                                                    <rect key="frame" x="251" y="10" width="61" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
+                                                    <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" text="" lineBreakMode="tailTruncation" minimumFontSize="12" id="vSd-Nh-nnB" userLabel="make/model">
+                                                    <rect key="frame" x="15" y="10" width="177" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="failtureText" destination="VWc-cO-5os" id="Q9e-5N-b9P"/>
+                                            <outlet property="fixText" destination="J8J-hK-N66" id="Uvk-Kx-b8W"/>
+                                            <outlet property="modelLabel" destination="vSd-Nh-nnB" id="4uF-T3-uc1"/>
+                                            <outlet property="roundCountLabel" destination="vj6-ea-J1n" id="5o0-Sk-cZB"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="mPU-Il-9xS" id="44X-SJ-S5A"/>
+                                    <outlet property="delegate" destination="mPU-Il-9xS" id="1sY-DN-uKg"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.80000000000000004" green="0.75294117650000003" blue="0.66274509800000003" alpha="1" colorSpace="deviceRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Malfunctions" id="eRe-57-OK0">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="x2h-xw-zDz">
+                            <connections>
+                                <segue destination="O5s-zN-ZBe" kind="modal" identifier="AddNewMalfunction" id="BGq-TX-HgV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="noMalfunctionsImageView" destination="lJW-AT-bWN" id="NPn-x2-kUO"/>
+                        <outlet property="tableView" destination="RDg-6q-12M" id="ggP-ND-5hs"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="2123" y="-2508"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="SrS-2Z-rtk">
             <objects>
@@ -6729,7 +6599,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="2506" y="-2508"/>
+            <point key="canvasLocation" x="2666" y="-2508"/>
         </scene>
         <!--Maintenances Add View Controller - New Maintenance-->
         <scene sceneID="wyc-FL-ZhR">
@@ -6757,6 +6627,150 @@
             </objects>
             <point key="canvasLocation" x="3032" y="-3079"/>
         </scene>
+        <!--Maintenances View Controller - Maintenance Items-->
+        <scene sceneID="gMj-Uv-Fsu">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Vc-Ts-Ff3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="0co-Ra-Tbo" customClass="MaintenancesViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="P9g-w1-H2M">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="SRK-Nn-Y94" userLabel="no maintenances image">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="186" sectionHeaderHeight="22" sectionFooterHeight="22" id="zbs-FQ-Scx">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MaintenanceCell" rowHeight="186" id="b1m-Vp-Jdt" userLabel="MaintenanceCell" customClass="MaintenanceCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="186"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="185"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="TopLeft" image="Notecard_short.png" id="dH4-N4-d7C" userLabel="short notecard background">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="186"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" text="" lineBreakMode="tailTruncation" minimumFontSize="12" id="ZaV-43-7g7" userLabel="rounds">
+                                                    <rect key="frame" x="15" y="10" width="177" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Action" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="YOC-dw-0ZN" userLabel="action performed header">
+                                                    <rect key="frame" x="0.0" y="45" width="97" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-CondensedBold" family="American Typewriter" pointSize="22"/>
+                                                    <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Performed" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="4WC-qM-ygS" userLabel="action performed header">
+                                                    <rect key="frame" x="0.0" y="60" width="97" height="28"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-CondensedBold" family="American Typewriter" pointSize="22"/>
+                                                    <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="TopLeft" alwaysBounceVertical="YES" pagingEnabled="YES" indicatorStyle="black" editable="NO" id="m0C-9b-GSF" userLabel="fix text">
+                                                    <rect key="frame" x="94" y="20" width="226" height="83"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <string key="text">Performed correction action on double feed. Marked magazine for replacement. magazine for replacement. magazine for replacement.</string>
+                                                    <color key="textColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="3000 rounds" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="RgB-26-mtn" userLabel="round count">
+                                                    <rect key="frame" x="200" y="10" width="50" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
+                                                    <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="rounds" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="xJZ-ct-E2p" userLabel="rounds">
+                                                    <rect key="frame" x="251" y="10" width="61" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
+                                                    <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="TopLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="wordWrap" id="1MS-Ip-gWP" userLabel="view malfunctions button">
+                                                    <rect key="frame" x="58" y="106" width="248" height="76"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                                    <state key="normal" backgroundImage="sticky_button.png">
+                                                        <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="#" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="iQl-Un-awC" userLabel="malfunction count label">
+                                                    <rect key="frame" x="242" y="123" width="42" height="42"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="24"/>
+                                                    <color key="textColor" red="0.27335995439999999" green="0.42722198369999997" blue="0.90956956150000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="shadowColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Related Malfunctions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="zO2-fr-DeV" userLabel="malfunction label">
+                                                    <rect key="frame" x="66" y="130" width="175" height="28"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-Condensed" family="American Typewriter" pointSize="23"/>
+                                                    <color key="textColor" red="0.27335995439999999" green="0.42722198369999997" blue="0.90956956150000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="shadowColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="TopLeft" image="notecard_bottom.png" id="C7w-aS-2vD" userLabel="notecard bottom">
+                                                    <rect key="frame" x="0.0" y="183" width="320" height="3"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="actionPerformedText" destination="m0C-9b-GSF" id="bCu-Ur-hSs"/>
+                                            <outlet property="malfunctionCountLabel" destination="iQl-Un-awC" id="L1Y-G6-IXD"/>
+                                            <outlet property="malfunctionLabel" destination="zO2-fr-DeV" id="UXM-gE-IoQ"/>
+                                            <outlet property="modelLabel" destination="ZaV-43-7g7" id="v9I-lr-1sZ"/>
+                                            <outlet property="roundCountLabel" destination="RgB-26-mtn" id="8q4-Cu-Qib"/>
+                                            <outlet property="viewMalfunctions" destination="1MS-Ip-gWP" id="HJN-aU-4Y9"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="0co-Ra-Tbo" id="rrr-r7-S9m"/>
+                                    <outlet property="delegate" destination="0co-Ra-Tbo" id="THS-UR-0cD"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.80000000000000004" green="0.75294117650000003" blue="0.66274509800000003" alpha="1" colorSpace="deviceRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Maintenance Items" id="hjh-29-w6U">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="yVf-Dw-Kb4">
+                            <connections>
+                                <segue destination="6Vl-qV-cHU" kind="modal" identifier="AddNewMalfunction" id="kCX-38-3UV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="noMaintenancesImageView" destination="SRK-Nn-Y94" id="4Vw-OV-wxR"/>
+                        <outlet property="tableView" destination="zbs-FQ-Scx" id="XVK-GQ-PfW"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="2123" y="-3079"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="6EW-XJ-vs2">
             <objects>
@@ -6773,7 +6787,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="2506" y="-3079"/>
+            <point key="canvasLocation" x="2666" y="-3079"/>
         </scene>
         <!--Navigation Controller - Cards-->
         <scene sceneID="Wdu-qz-tn5">
@@ -7346,10 +7360,11 @@
                 <relationship kind="outlet" name="zeroTextField" candidateClass="UITextField"/>
             </relationships>
         </class>
-        <class className="DopeCardsTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DopeCardsTableViewController.h"/>
+        <class className="DopeCardsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DopeCardsViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="noDopeCardsImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
         </class>
         <class className="DopeTableGeneratedCell" superclassName="UITableViewCell">
@@ -7450,9 +7465,11 @@
                 <relationship kind="action" name="saveTapped:"/>
             </relationships>
         </class>
-        <class className="MaintenancesTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MaintenancesTableViewController.h"/>
+        <class className="MaintenancesViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MaintenancesViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="noMaintenancesImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
@@ -7472,8 +7489,12 @@
                 <relationship kind="action" name="saveTapped:"/>
             </relationships>
         </class>
-        <class className="MalfunctionsTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MalfunctionsTableViewController.h"/>
+        <class className="MalfunctionsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MalfunctionsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="noMalfunctionsImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
         </class>
         <class className="ManufacturerChooserViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ManufacturerChooserViewController.h"/>
@@ -7726,14 +7747,14 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Kwm-tt-mog"/>
-        <segue reference="GCB-J1-qDm"/>
-        <segue reference="3T9-l8-OC5"/>
-        <segue reference="Tbc-pA-A98"/>
         <segue reference="DYz-Of-xaL"/>
         <segue reference="yYB-bQ-quH"/>
-        <segue reference="1aM-N2-SHm"/>
-        <segue reference="ddl-y7-aqM"/>
         <segue reference="uPm-6g-2kP"/>
+        <segue reference="Kwm-tt-mog"/>
+        <segue reference="GCB-J1-qDm"/>
+        <segue reference="Zff-G8-jkO"/>
+        <segue reference="Xax-8e-kYg"/>
+        <segue reference="qrX-kN-oby"/>
+        <segue reference="ddl-y7-aqM"/>
     </inferredMetricsTieBreakers>
 </document>

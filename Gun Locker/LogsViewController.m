@@ -24,6 +24,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     maintenanceCountLabel.text = [NSString stringWithFormat:@"%d", [Maintenance countOfEntities]];
     malfunctionCountLabel.text = [NSString stringWithFormat:@"%d", [Malfunction countOfEntities]];
     dopeCardsCountLabel.text = [NSString stringWithFormat:@"%d",    [DopeCard countOfEntities]];

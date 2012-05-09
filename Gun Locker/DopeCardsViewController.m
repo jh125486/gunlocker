@@ -6,14 +6,17 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "DopeCardsTableViewController.h"
+#import "DopeCardsViewController.h"
 
-@implementation DopeCardsTableViewController
+@implementation DopeCardsViewController
 @synthesize noDopeCardsImageView;
+@synthesize tableView;
 @synthesize selectedWeapon;
+@synthesize fetchedResultsController = _fetchedResultsController;
 
-- (id)initWithStyle:(UITableViewStyle)style {
-    self = [super initWithStyle:style];
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -22,21 +25,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"%@", self.selectedWeapon);
 
     //Register addNewDopeCardToArray to recieve "addNewDopeCard" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewDopeCard:) name:@"newDopeCard" object:nil];
+    
     if (!selectedWeapon) self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self loadDopeCards];
-    [self.tableView reloadData];  
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    [self loadDopeCards];
+    [self.tableView reloadData];
+    [self setTitle];
 }
 
 - (void)setTitle {
-    int count = self.selectedWeapon ? [self.selectedWeapon.dope_cards count] : [DopeCard countOfEntities];
     self.title = [NSString stringWithFormat:@"Dope Cards (%d)", count];
+    
+    self.noDopeCardsImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/DopeCards"]];
+    self.noDopeCardsImageView.hidden = (count != 0);
+    self.tableView.hidden = (count == 0);
 }
 
 - (void)loadDopeCards {
@@ -47,6 +56,7 @@
 
     if (self.selectedWeapon) {
         sections = [[self.selectedWeapon.dope_cards sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+        count = [sections count];
     } else {
         for(DopeCard *dopeCard in [DopeCard findAllSortedBy:@"name" ascending:YES]) {
             if ([dopeCards objectForKey:dopeCard.weapon.description] != nil) {
@@ -55,18 +65,19 @@
                 [sections addObject:dopeCard.weapon.description];
                 [dopeCards setObject:[NSMutableArray arrayWithObject:dopeCard] forKey:dopeCard.weapon.description];
             }
+            count++;
         }
         [sections sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"model" ascending:YES]]];
         sections = [[[sections reverseObjectEnumerator] allObjects] mutableCopy];
     }
-    
-    [self setTitle];
 }
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setSelectedWeapon:nil];
     [self setNoDopeCardsImageView:nil];
+    [self setTableView:nil];
+    [self setFetchedResultsController:nil];
     [super viewDidUnload];
 }
 
@@ -80,15 +91,22 @@
     if ([segueID isEqualToString:@"ShowDopeCard"]) {
         DopeCardViewController *dst = segue.destinationViewController;
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        self.navigationItem.title = @"Dope Cards";
         dst.selectedDopeCard = (self.selectedWeapon) ? [sections objectAtIndex:indexPath.row] : [[dopeCards objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     }
+    self.navigationItem.title = @"Dope Cards";
 }
 
 - (void) addNewDopeCard:(NSNotification*) notification {
     DopeCard *newDopeCard = [notification object];
     newDopeCard.weapon = self.selectedWeapon;
-    [[NSManagedObjectContext defaultContext] save];  
+    
+    
+    [sections addObject:newDopeCard];
+
+    count++;
+
+    [[NSManagedObjectContext defaultContext] save];
+    [self setTitle];
 }
 
 #pragma mark - Table view data source
@@ -98,12 +116,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSInteger count = (self.selectedWeapon) ? [sections count] : [[dopeCards objectForKey:[sections objectAtIndex:section]] count];
-    
-    self.noDopeCardsImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/DopeCards"]];
-    self.noDopeCardsImageView.hidden = (count != 0);
-
-    return count;
+    return (self.selectedWeapon) ? count : [[dopeCards objectForKey:[sections objectAtIndex:section]] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -111,7 +124,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DopeCardSummaryCell"];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DopeCardSummaryCell"];
         
     DopeCard *dopeCard = (self.selectedWeapon) ? [sections objectAtIndex:indexPath.row] : [[dopeCards objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
 
@@ -130,22 +143,45 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         DopeCard *currentDopeCard = (self.selectedWeapon) ? [sections objectAtIndex:indexPath.row] : [[dopeCards objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
         [currentDopeCard deleteEntity];
-        [[NSManagedObjectContext defaultContext] save];  
         
         // update table data
+        [self.tableView beginUpdates];
         if(self.selectedWeapon) {
             [sections removeObject:currentDopeCard];
+            NSLog(@"count %d", [sections count]);
         } else {
             [(NSMutableArray *)[dopeCards objectForKey:currentDopeCard.weapon.description] removeObject:currentDopeCard];
         }
+        count--;
         
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
+        
         [self setTitle];
+        [[NSManagedObjectContext defaultContext] save];
     }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath { 
     cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor clearColor] : [UIColor colorWithRed:0.855 green:0.812 blue:0.682 alpha:1.000];
 }  
+
+#pragma mark FetchedResultsController
+- (NSFetchedResultsController *)fetchedResultsController {
+    if (_fetchedResultsController != nil) return _fetchedResultsController;
+
+    NSPredicate *typeFilter = (self.selectedWeapon) ? [NSPredicate predicateWithFormat:@"weapon = %@", self.selectedWeapon] : nil;
+    NSFetchRequest *fetchRequest = [DopeCard requestAllSortedBy:@"name" ascending:YES withPredicate:typeFilter];
+    
+    [fetchRequest setFetchBatchSize:20];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+                                                                        managedObjectContext:[NSManagedObjectContext MR_defaultContext] 
+                                                                          sectionNameKeyPath:nil 
+                                                                                   cacheName:@"DopeCards"];
+    
+    _fetchedResultsController.delegate = self;
+    
+    return _fetchedResultsController;
+}
 
 @end

@@ -10,9 +10,9 @@
 #import "Maintenance.h"
 #import "Malfunction.h"
 #import "DopeCard.h"
-#import "MaintenancesTableViewController.h"
-#import "MalfunctionsTableViewController.h"
-#import "DopeCardsTableViewController.h"
+#import "MaintenancesViewController.h"
+#import "MalfunctionsViewController.h"
+#import "DopeCardsViewController.h"
 
 @interface LogsViewController : UITableViewController
 @property (weak, nonatomic) IBOutlet UILabel *maintenanceCountLabel;

@@ -129,10 +129,10 @@
         dst.weaponType = self.selectedWeapon.type;
         dst.selectedWeapon = self.selectedWeapon;
 	} else if ([segueID isEqualToString:@"Malfunctions"]) {
-        MalfunctionsTableViewController *dst = segue.destinationViewController;
+        MalfunctionsViewController *dst = segue.destinationViewController;
         dst.selectedWeapon = self.selectedWeapon;
 	} else if ([segueID isEqualToString:@"Maintenances"]) {
-        MaintenancesTableViewController *dst = segue.destinationViewController;
+        MaintenancesViewController *dst = segue.destinationViewController;
         dst.selectedWeapon = self.selectedWeapon;
 	} else if ([segueID isEqualToString:@"NFA"]) {
         NFAInformationViewController *dst = segue.destinationViewController;
@@ -141,7 +141,7 @@
         NotesTableViewController *dst = segue.destinationViewController;
         dst.selectedWeapon = self.selectedWeapon;
     } else if ([segueID isEqualToString:@"DopeCards"]) {
-        DopeCardsTableViewController *dst = segue.destinationViewController;
+        DopeCardsViewController *dst = segue.destinationViewController;
         dst.selectedWeapon = self.selectedWeapon;
     }
 

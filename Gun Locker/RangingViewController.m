@@ -112,7 +112,7 @@
         if(self.resultUnitControl.selectedSegmentIndex == 0) range *= YARDS_PER_METER;
         
         // adjust for angle
-        range *= cos(angle* M_PI / 180);
+        range *= cos(DEGREES_to_RAD(angle));
         
         self.resultLabel.text = [NSString stringWithFormat:@"Range %.0f", range];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setRange" 
@@ -141,9 +141,9 @@
                                                              if (angleInRadians < 0.0)
                                                                  angleInRadians += (2.0 * M_PI);
                                                              angleInRadians -= M_PI;
-                                                             int angleInDegrees = RAD_to_DEGREES(angleInRadians * (180/M_PI));
-                                                             if ((angleInDegrees % 5) == 0) {
-                                                                 self.angleTextField.text = [NSString stringWithFormat:@"%d", fabs(angleInDegrees)];                                                                 
+                                                             int angleInDegrees = RAD_to_DEGREES(angleInRadians);
+                                                             if (((angleInDegrees % 5) == 0) && (angleInDegrees < 90)) {
+                                                                 self.angleTextField.text = [NSString stringWithFormat:@"%d", abs(angleInDegrees)];                                                                 
                                                                  [self showRangeEstimate:nil];
                                                              }
                                                              
