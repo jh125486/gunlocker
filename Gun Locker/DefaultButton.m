@@ -42,7 +42,8 @@
         
         [self setTitleColor:[UIColor colorWithWhite:0.5f alpha:0.5f] forState:UIControlStateDisabled];
         [self setTitleShadowColor:[UIColor clearColor] forState:UIControlStateDisabled];
-        
+        self.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:24];
+    
         self.titleLabel.shadowOffset = CGSizeMake(0, 1);
     }
     return self;

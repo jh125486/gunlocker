@@ -42,10 +42,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
     
-    if([self.weaponType isEqualToString:@"Misc."])
-        self.title = @"Add Miscellaneous";
-    else
-        self.title = [NSString stringWithFormat:@"Add %@", [self.weaponType substringToIndex:[self.weaponType length] -1]];
+    self.title = [self.weaponType isEqualToString:@"Misc."] ? @"Add Miscellaneous" : [NSString stringWithFormat:@"Add %@", [self.weaponType substringToIndex:[self.weaponType length] -1]];
         
     self.addPhotoButton.titleLabel.textAlignment = UITextAlignmentCenter;
     

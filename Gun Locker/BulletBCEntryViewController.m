@@ -6,14 +6,15 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "BulletEntryManualViewController.h"
+#import "BulletBCEntryViewController.h"
 
-@implementation BulletEntryManualViewController
+@implementation BulletBCEntryViewController
+@synthesize g1BC4TextField;
+@synthesize g1FPS4TextField;
 @synthesize scrollView;
-@synthesize passedBulletBC, passedBulletWeight, selectedDragModel;
-@synthesize dragModelControl;
+@synthesize dragModelLabel;
+@synthesize passedBulletBC, selectedDragModel;
 @synthesize g1EntryView, g7EntryView;
-@synthesize bulletWeightTextField;
 @synthesize g7BCTextField;
 @synthesize g1BCTextField, g1BC1TextField, g1BC2TextField, g1BC3TextField;
 @synthesize g1FPS1TextField, g1FPS2TextField, g1FPS3TextField;
@@ -32,23 +33,21 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
     self.scrollView.alwaysBounceVertical = YES;
     
-    if (!self.selectedDragModel) self.selectedDragModel = @"G7";
+    if ([self.selectedDragModel isEqualToString:@"G7"]) {
+        formFields = [[NSArray alloc] initWithObjects:self.g7BCTextField, nil];
+    } else {
+        formFields = [[NSArray alloc] initWithObjects:self.g1BCTextField, 
+                                                      self.g1BC1TextField, self.g1FPS1TextField, 
+                                                      self.g1BC2TextField, self.g1FPS2TextField,
+                                                      self.g1BC3TextField, self.g1FPS3TextField, 
+                                                      self.g1BC4TextField, self.g1FPS4TextField, nil]; 
+    }
     
-    formFields = [[NSMutableArray alloc] initWithObjects:self.bulletWeightTextField, nil];
-    g1Fields = [[NSArray alloc] initWithObjects:self.g1BCTextField, 
-                                                self.g1BC1TextField, self.g1FPS1TextField, 
-                                                self.g1BC2TextField, self.g1FPS2TextField,
-                                                self.g1BC3TextField, self.g1FPS3TextField, nil];
-    g7Fields = [[NSArray alloc] initWithObjects:self.g7BCTextField, nil];
-    
-    
-    for(UITextField *field in formFields)
-        field.delegate = self;    
-    for(UITextField *field in g1Fields)
-        field.delegate = self;    
-    for(UITextField *field in g7Fields)
+    for(UITextField *field in formFields) {
         field.delegate = self;
-    
+        field.keyboardType = UIKeyboardTypeDecimalPad;
+    }
+        
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
                                                  name:UIKeyboardDidShowNotification object:nil];
@@ -62,44 +61,27 @@
     if (self.passedBulletBC) [self loadBulletInfo];
     
     if ([self.selectedDragModel isEqualToString:@"G7"]) {
-        self.dragModelControl.selectedSegmentIndex = 0;
+        self.dragModelLabel.text = @"Drag Model G7";
         self.g1EntryView.hidden = YES;
         self.g7EntryView.hidden = NO;
     } else if ([self.selectedDragModel isEqualToString:@"G1"]) {
-        self.dragModelControl.selectedSegmentIndex = 1;
+        self.dragModelLabel.text = @"Drag Model G1";
         self.g7EntryView.hidden = YES;
         self.g1EntryView.hidden = NO;
     }
-    [self calculateFormFields];
 }
 
 - (void)loadBulletInfo {
-    self.bulletWeightTextField.text = [NSString stringWithFormat:@"%@", self.passedBulletWeight];
-    if ([self.selectedDragModel isEqualToString:@"G7"]) {
-        self.g7BCTextField.text = [NSString stringWithFormat:@"%@", [self.passedBulletBC objectAtIndex:0]];
-    } else {
-        for (int i = 0; i < self.passedBulletBC.count; i +=2) {
-            [(UITextField*)[g1Fields objectAtIndex:i] setText:[NSString stringWithFormat:@"%@", [self.passedBulletBC objectAtIndex:i]]];
-            [(UITextField*)[g1Fields objectAtIndex:i+1] setText:[NSString stringWithFormat:@"%@", [self.passedBulletBC objectAtIndex:i+1]]];
-        }
+    ((UITextField*)[formFields objectAtIndex:0]).text = [NSString stringWithFormat:@"%@", [self.passedBulletBC objectAtIndex:0]];
+    for (int i = 1; i < self.passedBulletBC.count; i += 2) {
+        [(UITextField*)[formFields objectAtIndex:i]   setText:[NSString stringWithFormat:@"%@", [self.passedBulletBC objectAtIndex:i]]];
+        [(UITextField*)[formFields objectAtIndex:i+1] setText:[NSString stringWithFormat:@"%@", [self.passedBulletBC objectAtIndex:i+1]]];
     }
 }
 
-- (void)calculateFormFields {
-    if (self.dragModelControl.selectedSegmentIndex == 0) {
-        [formFields removeObjectsInArray:g1Fields];
-        [formFields addObjectsFromArray:g7Fields];
-    } else {
-        [formFields removeObjectsInArray:g7Fields];
-        [formFields addObjectsFromArray:g1Fields];
-    }
-}
-                  
 - (void)viewDidUnload {
     [self setG7EntryView:nil];
     [self setG1EntryView:nil];
-    [self setDragModelControl:nil];
-    [self setBulletWeightTextField:nil];
     [self setG7BCTextField:nil];
     [self setG1BCTextField:nil];
     [self setG1BC1TextField:nil];
@@ -109,6 +91,9 @@
     [self setG1FPS2TextField:nil];
     [self setG1FPS3TextField:nil];
     [self setScrollView:nil];
+    [self setDragModelLabel:nil];
+    [self setG1BC4TextField:nil];
+    [self setG1FPS4TextField:nil];
     [super viewDidUnload];
 }
 
@@ -116,36 +101,13 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)dragModelTypeChanged:(UISegmentedControl *)sender {
-    if (sender.selectedSegmentIndex == 0 ) {
-        self.selectedDragModel = @"G7";
-        self.g1EntryView.hidden = YES;
-        self.g7EntryView.hidden = NO;
-        [self.g7BCTextField becomeFirstResponder];
-    } else {
-        self.selectedDragModel = @"G1";
-        self.g7EntryView.hidden = YES;
-        self.g1EntryView.hidden = NO;
-        [self.g1BCTextField becomeFirstResponder];
-    }
-    [self calculateFormFields];
-}
-
 - (IBAction)saveTapped:(id)sender {
-    // notify manually entered
-    // notify drag model
     NSMutableArray *bc = [[NSMutableArray alloc] init];
-    if ([self.selectedDragModel isEqualToString:@"G7"]) {
-        for (UITextField *field in g7Fields)
-            if(![field.text isEqualToString:@""]) [bc addObject:field.text];
-    } else {
-        for (UITextField *field in g1Fields)
-            if(![field.text isEqualToString:@""]) [bc addObject:field.text];
+    for (UITextField *field in formFields) {
+        if(![field.text isEqualToString:@""]) [bc addObject:field.text];
     }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedDragModel" object:self.selectedDragModel];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"manuallyEnteredBullet" object:[NSArray arrayWithObjects:self.bulletWeightTextField.text, bc, nil]];
-    
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"manuallyEnteredBC" object:bc];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -179,7 +141,7 @@
     
     if ([formFields indexOfObject:textField] == 0) {
         [control setEnabled:NO forSegmentAtIndex:0];
-    } else if ([formFields indexOfObject:textField] == ([formFields count] -1)) {
+    } else if ([formFields lastObject] == textField) {
         [control setEnabled:NO forSegmentAtIndex:1];
     }
     
@@ -224,12 +186,7 @@
     scrollView.contentInset = contentInsets;
     scrollView.scrollIndicatorInsets = contentInsets;
     
-    double originY = self.currentTextField.frame.origin.y;
-    if ([g1Fields containsObject:self.currentTextField]) {
-        originY += self.g1EntryView.frame.origin.y;
-    } else if ([g7Fields containsObject:self.currentTextField]) {
-        originY += self.g7EntryView.frame.origin.y;
-    }
+    double originY = self.currentTextField.frame.origin.y + 48.0f;    
 
     CGRect aRect = CGRectMake(0, self.scrollView.frame.size.height - kbSize.height, kbSize.width, kbSize.height);
         

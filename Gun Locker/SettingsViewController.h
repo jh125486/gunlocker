@@ -16,14 +16,15 @@
 @property (weak, nonatomic) IBOutlet UISwitch *showNFAInformationSwitch;
 @property (weak, nonatomic) IBOutlet UITableViewCell *passcodeCell;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *rangeUnitsControl;
-@property (weak, nonatomic) IBOutlet TextStepperField *rangeStart;
-@property (weak, nonatomic) IBOutlet TextStepperField *rangeEnd;
-@property (weak, nonatomic) IBOutlet TextStepperField *rangeStep;
+@property (weak, nonatomic) IBOutlet TextStepperField *rangeStartStepper;
+@property (weak, nonatomic) IBOutlet TextStepperField *rangeEndStepper;
+@property (weak, nonatomic) IBOutlet TextStepperField *rangeStepStepper;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *reticleUnitsControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *directionControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *nightModeControl;
 @property (weak, nonatomic) IBOutlet UILabel *windLeadingLabel;
 
 - (IBAction)showNFAInformationTapped:(id)sender;
+- (IBAction)setStepperRanges:(id)sender;
 
 @end

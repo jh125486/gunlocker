@@ -12,7 +12,7 @@
 #import "DopeCardsAddEditViewController.h"
 #import "Weapon.h"
 
-@interface DopeCardViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface DopeCardTableViewController : UITableViewController
 
 @property (strong, nonatomic) IBOutlet UIView *dopeCardSectionHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *weaponLabel;
@@ -25,6 +25,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *rangeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dropLabel;
 @property (weak, nonatomic) IBOutlet UILabel *driftLabel;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) DopeCard *selectedDopeCard;
 @end

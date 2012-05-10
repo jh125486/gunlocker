@@ -10,13 +10,10 @@
 #import "Weapon.h"
 #import "DopeCard.h"
 #import "DopeCardsAddEditViewController.h"
-#import "DopeCardViewController.h"
+#import "DopeCardTableViewController.h"
 
-@interface DopeCardsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate> {
-    NSMutableDictionary *dopeCards;
-    NSMutableArray *sections;
-    int count;
-}
+@interface DopeCardsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+
 @property (weak, nonatomic) IBOutlet UIImageView *noDopeCardsImageView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

@@ -121,6 +121,7 @@
     return CGRectGetHeight(self.dopeCardSectionHeaderView.frame);
 }
 
+#pragma mark Actions
 - (IBAction)cancelTapped:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -149,9 +150,9 @@
         
     [[NSManagedObjectContext defaultContext] save];    
     NSLog(@"Saved dopecard %@ for %@", newDopeCard, newDopeCard.weapon);
-
+    NSString *message = [NSString stringWithFormat:@"Dope card for weapon\n'%@'\nsaved with name\n'%@'", newDopeCard.weapon, newDopeCard.name];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Dope Card Saved" 
-                                                    message:[NSString stringWithFormat:@"Dope card for weapon\n'%@' saved with name\n'%@'", newDopeCard.weapon, newDopeCard.name]
+                                                    message:message
                                                    delegate:nil 
                                           cancelButtonTitle:nil 
                                           otherButtonTitles:@"Ok", nil];

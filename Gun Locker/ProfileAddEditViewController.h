@@ -10,16 +10,18 @@
 #import "BallisticProfile.h"
 #import "Bullet.h"
 #import "BulletChooserViewController.h"
-#import "BulletEntryManualViewController.h"
+#import "BulletBCEntryViewController.h"
 #import "Weapon.h"
 
 @interface ProfileAddEditViewController : UITableViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
     Weapon *selectedWeapon;
+    Bullet *selectedBullet;
     NSArray *weapons;
+    NSMutableArray *weaponViews;
     NSArray *manually_entered_bc;
-    NSNumber *bullet_weight;
     NSString *drag_model;
     NSMutableArray *formFields;
+    NSArray *dragModels;
 }
 
 @property (weak, nonatomic) BallisticProfile *selectedProfile;
@@ -27,13 +29,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *weaponTextField;
 @property (retain, nonatomic) UIPickerView *weaponPicker;
-@property (weak, nonatomic) IBOutlet UILabel *bulletTypePromptLabel;
-@property (weak, nonatomic) IBOutlet UILabel *bulletTypeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *bulletDiameterLabel;
-@property (weak, nonatomic) IBOutlet UILabel *bulletWeightPromptLabel;
-@property (weak, nonatomic) IBOutlet UILabel *bulletWeightLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dragModelLabel;
-@property (weak, nonatomic) IBOutlet UILabel *bcLabel;
+
 @property (weak, nonatomic) IBOutlet UITextField *muzzleVelocityTextField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *muzzleVelocityUnitControl;
 @property (weak, nonatomic) IBOutlet UITextField *siteHeightTextField;
@@ -41,11 +37,22 @@
 @property (weak, nonatomic) IBOutlet UITextField *zeroDistanceTextField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *zeroDistanceUnitControl;
 
+@property (weak, nonatomic) IBOutlet UITextField *diameterTextField;
+@property (weak, nonatomic) IBOutlet UITextField *weightTextField;
+
+@property (weak, nonatomic) IBOutlet UIButton *weaponButton;
+@property (weak, nonatomic) IBOutlet UIButton *bulletButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *dragModelControl;
+@property (weak, nonatomic) IBOutlet UIView *bcButtonTopEdgeView;
+@property (weak, nonatomic) IBOutlet UIButton *bcButton;
+
 @property (weak, nonatomic) UITextField *currentTextField;
 
-
 - (IBAction)selectWeaponTapped:(id)sender;
-- (IBAction)bulletControlTapped:(UISegmentedControl *)sender;
+- (IBAction)dragModelChanged:(UISegmentedControl *)sender;
+- (IBAction)bulletFieldChanged:(UITextField *)sender;
+
+
 - (IBAction)cancelTapped:(id)sender;
 - (IBAction)saveTapped:(id)sender;
 @end

@@ -37,8 +37,16 @@
     NSLog(@"profile %@", selectedProfile.name);
     
     self.rangeStartStepper.Current = 100.f;
-    self.rangeEndStepper.Current = 1000.f;
+    self.rangeStartStepper.Minimum = 0.0f;
+    self.rangeStartStepper.Maximum = 1000.0f;
+    
+    self.rangeEndStepper.Current = 500.f;
+    self.rangeEndStepper.Minimum = 100.0f;
+    self.rangeEndStepper.Maximum = 2000.0f;
+
     self.rangeStepStepper.Current = 100.f;
+    self.rangeStepStepper.Minimum = 1.0f;
+    self.rangeStepStepper.Maximum = 250.0f;
     
     [self loadWeather];
     
@@ -52,10 +60,8 @@
                                                         self.leadingDirectionTextField, 
                                                         nil];
     
-    for(UITextField *field in formFields) {
-        field.delegate = self;    
-        field.keyboardType = UIKeyboardTypeNumberPad;
-    }
+    for(UITextField *field in formFields)
+        field.delegate = self;
     self.pressureTextField.keyboardType = UIKeyboardTypeDecimalPad;
 
 }
@@ -102,20 +108,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)calculate:(id)sender {
-    [self performSegueWithIdentifier:@"CalculateTrajectory" sender:self];
-}
-
-- (IBAction)setToDefaultEnvironmentTapped:(id)sender {
-    self.tempTextField.text = @"59";
-    self.tempUnitControl.selectedSegmentIndex = 0;
-    self.pressureTextField.text = @"29.92";
-    self.pressureUnitControl.selectedSegmentIndex = 0;
-    self.rhTextField.text = @"0";
-    self.altitudeTextField.text = @"0";
-    self.windSpeedTextField.text = @"0";
-    self.windDirectionTextField.text = @"0";
-}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     DopeTableGeneratedTableViewController *dst =[[segue.destinationViewController viewControllers] objectAtIndex:0];
@@ -166,9 +158,7 @@
     dst.passedTrajectory = trajectory;
 }
 
-
 #pragma mark TextField delegates
-
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     UIToolbar* textFieldToolBarView = [[UIToolbar alloc] init];
     textFieldToolBarView.barStyle = UIBarStyleBlack;
@@ -193,7 +183,7 @@
     
     if ([formFields indexOfObject:textField] == 0) {
         [control setEnabled:NO forSegmentAtIndex:0];
-    } else if ([formFields indexOfObject:textField] == ([formFields count] -1)) {
+    } else if ([formFields lastObject] == textField) {
         [control setEnabled:NO forSegmentAtIndex:1];
     }
     
@@ -231,5 +221,28 @@
 - (void) doneTyping:(id)sender {    
     [self.currentTextField resignFirstResponder];
 }
+
+# pragma mark Actions
+- (IBAction)calculate:(id)sender {
+    [self performSegueWithIdentifier:@"CalculateTrajectory" sender:self];
+}
+
+- (IBAction)setToDefaultEnvironmentTapped:(id)sender {
+    self.tempTextField.text = @"59";
+    self.tempUnitControl.selectedSegmentIndex = 0;
+    self.pressureTextField.text = @"29.92";
+    self.pressureUnitControl.selectedSegmentIndex = 0;
+    self.rhTextField.text = @"0";
+    self.altitudeTextField.text = @"0";
+    self.windSpeedTextField.text = @"0";
+    self.windDirectionTextField.text = @"0";
+}
+
+- (IBAction)setStepperRanges:(id)sender {
+    self.rangeStartStepper.Maximum = self.rangeEndStepper.Current - self.rangeStepStepper.Current;
+    self.rangeEndStepper.Minimum   = self.rangeStartStepper.Current + self.rangeStepStepper.Current;
+    self.rangeStepStepper.Maximum  = self.rangeEndStepper.Current - self.rangeStartStepper.Current;    
+}
+
 
 @end

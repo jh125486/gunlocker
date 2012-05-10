@@ -252,12 +252,6 @@
     self.driftUnitField.text = [dope_units objectAtIndex:[self.dopeUnitPickerView selectedRowInComponent:2]];
 }
 
-- (void)dopeUnitsPickerDone:(id)sender {
-    [self setDopeUnits];
-    self.currentTextField = nil;
-    [self.rangeUnitField resignFirstResponder];
-}
-
 - (void)setWindInfo {
     self.windInfoField.text = [NSString stringWithFormat:@"%d %@ from %@", 
                                [self.windInfoPickerView selectedRowInComponent:0],
@@ -270,13 +264,6 @@
                                [self.leadInfoPickerView selectedRowInComponent:0],
                                [wind_units objectAtIndex:[self.leadInfoPickerView selectedRowInComponent:1]],
                                [wind_directions objectAtIndex:[self.leadInfoPickerView selectedRowInComponent:2]]];
-}
-
-- (void)windLeadInfoPickerDone:(id)sender {
-    [self setWindInfo];
-    [self setLeadInfo];
-    self.currentTextField = nil;
-    [self.windInfoField resignFirstResponder];
 }
 
 #pragma mark - Text field delegate
@@ -299,17 +286,8 @@
     
     UIBarButtonItem *controlItem = [[UIBarButtonItem alloc] initWithCustomView:control];
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    SEL action = @selector(doneTyping:);
-    
-    if (textField == self.rangeUnitField) {
-        action = @selector(dopeUnitsPickerDone:);
-    } else if ((textField == self.windInfoField) || (textField == self.leadInfoField)){
-        action = @selector(windLeadInfoPickerDone:);
-    }
-    
     UIBarButtonItem *done  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-                                                                           target:self action:action];
+                                                                           target:self action:@selector(doneTyping:)];
 
     if ([dopeFields containsObject:self.currentTextField] && [dopeFields indexOfObject:self.currentTextField] % 3 != 0) {
         UIBarButtonItem *flipSign  = [[UIBarButtonItem alloc] initWithTitle:@" ± " 
@@ -320,9 +298,7 @@
         
         [textFieldToolBarView setItems:[NSArray arrayWithObjects:controlItem, space, flipSign, space, done, nil]];
     } else {
-        if ([formFields indexOfObject:textField] == 0) {
-            [control setEnabled:NO forSegmentAtIndex:0];
-        }
+        if ([formFields indexOfObject:textField] == 0) [control setEnabled:NO forSegmentAtIndex:0];
         [textFieldToolBarView setItems:[NSArray arrayWithObjects:controlItem, space, done, nil]];
     }
     textField.inputAccessoryView = textFieldToolBarView;
@@ -338,7 +314,7 @@
     self.currentTextField = nil;
 }
 
-- (void) nextPreviousTapped:(id)sender {
+- (void)nextPreviousTapped:(id)sender {
     int index = [formFields indexOfObject:self.currentTextField];
     
     if (currentTextField == rangeUnitField) {
@@ -377,6 +353,14 @@
 }
 
 - (void) doneTyping:(id)sender {
+    if (currentTextField == self.rangeUnitField) {
+        [self setDopeUnits];
+    } else if (currentTextField == self.windInfoField) {
+        [self setWindInfo];
+    } else if (currentTextField == self.leadInfoField) {
+        [self setLeadInfo];
+    }
+    
     [self.currentTextField resignFirstResponder];
 }
 

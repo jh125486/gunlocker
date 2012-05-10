@@ -33,8 +33,9 @@
 @property (retain, nonatomic) UIPickerView *dopeUnitPickerView;
 
 @property (weak, nonatomic) IBOutlet UITextField *windInfoField;
-@property (weak, nonatomic) IBOutlet UITextField *leadInfoField;
 @property (retain, nonatomic) UIPickerView *windInfoPickerView;
+
+@property (weak, nonatomic) IBOutlet UITextField *leadInfoField;
 @property (retain, nonatomic) UIPickerView *leadInfoPickerView;
 
 @property (weak, nonatomic) IBOutlet UITextField *notesTextField;

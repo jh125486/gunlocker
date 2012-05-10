@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "DopeCardViewController.h"
+#import "DopeCardTableViewController.h"
 
-@implementation DopeCardViewController
+@implementation DopeCardTableViewController
 @synthesize dopeCardSectionHeaderView;
 @synthesize weaponLabel;
 @synthesize zeroLabel;
@@ -20,11 +20,10 @@
 @synthesize rangeLabel;
 @synthesize dropLabel;
 @synthesize driftLabel;
-@synthesize tableView;
-@synthesize selectedDopeCard;
+@synthesize selectedDopeCard = _dopeCard;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)initWithStyle:(UITableViewStyle)style {
+    self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
     }
@@ -37,18 +36,22 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.title = selectedDopeCard.name;
-    self.weaponLabel.text = selectedDopeCard.weapon.description;
-    self.zeroLabel.text = [NSString stringWithFormat:@"%@ %@", selectedDopeCard.zero, selectedDopeCard.range_unit];
-    self.mvLabel.text   = [NSString stringWithFormat:@"%@ fps",selectedDopeCard.muzzle_velocity];
-    self.weatherLabel.text = selectedDopeCard.weather_info;
-    self.windInfoLabel.text = selectedDopeCard.wind_info;
-    self.leadInfoLabel.text = selectedDopeCard.lead_info;
-    self.notesLabel.text = selectedDopeCard.notes;
-    self.rangeLabel.text = selectedDopeCard.range_unit;
-    self.dropLabel.text  = selectedDopeCard.drop_unit;
-    self.driftLabel.text = selectedDopeCard.drift_unit;
+    [self loadDopeCard];
     [self.tableView reloadData];
+}
+
+- (void)loadDopeCard {
+    self.title = _dopeCard.name;
+    self.weaponLabel.text = _dopeCard.weapon.description;
+    if (_dopeCard.zero.length > 0) self.zeroLabel.text = [NSString stringWithFormat:@"%@ %@", _dopeCard.zero, _dopeCard.range_unit];
+    if (_dopeCard.muzzle_velocity.length > 0) self.mvLabel.text = [_dopeCard.muzzle_velocity stringByAppendingString:@" fps"];
+    if (_dopeCard.weather_info.length > 0) self.weatherLabel.text = _dopeCard.weather_info;
+    if (_dopeCard.wind_info.length > 0) self.windInfoLabel.text = _dopeCard.wind_info;
+    if (_dopeCard.lead_info.length > 0) self.leadInfoLabel.text = _dopeCard.lead_info;
+    if (_dopeCard.notes.length > 0) self.notesLabel.text = _dopeCard.notes;
+    self.rangeLabel.text = _dopeCard.range_unit;
+    self.dropLabel.text  = _dopeCard.drop_unit;
+    self.driftLabel.text = _dopeCard.drift_unit;
 }
 
 - (void)viewDidUnload {
@@ -59,7 +62,6 @@
     [self setWindInfoLabel:nil];
     [self setLeadInfoLabel:nil];
     [self setNotesLabel:nil];
-    [self setTableView:nil];
     [self setRangeLabel:nil];
     [self setDropLabel:nil];
     [self setDriftLabel:nil];
@@ -77,7 +79,7 @@
     
     if ([segueID isEqualToString:@"EditDopeCard"]) {
         DopeCardsAddEditViewController *dst = [[segue.destinationViewController viewControllers] objectAtIndex:0];
-        dst.selectedDopeCard = self.selectedDopeCard;
+        dst.selectedDopeCard = _dopeCard;
     }
 }
 
@@ -88,17 +90,21 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [selectedDopeCard.dope_data count]/3;
+    return [_dopeCard.dope_data count]/3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    DopeCardRowCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DopeCardRowCell"];
-    
-    cell.rangeLabel.text = [selectedDopeCard.dope_data objectAtIndex:(indexPath.row * 3) + 0];
-    cell.dropLabel.text  = [selectedDopeCard.dope_data objectAtIndex:(indexPath.row * 3) + 1];
-    cell.driftLabel.text = [selectedDopeCard.dope_data objectAtIndex:(indexPath.row * 3) + 2];
-        
+    static NSString *CellIdentifier = @"DopeCardRowCell";
+    DopeCardRowCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];    
+    [self configureCell:cell atIndexPath:indexPath];
     return cell;
+}
+
+-(void)configureCell:(DopeCardRowCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    int index = indexPath.row * 3;
+    cell.rangeLabel.text = [_dopeCard.dope_data objectAtIndex:index + 0];
+    cell.dropLabel.text  = [_dopeCard.dope_data objectAtIndex:index + 1];
+    cell.driftLabel.text = [_dopeCard.dope_data objectAtIndex:index + 2];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath { 

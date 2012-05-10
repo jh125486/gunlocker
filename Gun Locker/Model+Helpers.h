@@ -58,3 +58,7 @@
 -(double)getBCWithSpeedOfSound:(double)speed andVelocity:(double)velocity;
 -(void)calculateTheta;
 @end
+
+@interface Bullet (helper)
+- (NSString *)description;
+@end

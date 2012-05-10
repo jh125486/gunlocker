@@ -12,9 +12,7 @@
 @implementation SettingsViewController
 @synthesize nightModeControl;
 @synthesize rangeUnitsControl;
-@synthesize rangeStart;
-@synthesize rangeEnd;
-@synthesize rangeStep;
+@synthesize rangeStartStepper, rangeEndStepper, rangeStepStepper;
 @synthesize reticleUnitsControl;
 @synthesize windLeadingLabel;
 @synthesize directionControl;
@@ -40,19 +38,19 @@
     rangeUnitsControl.selectedSegmentIndex   = [defaults integerForKey:@"rangeUnitsControl"];
     reticleUnitsControl.selectedSegmentIndex = [defaults integerForKey:@"reticleUnitsControl"];
 
-    rangeStart.Current = [defaults integerForKey:@"rangeStart"];
-    rangeEnd.Current   = [defaults integerForKey:@"rangeEnd"];
-    rangeStep.Current  = [defaults integerForKey:@"rangeStep"];
-    rangeStart.Minimum = 5;
-    rangeStart.Maximum = 500;
-    rangeEnd.Minimum   = 100;
-    rangeEnd.Maximum   = 2000;
-    rangeStep.Minimum  = 1;
-    rangeStep.Maximum  = 250;
-    rangeStart.VariableSteps = rangeEnd.VariableSteps = rangeStep.VariableSteps = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:1], [NSNumber numberWithInt:5],  [NSNumber numberWithInt:50], nil];
-    rangeStart.VariableRanges = rangeEnd.VariableRanges = rangeStep.VariableRanges = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:10], [NSNumber numberWithInt:50], nil];
-    rangeStart.NumDecimals = rangeEnd.NumDecimals = rangeStep.NumDecimals = 0;
-    rangeStart.IsEditableTextField = rangeEnd.IsEditableTextField = rangeStep.IsEditableTextField = NO;
+    rangeStartStepper.Current = [defaults integerForKey:@"rangeStart"];
+    rangeEndStepper.Current   = [defaults integerForKey:@"rangeEnd"];
+    rangeStepStepper.Current  = [defaults integerForKey:@"rangeStep"];
+    rangeStartStepper.Minimum = 5;
+    rangeStartStepper.Maximum = 500;
+    rangeEndStepper.Minimum   = 100;
+    rangeEndStepper.Maximum   = 2000;
+    rangeStepStepper.Minimum  = 1;
+    rangeStepStepper.Maximum  = 250;
+    rangeStartStepper.VariableSteps = rangeEndStepper.VariableSteps = rangeStepStepper.VariableSteps = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:1], [NSNumber numberWithInt:5],  [NSNumber numberWithInt:50], nil];
+    rangeStartStepper.VariableRanges = rangeEndStepper.VariableRanges = rangeStepStepper.VariableRanges = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:10], [NSNumber numberWithInt:50], nil];
+    rangeStartStepper.NumDecimals = rangeEndStepper.NumDecimals = rangeStepStepper.NumDecimals = 0;
+    rangeStartStepper.IsEditableTextField = rangeEndStepper.IsEditableTextField = rangeStepStepper.IsEditableTextField = NO;
     
     windLeadingLabel.text = [NSString stringWithFormat:@"%@ %@", [defaults stringForKey:@"speedType"], [defaults stringForKey:@"speedUnit"]];
     directionControl.selectedSegmentIndex = [defaults integerForKey:@"directionControl"];
@@ -69,9 +67,9 @@
     [self setRangeUnitsControl:nil];
     [self setReticleUnitsControl:nil];
     [self setPasscodeCell:nil];
-    [self setRangeStart:nil];
-    [self setRangeEnd:nil];
-    [self setRangeStep:nil];
+    [self setRangeStartStepper:nil];
+    [self setRangeEndStepper:nil];
+    [self setRangeStepStepper:nil];
     [self setWindLeadingLabel:nil];
     [self setDirectionControl:nil];
     [self setShowNFAInformationSwitch:nil];
@@ -104,9 +102,9 @@
     [defaults setInteger:[rangeUnitsControl selectedSegmentIndex] forKey:@"rangeUnitsControl"];
     [defaults setInteger:[reticleUnitsControl selectedSegmentIndex] forKey:@"reticleUnitsControl"];
     [defaults setInteger:[directionControl selectedSegmentIndex] forKey:@"directionControl"];
-    [defaults setInteger:(int)rangeStart.Current forKey:@"rangeStart"];
-    [defaults setInteger:(int)rangeEnd.Current forKey:@"rangeEnd"];
-    [defaults setInteger:(int)rangeStep.Current forKey:@"rangeStep"];
+    [defaults setInteger:(int)rangeStartStepper.Current forKey:@"rangeStart"];
+    [defaults setInteger:(int)rangeEndStepper.Current forKey:@"rangeEnd"];
+    [defaults setInteger:(int)rangeStepStepper.Current forKey:@"rangeStep"];
 }
 
 - (void)windLeadingTableViewController:(WindLeadingTableViewController *)controller didSelectWindLeading:(NSString *)selectedWindLeading {
@@ -129,6 +127,12 @@
         
         [message show];
     }
+}
+
+- (IBAction)setStepperRanges:(id)sender {
+    self.rangeStartStepper.Maximum = self.rangeEndStepper.Current - self.rangeStepStepper.Current;
+    self.rangeEndStepper.Minimum   = self.rangeStartStepper.Current + self.rangeStepStepper.Current;
+    self.rangeStepStepper.Maximum  = self.rangeEndStepper.Current - self.rangeStartStepper.Current;    
 }
 
 @end

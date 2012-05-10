@@ -65,7 +65,7 @@
         return self.profile.weapon.description;
     } else if (section == 1) {
         if (self.profile.bullet) {
-            return self.profile.bullet.name;
+            return self.profile.bullet.description;
         } else {
             return @"Bullet";
         }

@@ -44,5 +44,6 @@
 
 - (IBAction)calculate:(id)sender;
 - (IBAction)setToDefaultEnvironmentTapped:(id)sender;
+- (IBAction)setStepperRanges:(id)sender;
 
 @end

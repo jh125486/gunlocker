@@ -207,3 +207,14 @@
 }
 
 @end
+
+@implementation Bullet (helper)
+
+- (NSString *)description {
+    NSMutableString *description = [[NSMutableString alloc] initWithFormat:@"%@ %@", self.brand, self.name];
+    if (![self.brand isEqualToString:self.category]) [description appendFormat:@" (%@)", self.category];
+
+    return [NSString stringWithString:description];    
+}
+
+@end
