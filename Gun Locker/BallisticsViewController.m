@@ -13,7 +13,9 @@
 @synthesize rangeLabel, rangeResult, rangeResultUnits;
 @synthesize tempLabel, windLabel, altitudeLabel, densityAltitudeLabel, rhLabel;
 @synthesize wxButton, wxStationLabel, wxIndicator, wxTimestampLabel;
-@synthesize chooseProfileButton, selectedProfileTextField, selectedProfilePickerView, selectedProfileWeaponLabel, selectedProfileNameLabel;
+@synthesize chooseProfileButton, selectedProfileTextField;
+@synthesize selectedProfilePickerView = _selectedProfilePickerView;
+@synthesize selectedProfileWeaponLabel, selectedProfileNameLabel;
 @synthesize dopeCardsButton, whizWheelButton;
 
 @synthesize locationManager, currentLocation, locationTimer;
@@ -29,9 +31,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-// TESTING Trajectory
+        
+//// TESTING Trajectory
     if ([BallisticProfile countOfEntities] == 0) {
         BallisticProfile *ballisticProfile1 = [BallisticProfile createEntity];
         ballisticProfile1.bullet_weight = [NSNumber numberWithInt:55.0];
@@ -44,7 +45,6 @@
         ballisticProfile1.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
         ballisticProfile1.weapon = [[Weapon findAll] objectAtIndex:1];
         [ballisticProfile1 calculateTheta];
-        NSLog(@"angle %@", ballisticProfile1.zero_theta);
         
         BallisticProfile *ballisticProfile2 = [BallisticProfile createEntity];
 
@@ -58,18 +58,18 @@
         ballisticProfile2.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
         ballisticProfile2.weapon = [[Weapon findAll] objectAtIndex:0];
         [ballisticProfile2 calculateTheta];
-        NSLog(@"angle %@", ballisticProfile2.zero_theta);
+
+        [[NSManagedObjectContext defaultContext] save];
     }
-// TESTING trajectory
-    
+//// TESTING trajectory
     
     self.title = @"Ballistics";
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
     
-    selectedProfilePickerView = [[UIPickerView alloc] init];
-    selectedProfilePickerView.delegate = self;
-    [selectedProfilePickerView setShowsSelectionIndicator:YES];
-    self.selectedProfileTextField.inputView = selectedProfilePickerView;
+    _selectedProfilePickerView = [[UIPickerView alloc] init];
+    _selectedProfilePickerView.delegate = self;
+    [_selectedProfilePickerView setShowsSelectionIndicator:YES];
+    self.selectedProfileTextField.inputView = _selectedProfilePickerView;
     UIToolbar* textFieldToolBarView = [[UIToolbar alloc] init];
     textFieldToolBarView.barStyle = UIBarStyleBlack;
     textFieldToolBarView.translucent = YES;
@@ -96,16 +96,24 @@
                                                         userInfo:nil 
                                                          repeats:NO];
     
-    profiles = [[BallisticProfile findAll] mutableCopy];
     
     //Register setRange to recieve "setRange" notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];
-    
-    [self setUpPickerData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    profiles = [BallisticProfile findAll];
+    NSLog(@"Profile count: %d (%d)", [profiles count], [BallisticProfile countOfEntities]);
+    
+    [self setUpPickerData];
+    [_selectedProfilePickerView reloadAllComponents];
+    if ([profiles containsObject:selectedProfile]) {
+        [_selectedProfilePickerView selectRow:[profiles indexOfObject:selectedProfile] inComponent:0 animated:NO];
+    } else {
+        [self resetChooseProfileButton];
+    }        
     
     self.chooseProfileButton.enabled = (profiles.count != 0);
     
@@ -113,6 +121,7 @@
     
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 }
+
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -152,8 +161,6 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString *segueID = segue.identifier;
     
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
-    
 	if ([segueID isEqualToString:@"WhizWheel"]) {
         ((WhizWheelViewController *)segue.destinationViewController).selectedProfile = selectedProfile;
     } else if ([segueID isEqualToString:@"DopeTable"]) {
@@ -162,6 +169,8 @@
     }  else if ([segueID isEqualToString:@"ShowProfile"]) {
         ((ProfileViewTableViewController *)segue.destinationViewController).profile = selectedProfile;
     }
+
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void)setRange:(NSNotification*)notification {
@@ -216,13 +225,24 @@
     self.selectedProfileWeaponLabel.text = [selectedProfile.weapon description];
     self.selectedProfileNameLabel.text = selectedProfile.name;
     
-    [chooseProfileButton setTitle:@"" forState:UIControlStateNormal];
-    [chooseProfileButton setTitle:@"" forState:UIControlStateHighlighted];
-    [chooseProfileButton setTitle:@"" forState:UIControlStateSelected];
+    [self.chooseProfileButton setTitle:@"" forState:UIControlStateNormal];
+    [self.chooseProfileButton setTitle:@"" forState:UIControlStateHighlighted];
+    [self.chooseProfileButton setTitle:@"" forState:UIControlStateSelected];
 //    chooseProfileButton.titleLabel.textAlignment = UITextAlignmentCenter;
-    dopeCardsButton.enabled = YES;
-    whizWheelButton.enabled = YES;
+    self.dopeCardsButton.enabled = YES;
+    self.whizWheelButton.enabled = YES;
     [self.selectedProfileTextField resignFirstResponder];
+}
+
+-(void)resetChooseProfileButton {
+    selectedProfile = nil;
+    [self.chooseProfileButton setTitle:@"Choose a Profile" forState:UIControlStateNormal];
+    [self.chooseProfileButton setTitle:@"Choose a Profile" forState:UIControlStateHighlighted];
+    [self.chooseProfileButton setTitle:@"Choose a Profile" forState:UIControlStateSelected];
+    self.selectedProfileWeaponLabel.text = @"";
+    self.selectedProfileNameLabel.text = @"";
+    self.dopeCardsButton.enabled = NO;
+    self.whizWheelButton.enabled = NO;
 }
 
 - (void)profileCancel:(id)sender {
@@ -286,33 +306,11 @@
 }
 
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-//    if (view == nil) {
-//        BallisticProfile *profile = [profiles objectAtIndex:row];
-//        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-//        view.backgroundColor = [UIColor clearColor];
-//        UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(16, 1, 56, 42)];
-//        thumbNail.image = [UIImage imageWithData:profile.weapon.photo_thumbnail];
-//        UILabel *firstLine  = [[UILabel alloc] initWithFrame:CGRectMake(75, 0, 230, 22)];
-//        UILabel *secondLine = [[UILabel alloc] initWithFrame:CGRectMake(75, 22, 230, 22)];
-//        firstLine.backgroundColor = [UIColor clearColor];
-//        secondLine.backgroundColor = [UIColor clearColor];
-//        firstLine.font  = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22];
-//        secondLine.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:18];
-//        firstLine.textColor = [UIColor blackColor];
-//        secondLine.textColor = [UIColor darkGrayColor];
-//        firstLine.adjustsFontSizeToFitWidth = YES;
-//        firstLine.text  = [NSString stringWithFormat:@"%@", profile.weapon];
-//        secondLine.text = [NSString stringWithFormat:@"%@", profile.name];
-//        [view addSubview:thumbNail];
-//        [view addSubview:firstLine];
-//        [view addSubview:secondLine];
-//    }
-//    return view;    
     return [profilePickerData objectAtIndex:row];
 }
 
 - (void)setUpPickerData {
-    profilePickerData = [[NSMutableArray alloc] init];
+    profilePickerData = [[NSMutableArray alloc] initWithCapacity:[profiles count]];
     
     for(BallisticProfile *profile in profiles) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
@@ -358,6 +356,22 @@
         default:
             break;
     }
+}
+
+#pragma mark Table delegates
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
+	tableView.sectionHeaderHeight = headerView.frame.size.height;
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 24)];
+	label.text = [self tableView:tableView titleForHeaderInSection:section];
+	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
+	label.shadowColor = [UIColor clearColor];
+	label.backgroundColor = [UIColor clearColor];
+	label.textColor = [UIColor blackColor];
+    
+	[headerView addSubview:label];
+	return headerView;
 }
 
 @end

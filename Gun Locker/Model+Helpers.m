@@ -92,7 +92,7 @@
         theta += dtheta;
     }
     self.zero_theta = [NSNumber numberWithDouble:theta]; // angle in radians
-    NSLog(@"theta angle: %f", theta);
+    NSLog(@"zero theta angle: %f Rads\t%fº\t%f MOA", theta, RAD_to_DEGREES(theta), RAD_to_MOA(theta));
 }
 
 -(double)ballisticCoefficientWithVelocity:(double)velocity {
@@ -215,6 +215,14 @@
     if (![self.brand isEqualToString:self.category]) [description appendFormat:@" (%@)", self.category];
 
     return [NSString stringWithString:description];    
+}
+
++(NSString *)bcToString:(NSArray*)bc {
+    NSMutableString *bcText = [[NSMutableString alloc] initWithFormat:@"BC: %@", [bc objectAtIndex:0]];
+    for (int i = 1; i < bc.count; i += 2) 
+        [bcText appendFormat:@"/%@", [bc objectAtIndex:i]];
+    
+    return [NSString stringWithString:bcText];
 }
 
 @end

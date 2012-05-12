@@ -15,7 +15,6 @@
 
 @interface ProfileAddEditViewController : UITableViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
     Weapon *selectedWeapon;
-    Bullet *selectedBullet;
     NSArray *weapons;
     NSMutableArray *weaponViews;
     NSArray *manually_entered_bc;
@@ -31,9 +30,7 @@
 @property (retain, nonatomic) UIPickerView *weaponPicker;
 
 @property (weak, nonatomic) IBOutlet UITextField *muzzleVelocityTextField;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *muzzleVelocityUnitControl;
 @property (weak, nonatomic) IBOutlet UITextField *siteHeightTextField;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *siteHeightUnitControl;
 @property (weak, nonatomic) IBOutlet UITextField *zeroDistanceTextField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *zeroDistanceUnitControl;
 
@@ -52,7 +49,7 @@
 - (IBAction)dragModelChanged:(UISegmentedControl *)sender;
 - (IBAction)bulletFieldChanged:(UITextField *)sender;
 
-
 - (IBAction)cancelTapped:(id)sender;
 - (IBAction)saveTapped:(id)sender;
+
 @end

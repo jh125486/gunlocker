@@ -16,11 +16,10 @@
 #import "ProfileViewTableViewController.h"
 
 @interface BallisticsViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate, UIActionSheetDelegate> {
-    NSMutableArray *profiles;
+    NSArray *profiles;
     BallisticProfile *selectedProfile;
     NSMutableArray *profilePickerData;
 }
-
 
 @property (weak, nonatomic) IBOutlet UILabel *rangeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *wxButton;

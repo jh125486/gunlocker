@@ -10,18 +10,10 @@
 
 @implementation ProfileAddEditViewController
 @synthesize nameTextField;
-@synthesize weaponTextField, weaponPicker;
-@synthesize muzzleVelocityTextField, muzzleVelocityUnitControl;
-@synthesize siteHeightTextField, siteHeightUnitControl;
-@synthesize zeroDistanceTextField, zeroDistanceUnitControl;
-@synthesize selectedProfile, selectedBullet;
-@synthesize diameterTextField;
-@synthesize weightTextField;
-@synthesize weaponButton;
-@synthesize bulletButton;
-@synthesize dragModelControl;
-@synthesize bcButton;
-@synthesize bcButtonTopEdgeView;
+@synthesize weaponButton, weaponTextField, weaponPicker;
+@synthesize muzzleVelocityTextField, siteHeightTextField, zeroDistanceTextField, zeroDistanceUnitControl;
+@synthesize selectedBullet = _selectedBullet;
+@synthesize selectedProfile, diameterTextField, weightTextField, bulletButton, dragModelControl, bcButton, bcButtonTopEdgeView;
 @synthesize currentTextField;
 
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -50,7 +42,7 @@
     for(UITextField *field in formFields)
         field.delegate = self;
     
-    self.siteHeightTextField.keyboardType = self.diameterTextField.keyboardType = self.weightTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    self.siteHeightTextField.keyboardType = self.diameterTextField.keyboardType = UIKeyboardTypeDecimalPad;
     
     self.weaponPicker = [[UIPickerView alloc] init];
     self.weaponPicker.delegate = self;
@@ -60,7 +52,7 @@
     weapons = [Weapon findAll];
     [self setUpPickerData];
     
-    if (selectedProfile) [self loadTextFieldsFromProfile];
+    if (self.selectedProfile) [self loadProfile];
 
     //Register self to recieve notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectBullet:) name:@"selectedBullet" object:nil];
@@ -74,8 +66,6 @@
     [self setMuzzleVelocityTextField:nil];
     [self setSiteHeightTextField:nil];
     [self setZeroDistanceTextField:nil];
-    [self setMuzzleVelocityUnitControl:nil];
-    [self setSiteHeightUnitControl:nil];
     [self setZeroDistanceUnitControl:nil];
     [self setNameTextField:nil];
     [self setWeaponTextField:nil];
@@ -93,30 +83,28 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)loadTextFieldsFromProfile {
-    selectedBullet = self.selectedProfile.bullet;
+- (void)loadProfile {
+    self.title = @"Edit Profile";
+    
+    _selectedBullet = self.selectedProfile.bullet;
+    drag_model = self.selectedProfile.drag_model;
+    selectedWeapon = self.selectedProfile.weapon;
     self.nameTextField.text           = self.selectedProfile.name;
-    [self.weaponButton setTitle:self.selectedProfile.weapon.description forState:UIControlStateNormal];
-    [self.weaponPicker selectRow:[weapons indexOfObject:self.selectedProfile.weapon] inComponent:0 animated:NO];
+    [self.weaponButton setTitle:selectedWeapon.description forState:UIControlStateNormal];
+    [self.weaponPicker selectRow:[weapons indexOfObject:selectedWeapon] inComponent:0 animated:NO];
     self.muzzleVelocityTextField.text = [self.selectedProfile.muzzle_velocity stringValue];
     self.siteHeightTextField.text     = [self.selectedProfile.sight_height_inches stringValue];
     self.zeroDistanceTextField.text   = [self.selectedProfile.zero stringValue];
-    self.diameterTextField.text       = [self.selectedProfile.bullet_diameter_inches stringValue];
-    self.weightTextField.text         = [self.selectedProfile.bullet_weight stringValue];
-    self.dragModelControl.selectedSegmentIndex = [dragModels indexOfObject:self.selectedProfile.drag_model];
-    
-    
-    NSArray *bc = [self.selectedProfile.bullet_bc objectForKey:drag_model];
-    NSMutableString *bcText = [[NSMutableString alloc] initWithFormat:@"%@", [bc objectAtIndex:0]];
-    if (bc.count > 1) [bcText appendString:@" and ..."];
-    [self.bcButton setTitle:bcText forState:UIControlStateNormal];
-    
-    if (selectedBullet) {
-        [self.bulletButton setTitle:selectedBullet.description forState:UIControlStateNormal];
+            
+    if (_selectedBullet) {
+        [self.bulletButton setTitle:_selectedBullet.description forState:UIControlStateNormal];
     } else {
         manually_entered_bc = self.selectedProfile.bullet_bc;
     }
-    
+    self.diameterTextField.text       = [self.selectedProfile.bullet_diameter_inches stringValue];
+    self.weightTextField.text         = [self.selectedProfile.bullet_weight stringValue];
+    self.dragModelControl.selectedSegmentIndex = [dragModels indexOfObject:drag_model];
+    [self setBCButtonTitle:[Bullet bcToString:self.selectedProfile.bullet_bc]];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -125,27 +113,23 @@
 	if ([segueID isEqualToString:@"BulletChooser"]) {
         UINavigationController *destinationController = segue.destinationViewController;
 		BulletChooserViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
-        dst.selectedBullet = selectedBullet;
+        dst.selectedBullet = _selectedBullet;
     } else if ([segueID isEqualToString:@"ManualBCEntry"]) {
         UINavigationController *destinationController = segue.destinationViewController;
 		BulletBCEntryViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
-        dst.passedBulletBC =  manually_entered_bc ? manually_entered_bc : [selectedBullet.ballistic_coefficient objectForKey:drag_model];
+        dst.passedBulletBC =  manually_entered_bc ? manually_entered_bc : [_selectedBullet.ballistic_coefficient objectForKey:drag_model];
         dst.selectedDragModel = drag_model;
     }   
 }
 
 # pragma mark NS notifiers
 - (void)didSelectBullet:(NSNotification*) notification  {
-    selectedBullet = [notification object];
-    NSArray *bc = [selectedBullet.ballistic_coefficient objectForKey:drag_model];
-    NSMutableString *bcText = [[NSMutableString alloc] initWithFormat:@"BC: %@", [bc objectAtIndex:0]];
-    for (int i = 1; i < bc.count; i += 2)
-        [bcText appendFormat:@"/%@", [bc objectAtIndex:i]];
+    self.selectedBullet = [notification object];
     
-    [self.bulletButton setTitle:selectedBullet.description forState:UIControlStateNormal];
-    self.diameterTextField.text = [selectedBullet.diameter_inches stringValue];
-    self.weightTextField.text   = [selectedBullet.weight_grains stringValue];
-    [self.bcButton setTitle:bcText forState:UIControlStateNormal];
+    [self.bulletButton setTitle:self.selectedBullet.description forState:UIControlStateNormal];
+    self.diameterTextField.text = [_selectedBullet.diameter_inches stringValue];
+    self.weightTextField.text   = [_selectedBullet.weight_grains stringValue];
+    [self setBCButtonTitle:[Bullet bcToString:[self.selectedBullet.ballistic_coefficient objectForKey:drag_model]]];
     
     manually_entered_bc = nil;
 }   
@@ -157,16 +141,10 @@
 
 - (void)didManuallyEnterBC:(NSNotification*) notification {
     if ([[notification object] count] == 0 ) return;
-    
     manually_entered_bc = [notification object];
-    
-    NSMutableString *bcText = [[NSMutableString alloc] initWithFormat:@"BC: %@", [manually_entered_bc objectAtIndex:0]];
-    for (int i = 1; i < manually_entered_bc.count; i += 2)
-        [bcText appendFormat:@"/%@", [manually_entered_bc objectAtIndex:i]];
 
-    [self.bcButton setTitle:bcText forState:UIControlStateNormal];
-    
-    selectedBullet = nil;
+    self.selectedBullet = nil;    
+    [self setBCButtonTitle:[Bullet bcToString:manually_entered_bc]];
 }
 
 # pragma mark Button Actions
@@ -178,15 +156,19 @@
     [self resetSelectedBullet];
     manually_entered_bc = nil;
     drag_model = [self.dragModelControl titleForSegmentAtIndex:self.dragModelControl.selectedSegmentIndex];
+    [self setBCButtonTitle:@"Enter Ballistic Coefficient"];
+}
+
+-(void)setBCButtonTitle:(NSString *)title {
+    [self.bcButton setTitle:title forState:UIControlStateNormal];
     self.bcButton.enabled = YES;
     self.bcButtonTopEdgeView.backgroundColor = [UIColor blackColor];
-    [self.bcButton setTitle:@"Enter Ballistic Coefficient" forState:UIControlStateNormal];
 }
 
 - (void)resetSelectedBullet {
-    if (selectedBullet) {
-        manually_entered_bc = [selectedBullet.ballistic_coefficient objectForKey:drag_model];
-        selectedBullet = nil;
+    if (_selectedBullet) {
+        manually_entered_bc = [self.selectedBullet.ballistic_coefficient objectForKey:drag_model];
+        self.selectedBullet = nil;
         [self.bulletButton setTitle:@"Select a Bullet" forState:UIControlStateNormal];
     }
 }
@@ -200,17 +182,32 @@
 }
 
 - (IBAction)saveTapped:(id)sender {
-    NSLog(@"Name: %@", self.nameTextField.text);
-    NSLog(@"Weapon: %@", selectedWeapon.description);
-    NSLog(@"%@ / %@ / %@", self.muzzleVelocityTextField.text, self.siteHeightTextField.text, self.zeroDistanceTextField.text);
-    NSLog(@"Bullet: %@", selectedBullet.description);
-    NSLog(@"%@ / %@", self.diameterTextField.text, self.weightTextField.text);
-    NSLog(@"Drag Model: %@", drag_model);
-    NSLog(@"BC: %@", manually_entered_bc ? manually_entered_bc : [selectedBullet.ballistic_coefficient objectForKey:drag_model]);
+    // if some fields are blank, throw up uialertview
     
-// either save the manually entered bullet data, or link selectedBullet to the profile
-//    [self.selectedProfile calculateTheta];
+    BallisticProfile *profile = (self.selectedProfile == nil) ? [BallisticProfile createEntity] : self.selectedProfile;
+    
+    profile.name = self.nameTextField.text;
+    profile.weapon = selectedWeapon;
+    profile.muzzle_velocity = [NSNumber numberWithInteger:[self.muzzleVelocityTextField.text intValue]];
+    profile.sight_height_inches = [NSNumber numberWithDouble:[self.siteHeightTextField.text doubleValue]];
+    profile.zero = [NSNumber numberWithInteger:[self.zeroDistanceTextField.text integerValue]];
+
+    if (_selectedBullet != nil) { // either link selectedBullet to the profile or set the manually entered bullet data
+        profile.bullet = _selectedBullet;
+        profile.bullet_bc = [_selectedBullet.ballistic_coefficient objectForKey:drag_model];
+    } else {
+        profile.bullet_bc = manually_entered_bc;
+    }
+    
+    profile.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:self.diameterTextField.text];
+    profile.bullet_weight = [NSNumber numberWithInteger:[self.weightTextField.text intValue]];
+    profile.drag_model = drag_model;
+
+    [self.selectedProfile calculateTheta];
+    NSLog(@"tried to saved %@", profile);
+    
     [[NSManagedObjectContext defaultContext] save];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark TextField delegates
@@ -323,6 +320,22 @@
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 1;
+}
+
+#pragma mark Table delegates
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
+	tableView.sectionHeaderHeight = headerView.frame.size.height;
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 24)];
+	label.text = [self tableView:tableView titleForHeaderInSection:section];
+	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
+	label.shadowColor = [UIColor clearColor];
+	label.backgroundColor = [UIColor clearColor];
+	label.textColor = [UIColor blackColor];
+    
+	[headerView addSubview:label];
+	return headerView;
 }
 
 @end

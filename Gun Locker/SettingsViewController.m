@@ -27,7 +27,6 @@
     return self;
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -80,31 +79,15 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"WindLeadingTable"])
+        [[segue destinationViewController] setDelegate:self];
+}
+
+#pragma mark Method Delegates
+
 - (void)didSettingsChanged:(KKPasscodeSettingsViewController*)viewController {
     self.passcodeCell.detailTextLabel.text = ([[KKPasscodeLock sharedLock] isPasscodeRequired]) ? @"On" : @"Off";
-}
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if(cell == self.passcodeCell) {
-        KKPasscodeSettingsViewController *vc = [[KKPasscodeSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        vc.delegate = self;
-        [self.navigationController pushViewController:vc animated:YES];        
-    }
-}
-
-- (IBAction)saveSettings:(id)sender {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-    [defaults setBool:showNFAInformationSwitch.on forKey:@"showNFADetails"];
-    [defaults setInteger:[nightModeControl selectedSegmentIndex] forKey:@"nightModeControl"];
-    [defaults setInteger:[rangeUnitsControl selectedSegmentIndex] forKey:@"rangeUnitsControl"];
-    [defaults setInteger:[reticleUnitsControl selectedSegmentIndex] forKey:@"reticleUnitsControl"];
-    [defaults setInteger:[directionControl selectedSegmentIndex] forKey:@"directionControl"];
-    [defaults setInteger:(int)rangeStartStepper.Current forKey:@"rangeStart"];
-    [defaults setInteger:(int)rangeEndStepper.Current forKey:@"rangeEnd"];
-    [defaults setInteger:(int)rangeStepStepper.Current forKey:@"rangeStep"];
 }
 
 - (void)windLeadingTableViewController:(WindLeadingTableViewController *)controller didSelectWindLeading:(NSString *)selectedWindLeading {
@@ -112,10 +95,7 @@
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"WindLeadingTable"])
-        [[segue destinationViewController] setDelegate:self];
-}
+#pragma mark Actions
 
 - (IBAction)showNFAInformationTapped:(id)sender {
     if (((UISwitch *)sender).isOn) {
@@ -129,10 +109,48 @@
     }
 }
 
+- (IBAction)saveSettings:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setBool:showNFAInformationSwitch.on forKey:@"showNFADetails"];
+    [defaults setInteger:[nightModeControl selectedSegmentIndex] forKey:@"nightModeControl"];
+    [defaults setInteger:[rangeUnitsControl selectedSegmentIndex] forKey:@"rangeUnitsControl"];
+    [defaults setInteger:[reticleUnitsControl selectedSegmentIndex] forKey:@"reticleUnitsControl"];
+    [defaults setInteger:[directionControl selectedSegmentIndex] forKey:@"directionControl"];
+    [defaults setInteger:(int)rangeStartStepper.Current forKey:@"rangeStart"];
+    [defaults setInteger:(int)rangeEndStepper.Current forKey:@"rangeEnd"];
+    [defaults setInteger:(int)rangeStepStepper.Current forKey:@"rangeStep"];
+}
+
 - (IBAction)setStepperRanges:(id)sender {
     self.rangeStartStepper.Maximum = self.rangeEndStepper.Current - self.rangeStepStepper.Current;
     self.rangeEndStepper.Minimum   = self.rangeStartStepper.Current + self.rangeStepStepper.Current;
     self.rangeStepStepper.Maximum  = self.rangeEndStepper.Current - self.rangeStartStepper.Current;    
+}
+
+#pragma mark Table delegates
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
+	tableView.sectionHeaderHeight = headerView.frame.size.height;
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 24)];
+	label.text = [self tableView:tableView titleForHeaderInSection:section];
+	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
+	label.shadowColor = [UIColor clearColor];
+	label.backgroundColor = [UIColor clearColor];
+	label.textColor = [UIColor blackColor];
+    
+	[headerView addSubview:label];
+	return headerView;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if(cell == self.passcodeCell) {
+        KKPasscodeSettingsViewController *vc = [[KKPasscodeSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        vc.delegate = self;
+        [self.navigationController pushViewController:vc animated:YES];        
+    }
 }
 
 @end

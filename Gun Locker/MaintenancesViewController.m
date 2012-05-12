@@ -71,7 +71,6 @@
     self.title = [NSString stringWithFormat:@"Maintenance (%d)", count];    
     self.noMaintenancesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Maintenance"]];
     self.noMaintenancesImageView.hidden = (count != 0);
-    NSLog(@"%@", self.noMaintenancesImageView.image);
 }
 
 - (void)viewDidUnload {

@@ -61,4 +61,5 @@
 
 @interface Bullet (helper)
 - (NSString *)description;
++(NSString *)bcToString:(NSArray*)bc;
 @end

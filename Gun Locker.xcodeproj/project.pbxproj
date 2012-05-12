@@ -116,6 +116,7 @@
 		5390EDE715152B9000746A93 /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390EDE615152B9000746A93 /* compass.png */; };
 		5391B8251526226F00582865 /* MalfunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5391B8241526226F00582865 /* MalfunctionCell.m */; };
 		539DBDF11515B2A300AB97FB /* tableview_skin.png in Resources */ = {isa = PBXBuildFile; fileRef = 539DBDF01515B2A300AB97FB /* tableview_skin.png */; };
+		539F2188155C390000DEB784 /* mil_dot_reticle_bullet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 539F2187155C390000DEB784 /* mil_dot_reticle_bullet@2x.png */; };
 		53A0E66815390F8B00846421 /* BulletChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A0E66715390F8B00846421 /* BulletChooserViewController.m */; };
 		53A0E66B153954F200846421 /* ProfileAddEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A0E66A153954F100846421 /* ProfileAddEditViewController.m */; };
 		53A0E687153A77FD00846421 /* Bullets in Resources */ = {isa = PBXBuildFile; fileRef = 53A0E686153A77FD00846421 /* Bullets */; };
@@ -360,7 +361,7 @@
 		53591A24152170DB00516C4C /* QuickDialog.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QuickDialog.xcodeproj; path = QuickDialog/QuickDialog.xcodeproj; sourceTree = "<group>"; };
 		53591A3E152181A000516C4C /* StampInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StampInfo.h; sourceTree = "<group>"; };
 		53591A3F152181A000516C4C /* StampInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StampInfo.m; sourceTree = "<group>"; };
-		53617977153F565E00F921A9 /* BulletBCEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = BulletBCEntryViewController.h; sourceTree = "<group>"; };
+		53617977153F565E00F921A9 /* BulletBCEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulletBCEntryViewController.h; sourceTree = "<group>"; };
 		53617978153F565E00F921A9 /* BulletBCEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BulletBCEntryViewController.m; sourceTree = "<group>"; };
 		53713F82152C28D7009B55B8 /* DopeCardsAddEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardsAddEditViewController.h; sourceTree = "<group>"; };
 		53713F83152C28D7009B55B8 /* DopeCardsAddEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DopeCardsAddEditViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -392,6 +393,7 @@
 		5391B8231526226F00582865 /* MalfunctionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MalfunctionCell.h; sourceTree = "<group>"; };
 		5391B8241526226F00582865 /* MalfunctionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MalfunctionCell.m; sourceTree = "<group>"; };
 		539DBDF01515B2A300AB97FB /* tableview_skin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableview_skin.png; sourceTree = "<group>"; };
+		539F2187155C390000DEB784 /* mil_dot_reticle_bullet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mil_dot_reticle_bullet@2x.png"; sourceTree = "<group>"; };
 		53A0E66615390F8B00846421 /* BulletChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulletChooserViewController.h; sourceTree = "<group>"; };
 		53A0E66715390F8B00846421 /* BulletChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BulletChooserViewController.m; sourceTree = "<group>"; };
 		53A0E669153954F100846421 /* ProfileAddEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileAddEditViewController.h; sourceTree = "<group>"; };
@@ -458,7 +460,7 @@
 		53CA98E0150A84E50060A1E8 /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weather.m; sourceTree = "<group>"; };
 		53D2633D1531EB4600ECA9EE /* DopeCardRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardRowCell.h; sourceTree = "<group>"; };
 		53D2633E1531EB4600ECA9EE /* DopeCardRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCardRowCell.m; sourceTree = "<group>"; };
-		53D263431531EBD000ECA9EE /* DopeCardTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = DopeCardTableViewController.h; sourceTree = "<group>"; };
+		53D263431531EBD000ECA9EE /* DopeCardTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardTableViewController.h; sourceTree = "<group>"; };
 		53D263441531EBD000ECA9EE /* DopeCardTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DopeCardTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53E31485151E8082005B414F /* icon_link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_link.png; sourceTree = "<group>"; };
 		53E31487151E8405005B414F /* icon_delink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_delink.png; sourceTree = "<group>"; };
@@ -622,22 +624,23 @@
 		530EA40214FC7AE000E132FB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				53405CC6151AA04500C7D84F /* add_photo.png */,
+				531D85B01522B259004BB3AA /* add_photo@2x.png */,
+				53908948151BB30C0048D5AE /* add_photo_highlight.png */,
+				531D85AF1522B259004BB3AA /* add_photo_highlight@2x.png */,
 				53E8314E1558808B0062893B /* BackgroundFabricTexture.png */,
+				53859F731504066100ABA0B1 /* brushed_steel_background.png */,
 				5314B9E7154DC54200FED997 /* DefaultButton_Disabled.png */,
 				5314B9E8154DC54200FED997 /* DefaultButton_Disabled@2x.png */,
 				5314B9E9154DC54200FED997 /* DefaultButton_Highlighted.png */,
 				5314B9EA154DC54200FED997 /* DefaultButton_Highlighted@2x.png */,
 				5314B9EB154DC54200FED997 /* DefaultButton_Normal.png */,
 				5314B9EC154DC54200FED997 /* DefaultButton_Normal@2x.png */,
-				53405CC6151AA04500C7D84F /* add_photo.png */,
-				531D85B01522B259004BB3AA /* add_photo@2x.png */,
-				53908948151BB30C0048D5AE /* add_photo_highlight.png */,
-				531D85AF1522B259004BB3AA /* add_photo_highlight@2x.png */,
-				53859F731504066100ABA0B1 /* brushed_steel_background.png */,
 				531D85AD1522A8EE004BB3AA /* delete_button.png */,
 				531D85B11522B259004BB3AA /* delete_button@2x.png */,
 				53F6AAC814FDE67E0079F613 /* Icons */,
 				53EBBD9A15171B1600488E63 /* mil_dot_reticle_bullet.png */,
+				539F2187155C390000DEB784 /* mil_dot_reticle_bullet@2x.png */,
 				53EBBD9615170E5100488E63 /* mil_dot_reticle_day.png */,
 				53EBBD9715170E5100488E63 /* mil_dot_reticle_night.png */,
 				530EA40A14FD30F200E132FB /* Notecard.png */,
@@ -1348,6 +1351,7 @@
 				53E831301555B2270062893B /* basic_auth.php in Resources */,
 				53E831311555B2270062893B /* digest_auth.php in Resources */,
 				53E8314F1558808B0062893B /* BackgroundFabricTexture.png in Resources */,
+				539F2188155C390000DEB784 /* mil_dot_reticle_bullet@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

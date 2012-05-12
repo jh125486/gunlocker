@@ -10,8 +10,9 @@
 #import "Bullet.h"
 #import "Weapon.h"
 #import "BallisticProfile.h"
+#import "ProfileAddEditViewController.h"
 
-@interface ProfileViewTableViewController : UITableViewController
+@interface ProfileViewTableViewController : UITableViewController <UIActionSheetDelegate>
 
 @property (weak, nonatomic) BallisticProfile *profile;
 @property (weak, nonatomic) IBOutlet UILabel *mvLabel;
@@ -22,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *dragModelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bcLabel;
 
-
-- (IBAction)editTapped:(id)sender;
+- (IBAction)deleteTapped:(id)sender;
 
 @end

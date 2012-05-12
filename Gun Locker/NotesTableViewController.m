@@ -108,7 +108,7 @@
     Note *currentNote = (self.selectedWeapon) ? [sections objectAtIndex:indexPath.row] : [[notes objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     cell.textLabel.text = currentNote.title;
     
-    cell.detailTextLabel.text = [NSDateFormatter localizedStringFromDate: currentNote.date
+    cell.detailTextLabel.text = [NSDateFormatter localizedStringFromDate:currentNote.date
                                                                dateStyle:NSDateFormatterShortStyle 
                                                                timeStyle:NSDateFormatterShortStyle];
     

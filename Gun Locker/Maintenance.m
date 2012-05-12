@@ -10,7 +10,6 @@
 #import "Malfunction.h"
 #import "Weapon.h"
 
-
 @implementation Maintenance
 
 @dynamic action_performed;
