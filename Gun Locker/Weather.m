@@ -18,6 +18,9 @@
     goodData = NO;
     
     if (self = [super init]) {
+        
+        
+        
         float longitude = location.coordinate.longitude;
         float latitude  = location.coordinate.latitude;
         self.altitude_m = location.altitude;

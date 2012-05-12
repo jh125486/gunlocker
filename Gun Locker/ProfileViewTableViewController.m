@@ -36,11 +36,11 @@
     self.title = self.profile.name;
     
     // TODO set up labels with units
-    self.mvLabel.text = [self.profile.muzzle_velocity stringValue];
-    self.sightHeightLabel.text = [self.profile.sight_height_inches stringValue];
-    self.zeroLabel.text = [self.profile.zero stringValue];
-    self.bulletDiameterLabel.text = [self.profile.bullet_diameter_inches stringValue];
-    self.bulletWeightLabel.text = [self.profile.bullet_weight stringValue];
+    self.mvLabel.text = [[self.profile.muzzle_velocity stringValue] stringByAppendingString:@" fps"];
+    self.sightHeightLabel.text = [[self.profile.sight_height_inches stringValue] stringByAppendingString:@"\""];
+    self.zeroLabel.text = [[self.profile.zero stringValue] stringByAppendingString:@" yards"];
+    self.bulletDiameterLabel.text = [[self.profile.bullet_diameter_inches stringValue] stringByAppendingString:@"\""];
+    self.bulletWeightLabel.text = [[self.profile.bullet_weight stringValue] stringByAppendingString:@" grains"];
     self.dragModelLabel.text = self.profile.drag_model;
     self.bcLabel.text = [[Bullet bcToString:self.profile.bullet_bc] substringFromIndex:4];
 }
@@ -82,35 +82,53 @@
 
 #pragma mark - Table view data source
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return self.profile.weapon.description;
-    } else if (section == 1) {
-        if (self.profile.bullet) {
-            return self.profile.bullet.description;
-        } else {
-            return @"Bullet";
-        }
+        return 60.0f;
     } else {
-        return @"";
+        return 30.0f;
     }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
-	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)];
-	tableView.sectionHeaderHeight = headerView.frame.size.height;
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 24)];
-	label.text = [self tableView:tableView titleForHeaderInSection:section];
-	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
-    label.minimumFontSize = 14.0f;
-    label.adjustsFontSizeToFitWidth = YES;
-    label.shadowColor = [UIColor clearColor];
-	label.backgroundColor = [UIColor clearColor];
-	label.textColor = [UIColor blackColor];
-    label.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
-    
-	[headerView addSubview:label];
-	return headerView;
+    if (section == 0) { // weapon
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 44)];
+        UILabel *manufacturer = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 22)];
+        manufacturer.adjustsFontSizeToFitWidth = YES;
+        manufacturer.text = self.profile.weapon.manufacturer.name;
+        manufacturer.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
+        manufacturer.minimumFontSize = 14.0f;
+        manufacturer.shadowColor = [UIColor clearColor];
+        manufacturer.backgroundColor = [UIColor clearColor];
+        manufacturer.textColor = [UIColor blackColor];
+        
+        UILabel *model = [[UILabel alloc] initWithFrame:CGRectMake(5, 30, headerView.frame.size.width - 20, 22)];
+        model.adjustsFontSizeToFitWidth = YES;
+        model.text = [self.profile.weapon.description substringFromIndex:manufacturer.text.length + 1];
+        model.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
+        model.minimumFontSize = 14.0f;
+        model.shadowColor = [UIColor clearColor];
+        model.backgroundColor = [UIColor clearColor];
+        model.textColor = [UIColor blackColor];
+
+        [headerView addSubview:manufacturer];
+        [headerView addSubview:model];
+        return headerView;
+        
+    } else { // bullet
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)];
+        UILabel *bullet = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 24)];
+        bullet.adjustsFontSizeToFitWidth = YES;
+        bullet.text =  (self.profile.bullet) ? self.profile.bullet.description : @"Bullet";
+        bullet.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
+        bullet.minimumFontSize = 14.0f;
+        bullet.shadowColor = [UIColor clearColor];
+        bullet.backgroundColor = [UIColor clearColor];
+        bullet.textColor = [UIColor blackColor];
+        
+        [headerView addSubview:bullet];
+        return headerView;
+    }
 }
 
 

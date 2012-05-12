@@ -32,12 +32,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //Register updateDopeCard to receive "editedDopeCard" notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateDopeCard:) name:@"editedDopeCard" object:nil];    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadDopeCard];
-    [self.tableView reloadData];
+    
 }
 
 - (void)loadDopeCard {
@@ -52,6 +55,7 @@
     self.rangeLabel.text = _dopeCard.range_unit;
     self.dropLabel.text  = _dopeCard.drop_unit;
     self.driftLabel.text = _dopeCard.drift_unit;
+    [self.tableView reloadData];
 }
 
 - (void)viewDidUnload {
@@ -82,6 +86,19 @@
         dst.selectedDopeCard = _dopeCard;
     }
 }
+
+// can only add dopeCard from weapon view, so no worry about updating sections
+- (void) updateDopeCard:(NSNotification*) notification {
+    _dopeCard = [notification object];
+    
+    NSError *error;
+    if(![[NSManagedObjectContext defaultContext] save:&error]) {
+        NSLog(@"error updating DopeCard");
+    } else {
+        NSLog(@"Updated DopeCard");
+    }    
+}
+
 
 #pragma mark - Table view data source
 

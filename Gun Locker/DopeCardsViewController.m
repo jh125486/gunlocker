@@ -80,13 +80,17 @@
                                                                             action:nil];
 }
 
-
 // can only add dopeCard from weapon view, so no worry about updating sections
 - (void) addNewDopeCard:(NSNotification*) notification {
     DopeCard *newDopeCard = [notification object];
     newDopeCard.weapon = self.selectedWeapon;
     
-    [[NSManagedObjectContext defaultContext] save];
+    NSError *error;
+    if(![[NSManagedObjectContext defaultContext] save:&error]) {
+        NSLog(@"error creating DopeCard");
+    } else {
+        NSLog(@"Saved new DopeCard");
+    }
 }
 
 #pragma mark - UITableViewDataSource

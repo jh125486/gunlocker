@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="AfA-Vr-bpm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="AfA-Vr-bpm">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
@@ -3319,7 +3319,7 @@
                         <barButtonItem key="backBarButtonItem" title="Dope Cards" id="QJc-a8-IbE"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="cdx-UT-NdU">
                             <connections>
-                                <segue destination="bT2-7j-s8O" kind="modal" identifier="NewDopeCard" id="ddl-y7-aqM"/>
+                                <segue destination="ZiT-il-4sD" kind="modal" identifier="NewDopeCard" modalTransitionStyle="coverVertical" id="5TZ-l7-AC7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -3547,7 +3547,7 @@
                     <navigationItem key="navigationItem" title="Dope Card" id="23j-DO-nVt">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="cpe-dW-xVP">
                             <connections>
-                                <segue destination="bT2-7j-s8O" kind="modal" identifier="EditDopeCard" modalTransitionStyle="flipHorizontal" id="buG-1s-zp7"/>
+                                <segue destination="ZiT-il-4sD" kind="modal" identifier="EditDopeCard" modalTransitionStyle="flipHorizontal" id="c82-71-VHJ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -3569,15 +3569,15 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Yxj-7l-iEz" userLabel="header divider">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="oPh-uN-UtH" userLabel="header background">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Yxj-7l-iEz" userLabel="header divider">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Ota-wa-4EK" userLabel="header divider">
                             <rect key="frame" x="0.0" y="41" width="320" height="1"/>
@@ -3630,190 +3630,182 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="2456" y="-4818"/>
+            <point key="canvasLocation" x="2473" y="-4808"/>
         </scene>
         <!--Dope Cards Add Edit View Controller - New Dope Card-->
-        <scene sceneID="xjK-oj-9NX">
+        <scene sceneID="vng-CY-x2O">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lm4-T6-Db3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="M4w-WI-xze" customClass="DopeCardsAddEditViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="thA-HD-ENI">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wTe-IY-WUz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="kDN-sM-QQ5" customClass="DopeCardsAddEditViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="v8K-8n-dEB">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" id="h46-YA-PIM">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.80000000000000004" green="0.75294117650000003" blue="0.66274509800000003" alpha="1" colorSpace="deviceRGB"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="MxL-mN-Uye">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="244"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="fgg-Bm-Abq" userLabel="Name">
+                                    <rect key="frame" x="20" y="14" width="43" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Card Name" minimumFontSize="15" id="zz1-UA-R2i">
+                                    <rect key="frame" x="71" y="9" width="229" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes"/>
+                                </textField>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Zero:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Zgd-gD-LPe" userLabel="Zero">
+                                    <rect key="frame" x="20" y="53" width="42" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Zero" minimumFontSize="15" id="yF0-3q-klk">
+                                    <rect key="frame" x="62" y="48" width="54" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad"/>
+                                </textField>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Muzzle Velocity:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="QIO-GN-IuZ" userLabel="Muzzle Velocity">
+                                    <rect key="frame" x="124" y="53" width="116" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="fps" minimumFontSize="15" id="f1P-dt-fpH" userLabel="Text Field - mv">
+                                    <rect key="frame" x="237" y="48" width="63" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad"/>
+                                </textField>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Weather Information" minimumFontSize="12" id="ZjM-rm-wah">
+                                    <rect key="frame" x="20" y="87" width="280" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes"/>
+                                </textField>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Wind:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="dTy-2e-rDO" userLabel="Wind">
+                                    <rect key="frame" x="20" y="131" width="42" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Wind Information" minimumFontSize="12" id="WLH-uJ-4xw">
+                                    <rect key="frame" x="70" y="126" width="230" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Target:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="fxz-0t-WkC" userLabel="Target">
+                                    <rect key="frame" x="20" y="170" width="52" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Lead Information" minimumFontSize="12" id="nbk-wt-sVt">
+                                    <rect key="frame" x="71" y="165" width="229" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Additional Notes" minimumFontSize="12" id="yig-18-D0O">
+                                    <rect key="frame" x="20" y="204" width="280" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
+                                </textField>
+                            </subviews>
+                            <color key="backgroundColor" red="0.75686274509999996" green="0.70980392160000005" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DopeCardEditRowCell" id="dDV-AA-cBE" userLabel="Dope Card Cell" customClass="DopeCardRowEditCell">
+                                <rect key="frame" x="0.0" y="266" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Zero:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Zgd-gD-LPe" userLabel="Zero">
-                                        <rect key="frame" x="20" y="54" width="42" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Wind:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="dTy-2e-rDO" userLabel="Wind">
-                                        <rect key="frame" x="20" y="132" width="42" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Target:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="fxz-0t-WkC" userLabel="Target">
-                                        <rect key="frame" x="20" y="171" width="52" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="fgg-Bm-Abq" userLabel="Name">
-                                        <rect key="frame" x="20" y="15" width="43" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Muzzle Velocity:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="QIO-GN-IuZ" userLabel="Muzzle Velocity">
-                                        <rect key="frame" x="124" y="54" width="116" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Card Name" minimumFontSize="15" id="zz1-UA-R2i">
-                                        <rect key="frame" x="71" y="10" width="229" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Zero" minimumFontSize="15" id="yF0-3q-klk">
-                                        <rect key="frame" x="61" y="49" width="54" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="fps" minimumFontSize="15" id="f1P-dt-fpH">
-                                        <rect key="frame" x="237" y="49" width="63" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Wind Information" minimumFontSize="12" id="WLH-uJ-4xw">
-                                        <rect key="frame" x="70" y="127" width="230" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Lead Information" minimumFontSize="12" id="nbk-wt-sVt">
-                                        <rect key="frame" x="71" y="166" width="229" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Additional Notes" minimumFontSize="12" id="yig-18-D0O">
-                                        <rect key="frame" x="20" y="205" width="280" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Weather Information" minimumFontSize="12" id="ZjM-rm-wah">
-                                        <rect key="frame" x="20" y="88" width="280" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes"/>
-                                    </textField>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="35" sectionHeaderHeight="22" sectionFooterHeight="22" id="aAA-m7-Bco">
-                                        <rect key="frame" x="0.0" y="244" width="320" height="223"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DopeCardEditRowCell" rowHeight="35" id="dDV-AA-cBE" userLabel="Dope Card Cell" customClass="DopeCardRowEditCell">
-                                                <rect key="frame" x="0.0" y="22" width="320" height="35"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="34"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Range" textAlignment="center" minimumFontSize="17" id="4X5-oC-V5G">
-                                                            <rect key="frame" x="20" y="2" width="66" height="31"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="20"/>
-                                                            <textInputTraits key="textInputTraits" returnKeyType="next"/>
-                                                        </textField>
-                                                        <textField opaque="NO" clipsSubviews="YES" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Drop" textAlignment="center" minimumFontSize="17" id="iSx-kW-Dm0">
-                                                            <rect key="frame" x="127" y="2" width="66" height="31"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="20"/>
-                                                            <textInputTraits key="textInputTraits" returnKeyType="next"/>
-                                                        </textField>
-                                                        <textField opaque="NO" clipsSubviews="YES" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Drift" textAlignment="center" minimumFontSize="17" id="xtc-Zb-6OB">
-                                                            <rect key="frame" x="234" y="2" width="66" height="31"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="20"/>
-                                                            <textInputTraits key="textInputTraits"/>
-                                                        </textField>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
-                                                <connections>
-                                                    <outlet property="driftField" destination="xtc-Zb-6OB" id="jGv-hq-epV"/>
-                                                    <outlet property="dropField" destination="iSx-kW-Dm0" id="Ui0-wn-bCx"/>
-                                                    <outlet property="rangeField" destination="4X5-oC-V5G" id="Rff-gu-eZ5"/>
-                                                </connections>
-                                            </tableViewCell>
-                                        </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="M4w-WI-xze" id="YHf-cE-0rN"/>
-                                            <outlet property="delegate" destination="M4w-WI-xze" id="dkZ-YP-0My"/>
-                                        </connections>
-                                    </tableView>
-                                </subviews>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.75686274509999996" green="0.70980392160000005" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="New Dope Card" id="nX2-ce-YDc">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Range" textAlignment="center" minimumFontSize="17" id="4X5-oC-V5G">
+                                            <rect key="frame" x="20" y="7" width="66" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="20"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                        </textField>
+                                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Drop" textAlignment="center" minimumFontSize="17" id="iSx-kW-Dm0">
+                                            <rect key="frame" x="127" y="7" width="66" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="20"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                        </textField>
+                                        <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Drift" textAlignment="center" minimumFontSize="17" id="xtc-Zb-6OB">
+                                            <rect key="frame" x="234" y="7" width="66" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="20"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <connections>
+                                    <outlet property="driftField" destination="xtc-Zb-6OB" id="jGv-hq-epV"/>
+                                    <outlet property="dropField" destination="iSx-kW-Dm0" id="Ui0-wn-bCx"/>
+                                    <outlet property="rangeField" destination="4X5-oC-V5G" id="Rff-gu-eZ5"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="kDN-sM-QQ5" id="uCY-Pk-n7p"/>
+                            <outlet property="delegate" destination="kDN-sM-QQ5" id="9NJ-E7-7bP"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="New Dope Card" id="2fa-PH-97b">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="aY5-Z6-1Qo">
                             <connections>
-                                <action selector="cancelTapped:" destination="M4w-WI-xze" id="VN9-EZ-PrU"/>
+                                <action selector="cancelTapped:" destination="kDN-sM-QQ5" id="1LT-IS-Os9"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="CA2-4d-IpZ">
                             <connections>
-                                <action selector="saveTapped:" destination="M4w-WI-xze" id="5CO-1i-rhO"/>
+                                <action selector="saveTapped:" destination="kDN-sM-QQ5" id="sMF-dG-ZKP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="cardNameTextField" destination="zz1-UA-R2i" id="mas-0D-zb7"/>
-                        <outlet property="driftUnitField" destination="0E1-fT-rBv" id="u9H-au-qMd"/>
-                        <outlet property="dropUnitField" destination="XVe-et-pp9" id="Yam-MP-RvJ"/>
-                        <outlet property="leadInfoField" destination="nbk-wt-sVt" id="Iyt-Xr-lIg"/>
-                        <outlet property="muzzleVelocityTextField" destination="f1P-dt-fpH" id="0Zi-4X-Ct6"/>
-                        <outlet property="notesTextField" destination="yig-18-D0O" id="3R2-lR-37A"/>
-                        <outlet property="rangeUnitField" destination="hhz-tr-eoF" id="KEl-DZ-hU5"/>
-                        <outlet property="scrollView" destination="h46-YA-PIM" id="A5X-AY-rVy"/>
-                        <outlet property="sectionHeader" destination="PZ6-Ba-TZy" id="BkA-o1-81t"/>
-                        <outlet property="tableView" destination="aAA-m7-Bco" id="nnv-xN-xP2"/>
-                        <outlet property="weatherInfoField" destination="ZjM-rm-wah" id="Jtj-1n-mTr"/>
-                        <outlet property="windInfoField" destination="WLH-uJ-4xw" id="7Md-an-Dxg"/>
-                        <outlet property="zeroTextField" destination="yF0-3q-klk" id="qcM-6r-94m"/>
+                        <outlet property="cardNameTextField" destination="zz1-UA-R2i" id="sjY-KW-QfL"/>
+                        <outlet property="driftUnitField" destination="0E1-fT-rBv" id="Do8-Pw-jk9"/>
+                        <outlet property="dropUnitField" destination="XVe-et-pp9" id="32I-4Q-Sbn"/>
+                        <outlet property="leadInfoField" destination="nbk-wt-sVt" id="cP2-Tx-RFF"/>
+                        <outlet property="muzzleVelocityTextField" destination="f1P-dt-fpH" id="lam-gr-ZWp"/>
+                        <outlet property="notesTextField" destination="yig-18-D0O" id="d1H-zB-Oyf"/>
+                        <outlet property="rangeUnitField" destination="hhz-tr-eoF" id="eCk-Mp-kCM"/>
+                        <outlet property="sectionHeader" destination="PZ6-Ba-TZy" id="503-av-0PA"/>
+                        <outlet property="weatherInfoField" destination="ZjM-rm-wah" id="EGw-Eh-ueP"/>
+                        <outlet property="windInfoField" destination="WLH-uJ-4xw" id="QGh-Ss-N3p"/>
+                        <outlet property="zeroTextField" destination="yF0-3q-klk" id="nvI-Lj-UUh"/>
                     </connections>
-                </viewController>
+                </tableViewController>
                 <view contentMode="scaleToFill" id="PZ6-Ba-TZy" userLabel="section header">
-                    <rect key="frame" x="0.0" y="-1" width="320" height="35"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="xK5-xm-odg" userLabel="header background">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                         </imageView>
@@ -3823,36 +3815,36 @@
                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="RtQ-6j-1Fr" userLabel="header divider">
-                            <rect key="frame" x="0.0" y="34" width="320" height="1"/>
+                            <rect key="frame" x="0.0" y="44" width="320" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Drift Unit" textAlignment="right" minimumFontSize="10" id="0E1-fT-rBv">
-                            <rect key="frame" x="220" y="2" width="80" height="31"/>
+                            <rect key="frame" x="220" y="6" width="80" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Drop Unit" textAlignment="center" minimumFontSize="10" id="XVe-et-pp9">
-                            <rect key="frame" x="120" y="2" width="80" height="31"/>
+                            <rect key="frame" x="120" y="6" width="80" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Range Unit" minimumFontSize="10" id="hhz-tr-eoF">
-                            <rect key="frame" x="20" y="2" width="80" height="31"/>
+                            <rect key="frame" x="20" y="6" width="80" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="3317" y="-4818"/>
+            <point key="canvasLocation" x="3326" y="-5374"/>
         </scene>
         <!--Note Add Edit Table View Controller - New Note-->
         <scene sceneID="2KQ-Qw-Qqc">
@@ -5324,15 +5316,15 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="73s-0u-6cb" userLabel="header divider">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="CcL-GL-iRt" userLabel="header background">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="73s-0u-6cb" userLabel="header divider">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Db5-RP-e8W" userLabel="header divider">
                             <rect key="frame" x="0.0" y="41" width="320" height="1"/>
@@ -6828,24 +6820,6 @@
             <point key="canvasLocation" x="655" y="-1922"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="0i6-db-B5B">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8SI-wY-O7S" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController id="bT2-7j-s8O" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="bdd-sP-VUb">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="M4w-WI-xze" kind="relationship" relationship="rootViewController" id="efC-32-9Ha"/>
-                    </connections>
-                </navigationController>
-            </objects>
-            <point key="canvasLocation" x="2893" y="-4818"/>
-        </scene>
-        <!--Navigation Controller-->
         <scene sceneID="1O5-Lu-PH6">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OSm-7L-nHf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -7203,6 +7177,24 @@
             </objects>
             <point key="canvasLocation" x="2633" y="2234"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Q9H-d0-WXG">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kdc-PV-OPS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="ZiT-il-4sD" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="0JV-bU-GTx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kDN-sM-QQ5" kind="relationship" relationship="rootViewController" id="NqX-g0-Wpm"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="2859" y="-5374"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Default.png" width="320" height="480"/>
@@ -7358,7 +7350,7 @@
                 <relationship kind="outlet" name="zeroLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
-        <class className="DopeCardsAddEditViewController" superclassName="UIViewController">
+        <class className="DopeCardsAddEditViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DopeCardsAddEditViewController.h"/>
             <relationships>
                 <relationship kind="action" name="cancelTapped:"/>
@@ -7370,9 +7362,7 @@
                 <relationship kind="outlet" name="muzzleVelocityTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="notesTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="rangeUnitField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="sectionHeader" candidateClass="UIView"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="weatherInfoField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="windInfoField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="zeroTextField" candidateClass="UITextField"/>
@@ -7766,15 +7756,15 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Kwm-tt-mog"/>
-        <segue reference="JST-tk-ezk"/>
-        <segue reference="GCB-J1-qDm"/>
         <segue reference="yYB-bQ-quH"/>
         <segue reference="DYz-Of-xaL"/>
         <segue reference="uPm-6g-2kP"/>
-        <segue reference="qrX-kN-oby"/>
+        <segue reference="Kwm-tt-mog"/>
+        <segue reference="JST-tk-ezk"/>
+        <segue reference="GCB-J1-qDm"/>
         <segue reference="Zff-G8-jkO"/>
+        <segue reference="qrX-kN-oby"/>
         <segue reference="Xax-8e-kYg"/>
-        <segue reference="buG-1s-zp7"/>
+        <segue reference="c82-71-VHJ"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -7,10 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "CardsViewController.h"
-#import "Manufacturer.h"
-#import "Bullet.h"
-#import "Caliber.h"
 
 @implementation AppDelegate
 

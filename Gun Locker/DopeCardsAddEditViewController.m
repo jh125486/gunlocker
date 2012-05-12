@@ -10,16 +10,14 @@
 
 @implementation DopeCardsAddEditViewController
 @synthesize sectionHeader;
-@synthesize scrollView;
 @synthesize cardNameTextField;
 @synthesize zeroTextField, muzzleVelocityTextField;
 @synthesize weatherInfoField;
 @synthesize windInfoField, windInfoPickerView, leadInfoField, leadInfoPickerView;
 @synthesize notesTextField;
 @synthesize rangeUnitField, dropUnitField, driftUnitField, dopeUnitPickerView;
-@synthesize tableView;
 @synthesize currentTextField;
-@synthesize selectedDopeCard;
+@synthesize selectedDopeCard = _selectedDopeCard;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -39,7 +37,6 @@
     for (int i = 1; i < 12; i++)
         [wind_directions addObject:[NSString stringWithFormat:@"%d o'clock", i]];
     
-    dopeFields = [[NSMutableArray alloc] init];
     dopeCardCellData = [[NSMutableArray alloc] init];
     
     // inputView pickers
@@ -55,52 +52,47 @@
     windInfoField.inputView  = windInfoPickerView;
     leadInfoField.inputView = leadInfoPickerView;
     
-    formFields = [[NSMutableArray alloc] initWithObjects:self.cardNameTextField, 
-                                                         self.zeroTextField, 
-														 self.muzzleVelocityTextField,
-                                                         self.weatherInfoField,
-                                                         self.windInfoField, 
-                                                         self.leadInfoField,
-												   		 self.notesTextField, 
-												   		 self.rangeUnitField, 
-												   		 self.dropUnitField, 
-												   		 self.driftUnitField, 
-												   		 nil];
+    formFields = [[NSArray alloc] initWithObjects:self.cardNameTextField, 
+                                                  self.zeroTextField, 
+                                                  self.muzzleVelocityTextField,
+                                                  self.weatherInfoField,
+                                                  self.windInfoField, 
+                                                  self.leadInfoField,
+                                                  self.notesTextField, 
+                                                  self.rangeUnitField, 
+                                                  self.dropUnitField, 
+                                                  self.driftUnitField, 
+                                                  nil];
+    
     for(UITextField *field in formFields)
-        field.delegate = self;    
+        field.delegate = self;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    
-    if (selectedDopeCard) [self loadDopeCard];
+    if (_selectedDopeCard) [self loadDopeCard];
+
+    // add extra empty row
+    [dopeCardCellData addObjectsFromArray:[NSArray arrayWithObjects:@"", @"", @"", nil]];
 }
 
 - (void)loadDopeCard {
     // TODO set pickers to correct values
     
     self.title = @"Edit Dope Card";
-    self.cardNameTextField.text       = selectedDopeCard.name;
-    self.zeroTextField.text           = selectedDopeCard.zero;
-    self.muzzleVelocityTextField.text = selectedDopeCard.muzzle_velocity;
-    self.weatherInfoField.text        = selectedDopeCard.weather_info;
-    self.windInfoField.text           = selectedDopeCard.wind_info;
-    self.leadInfoField.text           = selectedDopeCard.lead_info;
-    self.notesTextField.text          = selectedDopeCard.notes;
-    self.rangeUnitField.text          = selectedDopeCard.range_unit;
-    self.dropUnitField.text           = selectedDopeCard.drop_unit;
-    self.driftUnitField.text          = selectedDopeCard.drift_unit;
+    self.cardNameTextField.text       = _selectedDopeCard.name;
+    self.zeroTextField.text           = _selectedDopeCard.zero;
+    self.muzzleVelocityTextField.text = _selectedDopeCard.muzzle_velocity;
+    self.weatherInfoField.text        = _selectedDopeCard.weather_info;
+    self.windInfoField.text           = _selectedDopeCard.wind_info;
+    self.leadInfoField.text           = _selectedDopeCard.lead_info;
+    self.notesTextField.text          = _selectedDopeCard.notes;
+    self.rangeUnitField.text          = _selectedDopeCard.range_unit;
+    self.dropUnitField.text           = _selectedDopeCard.drop_unit;
+    self.driftUnitField.text          = _selectedDopeCard.drift_unit;
     
-    dopeCardCellData = selectedDopeCard.dope_data;
+    dopeCardCellData = [_selectedDopeCard.dope_data mutableCopy];
 }
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setScrollView:nil];
     [self setCardNameTextField:nil];
     [self setZeroTextField:nil];
     [self setMuzzleVelocityTextField:nil];
@@ -126,16 +118,13 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return ([dopeCardCellData count] / 3 ) + 1;
+    return ([dopeCardCellData count] / 3 );
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DopeCardRowEditCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DopeCardEditRowCell"];
-    
-    [dopeFields addObjectsFromArray:[NSArray arrayWithObjects:cell.rangeField, cell.dropField, cell.driftField, nil]];
-    [formFields addObjectsFromArray:[NSArray arrayWithObjects:cell.rangeField, cell.dropField, cell.driftField, nil]];
-    
-    if (selectedDopeCard && (([dopeCardCellData count] / 3) > (indexPath.row))) {
+        
+    if (_selectedDopeCard && (([dopeCardCellData count] / 3) > (indexPath.row))) {
         cell.rangeField.text = [dopeCardCellData objectAtIndex:(indexPath.row * 3 + 0)];
         cell.dropField.text  = [dopeCardCellData objectAtIndex:(indexPath.row * 3 + 1)];
         cell.driftField.text = [dopeCardCellData objectAtIndex:(indexPath.row * 3 + 2)];
@@ -144,14 +133,18 @@
         cell.dropField.text  = @"";
         cell.driftField.text = @"";
     }
+
+    cell.tag = indexPath.row;
     
+    cell.rangeField.tag = 1;
+    cell.dropField.tag  = 2;
+    cell.driftField.tag = 3;
+
     cell.rangeField.delegate = cell.dropField.delegate = cell.driftField.delegate = self;
     
     cell.rangeField.keyboardType = UIKeyboardTypeNumberPad;
-    cell.dropField.keyboardType = UIKeyboardTypeDecimalPad;
-    cell.driftField.keyboardType = UIKeyboardTypeDecimalPad;    
+    cell.dropField.keyboardType = cell.driftField.keyboardType = UIKeyboardTypeDecimalPad;
 
-    cell.tag = indexPath.row;
     return cell;
 }
 
@@ -268,7 +261,8 @@
 
 #pragma mark - Text field delegate
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {    
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
     UIToolbar* textFieldToolBarView = [[UIToolbar alloc] init];
     textFieldToolBarView.barStyle = UIBarStyleBlack;
     textFieldToolBarView.translucent = YES;
@@ -289,12 +283,12 @@
     UIBarButtonItem *done  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
                                                                            target:self action:@selector(doneTyping:)];
 
-    if ([dopeFields containsObject:self.currentTextField] && [dopeFields indexOfObject:self.currentTextField] % 3 != 0) {
+
+    if (![formFields containsObject:textField] && textField.tag != 1) {
         UIBarButtonItem *flipSign  = [[UIBarButtonItem alloc] initWithTitle:@" ± " 
                                                                       style:UIBarButtonItemStyleBordered 
                                                                      target:self 
                                                                      action:@selector(flipSignTapped:)];
-
         
         [textFieldToolBarView setItems:[NSArray arrayWithObjects:controlItem, space, flipSign, space, done, nil]];
     } else {
@@ -311,53 +305,74 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    // update dopeCardCellData
+    if (![formFields containsObject:textField]) {
+        if ([textField.text isEqualToString:@""] && textField.tag > 1)
+            textField.text = @"0.0";
+            
+        [dopeCardCellData replaceObjectAtIndex:[self indexForTextField:textField] - formFields.count withObject:textField.text];
+    }
     self.currentTextField = nil;
 }
 
 - (void)nextPreviousTapped:(id)sender {
-    int index = [formFields indexOfObject:self.currentTextField];
     
-    if (currentTextField == rangeUnitField) {
+    if (self.currentTextField == self.rangeUnitField) {
         [self setDopeUnits];
-    } else if (currentTextField == windInfoField) {
+    } else if (self.currentTextField == self.windInfoField) {
         [self setWindInfo];
-    } else if (currentTextField == leadInfoField) {
+    } else if (self.currentTextField == self.leadInfoField) {
         [self setLeadInfo];
-    }
+    } 
+        
+    int index = [self indexForTextField:self.currentTextField];
     
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
             index--;
             break;
-        case 1: //next            
-            if ([dopeFields containsObject:self.currentTextField] && [self.currentTextField isEqual:[dopeFields lastObject]]) {
-                int row = [dopeFields indexOfObject:self.currentTextField] / 3;
-                // if last textfield in dope card row, and last row in table, add new row
-                DopeCardRowEditCell *cell = (DopeCardRowEditCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+        case 1: //next
+            if ([formFields containsObject:self.currentTextField]) {
+                index++;
+            } else if (self.currentTextField.superview.superview.tag < [self.tableView numberOfRowsInSection:0] - 1) {
+                index++;
+            } else if (self.currentTextField.tag == 3) { // if last textfield in last row in table, add new row if not empty string
+                int row = self.currentTextField.superview.superview.tag;
+                DopeCardRowEditCell *cell = (DopeCardRowEditCell *)self.currentTextField.superview.superview;
+                
                 if (![cell.rangeField.text isEqualToString:@""]) {
-                    [dopeCardCellData addObject:cell.rangeField.text];
-                    [dopeCardCellData addObject:cell.dropField.text];
-                    [dopeCardCellData addObject:cell.driftField.text];
-                    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row + 1 inSection:0 ]] 
+                    [dopeCardCellData addObject:@""];
+                    [dopeCardCellData addObject:@""];
+                    [dopeCardCellData addObject:@""];
+                    
+                    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row + 1 inSection:0]] 
                                           withRowAnimation:UITableViewRowAnimationBottom];
+
                     index++;
+                } else {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Blank Range"
+                                                                    message:@"Enter a range to add a new row" 
+                                                                   delegate:nil 
+                                                          cancelButtonTitle:nil 
+                                                          otherButtonTitles:@"OK", nil];
+                    [alert show];
                 }
             } else {
                 index++;
             }
             break;
     }
-    
-    self.currentTextField = [formFields objectAtIndex:index];
+
+    self.currentTextField = [self textFieldForIndex:index];
     [self.currentTextField becomeFirstResponder];
 }
 
-- (void) doneTyping:(id)sender {
-    if (currentTextField == self.rangeUnitField) {
+- (void)doneTyping:(id)sender {
+    if (self.currentTextField == self.rangeUnitField) {
         [self setDopeUnits];
-    } else if (currentTextField == self.windInfoField) {
+    } else if (self.currentTextField == self.windInfoField) {
         [self setWindInfo];
-    } else if (currentTextField == self.leadInfoField) {
+    } else if (self.currentTextField == self.leadInfoField) {
         [self setLeadInfo];
     }
     
@@ -370,67 +385,34 @@
     self.currentTextField.text = [[number decimalNumberByMultiplyingBy:flip] stringValue];
 }
 
-# pragma mark Moving content under the keyboard
-
-- (void)keyboardWasShown:(NSNotification*)aNotification {
-    NSDictionary* info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-    scrollView.contentInset = contentInsets;
-    scrollView.scrollIndicatorInsets = contentInsets;
-    
-    double originY = currentTextField.frame.origin.y;
-    
-    if ((currentTextField == self.rangeUnitField) || (currentTextField == self.dropUnitField) || (currentTextField == self.driftUnitField)) {
-        UILabel *pickerLabel = [[UILabel alloc] initWithFrame:CGRectMake(19, 10, 283, 35)];
-        pickerLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableview_header"]];
-        pickerLabel.text = @"   Range       Drop         Drift";
-        pickerLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:24];
-        pickerLabel.textColor = [UIColor lightGrayColor];
-        pickerLabel.shadowColor = [UIColor whiteColor];
-        pickerLabel.shadowOffset = CGSizeMake (0,-1);
-        [dopeUnitPickerView insertSubview:pickerLabel atIndex:20];
-        originY += self.tableView.frame.origin.y;
-    } else if ((currentTextField == self.windInfoField) || (currentTextField == self.leadInfoField)) {
-        UILabel *pickerLabel = [[UILabel alloc] initWithFrame:CGRectMake(19, 10, 282, 35)];
-        pickerLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableview_header"]];
-        pickerLabel.text = @" Speed      Unit        Direction";
-        pickerLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:24];
-        pickerLabel.textColor = [UIColor lightGrayColor];
-        pickerLabel.shadowColor = [UIColor whiteColor];
-        pickerLabel.shadowOffset = CGSizeMake (0,-1);
-        if (currentTextField == self.windInfoField) {            
-            [windInfoPickerView insertSubview:pickerLabel atIndex:20];
-        } else if (currentTextField == self.leadInfoField) {
-            [leadInfoPickerView insertSubview:pickerLabel atIndex:20];            
-        }
-    }
-    
-    if ([dopeFields containsObject:currentTextField]) {
-        CGRect frame = [self.tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:[dopeFields indexOfObject:currentTextField]/3 inSection:0]];
-        originY = frame.origin.y + self.tableView.frame.origin.y;
-    }
-    
-    CGPoint currentOrigin = CGPointMake(currentTextField.frame.origin.x, originY);
-    CGRect aRect = CGRectMake(0, self.scrollView.frame.size.height - kbSize.height, kbSize.width, kbSize.height);
-    
-    if (CGRectContainsPoint(aRect, currentOrigin)) {
-        [scrollView setContentOffset:CGPointMake(0.0, currentOrigin.y - currentTextField.frame.size.height - 90) animated:YES];
+-(UITextField*)textFieldForIndex:(int)index {
+    if (index < formFields.count) {
+        return [formFields objectAtIndex:index];
     } else {
-        [scrollView setContentOffset:CGPointMake(0.0, 0.0) animated:YES];
+        int row = (index - formFields.count) / 3;
+        int tag = ((index - formFields.count) % 3) + 1;
+        
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+        return (UITextField *)[cell.contentView viewWithTag:tag];
     }
 }
 
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification {
-    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-    [scrollView setContentOffset:CGPointZero animated:YES];
-    scrollView.scrollIndicatorInsets = contentInsets;
+-(int)indexForTextField:(UITextField*)textField {
+    if ([formFields containsObject:textField]) {
+        return [formFields indexOfObject:textField];
+    } else {
+        int row = (textField.superview.superview.tag * 3);
+        int tag = textField.tag - 1;
+        
+        return formFields.count + row + tag;
+    }
 }
 
 # pragma mark Save Data
+
 - (IBAction)saveTapped:(id)sender {
     if (![self.cardNameTextField.text isEqualToString:@""]) {
-        DopeCard *newDopeCard       = selectedDopeCard ? selectedDopeCard : [DopeCard createEntity];
+        DopeCard *newDopeCard       = _selectedDopeCard ? _selectedDopeCard : [DopeCard createEntity];
         newDopeCard.name            = self.cardNameTextField.text;
         newDopeCard.zero            = self.zeroTextField.text;
         newDopeCard.muzzle_velocity = self.muzzleVelocityTextField.text;
@@ -442,22 +424,18 @@
         newDopeCard.drop_unit       = self.dropUnitField.text;
         newDopeCard.drift_unit      = self.driftUnitField.text;    
         
+        // check if range is blank, remove row if true
+        if ([[dopeCardCellData objectAtIndex:dopeCardCellData.count - 3] isEqualToString:@""])
+            [dopeCardCellData removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(dopeCardCellData.count -3, 3)]];
         
-        NSMutableArray *data = [[NSMutableArray alloc] init];
-        UITextField *t1, *t2, *t3;
-        for (int index = 0; index < [dopeFields count]; index += 3) {
-            t1 = [dopeFields objectAtIndex:index];
-            t2 = [dopeFields objectAtIndex:index + 1];
-            t3 = [dopeFields objectAtIndex:index + 2];
-            if ((![t1.text isEqualToString:@""]) && (![t2.text isEqualToString:@""])) {
-                [data addObject:t1.text];
-                [data addObject:t2.text];
-                [data addObject:t3.text];
-            }
-        }
-        newDopeCard.dope_data = data;
-            
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"newDopeCard" object:newDopeCard];
+        // check for empty data, set to 0.0 if empty
+        for (int i = 0; i < dopeCardCellData.count; i++)
+            if ([[dopeCardCellData objectAtIndex:i] isEqualToString:@""])
+                [dopeCardCellData replaceObjectAtIndex:i withObject:@"0.0"];        
+        
+        newDopeCard.dope_data = [NSArray arrayWithArray:dopeCardCellData];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:_selectedDopeCard ? @"editedDopeCard" : @"newDopeCard" object:newDopeCard];
 
         [self dismissModalViewControllerAnimated:YES];
     }

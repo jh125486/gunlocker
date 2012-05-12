@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
+#import "CardsViewController.h"
+#import "Manufacturer.h"
+#import "Bullet.h"
+#import "Caliber.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     CMMotionManager *motionManager;
