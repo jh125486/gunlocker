@@ -81,12 +81,46 @@
     self.zeroTextField.text           = _selectedDopeCard.zero;
     self.muzzleVelocityTextField.text = _selectedDopeCard.muzzle_velocity;
     self.weatherInfoField.text        = _selectedDopeCard.weather_info;
-    self.windInfoField.text           = _selectedDopeCard.wind_info;
-    self.leadInfoField.text           = _selectedDopeCard.lead_info;
     self.notesTextField.text          = _selectedDopeCard.notes;
     self.rangeUnitField.text          = _selectedDopeCard.range_unit;
     self.dropUnitField.text           = _selectedDopeCard.drop_unit;
     self.driftUnitField.text          = _selectedDopeCard.drift_unit;
+    
+    if (_selectedDopeCard.wind_info) {
+        NSArray *windInfoArray = [_selectedDopeCard.wind_info componentsSeparatedByString:@" "];
+        int speed      = [[windInfoArray objectAtIndex:0] intValue];
+        NSString *unit = [windInfoArray objectAtIndex:1];
+        int direction  = [[windInfoArray objectAtIndex:3] intValue];    
+
+        if ([windInfoArray count] == 4) { // direction in degrees
+                direction /= 30.0f;
+                direction = roundf(direction);
+                if (direction == 0) direction = 12;
+        }
+            
+        [self.windInfoPickerView selectRow:speed inComponent:0 animated:NO];
+        [self.windInfoPickerView selectRow:[wind_units indexOfObject:unit] inComponent:1 animated:NO];
+        [self.windInfoPickerView selectRow:(direction == 12) ? 0 : direction inComponent:2 animated:NO];
+        [self setWindInfo];
+    }
+        
+    if (_selectedDopeCard.lead_info) {
+        NSArray *leadInfoArray = [_selectedDopeCard.lead_info componentsSeparatedByString:@" "];
+        int speed      = [[leadInfoArray objectAtIndex:0] intValue];
+        NSString *unit = [leadInfoArray objectAtIndex:1];
+        int direction  = [[leadInfoArray objectAtIndex:3] intValue];    
+        
+        if ([leadInfoArray count] == 4) { // direction in degrees
+            direction /= 30.0f;
+            direction = roundf(direction);
+            if (direction == 0) direction = 12;
+        }
+
+        [self.leadInfoPickerView selectRow:speed inComponent:0 animated:NO];
+        [self.leadInfoPickerView selectRow:[wind_units indexOfObject:unit] inComponent:1 animated:NO];
+        [self.leadInfoPickerView selectRow:(direction == 12) ? 0 : direction inComponent:2 animated:NO];
+        [self setLeadInfo];
+    }
     
     dopeCardCellData = [_selectedDopeCard.dope_data mutableCopy];
 }
@@ -444,5 +478,6 @@
 - (IBAction)cancelTapped:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
 }
+
 
 @end

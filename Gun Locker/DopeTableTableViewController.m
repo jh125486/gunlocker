@@ -144,7 +144,7 @@
     
     dst.pressureString = [NSString stringWithFormat:@"%@ %@", self.pressureTextField.text,
                           [[NSArray arrayWithObjects:@"inHg", @"mb", nil] objectAtIndex:self.pressureUnitControl.selectedSegmentIndex]];
-    
+
     dst.windInfoString = [NSString stringWithFormat:@"%@ %@ from %@%@", self.windSpeedTextField.text, 
                           [[NSArray arrayWithObjects:@"Knots", @"MPH", nil] objectAtIndex:self.windSpeedUnitControl.selectedSegmentIndex], 
                           self.windDirectionTextField.text,
@@ -154,7 +154,7 @@
                           [[NSArray arrayWithObjects:@"Knots", @"MPH", nil] objectAtIndex:self.leadingSpeedUnitControl.selectedSegmentIndex], 
                           self.leadingDirectionTextField.text, 
                           [[NSArray arrayWithObjects:@"º", @" o'Clock", nil] objectAtIndex:self.leadingDirectionUnitControl.selectedSegmentIndex]];
-
+    
     dst.passedTrajectory = trajectory;
 }
 
