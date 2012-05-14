@@ -239,6 +239,8 @@
     if(error.code == kCLErrorDenied) {
         [self stopUpdatingLocations];
         [self resetWX];
+        self.wxButton.enabled = self.wxTimestampLabel.hidden = NO;
+        self.wxTimestampLabel.text = @"Location services disabled";
     } else if(error.code == kCLErrorLocationUnknown) {
         // retry
     } else {

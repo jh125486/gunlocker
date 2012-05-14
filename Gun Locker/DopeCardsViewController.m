@@ -146,13 +146,17 @@
     if (_fetchedResultsController != nil) return _fetchedResultsController;
 
     NSPredicate *typeFilter = (self.selectedWeapon) ? [NSPredicate predicateWithFormat:@"weapon = %@", self.selectedWeapon] : nil;
-    NSFetchRequest *fetchRequest = [DopeCard requestAllSortedBy:@"name" ascending:YES withPredicate:typeFilter];
     
-    [fetchRequest setFetchBatchSize:20];
+    NSFetchRequest *fetchRequest = [DopeCard requestAllSortedBy:(self.selectedWeapon) ? @"name" : @"weapon" ascending:YES withPredicate:typeFilter];
+    NSString *cacheName = (self.selectedWeapon) ? [NSString stringWithFormat:@"DopeCards%@", self.selectedWeapon] : @"DopeCards";
+    fetchRequest.fetchBatchSize = 20;
+    
+    NSString *sectionNameKeyPath = (self.selectedWeapon) ? nil : @"weapon.description";
+    
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
                                                                         managedObjectContext:[NSManagedObjectContext MR_defaultContext] 
-                                                                          sectionNameKeyPath:nil 
-                                                                                   cacheName:nil];
+                                                                          sectionNameKeyPath:sectionNameKeyPath
+                                                                                   cacheName:cacheName];
     
     _fetchedResultsController.delegate = self;
     

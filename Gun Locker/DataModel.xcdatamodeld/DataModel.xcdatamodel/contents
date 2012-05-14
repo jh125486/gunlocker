@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Ammunition" syncable="YES">
+        <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="caliber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="BallisticProfile" representedClassName="BallisticProfile" syncable="YES">
         <attribute name="bullet_bc" optional="YES" attributeType="Transformable" minValueString="0.001" maxValueString="0.999" syncable="YES"/>
         <attribute name="bullet_diameter_inches" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
@@ -57,6 +63,12 @@
         <attribute name="bullet_weight" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caliber" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="weapons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Weapon" inverseName="preferred_load" inverseEntity="Weapon" syncable="YES"/>
+    </entity>
+    <entity name="Magazine" syncable="YES">
+        <attribute name="caliber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Maintenance" representedClassName="Maintenance" syncable="YES">
         <attribute name="action_performed" optional="YES" attributeType="String" syncable="YES"/>
@@ -133,5 +145,7 @@
         <element name="Note" positionX="-549" positionY="333" width="128" height="105"/>
         <element name="StampInfo" positionX="-603" positionY="63" width="128" height="165"/>
         <element name="Weapon" positionX="-324" positionY="-111" width="128" height="360"/>
+        <element name="Ammunition" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="Magazine" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>
