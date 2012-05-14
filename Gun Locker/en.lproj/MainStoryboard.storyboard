@@ -1485,7 +1485,7 @@
                     <size key="shadowOffset" width="0.0" height="1"/>
                 </label>
             </objects>
-            <point key="canvasLocation" x="1059" y="-1303"/>
+            <point key="canvasLocation" x="1076" y="-1303"/>
         </scene>
         <!--Profile View Table View Controller-->
         <scene sceneID="SrP-10-jbe">
@@ -2189,7 +2189,7 @@
                             <tableViewSection id="FTR-fW-ZJm">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="MbN-1O-WPj" style="IBUITableViewCellStyleDefault" id="5VI-pP-sh7">
-                                        <rect key="frame" x="0.0" y="10" width="320" height="46"/>
+                                        <rect key="frame" x="0.0" y="10" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -2209,15 +2209,11 @@
                                             <segue destination="OxA-3Q-EZi" kind="push" id="tG7-Xq-VMK"/>
                                         </connections>
                                     </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="" id="EL0-IQ-odP">
-                                <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="WNp-Kr-8xC" style="IBUITableViewCellStyleDefault" id="hNU-Ww-K2l">
-                                        <rect key="frame" x="0.0" y="76" width="320" height="46"/>
+                                        <rect key="frame" x="0.0" y="55" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Estimate Range" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WNp-Kr-8xC">
@@ -2239,7 +2235,7 @@
                             <tableViewSection headerTitle="Energy Formulas" id="gSp-Yt-jYP">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="qIs-5c-iec" style="IBUITableViewCellStyleDefault" id="ueL-g4-xDY">
-                                        <rect key="frame" x="0.0" y="168" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="146" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -2260,7 +2256,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="1Nc-mj-ibd" style="IBUITableViewCellStyleDefault" id="7xU-aE-zQw">
-                                        <rect key="frame" x="0.0" y="213" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="191" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -2281,7 +2277,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="WHO-Iq-kli" style="IBUITableViewCellStyleDefault" id="zby-Pk-fdo">
-                                        <rect key="frame" x="0.0" y="257" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="235" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -2306,7 +2302,7 @@
                             <tableViewSection headerTitle="Miller Twist Rule" id="h6y-ZV-doW">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="pKB-pc-rbA" style="IBUITableViewCellStyleDefault" id="kVE-Rt-edD">
-                                        <rect key="frame" x="0.0" y="348" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="326" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -2327,7 +2323,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="NJ4-VU-UsV" style="IBUITableViewCellStyleDefault" id="KpO-Li-YNd">
-                                        <rect key="frame" x="0.0" y="393" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="371" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -7222,534 +7218,6 @@
         <image name="tableview_header.png" width="1" height="35"/>
         <image name="tableview_skin.png" width="327" height="220"/>
     </resources>
-    <classes>
-        <class className="BallisticsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BallisticsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="chooseProfileTapped:"/>
-                <relationship kind="action" name="getWX:"/>
-                <relationship kind="outlet" name="addNewProfileButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="altitudeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="chooseProfileButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="densityAltitudeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dopeCardsButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="rangeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rhLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="selectedProfileNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="selectedProfileTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="selectedProfileWeaponLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="tempLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="whizWheelButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="windLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="wxButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="wxIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="wxStationLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="wxTimestampLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="BulletBCEntryViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BulletBCEntryViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelTapped:"/>
-                <relationship kind="action" name="saveTapped:"/>
-                <relationship kind="outlet" name="dragModelLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="g1BC1TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="g1BC2TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="g1BC3TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="g1BC4TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="g1BCTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="g1EntryView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="g1FPS1TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="g1FPS2TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="g1FPS3TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="g1FPS4TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="g7BCTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="g7EntryView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="BulletChooserViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BulletChooserViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelTapped:"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="searchDisplayController" candidateClass="UISearchDisplayController"/>
-            </relationships>
-        </class>
-        <class className="CalculatorsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalculatorsViewController.h"/>
-        </class>
-        <class className="CaliberChooserViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CaliberChooserViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="searchDisplayController" candidateClass="UISearchDisplayController"/>
-            </relationships>
-        </class>
-        <class className="CardsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CardsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="segmentedTypeControlClicked"/>
-                <relationship kind="outlet" name="noFilesImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="segmentedTypeControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="ConversionsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ConversionsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="chooseUnit:" candidateClass="UIButton"/>
-                <relationship kind="action" name="convertLength:"/>
-                <relationship kind="action" name="convertWeight:"/>
-                <relationship kind="outlet" name="length1TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="length1UnitButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="length1UnitTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="length2TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="length2UnitButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="length2UnitTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="weight1TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="weight1UnitButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="weight1UnitTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="weight2TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="weight2UnitButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="weight2UnitTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="DefaultButton" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DefaultButton.h"/>
-        </class>
-        <class className="DopeCardRowCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DopeCardRowCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="driftLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dropLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rangeLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="DopeCardRowEditCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DopeCardRowEditCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="driftField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="dropField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="rangeField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="DopeCardTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DopeCardTableViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="dopeCardSectionHeaderView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="driftLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dropLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="leadInfoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="mvLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="notesLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rangeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="weaponLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="weatherLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="windInfoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="zeroLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="DopeCardsAddEditViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DopeCardsAddEditViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelTapped:"/>
-                <relationship kind="action" name="saveTapped:"/>
-                <relationship kind="outlet" name="cardNameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="driftUnitField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="dropUnitField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="leadInfoField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="muzzleVelocityTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="notesTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="rangeUnitField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="sectionHeader" candidateClass="UIView"/>
-                <relationship kind="outlet" name="weatherInfoField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="windInfoField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="zeroTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="DopeCardsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DopeCardsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="noDopeCardsImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="DopeTableGeneratedCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DopeTableGeneratedCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="driftLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dropLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="energyLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rangeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="velocityLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="DopeTableGeneratedTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DopeTableGeneratedTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelTapped:"/>
-                <relationship kind="action" name="saveTapped:"/>
-                <relationship kind="outlet" name="altitudeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dopeCardSectionHeaderView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="driftUnitLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dropUnitLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="mvLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="pressureLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profileNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rangeUnitLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rhLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="targetInfoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="tempLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="weaponLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="windInfoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="zeroLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="DopeTableTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DopeTableTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="calculate:"/>
-                <relationship kind="action" name="setStepperRanges:"/>
-                <relationship kind="action" name="setToDefaultEnvironmentTapped:"/>
-                <relationship kind="outlet" name="altitudeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="altitudeUnitControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="dropDriftUnitcontrol" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="leadingDirectionTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="leadingDirectionUnitControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="leadingSpeedTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="leadingSpeedUnitControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="pressureTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="pressureUnitControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="rangeEndStepper" candidateClass="TextStepperField"/>
-                <relationship kind="outlet" name="rangeStartStepper" candidateClass="TextStepperField"/>
-                <relationship kind="outlet" name="rangeStepStepper" candidateClass="TextStepperField"/>
-                <relationship kind="outlet" name="rangeUnitControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="rhTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="tempTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="tempUnitControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="windDirectionTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="windDirectionUnitControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="windSpeedTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="windSpeedUnitControl" candidateClass="UISegmentedControl"/>
-            </relationships>
-        </class>
-        <class className="EnergyViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EnergyViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="showResult:"/>
-                <relationship kind="outlet" name="bulletWeightTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="mvTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="resultFtLbsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resultJoulesLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="IntroSplashViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IntroSplashViewController.h"/>
-        </class>
-        <class className="LogsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="dopeCardsCountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="maintenanceCountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="malfunctionCountLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="MaintenanceCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MaintenanceCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="actionPerformedText" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="malfunctionCountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="malfunctionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="modelLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="roundCountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="viewMalfunctions" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="MaintenancesAddViewController" superclassName="QuickDialogController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MaintenancesAddViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelTapped:"/>
-                <relationship kind="action" name="saveTapped:"/>
-            </relationships>
-        </class>
-        <class className="MaintenancesViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MaintenancesViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="noMaintenancesImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="MalfunctionCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MalfunctionCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="failtureText" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="fixText" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="modelLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="roundCountLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="MalfunctionsAddViewController" superclassName="QuickDialogController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MalfunctionsAddViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelTapped:"/>
-                <relationship kind="action" name="saveTapped:"/>
-            </relationships>
-        </class>
-        <class className="MalfunctionsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MalfunctionsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="noMalfunctionsImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="ManufacturerChooserViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ManufacturerChooserViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="searchDisplayController" candidateClass="UISearchDisplayController"/>
-            </relationships>
-        </class>
-        <class className="MillerStabilityViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MillerStabilityViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="showResult:"/>
-                <relationship kind="outlet" name="bulletCaliberTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="bulletLengthTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="bulletWeightTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="mvTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="resultLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="twistRateTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="MillerTwistViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MillerTwistViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="showResult:"/>
-                <relationship kind="outlet" name="bulletCaliberTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="bulletLengthTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="bulletWeightTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="mvTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="resultLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="stabilityFactorTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="NFAInformationViewController" superclassName="QuickDialogController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NFAInformationViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="saveButtonTapped:"/>
-                <relationship kind="outlet" name="line1Label" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="line2Label" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="NoteAddEditTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NoteAddEditTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneTapped:"/>
-                <relationship kind="outlet" name="bodyTextView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="fakePlaceholderLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="titleTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="NotesTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NotesTableViewController.h"/>
-        </class>
-        <class className="PhotoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneTapped:"/>
-                <relationship kind="action" name="handlePan:" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="action" name="handlePinch:" candidateClass="UIPinchGestureRecognizer"/>
-                <relationship kind="outlet" name="containerView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="manufacturerLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="modelLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="photoView" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="ProfileAddEditViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileAddEditViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="bulletFieldChanged:" candidateClass="UITextField"/>
-                <relationship kind="action" name="cancelTapped:"/>
-                <relationship kind="action" name="dragModelChanged:" candidateClass="UISegmentedControl"/>
-                <relationship kind="action" name="saveTapped:"/>
-                <relationship kind="action" name="selectWeaponTapped:"/>
-                <relationship kind="outlet" name="bcButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="bcButtonTopEdgeView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="bulletButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="diameterTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="dragModelControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="muzzleVelocityTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="nameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="siteHeightTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="weaponButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="weaponTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="weightTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="zeroDistanceTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="zeroDistanceUnitControl" candidateClass="UISegmentedControl"/>
-            </relationships>
-        </class>
-        <class className="ProfileViewTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileViewTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="deleteTapped:"/>
-                <relationship kind="outlet" name="bcLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="bulletDiameterLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="bulletWeightLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dragModelLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="mvLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="sightHeightLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="zeroLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="QuickDialogController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickDialogController.h"/>
-        </class>
-        <class className="RangingSamplesViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RangingSamplesViewController.h"/>
-        </class>
-        <class className="RangingViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RangingViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="liveAngleUpdating:"/>
-                <relationship kind="action" name="showRangeEstimate:"/>
-                <relationship kind="outlet" name="angleLiveUpdateControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="angleTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="resultLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resultUnitControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="targetSizeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="targetSizeUnitControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="targetSpansTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="targetSpansUnitControl" candidateClass="UISegmentedControl"/>
-            </relationships>
-        </class>
-        <class className="SettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="setStepperRanges:"/>
-                <relationship kind="action" name="showNFAInformationTapped:"/>
-                <relationship kind="outlet" name="directionControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="nightModeControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="passcodeCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="rangeEndStepper" candidateClass="TextStepperField"/>
-                <relationship kind="outlet" name="rangeStartStepper" candidateClass="TextStepperField"/>
-                <relationship kind="outlet" name="rangeStepStepper" candidateClass="TextStepperField"/>
-                <relationship kind="outlet" name="rangeUnitsControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="reticleUnitsControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="showNFAInformationSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="windLeadingLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="TKOFViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TKOFViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="showResult:"/>
-                <relationship kind="outlet" name="bulletCaliberTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="bulletWeightTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="mvTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="resultLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="TextStepperField" superclassName="UIControl">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TextStepperField.h"/>
-        </class>
-        <class className="ThornileyViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThornileyViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="showResult:"/>
-                <relationship kind="outlet" name="bulletCaliberTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="bulletWeightTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="mvTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="resultLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="WeaponAddEditViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WeaponAddEditViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="barrelLengthValueChanged:"/>
-                <relationship kind="action" name="cancelTapped:"/>
-                <relationship kind="action" name="checkData:"/>
-                <relationship kind="action" name="photoButtonTapped"/>
-                <relationship kind="action" name="saveTapped:"/>
-                <relationship kind="outlet" name="addPhotoButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="barrelLengthTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="barrelLengthUnitLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="barrelThreadingTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="caliberTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="currencySymbolLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="finishTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="manufacturerTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="modelTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="purchaseDateTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="purchasePriceTextfield" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="serialNumberTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="WeaponCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WeaponCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="barrelInfoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="caliberLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="finishLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="malfunctionNumberLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="manufacturerLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="modelLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="photoButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="photoImageContainer" candidateClass="UIView"/>
-                <relationship kind="outlet" name="purchaseInfoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="roundCountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="serialNumberLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="stampDateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="stampSerialNumberLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="stampViewButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="stampViewContainer" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="WeaponShowViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WeaponShowViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="changeWeaponTypeTapped:"/>
-                <relationship kind="action" name="roundCountAdjust:"/>
-                <relationship kind="outlet" name="adjustRoundCountStepper" candidateClass="TextStepperField"/>
-                <relationship kind="outlet" name="dopeCardsCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="maintenanceCountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="malfunctionCountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="manufacturerLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="modelLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nfaCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="notesCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="quickCleanButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="weaponTypeLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="WhizWheelViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WhizWheelViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="directionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="directionsTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="driftInchesLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="driftMILsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="driftMOALabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dropInchesLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dropMILsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dropMOALabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rangeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rangesTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="resultBackgroundView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="resultBulletImpactImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="resultReticleView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="speedLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="speedTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="tableBackgroundImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="WindLeadingTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WindLeadingTableViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
@@ -7759,12 +7227,12 @@
         <segue reference="yYB-bQ-quH"/>
         <segue reference="DYz-Of-xaL"/>
         <segue reference="uPm-6g-2kP"/>
-        <segue reference="Kwm-tt-mog"/>
-        <segue reference="JST-tk-ezk"/>
-        <segue reference="GCB-J1-qDm"/>
-        <segue reference="Zff-G8-jkO"/>
         <segue reference="qrX-kN-oby"/>
         <segue reference="Xax-8e-kYg"/>
+        <segue reference="Zff-G8-jkO"/>
         <segue reference="c82-71-VHJ"/>
+        <segue reference="fV5-Vd-eQY"/>
+        <segue reference="Kwm-tt-mog"/>
+        <segue reference="GCB-J1-qDm"/>
     </inferredMetricsTieBreakers>
 </document>

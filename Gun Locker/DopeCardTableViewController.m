@@ -91,12 +91,7 @@
 - (void) updateDopeCard:(NSNotification*) notification {
     _dopeCard = [notification object];
     
-    NSError *error;
-    if(![[NSManagedObjectContext defaultContext] save:&error]) {
-        NSLog(@"error updating DopeCard");
-    } else {
-        NSLog(@"Updated DopeCard");
-    }    
+    [[NSManagedObjectContext defaultContext] save];
 }
 
 

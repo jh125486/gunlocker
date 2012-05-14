@@ -68,12 +68,12 @@
 
 -(void)loadWeather {
     if (self.currentWeather.goodData) {
-        self.tempTextField.text          = [NSString stringWithFormat:@"%.0f", self.currentWeather.temp_f];
-        self.pressureTextField.text      = [NSString stringWithFormat:@"%.2f", self.currentWeather.altim_in_hg];
+        self.tempTextField.text          = [NSString stringWithFormat:@"%.0f", TEMP_C_to_TEMP_F(self.currentWeather.tempC)];
+        self.pressureTextField.text      = [NSString stringWithFormat:@"%.2f", self.currentWeather.altimInHg];
         self.rhTextField.text            = [NSString stringWithFormat:@"%.0f", self.currentWeather.relativeHumidity];
-        self.altitudeTextField.text      = [NSString stringWithFormat:@"%.0f", METERS_to_FEET(self.currentWeather.altitude_m)];
-        self.windSpeedTextField.text     = [NSString stringWithFormat:@"%.0f", self.currentWeather.wind_speed_kt];
-        self.windDirectionTextField.text = [NSString stringWithFormat:@"%.0f", self.currentWeather.wind_dir_degrees];
+        self.altitudeTextField.text      = [NSString stringWithFormat:@"%.0f", METERS_to_FEET(self.currentWeather.altitudeMeters)];
+        self.windSpeedTextField.text     = [NSString stringWithFormat:@"%.0f", self.currentWeather.windSpeedKnots];
+        self.windDirectionTextField.text = [NSString stringWithFormat:@"%.0f", self.currentWeather.windDirectionDegrees];
     } else {
         self.tempTextField.text          = @"59";
         self.pressureTextField.text      = @"29.92";

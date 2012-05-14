@@ -7,24 +7,26 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AFHTTPRequestOperation.h"
 
 @interface Weather : NSObject
 
 @property (assign, nonatomic) NSDate *timestamp;
-@property float temp_c;
-@property float dewpoint_c;
-@property float wind_speed_kt;
-@property float wind_dir_degrees;
-@property float altim_in_hg;
+@property float tempC;
+@property float dewpointC;
+@property float windSpeedKnots;
+@property float windDirectionDegrees;
+@property float altimInHg;
 @property float relativeHumidity;
-@property float altitude_m;
-@property float air_density;
+@property float altitudeMeters;
+@property float airDensity;
 @property float kmFromStation;
 @property float densityAltitude;
 @property (assign, nonatomic)  NSString *stationID;
 @property BOOL  goodData;
 
--(id)initWithLocation: (CLLocation*)location;
+-(id)initClosetWeatherFromMetarArray:(NSArray*)metars andLocation:(CLLocation*)location;
+-(id)initWithMetarString:(NSString*)metarString andAltitude:(float)altitudeM;
 
 -(NSString*)description;
 
@@ -32,7 +34,7 @@
 -(float)pressureAltitudeinFeetFromBarometricPressureinMB:(float)pressure;
 -(void)calculateDensityAltitude;
 -(double)calculateSpeedOfSound;
--(float)temp_f;
+-(float)tempF;
 -(NSString *)cardinalDirectionFromDegrees:(float)degrees;
 
 +(float)saturationVaporPressureFromTemperatureInCelsius:(float)temp_c;

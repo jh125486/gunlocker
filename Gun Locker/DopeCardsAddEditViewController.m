@@ -433,7 +433,7 @@
             if ([[dopeCardCellData objectAtIndex:i] isEqualToString:@""])
                 [dopeCardCellData replaceObjectAtIndex:i withObject:@"0.0"];        
         
-        newDopeCard.dope_data = [NSArray arrayWithArray:dopeCardCellData];
+        [newDopeCard setDope_data:[NSArray arrayWithArray:dopeCardCellData]];
 
         [[NSNotificationCenter defaultCenter] postNotificationName:_selectedDopeCard ? @"editedDopeCard" : @"newDopeCard" object:newDopeCard];
 

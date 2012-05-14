@@ -103,7 +103,7 @@
                 range.drift_moa     = [NSString stringWithFormat:@"%.1f", driftMOA];
                 range.drift_mils    = [NSString stringWithFormat:@"%.1f", MOA_to_MIL(driftMOA)];
                 range.velocity_fps  = [NSString stringWithFormat:@"%.1f", v];
-                range.energy_ftlbs  = [NSString stringWithFormat:@"%.1f", [self energyAtVelocity:v]];
+                range.energy_ftlbs  = [NSString stringWithFormat:@"%.0f", [self energyAtVelocity:v]];
                 range.time          = [NSString stringWithFormat:@"%.3f", t];
 
                 [self.ranges addObject:range];

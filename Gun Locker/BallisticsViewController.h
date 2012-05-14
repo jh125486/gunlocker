@@ -14,6 +14,7 @@
 #import "WhizWheelViewController.h"
 #import "DopeTableTableViewController.h"
 #import "ProfileViewTableViewController.h"
+#import "AFHTTPRequestOperation.h"
 
 @interface BallisticsViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate, UIActionSheetDelegate> {
     NSArray *profiles;

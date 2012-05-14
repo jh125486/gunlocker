@@ -10,82 +10,158 @@
 
 @implementation Weather
 
-@synthesize timestamp, temp_c, dewpoint_c, wind_speed_kt, wind_dir_degrees, altim_in_hg, relativeHumidity, kmFromStation, densityAltitude;
-@synthesize altitude_m, air_density;
-@synthesize stationID, goodData;
+@synthesize timestamp = _timestamp;
+@synthesize tempC = _tempC;
+@synthesize dewpointC = _dewpointC;
+@synthesize windSpeedKnots = _windSpeedKnots;
+@synthesize windDirectionDegrees = _windDirectionDegrees;
+@synthesize altimInHg = _altimInHg;
+@synthesize relativeHumidity = _relativeHumidity;
+@synthesize kmFromStation = _kmFromStation;
+@synthesize densityAltitude = _densityAltitude;
+@synthesize altitudeMeters = _altitudeMeters;
+@synthesize airDensity = _airDensity;
+@synthesize stationID = _stationID;
+@synthesize goodData = _goodData;
 
-- (id)initWithLocation:(CLLocation *)location {
-    goodData = NO;
+-(id)initClosetWeatherFromMetarArray:(NSArray*)metars andLocation:(CLLocation*)location {
+    NSString *closestStation;
+    _kmFromStation = MAXFLOAT;
+    float distanceKM;
+    NSArray *stationWeatherArray = [NSArray alloc];
     
-    if (self = [super init]) {
+    // rolls through returned stations and find closest station
+    for (NSString *stationWeather in metars) {
+        stationWeatherArray = [stationWeather componentsSeparatedByString:@","];
+        CLLocation *stationLocation = [[CLLocation alloc] initWithLatitude:[[stationWeatherArray objectAtIndex:3] floatValue] 
+                                                                 longitude:[[stationWeatherArray objectAtIndex:4] floatValue]];
+        distanceKM = [location distanceFromLocation:stationLocation] / 1000.0f;
         
-        
-        
-        float longitude = location.coordinate.longitude;
-        float latitude  = location.coordinate.latitude;
-        self.altitude_m = location.altitude;
-        NSLog(@"Getting weather for Lat %f Long %f", latitude, longitude);
-        
-        NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://weather.aero/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=csv&radialDistance=30;%f,%f&hoursBeforeNow=2&fields=observation_time,station_id,latitude,longitude,temp_c,dewpoint_c,wind_dir_degrees,wind_speed_kt,altim_in_hg", longitude, latitude]];
+        if (distanceKM < _kmFromStation) {
+            closestStation = stationWeather;
+            _kmFromStation = distanceKM;
+        }
+    }
 
-        NSError *error = nil;
-        NSStringEncoding encoding;
-        NSString *weatherString = [[NSString alloc] initWithContentsOfURL:url
-                                                             usedEncoding:&encoding 
-                                                                    error:&error];
+    return [self initWithMetarString:closestStation andAltitude:location.altitude];
+}
+
+-(id)initWithMetarString:(NSString*)metarString andAltitude:(float)altitudeM {
+    if (self = [super init]) {
+        self.altitudeMeters = altitudeM;
         
-        NSMutableArray *weatherArray = [NSMutableArray arrayWithArray:[weatherString componentsSeparatedByString:@"\n"]];
+        NSArray *weatherArray = [metarString componentsSeparatedByString:@","];
         
-        if (weatherString == nil) return nil;
-        
-        int numberOfResults = [[[[weatherArray objectAtIndex:4] componentsSeparatedByString:@" "] objectAtIndex:0] intValue];
-                
         // METAR timestamp format 2012-03-10T19:23:00Z
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
         [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
         [formatter setLocale:[NSLocale systemLocale]];
         [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-        
-        NSArray *stationWeather;
-        int closestStationIndex = -1;
-        self.kmFromStation = MAXFLOAT;
-        float distanceKM;
-        
-        // rolls through returned stations and find closest station
-        for (int index = 6; index < numberOfResults + 6; index++) {
-            stationWeather = [[weatherArray objectAtIndex:index] componentsSeparatedByString:@","];
-            CLLocation *stationLocation = [[CLLocation alloc] initWithLatitude:[[stationWeather objectAtIndex:3] floatValue] 
-                                                                     longitude:[[stationWeather objectAtIndex:4] floatValue]];
-            distanceKM = [location distanceFromLocation:stationLocation] / 1000.0f;
-            
-            if(distanceKM < self.kmFromStation) {
-                closestStationIndex = index;
-                self.kmFromStation = distanceKM;
-            }
-        }
-        
-        // set up ivars with weather
-        if(closestStationIndex >= 0) {
-            stationWeather = [[weatherArray objectAtIndex:closestStationIndex] componentsSeparatedByString:@","];
-            self.timestamp = [formatter dateFromString:[stationWeather objectAtIndex:2]];        
-            self.stationID = [stationWeather objectAtIndex:1];
-            self.temp_c           = [[stationWeather objectAtIndex:5] floatValue];
-            self.dewpoint_c       = [[stationWeather objectAtIndex:6] floatValue];
-            self.wind_dir_degrees = [[stationWeather objectAtIndex:7] floatValue];
-            self.wind_speed_kt    = [[stationWeather objectAtIndex:8] floatValue];
-            self.altim_in_hg      = [[stationWeather objectAtIndex:11] floatValue];
-            self.relativeHumidity = exp((17.271*self.dewpoint_c)/(237.7+self.dewpoint_c)) / exp((17.271*self.temp_c)/(237.7+self.temp_c)) * 100;
-            //self.densityAltitude  = 145442.16 * (1 - pow((17.326*self.altim_in_hg)/(459.67+((self.temp_c/5)*9 + 32)), 0.235)) ;
-            [self calculateDensityAltitude];
-            
-            goodData = YES;
-            
-        } else {
-            NSLog(@"Failed to get weather. %d results.", numberOfResults);
-        }
+
+        _timestamp            = [formatter dateFromString:[weatherArray objectAtIndex:2]];        
+        _stationID            = [weatherArray objectAtIndex:1];
+        _tempC                = [[weatherArray objectAtIndex:5] floatValue];
+        _dewpointC            = [[weatherArray objectAtIndex:6] floatValue];
+        _windDirectionDegrees = [[weatherArray objectAtIndex:7] floatValue];
+        _windSpeedKnots       = [[weatherArray objectAtIndex:8] floatValue];
+        _altimInHg            = [[weatherArray objectAtIndex:11] floatValue];
+        _relativeHumidity = exp((17.271 * _dewpointC)/(237.7 + _dewpointC)) / exp((17.271 * _tempC)/(237.7 + _tempC)) * 100;
+        //self.densityAltitude  = 145442.16 * (1 - pow((17.326*self.altimInHg)/(459.67+((self.tempC/5)*9 + 32)), 0.235)) ;
+        [self calculateDensityAltitude];
     }
     return self;
 }
+
+//- (id)initWithLocation:(CLLocation *)location {
+//    goodData = NO;
+//    
+//    if (self = [super init]) {
+//        float longitude = location.coordinate.longitude;
+//        float latitude  = location.coordinate.latitude;
+//        self.altitudeMeters = location.altitude;
+//        NSLog(@"Getting weather for Lat %f Long %f", latitude, longitude);
+//        
+//        NSString *unescapedURL = [NSString stringWithFormat:@"http://weather.aero/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=csv&radialDistance=30;%f,%f&hoursBeforeNow=2&fields=observation_time,station_id,latitude,longitude,tempC,dewpointC,windDirectionDegrees,windSpeedKnots,altimInHg", longitude, latitude];
+//        
+//        NSURL *url = [NSURL URLWithString:[unescapedURL stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+//        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//        
+//        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+//        [operation setCompletionBlock:^{
+//            
+//            NSLog(@"CSV: %@", [[NSString alloc] initWithBytes:[operation.responseObject bytes] length:[operation.responseObject length] encoding:NSUTF8StringEncoding]);
+//        }];
+//        operation.finishedBlock = ^{
+//            if (operation.error) {
+//                NSLog(@"error");
+//            } else {
+//                
+//            }
+//        };
+//        
+//        operation.finishedBlock = ^{
+//            if (operation.error) {
+//                NSLog(@"Error retrieving weather");
+//            } else {
+//                NSString *weatherString = [[NSString alloc] initWithBytes:[operation.responseObject bytes] length:[operation.responseObject length] encoding:NSUTF8StringEncoding];
+//                NSMutableArray *weatherArray = [NSMutableArray arrayWithArray:[weatherString componentsSeparatedByString:@"\n"]];
+//                
+//                if (weatherString == nil) return nil;
+//                
+//                int numberOfResults = [[[[weatherArray objectAtIndex:4] componentsSeparatedByString:@" "] objectAtIndex:0] intValue];       
+//                
+//                // METAR timestamp format 2012-03-10T19:23:00Z
+//                NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+//                [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+//                [formatter setLocale:[NSLocale systemLocale]];
+//                [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+//                
+//                NSArray *stationWeatherArray;
+//                int closestStationIndex = -1;
+//                self.kmFromStation = MAXFLOAT;
+//                float distanceKM;
+//                
+//                // rolls through returned stations and find closest station
+//                for (int index = 6; index < numberOfResults + 6; index++) {
+//                    stationWeatherArray = [[weatherArray objectAtIndex:index] componentsSeparatedByString:@","];
+//                    CLLocation *stationLocation = [[CLLocation alloc] initWithLatitude:[[stationWeatherArray objectAtIndex:3] floatValue] 
+//                                                                             longitude:[[stationWeatherArray objectAtIndex:4] floatValue]];
+//                    distanceKM = [location distanceFromLocation:stationLocation] / 1000.0f;
+//                    
+//                    if(distanceKM < self.kmFromStation) {
+//                        closestStationIndex = index;
+//                        self.kmFromStation = distanceKM;
+//                    }
+//                }
+//                
+//                // set up ivars with weather
+//                if(closestStationIndex >= 0) {
+//                    stationWeatherArray = [[weatherArray objectAtIndex:closestStationIndex] componentsSeparatedByString:@","];
+//                    self.timestamp = [formatter dateFromString:[stationWeatherArray objectAtIndex:2]];        
+//                    self.stationID = [stationWeatherArray objectAtIndex:1];
+//                    self.tempC           = [[stationWeatherArray objectAtIndex:5] floatValue];
+//                    self.dewpointC       = [[stationWeatherArray objectAtIndex:6] floatValue];
+//                    self.windDirectionDegrees = [[stationWeatherArray objectAtIndex:7] floatValue];
+//                    self.windSpeedKnots    = [[stationWeatherArray objectAtIndex:8] floatValue];
+//                    self.altimInHg      = [[stationWeatherArray objectAtIndex:11] floatValue];
+//                    self.relativeHumidity = exp((17.271*self.dewpointC)/(237.7+self.dewpointC)) / exp((17.271*self.tempC)/(237.7+self.tempC)) * 100;
+//                    //self.densityAltitude  = 145442.16 * (1 - pow((17.326*self.altimInHg)/(459.67+((self.tempC/5)*9 + 32)), 0.235)) ;
+//                    [self calculateDensityAltitude];
+//                    
+//                    self.goodData = YES;
+//                    
+//                } else {
+//                    NSLog(@"Failed to get weather. %d results.", numberOfResults);
+//                }
+//                
+//            }
+//        };
+//        
+//        [operation start];
+//        
+//    }
+//    return self;
+//}
 
 
 +(float)saturationVaporPressureFromTemperatureInCelsius:(float)t {
@@ -114,44 +190,44 @@
 }
 
 -(void)calculateDensityAltitude {
-    float ISAtemp = 59 - ([self pressureAltitudeinFeetFromBarometricPressureinMB:(self.altim_in_hg*33.8637526)] / 1000) * 3.6;
-    float tempCorrection = (self.temp_f - ISAtemp) * 66.67;
+    float ISAtemp = 59 - ([self pressureAltitudeinFeetFromBarometricPressureinMB:(self.altimInHg*33.8637526)] / 1000) * 3.6;
+    float tempCorrection = (self.tempF - ISAtemp) * 66.67;
     self.densityAltitude = ISAtemp + tempCorrection;
 }
 
 -(NSString*)description {
     return [NSString stringWithFormat:@"\nStation: %@ @%@ (distance of %.f km)\nTemp: %.0f C\nDew point: %.0f C\nWind: %.0f knots from %.0f degrees\nAltimPressure: %.2f inHg\nRel . Hum.: %.0f%%\nDensity Altitude: %.0f\nPressure Altitude:\t%.0f'\nSpeed of Sound:\t%.0fm/s (%.0fft/s)",
-                                      self.stationID, self.timestamp, self.kmFromStation,
-                                      self.temp_c, 
-                                      self.dewpoint_c, 
-                                      self.wind_speed_kt, 
-                                      self.wind_dir_degrees, 
-                                      self.altim_in_hg, 
-                                      self.relativeHumidity,
-                                      self.densityAltitude,
-                                      [self pressureAltitudeinFeetFromBarometricPressureinMB:(self.altim_in_hg*33.8637526)],
+                                      _stationID, _timestamp, _kmFromStation,
+                                      _tempC, 
+                                      _dewpointC, 
+                                      _windSpeedKnots, 
+                                      _windDirectionDegrees, 
+                                      _altimInHg, 
+                                      _relativeHumidity,
+                                      _densityAltitude,
+                                      [self pressureAltitudeinFeetFromBarometricPressureinMB:(self.altimInHg*33.8637526)],
                                       self.calculateSpeedOfSound, METERS_to_FEET(self.calculateSpeedOfSound)];
 
 }
 
--(float)temp_f {
-    return TEMP_C_to_TEMP_F(self.temp_c);
+-(float)tempF {
+    return TEMP_C_to_TEMP_F(_tempC);
 }
 
--(float)temp_r {
-    return TEMP_F_to_TEMP_R(self.temp_f);
+-(float)tempR {
+    return TEMP_F_to_TEMP_R(self.tempF);
 }
 
--(float)temp_k {
-    return TEMP_C_to_TEMP_K(self.temp_c);
+-(float)tempK {
+    return TEMP_C_to_TEMP_K(_tempC);
 }
 
--(float)altim_in_pa {
-    return self.altim_in_hg * 3386.389;
+-(float)altimPa {
+    return _altimInHg * 3386.389;
 }
 
 -(double)calculateSpeedOfSound {
-    return [Weather calculateSpeedOfSoundFromTempC:self.temp_c andRH:self.relativeHumidity andPressurePa:self.altim_in_pa];
+    return [Weather calculateSpeedOfSoundFromTempC:_tempC andRH:self.relativeHumidity andPressurePa:self.altimPa];
 }
 
 +(double)calculateSpeedOfSoundFromTempC:(double)tempC andRH:(int)rh andPressurePa:(double)pressurePa {

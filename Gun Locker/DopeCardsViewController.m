@@ -85,12 +85,7 @@
     DopeCard *newDopeCard = [notification object];
     newDopeCard.weapon = self.selectedWeapon;
     
-    NSError *error;
-    if(![[NSManagedObjectContext defaultContext] save:&error]) {
-        NSLog(@"error creating DopeCard");
-    } else {
-        NSLog(@"Saved new DopeCard");
-    }
+    [[NSManagedObjectContext defaultContext] save];
 }
 
 #pragma mark - UITableViewDataSource

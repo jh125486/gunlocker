@@ -18,8 +18,10 @@
 @synthesize selectedProfileWeaponLabel, selectedProfileNameLabel;
 @synthesize dopeCardsButton, whizWheelButton;
 
-@synthesize locationManager, currentLocation, locationTimer;
-@synthesize currentWeather;
+@synthesize locationManager;
+@synthesize currentLocation = _currentLocation;
+@synthesize locationTimer;
+@synthesize currentWeather = _currentWeather;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -126,8 +128,8 @@
     [super viewDidAppear:animated];
     
     //crash for some reason
-//    if (self.currentWeather && self.currentWeather.goodData) {
-//        self.wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", [[self.currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
+//    if (_currentWeather && _currentWeather.goodData) {
+//        self.wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", [[_currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
 //    } else {
 //        self.wxTimestampLabel.text = @"";
 //    }
@@ -164,7 +166,7 @@
 	if ([segueID isEqualToString:@"WhizWheel"]) {
         ((WhizWheelViewController *)segue.destinationViewController).selectedProfile = selectedProfile;
     } else if ([segueID isEqualToString:@"DopeTable"]) {
-        ((DopeTableTableViewController *)segue.destinationViewController).currentWeather = currentWeather;
+        ((DopeTableTableViewController *)segue.destinationViewController).currentWeather = _currentWeather;
         ((DopeTableTableViewController *)segue.destinationViewController).selectedProfile = selectedProfile;
     }  else if ([segueID isEqualToString:@"ShowProfile"]) {
         ((ProfileViewTableViewController *)segue.destinationViewController).profile = selectedProfile;
@@ -178,32 +180,6 @@
     rangeResult = [passedRange objectAtIndex:0];
     rangeResultUnits = [passedRange objectAtIndex:1];
     self.rangeLabel.text = [NSString stringWithFormat:@"%.0f %@", [rangeResult floatValue], rangeResultUnits];
-}
-
-- (IBAction)getWX:(id)sender {
-    self.wxStationLabel.hidden = YES;
-    [self.wxIndicator startAnimating];
-    self.wxButton.enabled = NO;
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        self.currentWeather = [[Weather alloc] initWithLocation:currentLocation];        
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            if(self.currentWeather.goodData) {
-                self.tempLabel.text = [NSString stringWithFormat:@"%.0fº F", TEMP_C_to_TEMP_F(self.currentWeather.temp_c)];
-                self.rhLabel.text   = [NSString stringWithFormat:@"%.0f%%", self.currentWeather.relativeHumidity];
-                self.windLabel.text = [NSString stringWithFormat:@"%.0f knots from %@", self.currentWeather.wind_speed_kt, 
-                                                     [self.currentWeather cardinalDirectionFromDegrees:self.currentWeather.wind_dir_degrees]];
-                self.altitudeLabel.text = [NSString stringWithFormat:@"%.0f'%", METERS_to_FEET(self.currentWeather.altitude_m)];
-                self.densityAltitudeLabel.text = [NSString stringWithFormat:@"%.0f'%", self.currentWeather.densityAltitude];
-                self.wxStationLabel.text = [NSString stringWithFormat:@"%@ (%.0f km)", self.currentWeather.stationID, self.currentWeather.kmFromStation];
-                self.wxStationLabel.hidden = NO;
-                [self.wxIndicator stopAnimating];
-                self.wxButton.enabled = YES;
-                self.wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", [[self.currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
-                self.wxButton.titleLabel.text = @"↻ WX";
-            }
-        });
-    });
 }
 
 - (IBAction)chooseProfileTapped:(id)sender {
@@ -252,7 +228,7 @@
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    self.currentLocation = newLocation;
+    _currentLocation = newLocation;
     
     if(newLocation.horizontalAccuracy <= 100.0f)
         [self stopUpdatingLocations];
@@ -262,7 +238,7 @@
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     if(error.code == kCLErrorDenied) {
         [self stopUpdatingLocations];
-        self.wxButton.titleLabel.text = @"⇣ WX";
+        [self resetWX];
     } else if(error.code == kCLErrorLocationUnknown) {
         // retry
     } else {
@@ -350,7 +326,7 @@
             break;
             
         case 1:
-            
+            // choose a different profile
             [self.selectedProfileTextField becomeFirstResponder];
             break;
         default:
@@ -372,6 +348,76 @@
     
 	[headerView addSubview:label];
 	return headerView;
+}
+
+#pragma mark WX
+
+- (IBAction)getWX:(id)sender {
+    self.wxStationLabel.hidden = self.wxTimestampLabel.hidden = YES;
+    [self.wxIndicator startAnimating];
+    self.wxButton.enabled = NO;
+
+    NSLog(@"Getting weather for Lat %f Long %f", _currentLocation.coordinate.latitude, _currentLocation.coordinate.longitude);
+
+    NSString *unescapedURL = [NSString stringWithFormat:@"http://weather.aero/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=csv&radialDistance=30;%f,%f&hoursBeforeNow=2&fields=observation_time,station_id,latitude,longitude,temp_c,dewpoint_c,wind_dir_degrees,wind_speed_kt,altim_in_hg", _currentLocation.coordinate.longitude, _currentLocation.coordinate.latitude];
+    
+    NSURL *url = [NSURL URLWithString:[unescapedURL stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    operation.finishedBlock = ^{
+        if (operation.hasAcceptableStatusCode) {
+            NSArray *metarArray = [[[NSString alloc] initWithBytes:[operation.responseObject bytes] length:[operation.responseObject length] encoding:NSUTF8StringEncoding] componentsSeparatedByString:@"\n"];
+            
+            if ([[metarArray objectAtIndex:0] isEqualToString:@"No errors"]) {
+                int count = [[[[metarArray objectAtIndex:4] componentsSeparatedByString:@" "] objectAtIndex:0] intValue];
+                
+                NSArray *weatherArray = [metarArray subarrayWithRange:NSMakeRange(6, count)]; 
+
+                _currentWeather = [[Weather alloc] initClosetWeatherFromMetarArray:weatherArray andLocation:_currentLocation];
+
+                self.tempLabel.text = [NSString stringWithFormat:@"%.0fº F", TEMP_C_to_TEMP_F(_currentWeather.tempC)];
+                self.rhLabel.text   = [NSString stringWithFormat:@"%.0f%%", _currentWeather.relativeHumidity];
+                self.windLabel.text = [NSString stringWithFormat:@"%.0f knots from %@", _currentWeather.windSpeedKnots, 
+                                                     [_currentWeather cardinalDirectionFromDegrees:_currentWeather.windDirectionDegrees]];
+                self.altitudeLabel.text = [NSString stringWithFormat:@"%.0f'%", METERS_to_FEET(_currentWeather.altitudeMeters)];
+                self.densityAltitudeLabel.text = [NSString stringWithFormat:@"%.0f'%", _currentWeather.densityAltitude];
+                self.wxStationLabel.text = [NSString stringWithFormat:@"%@ (%.0f km)", _currentWeather.stationID, _currentWeather.kmFromStation];
+                self.wxTimestampLabel.hidden = self.wxStationLabel.hidden = NO;
+                [self.wxIndicator stopAnimating];
+                self.wxButton.enabled = YES;
+                self.wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", [[_currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
+
+                self.wxButton.titleLabel.text = @"↻ WX";
+
+            } else { // errors with weather.aero
+               NSLog(@"! Problem with METAR data from weather.aero: %@\n", metarArray);
+                [self resetWX];
+                self.wxTimestampLabel.text = @"Error processing weather data: dataservice down";
+           }
+        } else {      // network errors       
+            NSLog(@"! Error: %@", operation.error.localizedDescription);
+            [self resetWX];
+            self.wxTimestampLabel.text = operation.error.localizedDescription;
+        }
+    };
+    
+    [operation start];
+}
+
+-(void)resetWX {
+    _currentWeather = nil;
+    
+    [self.wxIndicator stopAnimating];
+    self.tempLabel.text            = @"n/a";
+    self.rhLabel.text              = @"n/a";
+    self.windLabel.text            = @"n/a";
+    self.altitudeLabel.text        = @"n/a";
+    self.densityAltitudeLabel.text = @"n/a";
+    self.wxTimestampLabel.hidden   = NO;
+    self.wxButton.enabled          = YES;
+    self.wxButton.titleLabel.text  = @"⇣ WX";
 }
 
 @end
