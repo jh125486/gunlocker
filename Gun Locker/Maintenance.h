@@ -2,7 +2,7 @@
 //  Maintenance.h
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 3/24/12.
+//  Created by Jacob Hochstetler on 5/14/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -15,7 +15,9 @@
 
 @property (nonatomic, retain) NSString * action_performed;
 @property (nonatomic, retain) NSDate * date;
+@property (nonatomic, retain) NSString * dateAgoInWords;
 @property (nonatomic, retain) NSNumber * round_count;
+@property (nonatomic, retain) NSString * indexForCollation;
 @property (nonatomic, retain) NSSet *malfunctions;
 @property (nonatomic, retain) Weapon *weapon;
 @end

@@ -2,7 +2,7 @@
 //  Manufacturer.h
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 4/12/12.
+//  Created by Jacob Hochstetler on 5/14/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSString * country;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * short_name;
+@property (nonatomic, retain) NSString * displayName;
 @property (nonatomic, retain) NSSet *weapons;
 @end
 

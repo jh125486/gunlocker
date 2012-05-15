@@ -1,21 +1,21 @@
 //
-//  DopeCardsTableViewController.m
+//  MagazineByBrandViewController.m
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 4/3/12.
+//  Created by Jacob Hochstetler on 5/15/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "DopeCardsViewController.h"
+#import "MagazineListByBrandViewController.h"
 
-@implementation DopeCardsViewController
-@synthesize noDopeCardsImageView;
-@synthesize tableView;
-@synthesize selectedWeapon;
+@implementation MagazineListByBrandViewController
 @synthesize fetchedResultsController = _fetchedResultsController;
+@synthesize caliberLabel = _caliberLabel;
+@synthesize brandCountLabel = _brandCountLabel;
+@synthesize selectedCaliber = _selectedCaliber;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)initWithStyle:(UITableViewStyle)style {
+    self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
     }
@@ -24,40 +24,40 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    //Register addNewDopeCardToArray to recieve "addNewDopeCard" notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewDopeCard:) name:@"newDopeCard" object:nil];
-
-    if (!selectedWeapon) self.navigationItem.rightBarButtonItem = nil;
+    self.title = @"Calibers";
     
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
 		// Update to handle the error appropriately.
 		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 		exit(-1);  // Fail
-	}
+	}    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    [super viewWillAppear:animated];
     [self setTitle];
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    if ([_fetchedResultsController.fetchedObjects count] == 0) [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)setTitle {
-    int count = [_fetchedResultsController.fetchedObjects count];
-    self.title = [NSString stringWithFormat:@"Dope Cards (%d)", count];
+    self.caliberLabel.text = _selectedCaliber;
     
-    self.noDopeCardsImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/DopeCards"]];
-    self.noDopeCardsImageView.hidden = (count != 0);
-    self.tableView.hidden = (count == 0);
+    NSNumber *magazines = [Magazine aggregateOperation:@"sum:" 
+                                           onAttribute:@"count" 
+                                         withPredicate:_fetchedResultsController.fetchRequest.predicate];
+    self.brandCountLabel.text = [NSString stringWithFormat:@"%d brands / %@ magazines", [_fetchedResultsController.sections count], magazines];
 }
 
 - (void)viewDidUnload {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setSelectedWeapon:nil];
-    [self setNoDopeCardsImageView:nil];
-    [self setTableView:nil];
     [self setFetchedResultsController:nil];
+    [self setCaliberLabel:nil];
+    [self setBrandCountLabel:nil];
     [super viewDidUnload];
 }
 
@@ -65,29 +65,25 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString *segueID = segue.identifier;
     
-    if ([segueID isEqualToString:@"ShowDopeCard"]) {
-        DopeCardTableViewController *dst = segue.destinationViewController;
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        dst.selectedDopeCard = [_fetchedResultsController objectAtIndexPath:indexPath];
+	if ([segueID isEqualToString:@"MagazineShow"]) {
+        MagazineShowViewController *dst = segue.destinationViewController;
+        dst.selectedMagazine = [_fetchedResultsController objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
+    } else if ([segueID isEqualToString:@"AddMagazineFromBrand"]) {
+        MagazineAddEditViewController *dst = [[segue.destinationViewController viewControllers] objectAtIndex:0];
+        dst.selectedCaliber = _selectedCaliber;
     }
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Dope Cards" 
+
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Brands" 
                                                                              style:UIBarButtonItemStylePlain 
                                                                             target:nil 
                                                                             action:nil];
+
 }
 
-// can only add dopeCard from weapon view, so no worry about updating sections
-- (void) addNewDopeCard:(NSNotification*) notification {
-    DopeCard *newDopeCard = [notification object];
-    newDopeCard.weapon = self.selectedWeapon;
-    
-    [[NSManagedObjectContext defaultContext] save];
-}
-
-#pragma mark - UITableViewDataSource
+#pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [[_fetchedResultsController sections] count];
@@ -108,55 +104,47 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-	return [_fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
+	return [_fetchedResultsController sectionForSectionIndexTitle:[title substringToIndex:1] atIndex:index];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"DopeCardSummaryCell";
+    static NSString *CellIdentifier = @"MagazineByBrandCell";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    [self configureCell:cell atIndexPath:indexPath];
+    [self configureCell:cell atIndexPath:indexPath];    
     return cell;
 }
 
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    DopeCard *dopeCard = [_fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = dopeCard.name;
-    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:20];
-    cell.textLabel.textColor = [UIColor blackColor];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Zero: %@ %@ / Wind: %@", dopeCard.zero, [dopeCard.range_unit lowercaseString], dopeCard.wind_info];
-    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
-    cell.detailTextLabel.textColor = [UIColor darkGrayColor];
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    Magazine *magazine        = [_fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text       =  magazine.type;
+    if (![magazine.color isEqualToString:@""]) cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@)", cell.textLabel.text, magazine.color];
+    cell.detailTextLabel.text = [magazine.count stringValue];
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [[_fetchedResultsController objectAtIndexPath:indexPath] deleteEntity];
+        [[NSManagedObjectContext defaultContext] save];
     }
-    [[NSManagedObjectContext defaultContext] save];
 }
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath { 
-    cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor clearColor] : [UIColor colorWithRed:0.855 green:0.812 blue:0.682 alpha:1.000];
-}  
 
 #pragma mark FetchedResultsController
 - (NSFetchedResultsController *)fetchedResultsController {
     if (_fetchedResultsController != nil) return _fetchedResultsController;
-
-    NSPredicate *typeFilter = (self.selectedWeapon) ? [NSPredicate predicateWithFormat:@"weapon = %@", self.selectedWeapon] : nil;
     
-    NSFetchRequest *fetchRequest = [DopeCard requestAllSortedBy:(self.selectedWeapon) ? @"name" : @"weapon" ascending:YES 
-                                                  withPredicate:typeFilter];
-    NSString *cacheName = (self.selectedWeapon) ? [NSString stringWithFormat:@"DopeCards%@", self.selectedWeapon] : @"DopeCards";
+    NSPredicate *caliberFilter = [NSPredicate predicateWithFormat:@"caliber = %@", _selectedCaliber];
+    
+    NSFetchRequest *fetchRequest = [Magazine requestAllSortedBy:@"brand" ascending:YES withPredicate:caliberFilter];
     fetchRequest.fetchBatchSize = 20;
+
+    NSString *sectionNameKeyPath = @"brand";
     
-    NSString *sectionNameKeyPath = (self.selectedWeapon) ? nil : @"weapon.description";
+    NSString *cacheName = [NSString stringWithFormat:@"MagazineByCaliber%@", _selectedCaliber];
     
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
-                                                                        managedObjectContext:[NSManagedObjectContext defaultContext] 
-                                                                          sectionNameKeyPath:sectionNameKeyPath
-                                                                                   cacheName:cacheName];
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+                                                                    managedObjectContext:[NSManagedObjectContext defaultContext] 
+                                                                      sectionNameKeyPath:sectionNameKeyPath
+                                                                               cacheName:cacheName];
     
     _fetchedResultsController.delegate = self;
     
@@ -179,14 +167,14 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self configureCell:(UITableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:
             [self.tableView deleteRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                                                    arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView insertRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                                                    arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
 }
@@ -202,11 +190,11 @@
     }
 }
 
-
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self setTitle];
     [self.tableView endUpdates];
+    if ([_fetchedResultsController.fetchedObjects count] == 0) [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

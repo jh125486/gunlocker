@@ -37,7 +37,7 @@
 
 - (void)configureWithWeapon:(Weapon *)aWeapon {
     self.weapon = aWeapon;
-    self.manufacturerLabel.text = weapon.manufacturer.short_name ? weapon.manufacturer.short_name : weapon.manufacturer.name;
+    self.manufacturerLabel.text = weapon.manufacturer.displayName;
 	self.modelLabel.text = [NSString stringWithFormat:@"%@", weapon.model];
     self.caliberLabel.text =  weapon.caliber ? weapon.caliber : @"n/a";
     

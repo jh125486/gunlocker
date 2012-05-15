@@ -2,7 +2,7 @@
 //  Weapon.m
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 4/12/12.
+//  Created by Jacob Hochstetler on 5/14/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -32,13 +32,14 @@
 @dynamic threaded_barrel;
 @dynamic threaded_barrel_pitch;
 @dynamic type;
+@dynamic indexLetter;
+@dynamic ballistic_profile;
 @dynamic dope_cards;
 @dynamic maintenances;
 @dynamic malfunctions;
+@dynamic manufacturer;
 @dynamic notes;
 @dynamic preferred_load;
 @dynamic stamp;
-@dynamic ballistic_profile;
-@dynamic manufacturer;
 
 @end

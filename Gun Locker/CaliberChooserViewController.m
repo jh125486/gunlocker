@@ -11,13 +11,12 @@
 @implementation CaliberChooserViewController
 
 @synthesize delegate;
-@synthesize selectedCaliber;
+@synthesize selectedCaliber = _selectedCaliber;
 @synthesize searchDisplayController;
 @synthesize searchBar;
-@synthesize searchResults;
+@synthesize searchResults = _searchResults;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
@@ -40,10 +39,10 @@
     
     calibers = [[content componentsSeparatedByString:@"\n"] mutableCopy];
     
-    if([self.selectedCaliber length] > 0 && ![calibers containsObject:self.selectedCaliber])
-        [calibers insertObject:self.selectedCaliber atIndex:0];
+    if([_selectedCaliber length] > 0 && ![calibers containsObject:_selectedCaliber])
+        [calibers insertObject:_selectedCaliber atIndex:0];
     
-    selectedIndex = [calibers indexOfObject:self.selectedCaliber];
+    selectedIndex = [calibers indexOfObject:_selectedCaliber];
 }
 
 - (void)viewDidUnload {
@@ -51,7 +50,6 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
@@ -62,15 +60,11 @@
 }
 
 - (void)filterContentForSearchText:(NSString*)searchText  scope:(NSString*)scope {
-    self.searchResults = [calibers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF contains[cd] %@", searchText]];
+    _searchResults = [calibers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF contains[cd] %@", searchText]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return [self.searchResults count];
-    } else {
-        return [calibers count];
-    }
+    return (tableView == self.searchDisplayController.searchResultsTableView) ? [_searchResults count] : [calibers count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -80,12 +74,9 @@
     if (cell == nil)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 
-    cell.textLabel.text = (tableView == self.searchDisplayController.searchResultsTableView) ? [self.searchResults objectAtIndex:indexPath.row] : [calibers objectAtIndex:indexPath.row];
+    cell.textLabel.text = (tableView == self.searchDisplayController.searchResultsTableView) ? [_searchResults objectAtIndex:indexPath.row] : [calibers objectAtIndex:indexPath.row];
     
-    if ([cell.textLabel.text isEqualToString:self.selectedCaliber])
-        cell.accessoryType =  UITableViewCellAccessoryCheckmark;
-    else
-        cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.accessoryType = ([cell.textLabel.text isEqualToString:_selectedCaliber]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	
     return cell;
 }
@@ -94,8 +85,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-	if (selectedIndex != NSNotFound)
-	{
+	if (selectedIndex != NSNotFound) {
 		UITableViewCell *cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedIndex inSection:0]];
 		cell.accessoryType = UITableViewCellAccessoryNone;
 	}

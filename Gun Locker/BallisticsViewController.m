@@ -264,13 +264,13 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     if (section != 0) return nil;
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, self.tableView.sectionFooterHeight)];
     [view addSubview:self.wxTimestampLabel];
     return view;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 30.0f;
+    return (section == 0) ? 30.0f : 0.0f;
 }
 
 #pragma mark Pickerview
@@ -291,21 +291,23 @@
     profilePickerData = [[NSMutableArray alloc] initWithCapacity:[profiles count]];
     
     for(BallisticProfile *profile in profiles) {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
         view.backgroundColor = [UIColor clearColor];
-        UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(16, 1, 56, 42)];
-        thumbNail.image = [UIImage imageWithData:profile.weapon.photo_thumbnail];
-        UILabel *firstLine  = [[UILabel alloc] initWithFrame:CGRectMake(75, 0, 230, 22)];
-        UILabel *secondLine = [[UILabel alloc] initWithFrame:CGRectMake(75, 22, 230, 22)];
-        firstLine.backgroundColor = [UIColor clearColor];
-        secondLine.backgroundColor = [UIColor clearColor];
-        firstLine.font  = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22];
-        secondLine.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:18];
+        UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 1.0f, 56.0f, 42.0f)];
+        UILabel *firstLine  = [[UILabel alloc] initWithFrame:CGRectMake(75.0f, 0.0f, 230.0f, 22.0f)];
+        UILabel *secondLine = [[UILabel alloc] initWithFrame:CGRectMake(75.0f, 22.0f, 230.0f, 22.0f)];
+        
+        firstLine.font  = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:20.0f];
+        secondLine.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:18.0f];
+        firstLine.backgroundColor = secondLine.backgroundColor = [UIColor clearColor];
         firstLine.textColor = [UIColor blackColor];
         secondLine.textColor = [UIColor darkGrayColor];
         firstLine.adjustsFontSizeToFitWidth = YES;
-        firstLine.text  = [NSString stringWithFormat:@"%@", profile.weapon];
-        secondLine.text = [NSString stringWithFormat:@"%@", profile.name];
+        
+        thumbNail.image = [UIImage imageWithData:profile.weapon.photo_thumbnail];
+        firstLine.text  = profile.weapon.description;
+        secondLine.text = profile.name;
+        
         [view addSubview:thumbNail];
         [view addSubview:firstLine];
         [view addSubview:secondLine];

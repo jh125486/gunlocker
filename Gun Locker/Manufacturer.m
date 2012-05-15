@@ -2,7 +2,7 @@
 //  Manufacturer.m
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 4/12/12.
+//  Created by Jacob Hochstetler on 5/14/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -15,6 +15,7 @@
 @dynamic country;
 @dynamic name;
 @dynamic short_name;
+@dynamic displayName;
 @dynamic weapons;
 
 @end

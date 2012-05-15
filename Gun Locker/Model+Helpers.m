@@ -9,16 +9,29 @@
 #import <Model+Helpers.h>
 
 @implementation Weapon (helper)
-
-- (NSString *)description {
-    NSString *manufacturer = self.manufacturer.short_name ? self.manufacturer.short_name : self.manufacturer.name;
+-(NSString *)description {
+    NSString *manufacturer = self.manufacturer.displayName;
     NSMutableString *description = [[NSString stringWithFormat:@"%@ %@", manufacturer, self.model] mutableCopy];
     if (self.barrel_length) [description appendFormat:@" (%@\")", self.barrel_length];
     
     return [NSString stringWithString:description];
 }
 
+-(NSString *)indexLetter {
+    return [self.manufacturer.displayName substringToIndex:1];
+}
+
+- (NSComparisonResult)compare:(Weapon *)otherObject {
+    return [self.description compare:otherObject.description];
+}
 @end
+
+@implementation Manufacturer (helper)
+-(NSString *)displayName {
+    return self.short_name ? self.short_name : self.name;
+}
+@end
+
 
 @implementation BallisticProfile (helper)
 
@@ -225,4 +238,26 @@
     return [NSString stringWithString:bcText];
 }
 
+@end
+
+@implementation Maintenance (helper)
+-(NSString *)dateAgoInWords {
+    [self willAccessValueForKey:@"date"];
+    NSString *distance = [[self date] distanceOfTimeInWords];
+    [self didAccessValueForKey:@"date"];
+    return distance;
+}
+
+-(NSString*)indexForCollation {
+    return self.weapon.indexLetter;
+}
+@end
+
+@implementation Malfunction (helper)
+-(NSString *)dateAgoInWords {
+    [self willAccessValueForKey:@"date"];
+    NSString *distance = [[self date] distanceOfTimeInWords];
+    [self didAccessValueForKey:@"date"];
+    return distance;
+}
 @end

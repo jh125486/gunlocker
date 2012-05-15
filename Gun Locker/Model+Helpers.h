@@ -10,6 +10,8 @@
 //#import <Accelerate/Accelerate.h>
 #import "Weapon.h"
 #import "Manufacturer.h"
+#import "Maintenance.h"
+#import "Malfunction.h"
 #import "Trajectory.h"
 #import "BallisticProfile.h"
 #import "Weather.h"
@@ -49,7 +51,12 @@
 #define GRAVITY_FPS (-32.1740486)
 
 @interface Weapon (helper)
-- (NSString *)description;
+-(NSString *)description;
+-(NSString *)indexLetter;
+@end
+
+@interface Manufacturer (helper)
+-(NSString *)displayName;
 @end
 
 @interface BallisticProfile (helper)
@@ -62,4 +69,13 @@
 @interface Bullet (helper)
 - (NSString *)description;
 +(NSString *)bcToString:(NSArray*)bc;
+@end
+
+@interface Maintenance (helper)
+-(NSString*)dateAgoInWords;
+-(NSString*)indexForCollation;
+@end
+
+@interface Malfunction (helper)
+-(NSString*)dateAgoInWords;
 @end

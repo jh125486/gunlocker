@@ -10,6 +10,8 @@
 #import "Maintenance.h"
 #import "Malfunction.h"
 #import "DopeCard.h"
+#import "Ammunition.h"
+#import "Magazine.h"
 #import "MaintenancesViewController.h"
 #import "MalfunctionsViewController.h"
 #import "DopeCardsViewController.h"
@@ -18,5 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *maintenanceCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *malfunctionCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dopeCardsCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *magazineCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ammunitionCountLabel;
 
 @end

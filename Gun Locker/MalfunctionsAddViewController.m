@@ -9,7 +9,7 @@
 #import "MalfunctionsAddViewController.h"
 
 @implementation MalfunctionsAddViewController
-@synthesize selectedWeapon;
+@synthesize selectedWeapon = _selectedWeapon;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,7 +32,7 @@
     malfunctionDate.mode = UIDatePickerModeDate;
     malfunctionDate.key = @"date";
 
-    QDecimalElement *roundCount = [[QDecimalElement alloc] initWithTitle:@"Occured at Round Count" value:[self.selectedWeapon.round_count intValue]];
+    QDecimalElement *roundCount = [[QDecimalElement alloc] initWithTitle:@"Round Count" value:[_selectedWeapon.round_count intValue]];
     roundCount.fractionDigits = 0;
     roundCount.keyboardType = UIKeyboardTypeNumberPad;
     roundCount.key = @"round_count";
@@ -78,10 +78,8 @@
     Malfunction *newMalfunction = [Malfunction createEntity];
 
     [self.root fetchValueIntoObject:newMalfunction];
-    newMalfunction.weapon = self.selectedWeapon;
+    newMalfunction.weapon = _selectedWeapon;
     [[NSManagedObjectContext defaultContext] save];
-        
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"newMalfunction" object:newMalfunction];
 
     [self dismissModalViewControllerAnimated:YES];
 }

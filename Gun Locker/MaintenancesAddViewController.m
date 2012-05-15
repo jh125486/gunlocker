@@ -9,7 +9,7 @@
 #import "MaintenancesAddViewController.h"
 
 @implementation MaintenancesAddViewController
-@synthesize selectedWeapon;
+@synthesize selectedWeapon = _selectedWeapon;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -42,7 +42,7 @@
     maintenanceDate.mode = UIDatePickerModeDate;
     maintenanceDate.key = @"date";
     
-    QDecimalElement *roundCount = [[QDecimalElement alloc] initWithTitle:@"Round count" value:[self.selectedWeapon.round_count floatValue]];
+    QDecimalElement *roundCount = [[QDecimalElement alloc] initWithTitle:@"Round Count" value:[_selectedWeapon.round_count floatValue]];
     roundCount.fractionDigits = 0;
     roundCount.keyboardType = UIKeyboardTypeNumberPad;
     roundCount.key = @"round_count";
@@ -59,17 +59,16 @@
     
     QSection *malfunctionSection = [[QSection alloc] initWithTitle:@"Related malfunctions"];
     NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
-    malfunctions = [self.selectedWeapon.malfunctions sortedArrayUsingDescriptors:sortDescriptors];
+    malfunctions = [_selectedWeapon.malfunctions sortedArrayUsingDescriptors:sortDescriptors];
     for(Malfunction *malfunction in malfunctions) {
         NSString *title = [NSString stringWithFormat:@"%@ %@", malfunction.failure, [[malfunction.date distanceOfTimeInWords] lowercaseString]];
         QBooleanElement *malfunctionElement = [[QBooleanElement alloc] initWithTitle:title BoolValue:NO];
         malfunctionElement.controllerAction = @"linkedMalfunctionChanged:";
         malfunctionElement.onImage  = [UIImage imageNamed:@"icon_link"];
         malfunctionElement.offImage = [UIImage imageNamed:@"icon_delink"];
-        malfunctionElement.key = [NSString stringWithFormat:@"%d", [malfunctions indexOfObject:malfunction]];
-//        malfunctionElement.onSelected
-        [malfunctionSection addElement:malfunctionElement];
-        NSLog(@"%@", malfunctionElement.controllerAction);
+        malfunctionElement.key = [NSString stringWithFormat:@"%d", [malfunctions indexOfObject:malfunction]];        
+        malfunctionElement.controllerAccessoryAction = @"linkedMalfunctionChanged:";
+        [malfunctionSection addElement:malfunctionElement];        
     }
     
     [_root addSection:infoSection];
@@ -91,6 +90,12 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)linkedMalfunctionChanged:(QBooleanElement *)element {
+    (element.boolValue) ? [linkedMalfunctions addObject:[malfunctions objectAtIndex:[element.key intValue]]] : 
+    [linkedMalfunctions removeObject:[malfunctions objectAtIndex:[element.key intValue]]];
+}
+
+#pragma mark Actions
 - (IBAction)cancelTapped:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -100,32 +105,27 @@
     [self.root fetchValueIntoObject:dict];
 
     Maintenance *newMaintenance = [Maintenance createEntity];
+
     // doesnt work because of the use of index keys for boolean elements
 //    [self.root fetchValueIntoObject:newMaintenance];
-    newMaintenance.weapon       = self.selectedWeapon;
+    newMaintenance.weapon       = _selectedWeapon;
     newMaintenance.date         = [dict valueForKey:@"date"];
     newMaintenance.round_count  = [dict valueForKey:@"round_count"];
     newMaintenance.action_performed = [dict valueForKey:@"action_performed"];
     newMaintenance.malfunctions = linkedMalfunctions;
-    NSLog(@"linked %@", linkedMalfunctions);
-    [[NSManagedObjectContext defaultContext] save];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"newMaintenance" object:newMaintenance];
+    [[NSManagedObjectContext defaultContext] save];
     
     [self dismissModalViewControllerAnimated:YES];
 }
+
+# pragma mark Quickdialog Style delegate
 
 - (void) cell:(UITableViewCell *)cell willAppearForElement:(QElement *)element atIndexPath:(NSIndexPath *)indexPath{
     if ([element isKindOfClass:[QBooleanElement class]]){
         cell.textLabel.numberOfLines = 3;
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
     }   
-}
-
-- (void)linkedMalfunctionChanged:(QElement *)element {
-    NSLog(@"%d hit", __LINE__);
-//    (element.boolValue) ? [linkedMalfunctions addObject:[malfunctions objectAtIndex:[element.key intValue]]] : 
-//                          [linkedMalfunctions removeObject:[malfunctions objectAtIndex:[element.key intValue]]];
 }
 
 @end

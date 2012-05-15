@@ -9,9 +9,11 @@
 #import "LogsViewController.h"
 
 @implementation LogsViewController
-@synthesize maintenanceCountLabel;
-@synthesize malfunctionCountLabel;
-@synthesize dopeCardsCountLabel;
+@synthesize maintenanceCountLabel = _maintenanceCountLabel;
+@synthesize malfunctionCountLabel = _malfunctionCountLabel;
+@synthesize dopeCardsCountLabel = _dopeCardsCountLabel;
+@synthesize magazineCountLabel = _magazineCountLabel;
+@synthesize ammunitionCountLabel = _ammunitionCountLabel;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -28,15 +30,22 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    maintenanceCountLabel.text = [NSString stringWithFormat:@"%d", [Maintenance countOfEntities]];
-    malfunctionCountLabel.text = [NSString stringWithFormat:@"%d", [Malfunction countOfEntities]];
-    dopeCardsCountLabel.text = [NSString stringWithFormat:@"%d",    [DopeCard countOfEntities]];
-}
+    NSNumber *magazineCount     = [Magazine aggregateOperation:@"sum:" onAttribute:@"count" withPredicate:nil];
+    NSNumber *ammunitionCount   = [Ammunition aggregateOperation:@"sum:" onAttribute:@"count" withPredicate:nil];
+    
+    _maintenanceCountLabel.text = [[Maintenance numberOfEntities] stringValue];
+    _malfunctionCountLabel.text = [[Malfunction numberOfEntities] stringValue];
+    _dopeCardsCountLabel.text   = [[DopeCard numberOfEntities] stringValue];
+    _magazineCountLabel.text    = [NSString stringWithFormat:@"%@ total", magazineCount];
+    _ammunitionCountLabel.text  = [NSString stringWithFormat:@"%@ total", ammunitionCount];
+ }
 
 - (void)viewDidUnload {
     [self setMalfunctionCountLabel:nil];
     [self setMaintenanceCountLabel:nil];
     [self setDopeCardsCountLabel:nil];
+    [self setAmmunitionCountLabel:nil];
+    [self setMagazineCountLabel:nil];
     [super viewDidUnload];
 }
 

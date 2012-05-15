@@ -11,22 +11,22 @@
 @implementation WeaponAddEditViewController
 
 @synthesize delegate;
-@synthesize selectedWeapon;
-@synthesize weaponType;
-@synthesize manufacturerTextField;
-@synthesize modelTextField;
-@synthesize caliberTextField;
-@synthesize finishTextField;
-@synthesize addPhotoButton;
-@synthesize barrelLengthTextField;
-@synthesize barrelLengthUnitLabel;
-@synthesize barrelThreadingTextField;
-@synthesize serialNumberTextField;
-@synthesize purchaseDateTextField;
-@synthesize purchaseDatePickerView;
-@synthesize purchasePriceTextfield;
-@synthesize currencySymbolLabel;
-@synthesize currentTextField;
+@synthesize selectedWeapon = _selectedWeapon;
+@synthesize weaponType = _weaponType;
+@synthesize manufacturerTextField = _manufacturerTextField;
+@synthesize modelTextField = _modelTextField;
+@synthesize caliberTextField = _caliberTextField;
+@synthesize finishTextField = _finishTextField;
+@synthesize addPhotoButton = _addPhotoButton;
+@synthesize barrelLengthTextField = _barrelLengthTextField;
+@synthesize barrelLengthUnitLabel = _barrelLengthUnitLabel;
+@synthesize barrelThreadingTextField = _barrelThreadingTextField;
+@synthesize serialNumberTextField = _serialNumberTextField;
+@synthesize purchaseDateTextField = _purchaseDateTextField;
+@synthesize purchaseDatePickerView = _purchaseDatePickerView;
+@synthesize purchasePriceTextfield = _purchasePriceTextfield;
+@synthesize currencySymbolLabel = _currencySymbolLabel;
+@synthesize currentTextField = _currentTextField;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -41,16 +41,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
-    
-    self.title = [self.weaponType isEqualToString:@"Misc."] ? @"Add Miscellaneous" : [NSString stringWithFormat:@"Add %@", [self.weaponType substringToIndex:[self.weaponType length] -1]];
-        
+            
     self.addPhotoButton.titleLabel.textAlignment = UITextAlignmentCenter;
     
     // set up barrelLength keyboard
     self.barrelLengthTextField.keyboardType = UIKeyboardTypeDecimalPad;
     
     // set up purchase price field with local currency symbol and keyboard
-    currencySymbolLabel.text = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
+    _currencySymbolLabel.text = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
     currencyFormatter = [[NSNumberFormatter alloc] init];
     [currencyFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
     [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
@@ -58,55 +56,59 @@
     [currencyFormatter setCurrencySymbol:@""];
     
     // set up purchase date picker
-    purchaseDatePickerView = [[UIDatePicker alloc] init];
-    purchaseDatePickerView.datePickerMode = UIDatePickerModeDate;
-    purchaseDatePickerView.maximumDate = [NSDate date];
-    self.purchaseDateTextField.inputView = purchaseDatePickerView;
+    _purchaseDatePickerView = [[UIDatePicker alloc] init];
+    _purchaseDatePickerView.datePickerMode = UIDatePickerModeDate;
+    _purchaseDatePickerView.maximumDate = [NSDate date];
+    _purchaseDateTextField.inputView = _purchaseDatePickerView;
     
-    formFields = [[NSArray alloc] initWithObjects:self.manufacturerTextField,
-                                                         self.modelTextField,
-                                                         self.caliberTextField,
-                                                         self.finishTextField,
-                                                         self.serialNumberTextField,
-                                                         self.barrelLengthTextField,
-                                                         self.barrelThreadingTextField,
-                                                         self.purchaseDateTextField, 
-                                                         self.purchasePriceTextfield, 
-                                                         nil];
+    formFields = [[NSArray alloc] initWithObjects:_manufacturerTextField,
+                                                  _modelTextField,
+                                                  _caliberTextField,
+                                                  _finishTextField,
+                                                  _serialNumberTextField,
+                                                  _barrelLengthTextField,
+                                                  _barrelThreadingTextField,
+                                                  _purchaseDateTextField, 
+                                                  _purchasePriceTextfield, 
+                                                  nil];
     
     for(UITextField *field in formFields)
         field.delegate = self;    
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    if(selectedWeapon) {
-        [self loadTextfieldsFromWeapon:selectedWeapon];
+    
+    // shenanighans to get around memory problem on iphone Camera Photo capture
+    if(_selectedWeapon) {
+        [self loadTextfieldsFromWeapon:_selectedWeapon];
     } else if (([defaults boolForKey:@"tempWeaponDirty"]) && ([defaults objectForKey:@"tempWeapon"])) {
         NSDictionary *tempWeapon = [defaults objectForKey:@"tempWeapon"];
         
-        self.weaponType                     = [tempWeapon objectForKey:@"weaponType"];       
-        self.manufacturerTextField.text     = [tempWeapon objectForKey:@"manufacturer"];
-        self.modelTextField.text            = [tempWeapon objectForKey:@"model"];
-        self.caliberTextField.text          = [tempWeapon objectForKey:@"caliber"];
-        self.finishTextField.text           = [tempWeapon objectForKey:@"finish"];
-        self.barrelLengthTextField.text     = [tempWeapon objectForKey:@"barrelLength"];
-        self.barrelThreadingTextField.text  = [tempWeapon objectForKey:@"barrelThreading"];
-        self.serialNumberTextField.text     = [tempWeapon objectForKey:@"serialNumber"];
+        _weaponType                     = [tempWeapon objectForKey:@"weaponType"];       
+        _manufacturerTextField.text     = [tempWeapon objectForKey:@"manufacturer"];
+        _modelTextField.text            = [tempWeapon objectForKey:@"model"];
+        _caliberTextField.text          = [tempWeapon objectForKey:@"caliber"];
+        _finishTextField.text           = [tempWeapon objectForKey:@"finish"];
+        _barrelLengthTextField.text     = [tempWeapon objectForKey:@"barrelLength"];
+        _barrelThreadingTextField.text  = [tempWeapon objectForKey:@"barrelThreading"];
+        _serialNumberTextField.text     = [tempWeapon objectForKey:@"serialNumber"];
         if (![[tempWeapon objectForKey:@"purchaseDate"] isEqualToString:@""]) {
-            NSLog(@"%@", [tempWeapon objectForKey:@"purchaseDate"]);
-            self.purchaseDatePickerView.date    = dateFromString([tempWeapon objectForKey:@"purchaseDate"], @"MMMM d, YYYY");
-            self.purchaseDateTextField.text     = [tempWeapon objectForKey:@"purchaseDate"];
+            _purchaseDatePickerView.date    = dateFromString([tempWeapon objectForKey:@"purchaseDate"], @"MMMM d, YYYY");
+            _purchaseDateTextField.text     = [tempWeapon objectForKey:@"purchaseDate"];
         }
-        self.purchasePriceTextfield.text    = [tempWeapon objectForKey:@"purchasePrice"];
+        _purchasePriceTextfield.text    = [tempWeapon objectForKey:@"purchasePrice"];
         [self barrelLengthValueChanged:nil];
         [self purchasePriceValueChanged:nil];
         [self checkData:nil];
-        if([self.weaponType isEqualToString:@"Misc."])
-            self.title = @"Add Miscellaneous";
-        else
-            self.title = [NSString stringWithFormat:@"Add %@", [self.weaponType substringToIndex:[self.weaponType length] -1]];
     }
-    
+    [self setTitle];
+}
+
+-(void)setTitle {
+    if([_weaponType isEqualToString:@"Misc."])
+        self.title = @"Add Miscellaneous";
+    else
+        self.title = [NSString stringWithFormat:@"Add %@", [_weaponType substringToIndex:[self.weaponType length] -1]];    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -117,16 +119,16 @@
 
 - (void)viewDidUnload {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];    
-    [defaults setObject:[[NSDictionary alloc] initWithObjectsAndKeys:self.manufacturerTextField.text, @"manufacturer", 
-                                                                     self.modelTextField.text, @"model",
-                                                                     self.caliberTextField.text, @"caliber",
-                                                                     self.finishTextField.text, @"finish",
-                                                                     self.barrelLengthTextField.text, @"barrelLength",
-                                                                     self.barrelThreadingTextField.text, @"barrelThreading",
-                                                                     self.serialNumberTextField.text, @"serialNumber",
-                                                                     self.purchaseDateTextField.text, @"purchaseDate",
-                                                                     self.purchasePriceTextfield.text, @"purchasePrice",
-                                                                     self.weaponType, @"weaponType",
+    [defaults setObject:[[NSDictionary alloc] initWithObjectsAndKeys:_manufacturerTextField.text, @"manufacturer", 
+                                                                     _modelTextField.text, @"model",
+                                                                     _caliberTextField.text, @"caliber",
+                                                                     _finishTextField.text, @"finish",
+                                                                     _barrelLengthTextField.text, @"barrelLength",
+                                                                     _barrelThreadingTextField.text, @"barrelThreading",
+                                                                     _serialNumberTextField.text, @"serialNumber",
+                                                                     _purchaseDateTextField.text, @"purchaseDate",
+                                                                     _purchasePriceTextfield.text, @"purchasePrice",
+                                                                     _weaponType, @"weaponType",
                                                                      nil] 
                 forKey:@"tempWeapon"];
     
@@ -154,19 +156,19 @@
 -(void)loadTextfieldsFromWeapon:(Weapon*)weapon {
     self.title = [NSString stringWithFormat:@"Edit %@", [self.weaponType substringToIndex:[self.weaponType length] - 1]];
 
-    self.manufacturerTextField.text = weapon.manufacturer.name;
-    self.modelTextField.text        = weapon.model;
-    self.caliberTextField.text      = weapon.caliber;
-    self.finishTextField.text       = weapon.finish;
-    self.barrelLengthTextField.text = [weapon.barrel_length stringValue];
-    self.barrelThreadingTextField.text = weapon.threaded_barrel_pitch;
+    _manufacturerTextField.text = weapon.manufacturer.name;
+    _modelTextField.text        = weapon.model;
+    _caliberTextField.text      = weapon.caliber;
+    _finishTextField.text       = weapon.finish;
+    _barrelLengthTextField.text = [weapon.barrel_length stringValue];
+    _barrelThreadingTextField.text = weapon.threaded_barrel_pitch;
     [self.addPhotoButton setImage:[UIImage imageWithData:weapon.photo_thumbnail] forState:UIControlStateNormal];
-    self.serialNumberTextField.text = weapon.serial_number;
+    _serialNumberTextField.text = weapon.serial_number;
     if (weapon.purchased_date) {
-        self.purchaseDatePickerView.date = weapon.purchased_date;
-        self.purchaseDateTextField.text = [self.purchaseDatePickerView.date onlyDate];
+        _purchaseDatePickerView.date = weapon.purchased_date;
+        _purchaseDateTextField.text = [_purchaseDatePickerView.date onlyDate];
     }
-    self.purchasePriceTextfield.text = [weapon.purchased_price compare:[NSDecimalNumber zero]] ? [currencyFormatter stringFromNumber:weapon.purchased_price] : @"";
+    _purchasePriceTextfield.text = [weapon.purchased_price compare:[NSDecimalNumber zero]] ? [currencyFormatter stringFromNumber:weapon.purchased_price] : @"";
     
     [self barrelLengthValueChanged:nil];
     [self purchasePriceValueChanged:nil];
@@ -183,16 +185,15 @@
 }
 
 - (IBAction)saveTapped:(id)sender {
-    Weapon *weapon = selectedWeapon ? selectedWeapon : [Weapon createEntity];
-    weapon.type = self.weaponType;
-    weapon.model = self.modelTextField.text;
-    weapon.caliber = self.caliberTextField.text;
-    weapon.finish = self.finishTextField.text;
+    Weapon *weapon = _selectedWeapon ? _selectedWeapon : [Weapon createEntity];
+    weapon.type = _weaponType;
+    weapon.model = _modelTextField.text;
+    weapon.caliber = _caliberTextField.text;
+    weapon.finish = _finishTextField.text;
+    weapon.barrel_length = (_barrelLengthTextField.text.length > 0) ? [NSNumber numberWithFloat:[_barrelLengthTextField.text floatValue]] : nil;    
+    weapon.threaded_barrel_pitch = _barrelThreadingTextField.text;
     
-    weapon.barrel_length = (self.barrelLengthTextField.text.length > 0) ? [NSNumber numberWithFloat:[self.barrelLengthTextField.text floatValue]] : nil;    
-    weapon.threaded_barrel_pitch = self.barrelThreadingTextField.text;
-    
-    UIImage *photo = [self.addPhotoButton imageForState:UIControlStateNormal];
+    UIImage *photo = [_addPhotoButton imageForState:UIControlStateNormal];
     if(photo) {
         weapon.photo = UIImagePNGRepresentation(photo);
         // Create a thumbnail version of the image for the object.
@@ -212,16 +213,16 @@
         NSLog(@"New thumbnail: %f x %f", thumbnail.size.width, thumbnail.size.height);
     }
         
-    weapon.serial_number = self.serialNumberTextField.text;
-    weapon.purchased_date = (purchaseDateTextField.text.length > 0) ? purchaseDatePickerView.date : nil;
-    weapon.purchased_price = [NSDecimalNumber decimalNumberWithDecimal:[[currencyFormatter numberFromString:self.purchasePriceTextfield.text] decimalValue]];
+    weapon.serial_number = _serialNumberTextField.text;
+    weapon.purchased_date = (_purchaseDateTextField.text.length > 0) ? _purchaseDatePickerView.date : nil;
+    weapon.purchased_price = [NSDecimalNumber decimalNumberWithDecimal:[[currencyFormatter numberFromString:_purchasePriceTextfield.text] decimalValue]];
     
     // if no selectedManufacturer, find one, else create one with the textfield text
     if(!selectedManufacturer) {
         if ((selectedManufacturer = [Manufacturer findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(name like[cd] %@) OR (short_name like[cd] %@)", self.manufacturerTextField.text, self.manufacturerTextField.text]])) {
         } else {
             selectedManufacturer = [Manufacturer createEntity];
-            selectedManufacturer.name = self.manufacturerTextField.text;
+            selectedManufacturer.name = _manufacturerTextField.text;
         }
     }
     weapon.manufacturer = selectedManufacturer;
@@ -239,30 +240,32 @@
 // TODO possible a better way to do this... 
 // alert saying not enough fields completed?
 
+// validation of Model and Manufacturer
 - (IBAction)checkData:(id)sender {
-    [self.navigationItem.rightBarButtonItem setEnabled:(([self.manufacturerTextField.text length] > 0) && ([self.modelTextField.text length] > 0))];
+    BOOL validated = ((self.manufacturerTextField.text.length > 0) && (self.modelTextField.text.length > 0));
+    [self.navigationItem.rightBarButtonItem setEnabled:validated];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	if ([segue.identifier isEqualToString:@"ChooseCaliber"]) {
+    NSString *segueID = segue.identifier;
+    
+	if ([segueID isEqualToString:@"ChooseCaliber"]) {
 		CaliberChooserViewController *caliberChooserViewController = segue.destinationViewController;
 		caliberChooserViewController.delegate = self;
-		caliberChooserViewController.selectedCaliber = self.caliberTextField.text;
-        self.currentTextField = self.caliberTextField;
-        [self.currentTextField becomeFirstResponder];
-	} else if ([segue.identifier isEqualToString:@"ChooseManufacturer"]) {
+		caliberChooserViewController.selectedCaliber = _caliberTextField.text;
+	} else if ([segueID isEqualToString:@"ChooseManufacturer"]) {
 		ManufacturerChooserViewController *manufacturerChooserViewController = segue.destinationViewController;
 		manufacturerChooserViewController.delegate = self;
 		manufacturerChooserViewController.selectedManufacturer = selectedManufacturer;
-        self.currentTextField = self.manufacturerTextField;
-        [self.currentTextField becomeFirstResponder];
     }
 }
 
 #pragma mark - CaliberChooserViewControllerDelegate
 
 - (void)caliberChooserViewController:(CaliberChooserViewController *)controller didSelectCaliber:(NSString *)selectedCaliber {
-	self.caliberTextField.text = selectedCaliber;
+	_caliberTextField.text = selectedCaliber;
+    _currentTextField = _caliberTextField;
+    [_currentTextField becomeFirstResponder];
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -270,7 +273,9 @@
 
 - (void)manufacturerChooserViewController:(ManufacturerChooserViewController *)controller didSelectManufacturer:(Manufacturer *)passedManufacturer {
     selectedManufacturer = passedManufacturer;
-	self.manufacturerTextField.text = selectedManufacturer.name;
+	_manufacturerTextField.text = selectedManufacturer.name;
+    _currentTextField = self.manufacturerTextField;
+    [_currentTextField becomeFirstResponder];
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -294,11 +299,11 @@
     NSLog(@"set photoButton image");
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [self dismissModalViewControllerAnimated:YES];
-    [self.addPhotoButton setImage:image forState:UIControlStateNormal];
+    [_addPhotoButton setImage:image forState:UIControlStateNormal];
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 2) return;
+    if (buttonIndex == 2) return; // sheet cancelled
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = (buttonIndex == 0) ? UIImagePickerControllerSourceTypeCamera : UIImagePickerControllerSourceTypePhotoLibrary;
     
@@ -307,6 +312,7 @@
     [self presentModalViewController:imagePicker animated:YES];
 }
 
+// disable camera if no camera present
 - (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) return;
     NSString *type = @"Take Photo";
@@ -323,6 +329,7 @@
 }
 
 #pragma mark Textfield Delegates
+
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if(textField == self.purchasePriceTextfield) {
         NSString *newValue = [textField.text stringByReplacingCharactersInRange:range withString:string];
@@ -377,7 +384,7 @@
     
     if ([formFields indexOfObject:textField] == 0) {
         [control setEnabled:NO forSegmentAtIndex:0];
-    } else if ([formFields indexOfObject:textField] == ([formFields count] -1)) {
+    } else if (formFields.lastObject == textField) {
         [control setEnabled:NO forSegmentAtIndex:1];
     }
     
@@ -388,15 +395,15 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.currentTextField = textField;    
+    _currentTextField = textField;    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.currentTextField = nil;
+    _currentTextField = nil;
 }
 
 - (void) nextPreviousTapped:(id)sender {
-    int index = [formFields indexOfObject:currentTextField];
+    int index = [formFields indexOfObject:_currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
             if (index > 0) index--;
@@ -406,49 +413,55 @@
             break;
     }
     
-    [self.currentTextField resignFirstResponder];
-    self.currentTextField = [formFields objectAtIndex:index];
-    [self.currentTextField becomeFirstResponder];
+    [_currentTextField resignFirstResponder];
+    _currentTextField = [formFields objectAtIndex:index];
+    [_currentTextField becomeFirstResponder];
 }
 
 - (void) doneTyping:(id)sender {
-    if (self.currentTextField == self.purchaseDateTextField)
-        self.purchaseDateTextField.text = [self.purchaseDatePickerView.date onlyDate];
+    if (_currentTextField == self.purchaseDateTextField)
+        _purchaseDateTextField.text = [_purchaseDatePickerView.date onlyDate];
 
-    [self.currentTextField resignFirstResponder];
+    [_currentTextField resignFirstResponder];
 }
 
 - (IBAction)barrelLengthValueChanged:(id)sender {
-    if([self.barrelLengthTextField.text length]) {
-        CGPoint origin = self.barrelLengthTextField.frame.origin;
-        CGFloat width = [@"\"" sizeWithFont:self.barrelLengthTextField.font].width;
-        self.barrelLengthUnitLabel.frame = CGRectMake(origin.x + width, origin.y, [self.barrelLengthTextField.text sizeWithFont:self.barrelLengthTextField.font].width, CGRectGetHeight(self.barrelLengthTextField.frame)); 
-        self.barrelLengthUnitLabel.hidden = NO;
+    if([_barrelLengthTextField.text length]) {
+        CGPoint origin = _barrelLengthTextField.frame.origin;
+        CGFloat width = [@"\"" sizeWithFont:_barrelLengthTextField.font].width;
+        _barrelLengthUnitLabel.frame = CGRectMake(origin.x + width, origin.y, [_barrelLengthTextField.text sizeWithFont:_barrelLengthTextField.font].width, CGRectGetHeight(self.barrelLengthTextField.frame)); 
+        _barrelLengthUnitLabel.hidden = NO;
     } else {
-        self.barrelLengthUnitLabel.hidden = YES;
+        _barrelLengthUnitLabel.hidden = YES;
     }
 }
 
 - (IBAction)purchasePriceValueChanged:(id)sender {
     if([self.purchasePriceTextfield.text length]) {
         // move field to the right
-        self.purchasePriceTextfield.frame = CGRectMake(22, 0, purchasePriceTextfield.frame.size.width, purchasePriceTextfield.frame.size.height);
-        self.currencySymbolLabel.hidden = NO;
+        _purchasePriceTextfield.frame = CGRectMake(22.0f, 
+                                                   0.0f, 
+                                                   CGRectGetWidth(_purchasePriceTextfield.frame), 
+                                                   CGRectGetHeight( _purchasePriceTextfield.frame));
+        _currencySymbolLabel.hidden = NO;
     } else {
         // reset field to the left
-        self.purchasePriceTextfield.frame = CGRectMake(10, 0, purchasePriceTextfield.frame.size.width, purchasePriceTextfield.frame.size.height);
-        self.currencySymbolLabel.hidden = YES;
+        _purchasePriceTextfield.frame = CGRectMake(10.0f, 
+                                                   0.0f, 
+                                                   CGRectGetWidth(_purchasePriceTextfield.frame), 
+                                                   CGRectGetHeight(_purchasePriceTextfield.frame));
+        _currencySymbolLabel.hidden = YES;
     }
 }
 
 #pragma mark Tableview delegates
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
-	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), 30.0f)];
 	tableView.sectionHeaderHeight = headerView.frame.size.height;
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 24)];
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5.0f, 6.0f, CGRectGetWidth(headerView.frame) - 20.0f, 24.0f)];
 	label.text = [self tableView:tableView titleForHeaderInSection:section];
-	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
+	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0f];
 	label.shadowColor = [UIColor clearColor];
 	label.backgroundColor = [UIColor clearColor];
 	label.textColor = [UIColor blackColor];

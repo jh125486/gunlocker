@@ -101,9 +101,7 @@
 		537797201533A8150096BF7A /* LogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377971F1533A8150096BF7A /* LogsViewController.m */; };
 		5377972915362E1A0096BF7A /* icon_calculators@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5377972815362E190096BF7A /* icon_calculators@2x.png */; };
 		5377973E153798480096BF7A /* Model+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377973D153798480096BF7A /* Model+Helpers.m */; };
-		537797411537D3B70096BF7A /* Manufacturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 537797401537D3B70096BF7A /* Manufacturer.m */; };
 		537797441537D3B90096BF7A /* Caliber.m in Sources */ = {isa = PBXBuildFile; fileRef = 537797431537D3B90096BF7A /* Caliber.m */; };
-		537797471537D3BA0096BF7A /* Weapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 537797461537D3BA0096BF7A /* Weapon.m */; };
 		537B1C5D151EAD6000A85E24 /* MaintenanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 537B1C5C151EAD6000A85E24 /* MaintenanceCell.m */; };
 		5380B3AA1521070600CD099D /* NFAInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5380B3A91521070600CD099D /* NFAInformationViewController.m */; };
 		53859F701501E11C00ABA0B1 /* icon_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 53859F6F1501E11C00ABA0B1 /* icon_settings.png */; };
@@ -145,6 +143,8 @@
 		53AF04521560171200D702FD /* AFXMLDocumentRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF04451560171200D702FD /* AFXMLDocumentRequestOperation.m */; };
 		53AF04531560171200D702FD /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF04471560171200D702FD /* AFXMLRequestOperation.m */; };
 		53AF04541560171200D702FD /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF04491560171200D702FD /* UIImageView+AFNetworking.m */; };
+		53AF045A15616B4C00D702FD /* Ammunition.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF045915616B4C00D702FD /* Ammunition.m */; };
+		53AF046015616F5300D702FD /* Malfunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF045F15616F5300D702FD /* Malfunction.m */; };
 		53AF06421512493A000B9943 /* WeaponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF06411512493A000B9943 /* WeaponCell.m */; };
 		53AF0645151251EC000B9943 /* MaintenancesAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF0644151251EC000B9943 /* MaintenancesAddViewController.m */; };
 		53AF064815125217000B9943 /* MalfunctionsAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF064715125217000B9943 /* MalfunctionsAddViewController.m */; };
@@ -176,8 +176,6 @@
 		53D263451531EBD000ECA9EE /* DopeCardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D263441531EBD000ECA9EE /* DopeCardTableViewController.m */; };
 		53E31486151E8082005B414F /* icon_link.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E31485151E8082005B414F /* icon_link.png */; };
 		53E31488151E8405005B414F /* icon_delink.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E31487151E8405005B414F /* icon_delink.png */; };
-		53E3148B151E9B1A005B414F /* Maintenance.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E3148A151E9B1A005B414F /* Maintenance.m */; };
-		53E3148E151E9B1A005B414F /* Malfunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E3148D151E9B1A005B414F /* Malfunction.m */; };
 		53E8309C1553931C0062893B /* DopeCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E8309B1553931C0062893B /* DopeCard.m */; };
 		53E830A3155438C20062893B /* ProfileViewTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E830A2155438C20062893B /* ProfileViewTableViewController.m */; };
 		53E8313F1555B25A0062893B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E8313E1555B2590062893B /* CFNetwork.framework */; };
@@ -192,10 +190,22 @@
 		53EBBD9815170E5100488E63 /* mil_dot_reticle_day.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9615170E5100488E63 /* mil_dot_reticle_day.png */; };
 		53EBBD9915170E5100488E63 /* mil_dot_reticle_night.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9715170E5100488E63 /* mil_dot_reticle_night.png */; };
 		53EBBD9B15171B1600488E63 /* mil_dot_reticle_bullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9A15171B1600488E63 /* mil_dot_reticle_bullet.png */; };
+		53F241A915619DC30038A666 /* Weapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241A815619DC30038A666 /* Weapon.m */; };
+		53F241AC15619DC40038A666 /* Manufacturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241AB15619DC40038A666 /* Manufacturer.m */; };
+		53F241AF1561A2A60038A666 /* Maintenance.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241AE1561A2A60038A666 /* Maintenance.m */; };
+		53F241BD156204A10038A666 /* AmmunitionListByCaliberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241BC156204A10038A666 /* AmmunitionListByCaliberViewController.m */; };
 		53F272DF150E5BFE005A329F /* DefaultButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F272DE150E5BFE005A329F /* DefaultButton.m */; };
 		53F2735B15112D37005A329F /* NSDate+Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2735A15112D37005A329F /* NSDate+Formatting.m */; };
 		53F273791511B936005A329F /* MaintenancesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F273781511B936005A329F /* MaintenancesViewController.m */; };
 		53F2737C1511B969005A329F /* MalfunctionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2737B1511B969005A329F /* MalfunctionsViewController.m */; };
+		53F9F41C1562AAE10008430D /* AmmunitionAddEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F41B1562AAE10008430D /* AmmunitionAddEditViewController.m */; };
+		53F9F41F1562AC870008430D /* AmmunitionShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F41E1562AC870008430D /* AmmunitionShowViewController.m */; };
+		53F9F4221562B8020008430D /* AmmunitionListByBrandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F4211562B8020008430D /* AmmunitionListByBrandViewController.m */; };
+		53F9F42C1562F6080008430D /* MagazineAddEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F4251562F6060008430D /* MagazineAddEditViewController.m */; };
+		53F9F42D1562F6080008430D /* MagazineListByBrandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F4271562F6060008430D /* MagazineListByBrandViewController.m */; };
+		53F9F42E1562F6080008430D /* MagazineListByCaliberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F4291562F6070008430D /* MagazineListByCaliberViewController.m */; };
+		53F9F42F1562F6080008430D /* MagazineShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F42B1562F6070008430D /* MagazineShowViewController.m */; };
+		53F9F4331562F8760008430D /* Magazine.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F4321562F8760008430D /* Magazine.m */; };
 		53FBDA10151D9FA200DD5180 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FBDA0F151D9FA200DD5180 /* Note.m */; };
 /* End PBXBuildFile section */
 
@@ -360,12 +370,8 @@
 		5377972815362E190096BF7A /* icon_calculators@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_calculators@2x.png"; sourceTree = "<group>"; };
 		5377973C153798480096BF7A /* Model+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Model+Helpers.h"; sourceTree = "<group>"; };
 		5377973D153798480096BF7A /* Model+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Model+Helpers.m"; sourceTree = "<group>"; };
-		5377973F1537D3B70096BF7A /* Manufacturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manufacturer.h; sourceTree = "<group>"; };
-		537797401537D3B70096BF7A /* Manufacturer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Manufacturer.m; sourceTree = "<group>"; };
 		537797421537D3B90096BF7A /* Caliber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Caliber.h; sourceTree = "<group>"; };
 		537797431537D3B90096BF7A /* Caliber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Caliber.m; sourceTree = "<group>"; };
-		537797451537D3B90096BF7A /* Weapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weapon.h; sourceTree = "<group>"; };
-		537797461537D3BA0096BF7A /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
 		537B1C5B151EAD6000A85E24 /* MaintenanceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaintenanceCell.h; sourceTree = "<group>"; };
 		537B1C5C151EAD6000A85E24 /* MaintenanceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaintenanceCell.m; sourceTree = "<group>"; };
 		5380B3A81521070600CD099D /* NFAInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFAInformationViewController.h; sourceTree = "<group>"; };
@@ -429,6 +435,10 @@
 		53AF04471560171200D702FD /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		53AF04481560171200D702FD /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		53AF04491560171200D702FD /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		53AF045815616B4C00D702FD /* Ammunition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ammunition.h; sourceTree = "<group>"; };
+		53AF045915616B4C00D702FD /* Ammunition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ammunition.m; sourceTree = "<group>"; };
+		53AF045E15616F5200D702FD /* Malfunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Malfunction.h; sourceTree = "<group>"; };
+		53AF045F15616F5300D702FD /* Malfunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Malfunction.m; sourceTree = "<group>"; };
 		53AF06401512493A000B9943 /* WeaponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeaponCell.h; sourceTree = "<group>"; };
 		53AF06411512493A000B9943 /* WeaponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeaponCell.m; sourceTree = "<group>"; };
 		53AF0643151251EC000B9943 /* MaintenancesAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaintenancesAddViewController.h; sourceTree = "<group>"; };
@@ -477,10 +487,6 @@
 		53D263441531EBD000ECA9EE /* DopeCardTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DopeCardTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53E31485151E8082005B414F /* icon_link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_link.png; sourceTree = "<group>"; };
 		53E31487151E8405005B414F /* icon_delink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_delink.png; sourceTree = "<group>"; };
-		53E31489151E9B1A005B414F /* Maintenance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Maintenance.h; sourceTree = "<group>"; };
-		53E3148A151E9B1A005B414F /* Maintenance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Maintenance.m; sourceTree = "<group>"; };
-		53E3148C151E9B1A005B414F /* Malfunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Malfunction.h; sourceTree = "<group>"; };
-		53E3148D151E9B1A005B414F /* Malfunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Malfunction.m; sourceTree = "<group>"; };
 		53E8309A1553931C0062893B /* DopeCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCard.h; sourceTree = "<group>"; };
 		53E8309B1553931C0062893B /* DopeCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCard.m; sourceTree = "<group>"; };
 		53E830A1155438C20062893B /* ProfileViewTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewTableViewController.h; sourceTree = "<group>"; };
@@ -502,6 +508,14 @@
 		53EBBD9615170E5100488E63 /* mil_dot_reticle_day.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mil_dot_reticle_day.png; sourceTree = "<group>"; };
 		53EBBD9715170E5100488E63 /* mil_dot_reticle_night.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mil_dot_reticle_night.png; sourceTree = "<group>"; };
 		53EBBD9A15171B1600488E63 /* mil_dot_reticle_bullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mil_dot_reticle_bullet.png; sourceTree = "<group>"; };
+		53F241A715619DC30038A666 /* Weapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weapon.h; sourceTree = "<group>"; };
+		53F241A815619DC30038A666 /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
+		53F241AA15619DC40038A666 /* Manufacturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manufacturer.h; sourceTree = "<group>"; };
+		53F241AB15619DC40038A666 /* Manufacturer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Manufacturer.m; sourceTree = "<group>"; };
+		53F241AD1561A2A60038A666 /* Maintenance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Maintenance.h; sourceTree = "<group>"; };
+		53F241AE1561A2A60038A666 /* Maintenance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Maintenance.m; sourceTree = "<group>"; };
+		53F241BB156204A10038A666 /* AmmunitionListByCaliberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmmunitionListByCaliberViewController.h; sourceTree = "<group>"; };
+		53F241BC156204A10038A666 /* AmmunitionListByCaliberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmmunitionListByCaliberViewController.m; sourceTree = "<group>"; };
 		53F272DD150E5BFE005A329F /* DefaultButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultButton.h; sourceTree = "<group>"; };
 		53F272DE150E5BFE005A329F /* DefaultButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultButton.m; sourceTree = "<group>"; };
 		53F2735915112D36005A329F /* NSDate+Formatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Formatting.h"; sourceTree = "<group>"; };
@@ -510,6 +524,22 @@
 		53F273781511B936005A329F /* MaintenancesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaintenancesViewController.m; sourceTree = "<group>"; };
 		53F2737A1511B969005A329F /* MalfunctionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MalfunctionsViewController.h; sourceTree = "<group>"; };
 		53F2737B1511B969005A329F /* MalfunctionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MalfunctionsViewController.m; sourceTree = "<group>"; };
+		53F9F41A1562AAE10008430D /* AmmunitionAddEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmmunitionAddEditViewController.h; sourceTree = "<group>"; };
+		53F9F41B1562AAE10008430D /* AmmunitionAddEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmmunitionAddEditViewController.m; sourceTree = "<group>"; };
+		53F9F41D1562AC870008430D /* AmmunitionShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmmunitionShowViewController.h; sourceTree = "<group>"; };
+		53F9F41E1562AC870008430D /* AmmunitionShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmmunitionShowViewController.m; sourceTree = "<group>"; };
+		53F9F4201562B8020008430D /* AmmunitionListByBrandViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmmunitionListByBrandViewController.h; sourceTree = "<group>"; };
+		53F9F4211562B8020008430D /* AmmunitionListByBrandViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmmunitionListByBrandViewController.m; sourceTree = "<group>"; };
+		53F9F4241562F6060008430D /* MagazineAddEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagazineAddEditViewController.h; sourceTree = "<group>"; };
+		53F9F4251562F6060008430D /* MagazineAddEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagazineAddEditViewController.m; sourceTree = "<group>"; };
+		53F9F4261562F6060008430D /* MagazineListByBrandViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagazineListByBrandViewController.h; sourceTree = "<group>"; };
+		53F9F4271562F6060008430D /* MagazineListByBrandViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagazineListByBrandViewController.m; sourceTree = "<group>"; };
+		53F9F4281562F6070008430D /* MagazineListByCaliberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagazineListByCaliberViewController.h; sourceTree = "<group>"; };
+		53F9F4291562F6070008430D /* MagazineListByCaliberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagazineListByCaliberViewController.m; sourceTree = "<group>"; };
+		53F9F42A1562F6070008430D /* MagazineShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagazineShowViewController.h; sourceTree = "<group>"; };
+		53F9F42B1562F6070008430D /* MagazineShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagazineShowViewController.m; sourceTree = "<group>"; };
+		53F9F4311562F8760008430D /* Magazine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Magazine.h; sourceTree = "<group>"; };
+		53F9F4321562F8760008430D /* Magazine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Magazine.m; sourceTree = "<group>"; };
 		53FBDA0E151D9FA200DD5180 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		53FBDA0F151D9FA200DD5180 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -868,13 +898,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		537797211533A82A0096BF7A /* Logs */ = {
+		537797211533A82A0096BF7A /* Logbook */ = {
 			isa = PBXGroup;
 			children = (
+				53F9F4301562F6140008430D /* Magazines */,
+				53F9F4231562EDE00008430D /* Ammunition */,
 				5377971E1533A8150096BF7A /* LogsViewController.h */,
 				5377971F1533A8150096BF7A /* LogsViewController.m */,
 			);
-			name = Logs;
+			name = Logbook;
 			sourceTree = "<group>";
 		};
 		537797221533A8D00096BF7A /* NFA */ = {
@@ -982,7 +1014,7 @@
 				5319C8BF15086F2700795B87 /* IntroSplashViewController.h */,
 				5319C8C015086F2700795B87 /* IntroSplashViewController.m */,
 				5348C6981506E69F00147AAF /* Cards */,
-				537797211533A82A0096BF7A /* Logs */,
+				537797211533A82A0096BF7A /* Logbook */,
 				5348C6971506E66F00147AAF /* Ballistics */,
 				5348C6961506E62200147AAF /* Calculators */,
 				5348C6991506E6AC00147AAF /* Settings */,
@@ -994,26 +1026,14 @@
 			isa = PBXGroup;
 			children = (
 				53B5E16815460EAC000D3A8C /* Ballistics */,
-				53A0E688153A80DA00846421 /* Bullet.h */,
-				53A0E689153A80DA00846421 /* Bullet.m */,
 				537797421537D3B90096BF7A /* Caliber.h */,
 				537797431537D3B90096BF7A /* Caliber.m */,
 				53E8309A1553931C0062893B /* DopeCard.h */,
 				53E8309B1553931C0062893B /* DopeCard.m */,
-				53E31489151E9B1A005B414F /* Maintenance.h */,
-				53E3148A151E9B1A005B414F /* Maintenance.m */,
-				53E3148C151E9B1A005B414F /* Malfunction.h */,
-				53E3148D151E9B1A005B414F /* Malfunction.m */,
-				5377973F1537D3B70096BF7A /* Manufacturer.h */,
-				537797401537D3B70096BF7A /* Manufacturer.m */,
+				53F9F4341562F88D0008430D /* Inventory */,
 				5377973C153798480096BF7A /* Model+Helpers.h */,
 				5377973D153798480096BF7A /* Model+Helpers.m */,
-				53FBDA0E151D9FA200DD5180 /* Note.h */,
-				53FBDA0F151D9FA200DD5180 /* Note.m */,
-				53591A3E152181A000516C4C /* StampInfo.h */,
-				53591A3F152181A000516C4C /* StampInfo.m */,
-				537797451537D3B90096BF7A /* Weapon.h */,
-				537797461537D3BA0096BF7A /* Weapon.m */,
+				53F9F4351562F8A10008430D /* Weapons */,
 				53CA98DF150A84E50060A1E8 /* Weather.h */,
 				53CA98E0150A84E50060A1E8 /* Weather.m */,
 			);
@@ -1023,6 +1043,8 @@
 		53B5E16815460EAC000D3A8C /* Ballistics */ = {
 			isa = PBXGroup;
 			children = (
+				53A0E688153A80DA00846421 /* Bullet.h */,
+				53A0E689153A80DA00846421 /* Bullet.m */,
 				53E83166155998D50062893B /* BallisticProfile.h */,
 				53E83167155998D50062893B /* BallisticProfile.m */,
 				53B5E18A1548A214000D3A8C /* Trajectory.h */,
@@ -1105,6 +1127,66 @@
 				53859F6F1501E11C00ABA0B1 /* icon_settings.png */,
 			);
 			path = Icons;
+			sourceTree = "<group>";
+		};
+		53F9F4231562EDE00008430D /* Ammunition */ = {
+			isa = PBXGroup;
+			children = (
+				53F9F41A1562AAE10008430D /* AmmunitionAddEditViewController.h */,
+				53F9F41B1562AAE10008430D /* AmmunitionAddEditViewController.m */,
+				53F9F41D1562AC870008430D /* AmmunitionShowViewController.h */,
+				53F9F41E1562AC870008430D /* AmmunitionShowViewController.m */,
+				53F9F4201562B8020008430D /* AmmunitionListByBrandViewController.h */,
+				53F9F4211562B8020008430D /* AmmunitionListByBrandViewController.m */,
+				53F241BB156204A10038A666 /* AmmunitionListByCaliberViewController.h */,
+				53F241BC156204A10038A666 /* AmmunitionListByCaliberViewController.m */,
+			);
+			name = Ammunition;
+			sourceTree = "<group>";
+		};
+		53F9F4301562F6140008430D /* Magazines */ = {
+			isa = PBXGroup;
+			children = (
+				53F9F4241562F6060008430D /* MagazineAddEditViewController.h */,
+				53F9F4251562F6060008430D /* MagazineAddEditViewController.m */,
+				53F9F4261562F6060008430D /* MagazineListByBrandViewController.h */,
+				53F9F4271562F6060008430D /* MagazineListByBrandViewController.m */,
+				53F9F4281562F6070008430D /* MagazineListByCaliberViewController.h */,
+				53F9F4291562F6070008430D /* MagazineListByCaliberViewController.m */,
+				53F9F42A1562F6070008430D /* MagazineShowViewController.h */,
+				53F9F42B1562F6070008430D /* MagazineShowViewController.m */,
+			);
+			name = Magazines;
+			sourceTree = "<group>";
+		};
+		53F9F4341562F88D0008430D /* Inventory */ = {
+			isa = PBXGroup;
+			children = (
+				53F9F4311562F8760008430D /* Magazine.h */,
+				53F9F4321562F8760008430D /* Magazine.m */,
+				53AF045815616B4C00D702FD /* Ammunition.h */,
+				53AF045915616B4C00D702FD /* Ammunition.m */,
+			);
+			name = Inventory;
+			sourceTree = "<group>";
+		};
+		53F9F4351562F8A10008430D /* Weapons */ = {
+			isa = PBXGroup;
+			children = (
+				53F241AD1561A2A60038A666 /* Maintenance.h */,
+				53F241AE1561A2A60038A666 /* Maintenance.m */,
+				53AF045E15616F5200D702FD /* Malfunction.h */,
+				53AF045F15616F5300D702FD /* Malfunction.m */,
+				53F241AA15619DC40038A666 /* Manufacturer.h */,
+				53F241AB15619DC40038A666 /* Manufacturer.m */,
+				53FBDA0E151D9FA200DD5180 /* Note.h */,
+				53FBDA0F151D9FA200DD5180 /* Note.m */,
+				53591A3E152181A000516C4C /* StampInfo.h */,
+				53591A3F152181A000516C4C /* StampInfo.m */,
+				53F241A715619DC30038A666 /* Weapon.h */,
+				53F241A815619DC30038A666 /* Weapon.m */,
+			);
+			name = Weapons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1317,8 +1399,6 @@
 				53405CC2151936A300C7D84F /* TextStepperField.m in Sources */,
 				53405CC51519C02B00C7D84F /* WindLeadingTableViewController.m in Sources */,
 				53FBDA10151D9FA200DD5180 /* Note.m in Sources */,
-				53E3148B151E9B1A005B414F /* Maintenance.m in Sources */,
-				53E3148E151E9B1A005B414F /* Malfunction.m in Sources */,
 				537B1C5D151EAD6000A85E24 /* MaintenanceCell.m in Sources */,
 				5380B3AA1521070600CD099D /* NFAInformationViewController.m in Sources */,
 				53591A40152181A000516C4C /* StampInfo.m in Sources */,
@@ -1333,9 +1413,7 @@
 				53D263451531EBD000ECA9EE /* DopeCardTableViewController.m in Sources */,
 				537797201533A8150096BF7A /* LogsViewController.m in Sources */,
 				5377973E153798480096BF7A /* Model+Helpers.m in Sources */,
-				537797411537D3B70096BF7A /* Manufacturer.m in Sources */,
 				537797441537D3B90096BF7A /* Caliber.m in Sources */,
-				537797471537D3BA0096BF7A /* Weapon.m in Sources */,
 				53A0E66815390F8B00846421 /* BulletChooserViewController.m in Sources */,
 				53A0E66B153954F200846421 /* ProfileAddEditViewController.m in Sources */,
 				53A0E68A153A80DA00846421 /* Bullet.m in Sources */,
@@ -1369,6 +1447,20 @@
 				53AF04521560171200D702FD /* AFXMLDocumentRequestOperation.m in Sources */,
 				53AF04531560171200D702FD /* AFXMLRequestOperation.m in Sources */,
 				53AF04541560171200D702FD /* UIImageView+AFNetworking.m in Sources */,
+				53AF045A15616B4C00D702FD /* Ammunition.m in Sources */,
+				53AF046015616F5300D702FD /* Malfunction.m in Sources */,
+				53F241A915619DC30038A666 /* Weapon.m in Sources */,
+				53F241AC15619DC40038A666 /* Manufacturer.m in Sources */,
+				53F241AF1561A2A60038A666 /* Maintenance.m in Sources */,
+				53F241BD156204A10038A666 /* AmmunitionListByCaliberViewController.m in Sources */,
+				53F9F41C1562AAE10008430D /* AmmunitionAddEditViewController.m in Sources */,
+				53F9F41F1562AC870008430D /* AmmunitionShowViewController.m in Sources */,
+				53F9F4221562B8020008430D /* AmmunitionListByBrandViewController.m in Sources */,
+				53F9F42C1562F6080008430D /* MagazineAddEditViewController.m in Sources */,
+				53F9F42D1562F6080008430D /* MagazineListByBrandViewController.m in Sources */,
+				53F9F42E1562F6080008430D /* MagazineListByCaliberViewController.m in Sources */,
+				53F9F42F1562F6080008430D /* MagazineShowViewController.m in Sources */,
+				53F9F4331562F8760008430D /* Magazine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -115,7 +115,7 @@
         [headerView addSubview:model];
         return headerView;
         
-    } else { // bullet
+    } else if (section == 1) { // bullet
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)];
         UILabel *bullet = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 24)];
         bullet.adjustsFontSizeToFitWidth = YES;
@@ -128,18 +128,19 @@
         
         [headerView addSubview:bullet];
         return headerView;
+    } else {
+        return nil;
     }
 }
 
 
 # pragma mark UIActionSheet
-- (void)actionSheet:(UIActionSheet *)sender clickedButtonAtIndex:(int)index {
-    if (index == sender.destructiveButtonIndex) {
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == actionSheet.destructiveButtonIndex) {
         [self.profile deleteEntity];
         [[NSManagedObjectContext defaultContext] save];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
-
 
 @end

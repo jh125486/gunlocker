@@ -13,6 +13,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *roundCountLabel;
 @property (nonatomic, strong) IBOutlet UITextView *failtureText;
 @property (nonatomic, strong) IBOutlet UITextView *fixText;
-@property (nonatomic, strong) IBOutlet UILabel *modelLabel;
+@property (nonatomic, strong) IBOutlet UILabel *dateLabel;
 
 @end

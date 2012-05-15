@@ -13,13 +13,12 @@
 #import "MalfunctionCell.h"
 #import "Maintenance.h"
 
-@interface MalfunctionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
-    NSMutableDictionary *malfunctions;
-    NSMutableArray *sections;
-    int count;
-}
+@interface MalfunctionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
+
 @property (weak, nonatomic) IBOutlet UIImageView *noMalfunctionsImageView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 @property (nonatomic, weak) Weapon *selectedWeapon;
 @property (nonatomic, weak) Maintenance *selectedMaintenance;

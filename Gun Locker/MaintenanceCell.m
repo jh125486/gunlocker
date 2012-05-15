@@ -9,7 +9,7 @@
 #import "MaintenanceCell.h"
 
 @implementation MaintenanceCell
-@synthesize roundCountLabel, actionPerformedText, viewMalfunctions, malfunctionCountLabel, malfunctionLabel, modelLabel;
+@synthesize roundCountLabel, actionPerformedText, viewMalfunctions, malfunctionCountLabel, malfunctionLabel, dateLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

@@ -178,13 +178,13 @@
     if (sectionTitle == nil) {
         return nil;
     }
-	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.sectionHeaderHeight)];
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, tableView.bounds.size.width, tableView.sectionHeaderHeight)];
     headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background"]];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(4, 0, headerView.frame.size.width - 20, tableView.sectionHeaderHeight)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(4.0f, 0.0f, headerView.frame.size.width - 20.0f, tableView.sectionHeaderHeight)];
 	label.text = sectionTitle;
-	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:20.0];
+	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:20.0f];
 	label.shadowColor = [UIColor lightTextColor];
-    label.shadowOffset = CGSizeMake(0, 1);
+    label.shadowOffset = CGSizeMake(0.0f, 1.0f);
 	label.backgroundColor = [UIColor clearColor];    
 	label.textColor = [UIColor blackColor];
     

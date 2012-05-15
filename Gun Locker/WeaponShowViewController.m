@@ -60,7 +60,7 @@
 
 - (void)setTitleView {
     self.modelLabel.text = self.title;
-    self.manufacturerLabel.text = self.selectedWeapon.manufacturer.short_name ? self.selectedWeapon.manufacturer.short_name : self.selectedWeapon.manufacturer.name;    
+    self.manufacturerLabel.text = self.selectedWeapon.manufacturer.displayName;    
 }
 
 - (void)viewDidUnload {

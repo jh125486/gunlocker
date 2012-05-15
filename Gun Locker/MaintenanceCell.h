@@ -15,6 +15,6 @@
 @property (nonatomic, strong) IBOutlet UIButton *viewMalfunctions;
 @property (nonatomic, strong) IBOutlet UILabel *malfunctionCountLabel;
 @property (nonatomic, strong) IBOutlet UILabel *malfunctionLabel;
-@property (nonatomic, strong) IBOutlet UILabel *modelLabel;
+@property (nonatomic, strong) IBOutlet UILabel *dateLabel;
 
 @end
