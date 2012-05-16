@@ -6,13 +6,15 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "NotesTableViewController.h"
+#import "NotesListViewController.h"
 
-@implementation NotesTableViewController
-@synthesize selectedWeapon;
+@implementation NotesListViewController
+@synthesize noNotesImageView = _noNotesImageView;
+@synthesize tableView;
+@synthesize selectedWeapon = _selectedWeapon;
 
-- (id)initWithStyle:(UITableViewStyle)style {
-    self = [super initWithStyle:style];
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -22,10 +24,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+
     //Register addNewNoteToArray to recieve "newNote" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewNote:) name:@"newNote" object:nil];
 
-    self.navigationItem.rightBarButtonItem.enabled = self.selectedWeapon ? YES : NO;
+    self.navigationItem.rightBarButtonItem.enabled = _selectedWeapon ? YES : NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -35,8 +39,12 @@
 }
 
 - (void)setTitle {
-    int count = self.selectedWeapon ? [self.selectedWeapon.notes count] : [Note countOfEntities];
+    int count = _selectedWeapon ? [_selectedWeapon.notes count] : [Note countOfEntities];
     self.title = [NSString stringWithFormat:@"Note%@ (%d)", (count == 1) ? @"" : @"s", count];
+    
+    self.noNotesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Notes"]];
+    self.noNotesImageView.hidden = (count != 0);
+    self.tableView.hidden = (count == 0);
 }
 
 - (void)loadNotes {
@@ -45,8 +53,8 @@
     
     NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]];
     
-    if (self.selectedWeapon) {
-        sections = [[self.selectedWeapon.notes sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+    if (_selectedWeapon) {
+        sections = [[_selectedWeapon.notes sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
     } else {
         for(Note *note in [Note findAllSortedBy:@"date" ascending:YES]) {
             if ([notes objectForKey:note.weapon] != nil) {
@@ -65,6 +73,9 @@
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self setTableView:nil];
+    [self setNoNotesImageView:nil];
+    [self setSelectedWeapon:nil];
     [super viewDidUnload];
 }
 
@@ -79,33 +90,33 @@
         NoteAddEditTableViewController *dst = segue.destinationViewController;
 
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        dst.passedNote = (self.selectedWeapon) ? [sections objectAtIndex:indexPath.row] : [[notes objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        dst.passedNote = (_selectedWeapon) ? [sections objectAtIndex:indexPath.row] : [[notes objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     }
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return (self.selectedWeapon) ? 1 : [sections count];
+    return (_selectedWeapon) ? 1 : [sections count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return (self.selectedWeapon) ? [sections count] : [[notes objectForKey:[sections objectAtIndex:section]] count];
+    return (_selectedWeapon) ? [sections count] : [[notes objectForKey:[sections objectAtIndex:section]] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return (self.selectedWeapon) ? nil : [[sections objectAtIndex:section] distanceOfTimeInWordsOnlyDate];
+    return (_selectedWeapon) ? nil : [[sections objectAtIndex:section] distanceOfTimeInWordsOnlyDate];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"NoteCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
 
     
-    Note *currentNote = (self.selectedWeapon) ? [sections objectAtIndex:indexPath.row] : [[notes objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    Note *currentNote = (_selectedWeapon) ? [sections objectAtIndex:indexPath.row] : [[notes objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     cell.textLabel.text = currentNote.title;
     
     cell.detailTextLabel.text = [NSDateFormatter localizedStringFromDate:currentNote.date
@@ -117,7 +128,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Note *currentNote = (self.selectedWeapon) ? [sections objectAtIndex:indexPath.row] : [[notes objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        Note *currentNote = (_selectedWeapon) ? [sections objectAtIndex:indexPath.row] : [[notes objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
         [currentNote deleteEntity];
         [[NSManagedObjectContext defaultContext] save];  
 
@@ -128,14 +139,14 @@
             [(NSMutableArray *)[notes objectForKey:currentNote.weapon] removeObject:currentNote];
         }
 
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self setTitle];
     }
 }
 
 - (void) addNewNote:(NSNotification*) notification {
     Note *newNote = [notification object];
-    newNote.weapon = self.selectedWeapon;
+    newNote.weapon = _selectedWeapon;
     [[NSManagedObjectContext defaultContext] save];  
 }
 

@@ -10,7 +10,7 @@
 
 @implementation CaliberChooserViewController
 
-@synthesize delegate;
+@synthesize delegate = _delegate;
 @synthesize selectedCaliber = _selectedCaliber;
 @synthesize searchDisplayController;
 @synthesize searchBar;
@@ -93,7 +93,7 @@
 	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 	cell.accessoryType = UITableViewCellAccessoryCheckmark;
         
-    [self.delegate caliberChooserViewController:self didSelectCaliber:cell.textLabel.text];
+    [_delegate caliberChooserViewController:self didSelectCaliber:cell.textLabel.text];
 }
 
 #pragma mark - UISearchDisplayController delegate methods

@@ -16,7 +16,7 @@
 #import "ProfileViewTableViewController.h"
 #import "AFHTTPRequestOperation.h"
 
-@interface BallisticsViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate, UIActionSheetDelegate> {
+@interface BallisticsViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate, UIActionSheetDelegate, ProfileAddEditViewControllerDelegate> {
     NSArray *profiles;
     BallisticProfile *selectedProfile;
     NSMutableArray *profilePickerData;

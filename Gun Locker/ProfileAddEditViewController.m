@@ -9,6 +9,7 @@
 #import "ProfileAddEditViewController.h"
 
 @implementation ProfileAddEditViewController
+@synthesize delegate = _delegate;
 @synthesize nameTextField;
 @synthesize weaponButton, weaponTextField, weaponPicker;
 @synthesize muzzleVelocityTextField, siteHeightTextField, zeroDistanceTextField, zeroDistanceUnitControl;
@@ -26,7 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
 
     dragModels = [NSArray arrayWithObjects:@"G7", @"G1", nil];
@@ -76,6 +77,7 @@
     [self setWeightTextField:nil];
     [self setBulletButton:nil];
     [self setWeaponButton:nil];
+    [self setDelegate:nil];
     [super viewDidUnload];
 }
 
@@ -111,12 +113,12 @@
     NSString *segueID = segue.identifier;
     
 	if ([segueID isEqualToString:@"BulletChooser"]) {
+        [self.currentTextField resignFirstResponder];
         UINavigationController *destinationController = segue.destinationViewController;
 		BulletChooserViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
         dst.selectedBullet = _selectedBullet;
     } else if ([segueID isEqualToString:@"ManualBCEntry"]) {
-        UINavigationController *destinationController = segue.destinationViewController;
-		BulletBCEntryViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
+        BulletBCEntryViewController *dst = [[segue.destinationViewController  viewControllers] objectAtIndex:0];
         dst.passedBulletBC =  manually_entered_bc ? manually_entered_bc : [_selectedBullet.ballistic_coefficient objectForKey:drag_model];
         dst.selectedDragModel = drag_model;
     }   
@@ -130,7 +132,6 @@
     self.diameterTextField.text = [_selectedBullet.diameter_inches stringValue];
     self.weightTextField.text   = [_selectedBullet.weight_grains stringValue];
     [self setBCButtonTitle:[Bullet bcToString:[self.selectedBullet.ballistic_coefficient objectForKey:drag_model]]];
-    
     manually_entered_bc = nil;
 }   
 
@@ -182,7 +183,7 @@
 }
 
 - (IBAction)saveTapped:(id)sender {
-    // if some fields are blank, throw up uialertview
+    // TODO if some fields are blank, throw up uialertview
     
     BallisticProfile *profile = (self.selectedProfile == nil) ? [BallisticProfile createEntity] : self.selectedProfile;
     
@@ -203,10 +204,11 @@
     profile.bullet_weight = [NSNumber numberWithInteger:[self.weightTextField.text intValue]];
     profile.drag_model = drag_model;
 
-    [self.selectedProfile calculateTheta];
-    NSLog(@"tried to saved %@", profile);
+    [profile calculateTheta];
     
     [[NSManagedObjectContext defaultContext] save];
+    
+    [_delegate profileAddEditViewController:self didAddEditProfile:profile];
     [self dismissModalViewControllerAnimated:YES];
 }
 

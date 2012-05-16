@@ -138,7 +138,7 @@
         NFAInformationViewController *dst = segue.destinationViewController;
         dst.selectedWeapon = self.selectedWeapon;
     } else if ([segueID isEqualToString:@"Notes"]) {
-        NotesTableViewController *dst = segue.destinationViewController;
+        NotesListViewController *dst = segue.destinationViewController;
         dst.selectedWeapon = self.selectedWeapon;
     } else if ([segueID isEqualToString:@"DopeCards"]) {
         DopeCardsViewController *dst = segue.destinationViewController;

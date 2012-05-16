@@ -13,6 +13,12 @@
 #import "BulletBCEntryViewController.h"
 #import "Weapon.h"
 
+@class ProfileAddEditViewController;
+
+@protocol ProfileAddEditViewControllerDelegate <NSObject>
+- (void)profileAddEditViewController:(ProfileAddEditViewController *)controller didAddEditProfile:(BallisticProfile *)profile;
+@end
+
 @interface ProfileAddEditViewController : UITableViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
     Weapon *selectedWeapon;
     NSArray *weapons;
@@ -22,6 +28,8 @@
     NSMutableArray *formFields;
     NSArray *dragModels;
 }
+
+@property (nonatomic, weak) id <ProfileAddEditViewControllerDelegate> delegate;
 
 @property (weak, nonatomic) BallisticProfile *selectedProfile;
 @property (strong, nonatomic) Bullet *selectedBullet;

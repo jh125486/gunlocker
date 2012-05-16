@@ -11,10 +11,13 @@
 #import "Note.h"
 #import "NoteAddEditTableViewController.h"
 
-@interface NotesTableViewController : UITableViewController {
+@interface NotesListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     NSMutableDictionary *notes;
     NSMutableArray *sections;
 }
+
+@property (weak, nonatomic) IBOutlet UIImageView *noNotesImageView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, weak) Weapon *selectedWeapon;
 @end

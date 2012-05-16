@@ -33,8 +33,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
-
-    NSLog(@"profile %@", selectedProfile.name);
     
     self.rangeStartStepper.Current = 100.f;
     self.rangeStartStepper.Minimum = 0.0f;
@@ -67,7 +65,7 @@
 }
 
 -(void)loadWeather {
-    if (self.currentWeather.goodData) {
+    if (self.currentWeather) {
         self.tempTextField.text          = [NSString stringWithFormat:@"%.0f", TEMP_C_to_TEMP_F(self.currentWeather.tempC)];
         self.pressureTextField.text      = [NSString stringWithFormat:@"%.2f", self.currentWeather.altimInHg];
         self.rhTextField.text            = [NSString stringWithFormat:@"%.0f", self.currentWeather.relativeHumidity];

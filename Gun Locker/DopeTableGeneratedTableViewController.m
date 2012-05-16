@@ -11,10 +11,11 @@
 @implementation DopeTableGeneratedTableViewController
 @synthesize passedTrajectory;
 @synthesize dopeCardSectionHeaderView;
-@synthesize rangeUnitLabel, dropUnitLabel, driftUnitLabel;
+@synthesize rangeUnitLabel = _rangeUnitLabel, dropUnitLabel = _dropUnitLabel, driftUnitLabel = _driftUnitLabel;
 @synthesize weaponLabel, profileNameLabel;
 @synthesize zeroLabel, mvLabel, tempLabel, rhLabel, altitudeLabel, pressureLabel, windInfoLabel, targetInfoLabel;
-@synthesize rangeUnit, dropDriftUnit, tempString, altitudeString, pressureString, windInfoString, leadInfoString;
+@synthesize rangeUnit =_rangeUnit, dropDriftUnit = _dropDriftUnit;
+@synthesize tempString, altitudeString, pressureString, windInfoString, leadInfoString;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -97,10 +98,23 @@
     
     TrajectoryRange *range = [trajectory.ranges objectAtIndex:indexPath.row];
 
-    // figure out which units to show on Range/Drop/Drift
-    cell.rangeLabel.text    = range.range_yards;
-    cell.dropLabel.text     = range.drop_inches;
-    cell.driftLabel.text    = range.drift_inches;
+    if (_rangeUnit == @"Yards") {
+        cell.rangeLabel.text = range.range_yards;
+    } else if (_rangeUnit == @"Meters") {
+        cell.rangeLabel.text = range.range_m;
+    }
+    
+    if (_dropDriftUnit == @"Inches") {
+        cell.dropLabel.text  = range.drop_inches;
+        cell.driftLabel.text = range.drift_inches;
+    } else if (_dropDriftUnit == @"MOA") {
+        cell.dropLabel.text  = range.drop_moa;
+        cell.driftLabel.text = range.drift_moa;
+    } else if (_dropDriftUnit == @"Mils") {
+        cell.dropLabel.text  = range.drop_mils;
+        cell.driftLabel.text = range.drift_mils;
+    }
+    
     cell.velocityLabel.text = range.velocity_fps;
     cell.energyLabel.text   = range.energy_ftlbs;
     cell.timeLabel.text     = range.time;

@@ -12,7 +12,7 @@
 #import "MaintenancesViewController.h"
 #import "MalfunctionsViewController.h"
 #import "NFAInformationViewController.h"
-#import "NotesTableViewController.h"
+#import "NotesListViewController.h"
 #import "TextStepperField.h"
 #import "DopeCardsViewController.h"
 #import "CardsViewController.h"

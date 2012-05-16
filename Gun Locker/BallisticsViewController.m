@@ -107,12 +107,12 @@
     [super viewWillAppear:animated];
     
     profiles = [BallisticProfile findAll];
-    NSLog(@"Profile count: %d (%d)", [profiles count], [BallisticProfile countOfEntities]);
     
     [self setUpPickerData];
     [_selectedProfilePickerView reloadAllComponents];
     if ([profiles containsObject:selectedProfile]) {
         [_selectedProfilePickerView selectRow:[profiles indexOfObject:selectedProfile] inComponent:0 animated:NO];
+        [self profileSelected:nil];
     } else {
         [self resetChooseProfileButton];
     }        
@@ -158,21 +158,6 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSString *segueID = segue.identifier;
-    
-	if ([segueID isEqualToString:@"WhizWheel"]) {
-        ((WhizWheelViewController *)segue.destinationViewController).selectedProfile = selectedProfile;
-    } else if ([segueID isEqualToString:@"DopeTable"]) {
-        ((DopeTableTableViewController *)segue.destinationViewController).currentWeather = _currentWeather;
-        ((DopeTableTableViewController *)segue.destinationViewController).selectedProfile = selectedProfile;
-    }  else if ([segueID isEqualToString:@"ShowProfile"]) {
-        ((ProfileViewTableViewController *)segue.destinationViewController).profile = selectedProfile;
-    }
-
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void)setRange:(NSNotification*)notification {
@@ -225,6 +210,27 @@
     [self.selectedProfileTextField resignFirstResponder];
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString *segueID = segue.identifier;
+    
+	if ([segueID isEqualToString:@"WhizWheel"]) {
+        WhizWheelViewController *dst = segue.destinationViewController;
+        dst.selectedProfile = selectedProfile;
+    } else if ([segueID isEqualToString:@"DopeTable"]) {
+        DopeTableTableViewController *dst = segue.destinationViewController;
+        dst.currentWeather = _currentWeather;
+        dst.selectedProfile = selectedProfile;
+    } else if ([segueID isEqualToString:@"ShowProfile"]) {
+        ProfileViewTableViewController *dst = segue.destinationViewController;
+        dst.profile = selectedProfile;
+    } else if ([segueID isEqualToString:@"AddProfile"]) {
+        ProfileAddEditViewController *dst = [[segue.destinationViewController  viewControllers] objectAtIndex:0];
+        dst.delegate = self;
+    }
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+}
+
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
@@ -260,7 +266,14 @@
     [locationTimer invalidate]; 
 }
 
-# pragma mark tableview
+#pragma mark - ProfileAddEditViewController delegate
+
+-(void)profileAddEditViewController:(ProfileAddEditViewController *)controller didAddEditProfile:(BallisticProfile *)profile {
+    selectedProfile = profile;
+}
+
+
+# pragma mark tableview header/footer
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     if (section != 0) return nil;
@@ -328,7 +341,6 @@
             // perform segue to ViewProfile
             [self performSegueWithIdentifier:@"ShowProfile" sender:nil];
             break;
-            
         case 1:
             // choose a different profile
             [self.selectedProfileTextField becomeFirstResponder];

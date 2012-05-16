@@ -64,7 +64,7 @@
 		531D85CE15239F06004BB3AA /* unselected_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 531D85C915239F06004BB3AA /* unselected_selected@2x.png */; };
 		531D85CF15239F06004BB3AA /* unselected_unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 531D85CA15239F06004BB3AA /* unselected_unselected@2x.png */; };
 		531D85DC1523D698004BB3AA /* CardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D85DB1523D697004BB3AA /* CardsViewController.m */; };
-		532845F1152B863800F75828 /* NotesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532845F0152B863800F75828 /* NotesTableViewController.m */; };
+		532845F1152B863800F75828 /* NotesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532845F0152B863800F75828 /* NotesListViewController.m */; };
 		532845F4152B9C2B00F75828 /* NoteAddEditTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532845F3152B9C2B00F75828 /* NoteAddEditTableViewController.m */; };
 		532EE03D14F74FFB008A9558 /* manufacturers.txt in Resources */ = {isa = PBXBuildFile; fileRef = 532EE03C14F74FFB008A9558 /* manufacturers.txt */; };
 		5331481015262B930063C3EC /* Notecard_short.png in Resources */ = {isa = PBXBuildFile; fileRef = 5331480D15262B930063C3EC /* Notecard_short.png */; };
@@ -321,8 +321,8 @@
 		531D85CA15239F06004BB3AA /* unselected_unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unselected_unselected@2x.png"; sourceTree = "<group>"; };
 		531D85DA1523D697004BB3AA /* CardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardsViewController.h; sourceTree = "<group>"; };
 		531D85DB1523D697004BB3AA /* CardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardsViewController.m; sourceTree = "<group>"; };
-		532845EF152B863800F75828 /* NotesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesTableViewController.h; sourceTree = "<group>"; };
-		532845F0152B863800F75828 /* NotesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesTableViewController.m; sourceTree = "<group>"; };
+		532845EF152B863800F75828 /* NotesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesListViewController.h; sourceTree = "<group>"; };
+		532845F0152B863800F75828 /* NotesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesListViewController.m; sourceTree = "<group>"; };
 		532845F2152B9C2B00F75828 /* NoteAddEditTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteAddEditTableViewController.h; sourceTree = "<group>"; };
 		532845F3152B9C2B00F75828 /* NoteAddEditTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteAddEditTableViewController.m; sourceTree = "<group>"; };
 		532EE03C14F74FFB008A9558 /* manufacturers.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = manufacturers.txt; path = "Gun Locker/manufacturers.txt"; sourceTree = SOURCE_ROOT; };
@@ -1088,8 +1088,8 @@
 			children = (
 				532845F2152B9C2B00F75828 /* NoteAddEditTableViewController.h */,
 				532845F3152B9C2B00F75828 /* NoteAddEditTableViewController.m */,
-				532845EF152B863800F75828 /* NotesTableViewController.h */,
-				532845F0152B863800F75828 /* NotesTableViewController.m */,
+				532845EF152B863800F75828 /* NotesListViewController.h */,
+				532845F0152B863800F75828 /* NotesListViewController.m */,
 			);
 			name = Notes;
 			sourceTree = "<group>";
@@ -1404,7 +1404,7 @@
 				53591A40152181A000516C4C /* StampInfo.m in Sources */,
 				531D85DC1523D698004BB3AA /* CardsViewController.m in Sources */,
 				5391B8251526226F00582865 /* MalfunctionCell.m in Sources */,
-				532845F1152B863800F75828 /* NotesTableViewController.m in Sources */,
+				532845F1152B863800F75828 /* NotesListViewController.m in Sources */,
 				532845F4152B9C2B00F75828 /* NoteAddEditTableViewController.m in Sources */,
 				53BC9F49152C06CB00B7D7AD /* DopeCardsViewController.m in Sources */,
 				53BC9F4F152C11A700B7D7AD /* DopeCardRowEditCell.m in Sources */,
