@@ -1751,8 +1751,8 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1058823529" green="0.25490196079999999" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="mil_dot_reticle_bullet.png" id="v4W-mN-G9x">
-                                <rect key="frame" x="152" y="66" width="16" height="16"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Reticles/POI.png" id="v4W-mN-G9x" userLabel="POI">
+                                <rect key="frame" x="152" y="66" width="9" height="9"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" id="Ubt-kS-6oM" userLabel="table as picker">
@@ -1794,19 +1794,19 @@
                                         </connections>
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="EBB-Al-eVF" userLabel="directions table">
-                                        <rect key="frame" x="104" y="10" width="104" height="197"/>
+                                        <rect key="frame" x="104" y="10" width="101" height="197"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DirectionCell" textLabel="fJf-As-1y3" style="IBUITableViewCellStyleDefault" id="p9a-n4-zHi">
-                                                <rect key="frame" x="0.0" y="22" width="104" height="44"/>
+                                                <rect key="frame" x="0.0" y="22" width="101" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="104" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="101" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="12 o'clock" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="fJf-As-1y3">
-                                                            <rect key="frame" x="10" y="0.0" width="84" height="43"/>
+                                                            <rect key="frame" x="10" y="0.0" width="81" height="43"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="21"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1823,19 +1823,19 @@
                                         </connections>
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Oaf-EV-BQI" userLabel="speeds table">
-                                        <rect key="frame" x="209" y="10" width="96" height="197"/>
+                                        <rect key="frame" x="206" y="10" width="99" height="197"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SpeedCell" textLabel="3sT-SC-MS2" style="IBUITableViewCellStyleDefault" id="gOa-gJ-k5M">
-                                                <rect key="frame" x="0.0" y="22" width="96" height="44"/>
+                                                <rect key="frame" x="0.0" y="22" width="99" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="96" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="99" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="24 Knots" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3sT-SC-MS2">
-                                                            <rect key="frame" x="10" y="0.0" width="76" height="43"/>
+                                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Running" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" id="3sT-SC-MS2">
+                                                            <rect key="frame" x="10" y="0.0" width="79" height="43"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="21"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1868,7 +1868,7 @@
                                         <size key="shadowOffset" width="0.0" height="0.0"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Direction" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" minimumFontSize="10" id="z3h-oO-vYO" userLabel="Direction">
-                                        <rect key="frame" x="104" y="10" width="104" height="35"/>
+                                        <rect key="frame" x="104" y="10" width="101" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1883,62 +1883,76 @@
                                     </label>
                                 </subviews>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="mil_dot_reticle_day.png" id="MRY-qU-25K" userLabel="reticle">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="MRY-qU-25K" userLabel="reticle">
                                 <rect key="frame" x="86" y="0.0" width="148" height="148"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Drop" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="hxA-gl-aiw">
-                                <rect key="frame" x="0.0" y="0.0" width="89" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Drop" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="hxA-gl-aiw" userLabel="Prompt Drop">
+                                <rect key="frame" x="6" y="0.0" width="58" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="18"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="inches" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="XDc-QV-RRH" userLabel="drop inches">
-                                <rect key="frame" x="0.0" y="21" width="89" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="XDc-QV-RRH" userLabel="drop inches #">
+                                <rect key="frame" x="6" y="22" width="58" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="18"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="MOA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="m4I-9i-jyN" userLabel="drop MOA">
-                                <rect key="frame" x="0.0" y="76" width="89" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="&quot;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Cfz-cQ-uWG" userLabel="drop  inches unit label">
+                                <rect key="frame" x="64" y="22" width="8" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="18"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="MILs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="vo8-Pf-Edn" userLabel="drop MILs">
-                                <rect key="frame" x="0.0" y="98" width="89" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="vo8-Pf-Edn" userLabel="drop #">
+                                <rect key="frame" x="6" y="44" width="58" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="18"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Drift" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="pVq-8g-4Y0">
-                                <rect key="frame" x="231" y="0.0" width="89" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="MILs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="CM0-yZ-YPj" userLabel="drop unit label">
+                                <rect key="frame" x="67" y="44" width="52" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="18"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="inches" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="iuM-HW-LIC" userLabel="drift inches">
-                                <rect key="frame" x="231" y="21" width="89" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Drift" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="pVq-8g-4Y0" userLabel="Prompt Drift">
+                                <rect key="frame" x="201" y="0.0" width="58" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="18"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="MOA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="olq-Kw-cZO" userLabel="drift MOA">
-                                <rect key="frame" x="231" y="76" width="89" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="iuM-HW-LIC" userLabel="drift inches #">
+                                <rect key="frame" x="201" y="22" width="58" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="18"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="MILs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="WYl-Ia-FZm" userLabel="drift MILs">
-                                <rect key="frame" x="231" y="96" width="89" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="&quot;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Ps6-sT-4Bj" userLabel="drift inches unit label">
+                                <rect key="frame" x="259" y="22" width="8" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="18"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="WYl-Ia-FZm" userLabel="drift #">
+                                <rect key="frame" x="201" y="44" width="58" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="18"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="MILs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="UqU-GC-fy7" userLabel="drift unit label">
+                                <rect key="frame" x="262" y="44" width="52" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="18"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1952,16 +1966,16 @@
                         <outlet property="directionLabel" destination="z3h-oO-vYO" id="E2T-LU-nbe"/>
                         <outlet property="directionsTableView" destination="EBB-Al-eVF" id="1Vx-28-JSe"/>
                         <outlet property="driftInchesLabel" destination="iuM-HW-LIC" id="eIA-fS-VSc"/>
-                        <outlet property="driftMILsLabel" destination="WYl-Ia-FZm" id="iLZ-sJ-Y38"/>
-                        <outlet property="driftMOALabel" destination="olq-Kw-cZO" id="vId-Xp-039"/>
+                        <outlet property="driftMOAMils" destination="WYl-Ia-FZm" id="VdO-TX-XoE"/>
+                        <outlet property="driftUnitLabel" destination="UqU-GC-fy7" id="N6v-9P-m1D"/>
                         <outlet property="dropInchesLabel" destination="XDc-QV-RRH" id="Vbf-Gp-NKN"/>
-                        <outlet property="dropMILsLabel" destination="vo8-Pf-Edn" id="yjM-ZK-olI"/>
-                        <outlet property="dropMOALabel" destination="m4I-9i-jyN" id="031-8J-rqc"/>
+                        <outlet property="dropMOAMils" destination="vo8-Pf-Edn" id="zwG-5z-g6v"/>
+                        <outlet property="dropUnitLabel" destination="CM0-yZ-YPj" id="Yce-LS-WNp"/>
                         <outlet property="rangeLabel" destination="fm0-Gv-Cxw" id="OxL-hG-NfW"/>
                         <outlet property="rangesTableView" destination="JFh-AE-DMQ" id="n5c-Cv-PsT"/>
                         <outlet property="resultBackgroundView" destination="iJu-JK-8M4" id="4vL-Nb-ZoV"/>
-                        <outlet property="resultBulletImpactImage" destination="v4W-mN-G9x" id="72f-HK-ewa"/>
-                        <outlet property="resultReticleView" destination="MRY-qU-25K" id="FkU-L0-yIn"/>
+                        <outlet property="reticleImage" destination="MRY-qU-25K" id="Xxg-dr-YMw"/>
+                        <outlet property="reticlePOIImage" destination="v4W-mN-G9x" id="DnO-He-OoE"/>
                         <outlet property="speedLabel" destination="1yv-Xo-sAm" id="OLr-B4-9Az"/>
                         <outlet property="speedTableView" destination="Oaf-EV-BQI" id="Zh9-6n-HwZ"/>
                         <outlet property="tableBackgroundImage" destination="KUc-bd-H6o" id="uqJ-im-HTU"/>
@@ -3049,8 +3063,8 @@
                                                     <rect key="frame" x="125" y="7" width="155" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <segments>
+                                                        <segment title="Mil Dot"/>
                                                         <segment title="MOA"/>
-                                                        <segment title="Mils"/>
                                                     </segments>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <connections>
@@ -5455,7 +5469,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="KPH" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1mR-Dx-vQh">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="km/h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1mR-Dx-vQh">
                                                     <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
@@ -5473,7 +5487,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="MPS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9l8-37-91c">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="m/s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9l8-37-91c">
                                                     <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
@@ -5531,7 +5545,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="KPH" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZNT-io-4By">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="km/h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZNT-io-4By">
                                                     <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
@@ -6782,28 +6796,28 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="3000 rounds" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="vj6-ea-J1n" userLabel="round count">
-                                                    <rect key="frame" x="200" y="10" width="50" height="17"/>
+                                                    <rect key="frame" x="186" y="10" width="64" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
                                                     <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="rounds" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="iAG-BE-ReP" userLabel="round prompt">
                                                     <rect key="frame" x="251" y="10" width="61" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
                                                     <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Failure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="QBz-F1-Z8b" userLabel="Failure header">
                                                     <rect key="frame" x="5" y="64" width="80" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AmericanTypewriter-CondensedBold" family="American Typewriter" pointSize="22"/>
                                                     <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="shadowColor" cocoaTouchSystemColor="lightTextColor"/>
                                                     <size key="shadowOffset" width="0.0" height="1"/>
                                                 </label>
@@ -6820,7 +6834,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AmericanTypewriter-CondensedBold" family="American Typewriter" pointSize="22"/>
                                                     <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="shadowColor" cocoaTouchSystemColor="lightTextColor"/>
                                                     <size key="shadowOffset" width="0.0" height="1"/>
                                                 </label>
@@ -6928,7 +6942,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MaintenanceCell" rowHeight="186" id="b1m-Vp-Jdt" userLabel="MaintenanceCell" customClass="MaintenanceCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MaintenanceCell" rowHeight="186" id="b1m-Vp-Jdt" userLabel="MaintenanceCell" customClass="MaintenanceCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="186"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -6944,7 +6958,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Action" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="YOC-dw-0ZN" userLabel="action performed header 1">
                                                     <rect key="frame" x="0.0" y="45" width="97" height="21"/>
@@ -6971,7 +6985,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="3000 rounds" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="RgB-26-mtn" userLabel="round count">
-                                                    <rect key="frame" x="200" y="10" width="50" height="17"/>
+                                                    <rect key="frame" x="186" y="10" width="64" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="16"/>
                                                     <color key="textColor" red="0.71372549019999998" green="0.26241263819999999" blue="0.3160061623" alpha="1" colorSpace="calibratedRGB"/>
@@ -7004,18 +7018,16 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="24"/>
                                                     <color key="textColor" red="0.27335995439999999" green="0.42722198369999997" blue="0.90956956150000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" red="0.27335995439999999" green="0.42722198369999997" blue="0.90956956150000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="shadowColor" cocoaTouchSystemColor="lightTextColor"/>
-                                                    <size key="shadowOffset" width="0.0" height="1"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Related Malfunctions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="zO2-fr-DeV" userLabel="malfunction label">
                                                     <rect key="frame" x="66" y="130" width="175" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AmericanTypewriter-Condensed" family="American Typewriter" pointSize="23"/>
                                                     <color key="textColor" red="0.27335995439999999" green="0.42722198369999997" blue="0.90956956150000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" red="0.27335995439999999" green="0.42722198369999997" blue="0.90956956150000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="shadowColor" cocoaTouchSystemColor="lightTextColor"/>
-                                                    <size key="shadowOffset" width="0.0" height="1"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="TopLeft" image="notecard_bottom.png" id="C7w-aS-2vD" userLabel="notecard bottom">
                                                     <rect key="frame" x="0.0" y="183" width="320" height="3"/>
@@ -8242,6 +8254,7 @@
         <image name="Default.png" width="320" height="480"/>
         <image name="Notecard.png" width="316" height="332"/>
         <image name="Notecard_short.png" width="318" height="186"/>
+        <image name="Reticles/POI.png" width="16" height="16"/>
         <image name="Table/Fake Table/Bottom_Row.png" width="16" height="16"/>
         <image name="Table/Fake Table/Middle_Row.png" width="16" height="16"/>
         <image name="Table/Fake Table/Single_Row.png" width="16" height="16"/>
@@ -8254,8 +8267,6 @@
         <image name="icon_card_file.png" width="26" height="17"/>
         <image name="icon_logbook.png" width="28" height="26"/>
         <image name="icon_settings.png" width="26" height="28"/>
-        <image name="mil_dot_reticle_bullet.png" width="14" height="14"/>
-        <image name="mil_dot_reticle_day.png" width="148" height="148"/>
         <image name="notecard_bottom.png" width="318" height="3"/>
         <image name="photo_back.png" width="166" height="126"/>
         <image name="photo_tape_bottom.png" width="69" height="30"/>
@@ -8856,16 +8867,16 @@
                 <relationship kind="outlet" name="directionLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="directionsTableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="driftInchesLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="driftMILsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="driftMOALabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="driftMOAMils" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="driftUnitLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="dropInchesLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dropMILsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dropMOALabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="dropMOAMils" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="dropUnitLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="rangeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="rangesTableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="resultBackgroundView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="resultBulletImpactImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="resultReticleView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="reticleImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="reticlePOIImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="speedLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="speedTableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="tableBackgroundImage" candidateClass="UIImageView"/>
@@ -8881,18 +8892,18 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="0Zs-gO-FEQ"/>
-        <segue reference="e7w-6L-bbT"/>
-        <segue reference="obo-2h-Fze"/>
-        <segue reference="fV5-Vd-eQY"/>
-        <segue reference="Kwm-tt-mog"/>
-        <segue reference="GCB-J1-qDm"/>
-        <segue reference="v4O-3O-IBy"/>
         <segue reference="5Rg-4E-xmM"/>
-        <segue reference="Vt3-cf-MsD"/>
         <segue reference="yYB-bQ-quH"/>
+        <segue reference="v4O-3O-IBy"/>
         <segue reference="DYz-Of-xaL"/>
         <segue reference="44M-51-dEq"/>
+        <segue reference="V22-lG-rzL"/>
         <segue reference="5TZ-l7-AC7"/>
+        <segue reference="e7w-6L-bbT"/>
+        <segue reference="obo-2h-Fze"/>
+        <segue reference="0Zs-gO-FEQ"/>
+        <segue reference="Kwm-tt-mog"/>
+        <segue reference="fV5-Vd-eQY"/>
+        <segue reference="GCB-J1-qDm"/>
     </inferredMetricsTieBreakers>
 </document>

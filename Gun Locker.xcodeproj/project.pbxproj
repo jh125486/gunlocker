@@ -113,8 +113,8 @@
 		53908949151BB30C0048D5AE /* add_photo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 53908948151BB30C0048D5AE /* add_photo_highlight.png */; };
 		5390EDE715152B9000746A93 /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390EDE615152B9000746A93 /* compass.png */; };
 		5391B8251526226F00582865 /* MalfunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5391B8241526226F00582865 /* MalfunctionCell.m */; };
+		539D94EF15643D5200669758 /* Reticles in Resources */ = {isa = PBXBuildFile; fileRef = 539D94EE15643D5200669758 /* Reticles */; };
 		539DBDF11515B2A300AB97FB /* tableview_skin.png in Resources */ = {isa = PBXBuildFile; fileRef = 539DBDF01515B2A300AB97FB /* tableview_skin.png */; };
-		539F2188155C390000DEB784 /* mil_dot_reticle_bullet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 539F2187155C390000DEB784 /* mil_dot_reticle_bullet@2x.png */; };
 		53A0E66815390F8B00846421 /* BulletChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A0E66715390F8B00846421 /* BulletChooserViewController.m */; };
 		53A0E66B153954F200846421 /* ProfileAddEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A0E66A153954F100846421 /* ProfileAddEditViewController.m */; };
 		53A0E687153A77FD00846421 /* Bullets in Resources */ = {isa = PBXBuildFile; fileRef = 53A0E686153A77FD00846421 /* Bullets */; };
@@ -187,9 +187,6 @@
 		53E8314F1558808B0062893B /* BackgroundFabricTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E8314E1558808B0062893B /* BackgroundFabricTexture.png */; };
 		53E83168155998D50062893B /* BallisticProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E83167155998D50062893B /* BallisticProfile.m */; };
 		53EBBD951516F36C00488E63 /* tableview_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD941516F36C00488E63 /* tableview_header.png */; };
-		53EBBD9815170E5100488E63 /* mil_dot_reticle_day.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9615170E5100488E63 /* mil_dot_reticle_day.png */; };
-		53EBBD9915170E5100488E63 /* mil_dot_reticle_night.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9715170E5100488E63 /* mil_dot_reticle_night.png */; };
-		53EBBD9B15171B1600488E63 /* mil_dot_reticle_bullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD9A15171B1600488E63 /* mil_dot_reticle_bullet.png */; };
 		53F241A915619DC30038A666 /* Weapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241A815619DC30038A666 /* Weapon.m */; };
 		53F241AC15619DC40038A666 /* Manufacturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241AB15619DC40038A666 /* Manufacturer.m */; };
 		53F241AF1561A2A60038A666 /* Maintenance.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241AE1561A2A60038A666 /* Maintenance.m */; };
@@ -388,8 +385,8 @@
 		5390EDE615152B9000746A93 /* compass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compass.png; sourceTree = "<group>"; };
 		5391B8231526226F00582865 /* MalfunctionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MalfunctionCell.h; sourceTree = "<group>"; };
 		5391B8241526226F00582865 /* MalfunctionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MalfunctionCell.m; sourceTree = "<group>"; };
+		539D94EE15643D5200669758 /* Reticles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Reticles; sourceTree = "<group>"; };
 		539DBDF01515B2A300AB97FB /* tableview_skin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableview_skin.png; sourceTree = "<group>"; };
-		539F2187155C390000DEB784 /* mil_dot_reticle_bullet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mil_dot_reticle_bullet@2x.png"; sourceTree = "<group>"; };
 		53A0E66615390F8B00846421 /* BulletChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulletChooserViewController.h; sourceTree = "<group>"; };
 		53A0E66715390F8B00846421 /* BulletChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BulletChooserViewController.m; sourceTree = "<group>"; };
 		53A0E669153954F100846421 /* ProfileAddEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileAddEditViewController.h; sourceTree = "<group>"; };
@@ -505,9 +502,6 @@
 		53E83166155998D50062893B /* BallisticProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfile.h; sourceTree = "<group>"; };
 		53E83167155998D50062893B /* BallisticProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfile.m; sourceTree = "<group>"; };
 		53EBBD941516F36C00488E63 /* tableview_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableview_header.png; sourceTree = "<group>"; };
-		53EBBD9615170E5100488E63 /* mil_dot_reticle_day.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mil_dot_reticle_day.png; sourceTree = "<group>"; };
-		53EBBD9715170E5100488E63 /* mil_dot_reticle_night.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mil_dot_reticle_night.png; sourceTree = "<group>"; };
-		53EBBD9A15171B1600488E63 /* mil_dot_reticle_bullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mil_dot_reticle_bullet.png; sourceTree = "<group>"; };
 		53F241A715619DC30038A666 /* Weapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weapon.h; sourceTree = "<group>"; };
 		53F241A815619DC30038A666 /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
 		53F241AA15619DC40038A666 /* Manufacturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manufacturer.h; sourceTree = "<group>"; };
@@ -657,10 +651,6 @@
 				530EA3FA14FC780000E132FB /* icon.png */,
 				530EA3FC14FC780300E132FB /* icon@2x.png */,
 				53F6AAC814FDE67E0079F613 /* Icons */,
-				53EBBD9A15171B1600488E63 /* mil_dot_reticle_bullet.png */,
-				539F2187155C390000DEB784 /* mil_dot_reticle_bullet@2x.png */,
-				53EBBD9615170E5100488E63 /* mil_dot_reticle_day.png */,
-				53EBBD9715170E5100488E63 /* mil_dot_reticle_night.png */,
 				530EA40A14FD30F200E132FB /* Notecard.png */,
 				5331480F15262B930063C3EC /* Notecard@2x.png */,
 				53BB602D152A157100625CC7 /* notecard_bottom.png */,
@@ -672,6 +662,7 @@
 				530EA40D14FD358100E132FB /* photo_tape_top.png */,
 				5348C69C150719A500147AAF /* picker_footer_overlay.png */,
 				5348C69A1507188D00147AAF /* picker_overlay.png */,
+				539D94EE15643D5200669758 /* Reticles */,
 				531D85C515239F06004BB3AA /* segmented_control */,
 				53AC4E7215242FEB0015A152 /* Stamp_AOW.png */,
 				53AC4E7315242FEB0015A152 /* Stamp_AOW@2x.png */,
@@ -1289,9 +1280,6 @@
 				5390EDE715152B9000746A93 /* compass.png in Resources */,
 				539DBDF11515B2A300AB97FB /* tableview_skin.png in Resources */,
 				53EBBD951516F36C00488E63 /* tableview_header.png in Resources */,
-				53EBBD9815170E5100488E63 /* mil_dot_reticle_day.png in Resources */,
-				53EBBD9915170E5100488E63 /* mil_dot_reticle_night.png in Resources */,
-				53EBBD9B15171B1600488E63 /* mil_dot_reticle_bullet.png in Resources */,
 				53405CB4151936A300C7D84F /* UIStepperLeft.png in Resources */,
 				53405CB5151936A300C7D84F /* UIStepperLeft@2x.png in Resources */,
 				53405CB6151936A300C7D84F /* UIStepperLeftPressed.png in Resources */,
@@ -1347,7 +1335,7 @@
 				5314B9F2154DC54200FED997 /* DefaultButton_Normal@2x.png in Resources */,
 				538DA6F5154F444D0066F74A /* Test in Resources */,
 				53E8314F1558808B0062893B /* BackgroundFabricTexture.png in Resources */,
-				539F2188155C390000DEB784 /* mil_dot_reticle_bullet@2x.png in Resources */,
+				539D94EF15643D5200669758 /* Reticles in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

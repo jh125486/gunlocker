@@ -10,48 +10,48 @@
 
 @implementation Trajectory
 
-@synthesize pressureInhg, relativeHumidity, tempC, altitudeM;
-@synthesize rangeMax, rangeMin, rangeIncrement;
-@synthesize leadSpeed, leadAngle, windSpeed, windAngle, shootingAngle;
-@synthesize ranges, ballisticProfile, setupCompleted;
+@synthesize pressureInhg = _pressureInhg, relativeHumidity = _relativeHumidity, tempC = _tempC, altitudeM = _altitudeM;
+@synthesize rangeEnd = _rangeEnd, rangeStart = _rangeStart, rangeStep = _rangeStep;
+@synthesize leadSpeed = _leadSpeed, leadAngle = _leadAngle, windSpeed = _windSpeed, windAngle = _windAngle, shootingAngle = _shootingAngle;
+@synthesize ranges = _ranges, ballisticProfile = _ballisticProfile, setupCompleted = _setupCompleted;
 
 -(id)init {
     if (self = [super init]) {
-        self.setupCompleted = FALSE;
+        _setupCompleted = FALSE;
     }
     return self;
 }
 
 -(void)setup {
-    gravity = METERS_to_FEET([self gravityFromAltitudeInMeters:altitudeM]);
+    gravity = METERS_to_FEET([self gravityFromAltitudeInMeters:_altitudeM]);
     sectionalArea = [self calculateSectionalArea];
     airDensity = [self airDensity];
-    xAtZero = [self.ballisticProfile.zero doubleValue];
+    xAtZero = [_ballisticProfile.zero doubleValue];
     bulletMass = [self bulletMass];
-    yInitial = -INCHES_to_FEET([self.ballisticProfile.sight_height_inches doubleValue]);
-    vInitial = [self.ballisticProfile.muzzle_velocity doubleValue];
+    yInitial = -INCHES_to_FEET([_ballisticProfile.sight_height_inches doubleValue]);
+    vInitial = [_ballisticProfile.muzzle_velocity doubleValue];
     speedOfSound = [self calculateSpeedOfSoundInFeet];
-    windXSpeed = MPH_to_FPS(cos(DEGREES_to_RAD(self.windAngle)) * self.windSpeed);
+    windXSpeed = MPH_to_FPS(cos(DEGREES_to_RAD(_windAngle)) * _windSpeed);
     
     // wind from rear doesn't affect bullet as much
     // probably should be developed from sectional area
     if (windXSpeed > 0) windXSpeed *= 0.25;
     
-    windZSpeed = MPH_to_FPS(sin(DEGREES_to_RAD(self.windAngle)) * self.windSpeed);
-    if (!self.ballisticProfile.zero_theta) {[self.ballisticProfile calculateTheta]; NSLog(@"calced theta");}
+    windZSpeed = MPH_to_FPS(sin(DEGREES_to_RAD(_windAngle)) * _windSpeed);
+    if (!_ballisticProfile.zero_theta) {[_ballisticProfile calculateTheta]; NSLog(@"Trajectory: had to calculate theta angle");}
     
-    self.setupCompleted = YES;
+    _setupCompleted = YES;
 }
 
 -(void)calculateTrajectory {
-    if(!self.setupCompleted) [self setup];
+    if(!_setupCompleted) [self setup];
 
     double t = 0;
     double dt = 0.5 / vInitial;
 
     double v  = vInitial;
-    double vx = vInitial * cos([self.ballisticProfile.zero_theta doubleValue]);
-    double vy = vInitial * sin([self.ballisticProfile.zero_theta doubleValue]);
+    double vx = vInitial * cos([_ballisticProfile.zero_theta doubleValue]);
+    double vy = vInitial * sin([_ballisticProfile.zero_theta doubleValue]);
     double vx1 = 0, vy1 = 0;
 
     double dv  = 0, dvx = 0, dvy = 0;
@@ -61,20 +61,20 @@
 	double z   = 0;
 	double dropMOA = 0, driftMOA = 0;
 	
-    double gx = gravity * sin(DEGREES_to_RAD(self.shootingAngle) + [self.ballisticProfile.zero_theta doubleValue]);
-    double gy = gravity * cos(DEGREES_to_RAD(self.shootingAngle) + [self.ballisticProfile.zero_theta doubleValue]);
+    double gx = gravity * sin(DEGREES_to_RAD(_shootingAngle) + [_ballisticProfile.zero_theta doubleValue]);
+    double gy = gravity * cos(DEGREES_to_RAD(_shootingAngle) + [_ballisticProfile.zero_theta doubleValue]);
 
-    self.ranges = [[NSMutableArray alloc] initWithCapacity:self.rangeMax];
+    self.ranges = [[NSMutableArray alloc] initWithCapacity:_rangeEnd];
 
-    int n = self.rangeMin;
-    while (n <= self.rangeMax) { // stop at max range yards
+    int n = self.rangeStart;
+    while (n <= self.rangeEnd) { // stop at max range yards
         vx1 = vx;
         vy1 = vy;
         v = VECTOR_LENGTH(vx, vy);
         dt = 0.5 / v;
         
         // Compute acceleration using the drag function retardation	
-        dv =  [self.ballisticProfile getBCWithSpeedOfSound:speedOfSound andVelocity: v - 1.5*windXSpeed];
+        dv =  [_ballisticProfile getBCWithSpeedOfSound:speedOfSound andVelocity: v - 1.5*windXSpeed];
         dv += [self extraDragRetardationWithVelocity: v];
         dvx = -(vx/v)*dv;
         dvy = -(vy/v)*dv;
@@ -86,12 +86,14 @@
         t += dt;
         
         if (FEET_to_YARDS(x) >= n) {            
-            if ((lround(x) % self.rangeIncrement) == 0) {
+            if ((lround(x) % _rangeStep) == 0) {
                 TrajectoryRange *range = [[TrajectoryRange alloc] init];
                 
                 // equation 5.2 Litz
                 z = windZSpeed * (t - (x/vInitial));
                 //        drift = windage +-  lead  which is [NSNumber numberWithDouble:(sin(t)*self.lead_angle*self.lead_speed)];
+                // leadXSpeed should be factored into distance travelled: x = dt * (vx + vx1 + leadXSpeed)/2.0  --> same for y = on line 117
+                // add in SpinDrift 1.25*(SG + 1.2)* pow(t, 1.83)
                 dropMOA  = RAD_to_MOA(atan2(y, x));
                 driftMOA = RAD_to_MOA(atan2(z, x)); 
                 range.range_yards   = [NSString stringWithFormat:@"%.0f", FEET_to_YARDS(x)];
@@ -106,7 +108,7 @@
                 range.energy_ftlbs  = [NSString stringWithFormat:@"%.0f", [self energyAtVelocity:v]];
                 range.time          = [NSString stringWithFormat:@"%.3f", t];
 
-                [self.ranges addObject:range];
+                [_ranges addObject:range];
              }
 			n++;
 		}
@@ -126,7 +128,7 @@
 }
 
 -(double)airDensity {
-    return [Weather airDensityFromTempC:self.tempC andRH:self.relativeHumidity andPressurePa:INHG_to_PA(self.pressureInhg)];
+    return [Weather airDensityFromTempC:_tempC andRH:_relativeHumidity andPressurePa:INHG_to_PA(_pressureInhg)];
 }
 
 -(double)bulletMass {
@@ -134,7 +136,7 @@
 }
 
 -(double)calculateSectionalArea {
-    return (M_PI_4) * pow(INCHES_to_FEET([self.ballisticProfile.bullet_diameter_inches doubleValue]), 2);
+    return (M_PI_4) * pow(INCHES_to_FEET([_ballisticProfile.bullet_diameter_inches doubleValue]), 2);
 }
 
 -(double)gravityFromAltitudeInMeters:(double)altitude {
@@ -146,15 +148,15 @@
 }
 
 -(double)calculateSpeedOfSoundInFeet {
-    return METERS_to_FEET([Weather calculateSpeedOfSoundFromTempC:self.tempC andRH:self.relativeHumidity andPressurePa:INHG_to_PA(self.pressureInhg)]);
+    return METERS_to_FEET([Weather calculateSpeedOfSoundFromTempC:_tempC andRH:_relativeHumidity andPressurePa:INHG_to_PA(_pressureInhg)]);
 }
 
 -(double)gravityY {
-    return gravity * cos(DEGREES_to_RAD((self.shootingAngle + [self.ballisticProfile.zero_theta doubleValue])));
+    return gravity * cos(DEGREES_to_RAD((_shootingAngle + [_ballisticProfile.zero_theta doubleValue])));
 }
 
 -(double)gravityX {
-    return gravity * sin(DEGREES_to_RAD((self.shootingAngle + [self.ballisticProfile.zero_theta doubleValue])));
+    return gravity * sin(DEGREES_to_RAD((_shootingAngle + [_ballisticProfile.zero_theta doubleValue])));
 }
 
 

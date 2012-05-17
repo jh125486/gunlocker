@@ -113,9 +113,9 @@
     Trajectory *trajectory = [[Trajectory alloc] init];
     
     // XXX do all conversions for UnitControls
-    trajectory.rangeMin = self.rangeStartStepper.Current;
-    trajectory.rangeMax =  self.rangeEndStepper.Current;
-    trajectory.rangeIncrement = self.rangeStepStepper.Current;
+    trajectory.rangeStart = self.rangeStartStepper.Current;
+    trajectory.rangeEnd =  self.rangeEndStepper.Current;
+    trajectory.rangeStep = self.rangeStepStepper.Current;
 
     trajectory.tempC = (self.tempUnitControl.selectedSegmentIndex == 0) ? TEMP_F_to_TEMP_C([self.tempTextField.text doubleValue]) : [self.tempTextField.text doubleValue];
     

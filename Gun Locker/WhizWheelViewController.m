@@ -6,20 +6,22 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 #define CIRCULAR_TABLE_SIZE 1000
-#define PIXELS_PER_MIL -9.2
+#define PIXELS_PER_MIL -10
+#define PIXELS_PER_MOA -2
 #import "WhizWheelViewController.h"
 
 @implementation WhizWheelViewController
 @synthesize tableBackgroundImage;
 @synthesize rangesTableView, directionsTableView, speedTableView;
 @synthesize rangeLabel, directionLabel, speedLabel;
-@synthesize dropInchesLabel, dropMOALabel, dropMILsLabel;
-@synthesize driftInchesLabel, driftMOALabel, driftMILsLabel;
+@synthesize dropInchesLabel = _dropInchesLabel, dropMOAMils = _dropMOAMils;
+@synthesize driftInchesLabel = _driftInchesLabel, driftMOAMils = _driftMOAMils;
+@synthesize dropUnitLabel = _dropUnitLabel, driftUnitLabel = _driftUnitLabel;
 @synthesize selectedProfile;
 @synthesize lastSelectedRangeCell, lastSelectedDirectionCell, lastSelectedSpeedCell;
 @synthesize resultBackgroundView;
-@synthesize resultReticleView;
-@synthesize resultBulletImpactImage;
+@synthesize reticleImage = _reticleImage;
+@synthesize reticlePOIImage = _reticlePOIImage;
 @synthesize nightMode;
 @synthesize speedUnit, speedType;
 
@@ -34,97 +36,70 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = self.selectedProfile.name;
+    trajectory = [[Trajectory alloc] init];
+    dataManager = [DataManager sharedManager];
 
+    
 //    trajectory.windSpeed = (self.windSpeedUnitControl.selectedSegmentIndex == 0) ? KNOTS_to_MPH([self.windSpeedTextField.text doubleValue]) : [self.windSpeedTextField.text doubleValue];
 //    trajectory.windAngle = (self.windDirectionUnitControl.selectedSegmentIndex == 0) ? [self.windDirectionTextField.text doubleValue] : CLOCK_to_DEGREES([self.windDirectionTextField.text doubleValue]);
 //    
 //    trajectory.leadSpeed = (self.leadingSpeedUnitControl.selectedSegmentIndex == 0) ? KNOTS_to_MPH([self.leadingSpeedTextField.text doubleValue]) : [self.leadingSpeedTextField.text doubleValue];
 //    trajectory.leadAngle = (self.leadingDirectionUnitControl.selectedSegmentIndex == 0) ? [self.leadingDirectionTextField.text doubleValue] : CLOCK_to_DEGREES([self.leadingDirectionTextField.text doubleValue]);
   
-    rangeIndex = 0;
 }
 
 -(void)viewWillAppear:(BOOL)animated {    
     [super viewWillAppear:animated];
 
+    // set to initial picker positions
+    rangeIndex = 0;
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    reticle = [defaults boolForKey:@"reticleUnitsControl"] ? @"MOA" : @"MilDot";
     
-    trajectory = [[Trajectory alloc] init];
-    
+    int rangeStart       = [defaults integerForKey:@"rangeStart"];
+    int rangeEnd         = [defaults integerForKey:@"rangeEnd"];
+    int rangeStep        = [defaults integerForKey:@"rangeStep"];
+    self.rangeLabel.text = [defaults integerForKey:@"rangeUnitsControl"] == 0 ? @"Yards" : @"Meters";
+
     // XXX do all conversions for UnitControls
-    trajectory.rangeMin = [defaults integerForKey:@"rangeStart"];
-    trajectory.rangeMax =  [defaults integerForKey:@"rangeEnd"];
-    trajectory.rangeIncrement = [defaults integerForKey:@"rangeStep"];
+    trajectory.rangeStart = rangeStart;
+    trajectory.rangeEnd =  rangeEnd;
+    trajectory.rangeStep = rangeStep;
     trajectory.tempC = 15;
     trajectory.relativeHumidity = 0;
     trajectory.pressureInhg = 29.92;
     trajectory.altitudeM = 0;
     trajectory.ballisticProfile = selectedProfile;
     
-    int rangeStart       = [defaults integerForKey:@"rangeStart"];
-    int rangeEnd         = [defaults integerForKey:@"rangeEnd"];
-    int rangeStep        = [defaults integerForKey:@"rangeStep"];
-    self.rangeLabel.text = [defaults integerForKey:@"rangeUnitsControl"] == 0 ? @"Yards" : @"Meters";
-        
-    // array of Ranges:  pad front and bad to get proper pickerview from tableview
+    // array of Ranges:  pad front and back to get proper fake pickerview row alignment from real tableview
     arrayRanges = [[NSMutableArray alloc] initWithObjects:@"", @"", nil];
     for(int range = rangeStart; range <= rangeEnd; range += rangeStep)
         [arrayRanges addObject:[NSString stringWithFormat:@"%d", range]];
     [arrayRanges addObject:@""];
     [arrayRanges addObject:@""];
     
-    // array of Directions
-    arrayDirections = [[NSMutableArray alloc] init];
-    switch ([defaults integerForKey:@"directionControl"]) {
-        case 0:          // degrees
-            for(int degree = 0; degree < 360; degree += 30)
-                [arrayDirections addObject:[NSString stringWithFormat:@"%d°", degree]];
-            directionLabel.text = @"Degree";
-            break;
-        case 1:          // clock
-            [arrayDirections addObject:@"12 o'clock"];
-            for(int clock = 1; clock < 12; clock++)
-                [arrayDirections addObject:[NSString stringWithFormat:@"%d o'clock", clock]];
-            directionLabel.text = @"Direction";
-            break;
-        case 2:          // cardinal  --> Needs compass to be implemented correctly
-            [arrayDirections addObject:@"North"];
-            [arrayDirections addObject:@"Northeast"];
-            [arrayDirections addObject:@"East"];
-            [arrayDirections addObject:@"Southeast"];
-            [arrayDirections addObject:@"South"];
-            [arrayDirections addObject:@"Southwest"];
-            [arrayDirections addObject:@"West"];
-            [arrayDirections addObject:@"Northwest"];
-            break;
-        default:
-            break;
-    }
     
-    // array of Speeds
-    arraySpeeds = [[NSMutableArray alloc] init];
-    self.speedUnit = [defaults objectForKey:@"speedUnit"];
+    self.directionLabel.text = [dataManager.directionTypes objectAtIndex:[defaults integerForKey:@"directionControl"]];
+    arrayDirections = [dataManager.whizWheelPicker2 objectForKey:directionLabel.text];
+    
+    self.speedUnit = [defaults objectForKey:@"speedUnit"]; // should have another label to differentiate between leading and windage
     self.speedType = [defaults objectForKey:@"speedType"];
-    if([speedUnit isEqualToString:@"Human"]) {
-        speedLabel.text = speedUnit;
-        [arraySpeeds addObject:@"At Rest"];
-        [arraySpeeds addObject:@"Walking"];
-        [arraySpeeds addObject:@"Jogging"];
-        [arraySpeeds addObject:@"Running"];        
-    } else { // MPH km/h MPS Knots
-        for (int speed = 0; speed < 25; speed++)
-            [arraySpeeds addObject:[NSString stringWithFormat:@"%d %@", speed, speedUnit]];
-        speedLabel.text = speedType;
-    }
+    self.speedLabel.text = speedType;
+    arraySpeeds = [dataManager.whizWheelPicker3 objectForKey:speedUnit];
+    
+    NSLog(@"whiz2 keys %@  whiz3 key %@", [dataManager.whizWheelPicker2 allKeys], [dataManager.whizWheelPicker3 allKeys]);
+    NSLog(@"size of ranges: %d directions %d speeds %d", [arrayRanges count], [arrayDirections count], [arraySpeeds count]);
     
     [rangesTableView reloadData];
     [directionsTableView reloadData];
     [speedTableView reloadData];
     
     self.nightMode = [[defaults objectForKey:@"nightModeControl"] intValue];
+    
     if (nightMode) {
         rangesTableView.backgroundColor = directionsTableView.backgroundColor = speedTableView.backgroundColor = resultBackgroundView.backgroundColor = [UIColor blackColor];
-        resultReticleView.image = [UIImage imageNamed:@"mil_dot_reticle_night"];
+        _reticleImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Reticles/%@_night", reticle]];
         for (UILabel *label in self.view.subviews){
             if ([label isKindOfClass:[UILabel class]]){
                 label.textColor = tableBackgroundImage.backgroundColor = [UIColor colorWithRed:0.603 green:0.000 blue:0.000 alpha:1.000];
@@ -133,7 +108,7 @@
         rangeLabel.textColor = directionLabel.textColor = speedLabel.textColor = [UIColor lightGrayColor];
     } else {
         rangesTableView.backgroundColor = directionsTableView.backgroundColor = speedTableView.backgroundColor = resultBackgroundView.backgroundColor = [UIColor whiteColor];
-        resultReticleView.image = [UIImage imageNamed:@"mil_dot_reticle_day"];
+        _reticleImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Reticles/%@_day", reticle]];
         for (UILabel *label in self.view.subviews){
             if ([label isKindOfClass:[UILabel class]]){
                 label.textColor = [UIColor blackColor];
@@ -158,17 +133,17 @@
     [self setSpeedLabel:nil];
     [self setDirectionLabel:nil];
     [self setResultBackgroundView:nil];
-    [self setResultReticleView:nil];
+    [self setReticleImage:nil];
     [self setTableBackgroundImage:nil];
-    [self setResultBulletImpactImage:nil];
+    [self setReticlePOIImage:nil];
     [self setSpeedType:nil];
     [self setSpeedUnit:nil];
     [self setDropInchesLabel:nil];
-    [self setDropMOALabel:nil];
-    [self setDropMILsLabel:nil];
     [self setDriftInchesLabel:nil];
-    [self setDriftMOALabel:nil];
-    [self setDriftMILsLabel:nil];
+    [self setDropMOAMils:nil];
+    [self setDriftMOAMils:nil];
+    [self setDropUnitLabel:nil];
+    [self setDriftUnitLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -218,6 +193,7 @@
         cellText = [arrayDirections objectAtIndex:indexPath.row % [arrayDirections count]];
     } else if (tableView == speedTableView) {
         cellText = [arraySpeeds objectAtIndex:indexPath.row % [arraySpeeds count]];
+        if (![speedUnit isEqualToString:@"Human"]) cellText = [cellText stringByAppendingString:self.speedUnit];
     }
     
     cell.textLabel.text = cellText;
@@ -267,6 +243,8 @@
     }
 }
 
+
+#pragma mark Actions
 -(void)highlightSelectedCells { //  highlight cells under the selector if night mode
     if(nightMode) {
         self.lastSelectedRangeCell.textLabel.textColor = [UIColor whiteColor];
@@ -291,52 +269,46 @@
 
 - (void)showTrajectoryWithRecalc:(BOOL)recalc {
     if(recalc) {
-        // set up wind/leading speed
-        // set up wind/leading direction
-        trajectory.windSpeed = [self.lastSelectedSpeedCell.textLabel.text intValue];
-        trajectory.windAngle = [self.lastSelectedDirectionCell.textLabel.text intValue];
+        // set up wind/leading speed/direction unit conversions
+        if ([speedType isEqualToString:@"Wind"]) {
+            trajectory.windSpeed = [self.lastSelectedSpeedCell.textLabel.text doubleValue];
+            trajectory.windAngle = [self.lastSelectedDirectionCell.textLabel.text doubleValue];
+            trajectory.leadSpeed = 0.0;
+        } else {
+            if ([speedUnit isEqualToString:@"Human"]) {
+                trajectory.leadSpeed = [[dataManager.humanMPHSpeeds objectForKey:lastSelectedSpeedCell.textLabel.text] doubleValue];
+            } else {                
+                trajectory.leadSpeed = [self.lastSelectedSpeedCell.textLabel.text doubleValue];
+            }
+            trajectory.leadAngle = [self.lastSelectedDirectionCell.textLabel.text doubleValue];
+            trajectory.windSpeed = 0.0;
+        }
         
         [trajectory setup];
         [trajectory calculateTrajectory];
-        NSLog(@"recalced");    
+        NSLog(@"Whiz Wheel: had to recalculate");
     }
         
     TrajectoryRange *range = [trajectory.ranges objectAtIndex:rangeIndex];
-    NSLog(@"row %d\trange: %@\tdrop: %@", rangeIndex, range.range_yards, range.drop_inches);
+    
+    NSLog(@"row %d\trange: %@\tdrop: \"%@\tdrift: %@\"", rangeIndex, range.range_yards, range.drop_inches, range.drift_inches);
+    
+    _dropInchesLabel.text  = range.drop_inches;
+    _driftInchesLabel.text = range.drift_inches;
 
-//    int range = [self.lastSelectedRangeCell.textLabel.text intValue];
-//    int speed = [self.lastSelectedSpeedCell.textLabel.text intValue];
-//    
-//    if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"At Rest"]) {
-//        speed = 0;
-//    } else if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"Walking"]) {
-//        speed = 3;
-//    } else if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"Jogging"]) {
-//        speed = 6;
-//    } else if ([lastSelectedSpeedCell.textLabel.text isEqualToString:@"Running"]) {
-//        speed = 10;
-//    }
-//    
-//    if ([speedType isEqualToString:@"Leading"]) {
-//        speed *= -1;
-//    }
-//    
-//    
-//    // pseudo random drop
-//    float fakeDropMILs = range/1200.0 * 5; 
-//    
-//    // pseudo random drift
-//    float fakeDriftMILs = range/1200.0 * 5 * speed/30.0 ; 
-//
-    self.resultBulletImpactImage.center = CGPointMake(160 + [range.drift_mils floatValue] * PIXELS_PER_MIL, 
-                                                      74 + [range.drop_mils floatValue] * PIXELS_PER_MIL);
-    dropInchesLabel.text  = [range.drop_inches stringByAppendingString:@"\""];
-    dropMOALabel.text     = [range.drop_moa stringByAppendingString:@" MOA"];
-    dropMILsLabel.text    = [range.drop_mils stringByAppendingString:@" MILs"];
-
-    driftInchesLabel.text = [range.drift_inches stringByAppendingString:@"\""];
-    driftMOALabel.text    = [range.drift_moa stringByAppendingString:@" MOA"];
-    driftMILsLabel.text   = [range.drift_mils stringByAppendingString:@" MILs"];
+    if ([reticle isEqualToString:@"MOA"]) {
+        _reticlePOIImage.center = CGPointMake(160.5f + [range.drift_moa floatValue] * PIXELS_PER_MOA, 
+                                               74.5f + [range.drop_moa floatValue]  * PIXELS_PER_MOA);
+        _dropMOAMils.text  = range.drop_moa;
+        _driftMOAMils.text = range.drift_moa;
+        _dropUnitLabel.text = _driftUnitLabel.text = @"MOA";
+    } else {
+        _reticlePOIImage.center = CGPointMake(160.5f + [range.drift_mils floatValue] * PIXELS_PER_MIL, 
+                                               74.5f + [range.drop_mils floatValue]  * PIXELS_PER_MIL);        
+        _dropMOAMils.text  = range.drop_mils;
+        _driftMOAMils.text = range.drift_mils;
+        _dropUnitLabel.text = _driftUnitLabel.text = @"MILs";
+    }
 }
 
 @end

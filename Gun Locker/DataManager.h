@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Weather.h"
 
 @interface DataManager : NSObject
 
@@ -20,7 +19,9 @@
 @property (nonatomic, retain) NSArray *transferTypes;
 @property (nonatomic, retain) NSDictionary *windageLeading;
 @property (nonatomic, retain) NSArray *speedTypes;
-@property (nonatomic, retain) Weather *currentWeather;
+@property (nonatomic, retain) NSDictionary *whizWheelPicker2;
+@property (nonatomic, retain) NSDictionary *whizWheelPicker3;
+@property (nonatomic, retain) NSDictionary *humanMPHSpeeds;
 
 + (id)sharedManager;
 @end

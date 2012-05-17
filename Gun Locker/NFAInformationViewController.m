@@ -143,7 +143,6 @@
 - (void)actionSheet:(UIActionSheet *)sender clickedButtonAtIndex:(int)index {
     if (index == sender.destructiveButtonIndex) {
         [self.selectedWeapon.stamp deleteEntity];
-        NSLog(@"got here");
         [[NSManagedObjectContext defaultContext] save];
         [self.navigationController popViewControllerAnimated:YES];
     }

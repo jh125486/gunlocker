@@ -38,9 +38,9 @@
 @property (nonatomic, assign) double relativeHumidity;
 @property (nonatomic, assign) double tempC;
 @property (nonatomic, assign) double altitudeM;
-@property (nonatomic, assign) int rangeIncrement;
-@property (nonatomic, assign) int rangeMax;
-@property (nonatomic, assign) int rangeMin;
+@property (nonatomic, assign) int rangeStart;
+@property (nonatomic, assign) int rangeEnd;
+@property (nonatomic, assign) int rangeStep;
 @property (nonatomic, assign) double leadSpeed;
 @property (nonatomic, assign) double leadAngle;
 @property (nonatomic, assign) double windSpeed;
