@@ -9,14 +9,15 @@
 #import "DopeCardsAddEditViewController.h"
 
 @implementation DopeCardsAddEditViewController
-@synthesize sectionHeader;
-@synthesize cardNameTextField;
-@synthesize zeroTextField, muzzleVelocityTextField;
-@synthesize weatherInfoField;
-@synthesize windInfoField, windInfoPickerView, leadInfoField, leadInfoPickerView;
-@synthesize notesTextField;
-@synthesize rangeUnitField, dropUnitField, driftUnitField, dopeUnitPickerView;
-@synthesize currentTextField;
+@synthesize sectionHeader = _sectionHeader;
+@synthesize cardNameTextField = _cardNameTextField;
+@synthesize zeroTextField = _zeroTextField, muzzleVelocityTextField = _muzzleVelocityTextField;
+@synthesize weatherInfoField = _weatherInfoField;
+@synthesize windInfoField = _windInfoField, leadInfoField = _leadInfoField;
+@synthesize notesTextField = _notesTextField;
+@synthesize rangeUnitField = _rangeUnitField, dropUnitField = _dropUnitField, driftUnitField = _driftUnitField;
+@synthesize windInfoPickerView = _windInfoPickerView, leadInfoPickerView = _leadInfoPickerView, dopeUnitPickerView = _dopeUnitPickerView;
+@synthesize currentTextField = _currentTextField;
 @synthesize selectedDopeCard = _selectedDopeCard;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -29,6 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    
     dataManager = [DataManager sharedManager];
     range_units = dataManager.rangeUnits;
     dope_units  = dataManager.dopeUnits;
@@ -40,28 +43,28 @@
     dopeCardCellData = [[NSMutableArray alloc] init];
     
     // inputView pickers
-    dopeUnitPickerView = [[UIPickerView alloc] init];    
-    windInfoPickerView = [[UIPickerView alloc] init];
-    leadInfoPickerView = [[UIPickerView alloc] init];
+    _dopeUnitPickerView = [[UIPickerView alloc] init];    
+    _windInfoPickerView = [[UIPickerView alloc] init];
+    _leadInfoPickerView = [[UIPickerView alloc] init];
     
-    dopeUnitPickerView.delegate   = windInfoPickerView.delegate   = leadInfoPickerView.delegate   = self;
-    dopeUnitPickerView.dataSource = windInfoPickerView.dataSource = leadInfoPickerView.dataSource = self;
-    dopeUnitPickerView.showsSelectionIndicator = windInfoPickerView.showsSelectionIndicator = leadInfoPickerView.showsSelectionIndicator = YES;
+    _dopeUnitPickerView.delegate   = _windInfoPickerView.delegate   = _leadInfoPickerView.delegate   = self;
+    _dopeUnitPickerView.dataSource = _windInfoPickerView.dataSource = _leadInfoPickerView.dataSource = self;
+    _dopeUnitPickerView.showsSelectionIndicator = _windInfoPickerView.showsSelectionIndicator = _leadInfoPickerView.showsSelectionIndicator = YES;
     
-    rangeUnitField.inputView = dropUnitField.inputView = driftUnitField.inputView = dopeUnitPickerView;
-    windInfoField.inputView  = windInfoPickerView;
-    leadInfoField.inputView = leadInfoPickerView;
+    _rangeUnitField.inputView = _dropUnitField.inputView = _driftUnitField.inputView = _dopeUnitPickerView;
+    _windInfoField.inputView  = _windInfoPickerView;
+    _leadInfoField.inputView  = _leadInfoPickerView;
     
-    formFields = [[NSArray alloc] initWithObjects:self.cardNameTextField, 
-                                                  self.zeroTextField, 
-                                                  self.muzzleVelocityTextField,
-                                                  self.weatherInfoField,
-                                                  self.windInfoField, 
-                                                  self.leadInfoField,
-                                                  self.notesTextField, 
-                                                  self.rangeUnitField, 
-                                                  self.dropUnitField, 
-                                                  self.driftUnitField, 
+    formFields = [[NSArray alloc] initWithObjects:_cardNameTextField, 
+                                                  _zeroTextField, 
+                                                  _muzzleVelocityTextField,
+                                                  _weatherInfoField,
+                                                  _windInfoField, 
+                                                  _leadInfoField,
+                                                  _notesTextField, 
+                                                  _rangeUnitField, 
+                                                  _dropUnitField, 
+                                                  _driftUnitField, 
                                                   nil];
     
     for(UITextField *field in formFields)
@@ -77,14 +80,14 @@
     // TODO set pickers to correct values
     
     self.title = @"Edit Dope Card";
-    self.cardNameTextField.text       = _selectedDopeCard.name;
-    self.zeroTextField.text           = _selectedDopeCard.zero;
-    self.muzzleVelocityTextField.text = _selectedDopeCard.muzzle_velocity;
-    self.weatherInfoField.text        = _selectedDopeCard.weather_info;
-    self.notesTextField.text          = _selectedDopeCard.notes;
-    self.rangeUnitField.text          = _selectedDopeCard.range_unit;
-    self.dropUnitField.text           = _selectedDopeCard.drop_unit;
-    self.driftUnitField.text          = _selectedDopeCard.drift_unit;
+    _cardNameTextField.text       = _selectedDopeCard.name;
+    _zeroTextField.text           = _selectedDopeCard.zero;
+    _muzzleVelocityTextField.text = _selectedDopeCard.muzzle_velocity;
+    _weatherInfoField.text        = _selectedDopeCard.weather_info;
+    _notesTextField.text          = _selectedDopeCard.notes;
+    _rangeUnitField.text          = _selectedDopeCard.range_unit;
+    _dropUnitField.text           = _selectedDopeCard.drop_unit;
+    _driftUnitField.text          = _selectedDopeCard.drift_unit;
     
     if (_selectedDopeCard.wind_info) {
         NSArray *windInfoArray = [_selectedDopeCard.wind_info componentsSeparatedByString:@" "];
@@ -98,9 +101,9 @@
                 if (direction == 0) direction = 12;
         }
             
-        [self.windInfoPickerView selectRow:speed inComponent:0 animated:NO];
-        [self.windInfoPickerView selectRow:[wind_units indexOfObject:unit] inComponent:1 animated:NO];
-        [self.windInfoPickerView selectRow:(direction == 12) ? 0 : direction inComponent:2 animated:NO];
+        [_windInfoPickerView selectRow:speed inComponent:0 animated:NO];
+        [_windInfoPickerView selectRow:[wind_units indexOfObject:unit] inComponent:1 animated:NO];
+        [_windInfoPickerView selectRow:(direction == 12) ? 0 : direction inComponent:2 animated:NO];
         [self setWindInfo];
     }
         
@@ -116,9 +119,9 @@
             if (direction == 0) direction = 12;
         }
 
-        [self.leadInfoPickerView selectRow:speed inComponent:0 animated:NO];
-        [self.leadInfoPickerView selectRow:[wind_units indexOfObject:unit] inComponent:1 animated:NO];
-        [self.leadInfoPickerView selectRow:(direction == 12) ? 0 : direction inComponent:2 animated:NO];
+        [_leadInfoPickerView selectRow:speed inComponent:0 animated:NO];
+        [_leadInfoPickerView selectRow:[wind_units indexOfObject:unit] inComponent:1 animated:NO];
+        [_leadInfoPickerView selectRow:(direction == 12) ? 0 : direction inComponent:2 animated:NO];
         [self setLeadInfo];
     }
     
@@ -187,11 +190,11 @@
 }  
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return self.sectionHeader;
+    return _sectionHeader;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return CGRectGetHeight(self.sectionHeader.frame);
+    return CGRectGetHeight(_sectionHeader.frame);
 }
 
 #pragma mark - Picker view methods
@@ -201,7 +204,7 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (pickerView == self.dopeUnitPickerView) {
+    if (pickerView == _dopeUnitPickerView) {
         return (component == 0) ? [range_units count] : [dope_units count];
     } else { // wind picker
         switch (component) {
@@ -222,12 +225,12 @@
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if (pickerView == self.dopeUnitPickerView) {
+    if (pickerView == _dopeUnitPickerView) {
         return (component == 0) ? [range_units objectAtIndex:row] : [dope_units objectAtIndex:row];
     } else { // wind picker
         switch (component) {
             case 0: //speed
-                return [NSString stringWithFormat:@"%5d", row];
+                return [NSString stringWithFormat:@"%d", row];
                 break;
             case 1: // units
                 return [wind_units objectAtIndex:row];
@@ -243,54 +246,54 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if (pickerView == dopeUnitPickerView) {
+    if (pickerView == _dopeUnitPickerView) {
         [self setDopeUnits];
-    } else if (pickerView == self.windInfoPickerView) {
+    } else if (pickerView == _windInfoPickerView) {
         [self setWindInfo];
-    } else if (pickerView == self.leadInfoPickerView) {
+    } else if (pickerView == _leadInfoPickerView) {
         [self setLeadInfo];
     } 
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
-    if (pickerView == dopeUnitPickerView) {
-        return 95.0;
+    if (pickerView == _dopeUnitPickerView) {
+        return 95.0f;
     } else {
         switch (component) {
             case 0:
-                return 80.0;
+                return 80.0f;
                 break;
             case 1:
-                return 84.0;
+                return 84.0f;
                 break;
             case 2:
-                return 120.0;
+                return 120.0f;
                 break;
             default:
-                return 0;
+                return 0.0f;
                 break;
         }
     }
 }
 
 - (void)setDopeUnits {
-    self.rangeUnitField.text = [range_units objectAtIndex:[self.dopeUnitPickerView selectedRowInComponent:0]];
-    self.dropUnitField.text  = [dope_units objectAtIndex:[self.dopeUnitPickerView selectedRowInComponent:1]];
-    self.driftUnitField.text = [dope_units objectAtIndex:[self.dopeUnitPickerView selectedRowInComponent:2]];
+    _rangeUnitField.text = [range_units objectAtIndex:[_dopeUnitPickerView selectedRowInComponent:0]];
+    _dropUnitField.text  = [dope_units objectAtIndex:[_dopeUnitPickerView selectedRowInComponent:1]];
+    _driftUnitField.text = [dope_units objectAtIndex:[_dopeUnitPickerView selectedRowInComponent:2]];
 }
 
 - (void)setWindInfo {
-    self.windInfoField.text = [NSString stringWithFormat:@"%d %@ from %@", 
-                               [self.windInfoPickerView selectedRowInComponent:0],
-                               [wind_units objectAtIndex:[self.windInfoPickerView selectedRowInComponent:1]],
-                               [wind_directions objectAtIndex:[self.windInfoPickerView selectedRowInComponent:2]]];
+    _windInfoField.text = [NSString stringWithFormat:@"%d %@ at %@", 
+                               [_windInfoPickerView selectedRowInComponent:0],
+                               [wind_units objectAtIndex:[_windInfoPickerView selectedRowInComponent:1]],
+                               [wind_directions objectAtIndex:[_windInfoPickerView selectedRowInComponent:2]]];
 }
 
 - (void)setLeadInfo {
-    self.leadInfoField.text = [NSString stringWithFormat:@"%d %@ at %@", 
-                               [self.leadInfoPickerView selectedRowInComponent:0],
-                               [wind_units objectAtIndex:[self.leadInfoPickerView selectedRowInComponent:1]],
-                               [wind_directions objectAtIndex:[self.leadInfoPickerView selectedRowInComponent:2]]];
+    _leadInfoField.text = [NSString stringWithFormat:@"%d %@ at %@", 
+                               [_leadInfoPickerView selectedRowInComponent:0],
+                               [wind_units objectAtIndex:[_leadInfoPickerView selectedRowInComponent:1]],
+                               [wind_directions objectAtIndex:[_leadInfoPickerView selectedRowInComponent:2]]];
 }
 
 #pragma mark - Text field delegate
@@ -335,7 +338,7 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.currentTextField = textField;
+    _currentTextField = textField;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -346,33 +349,33 @@
             
         [dopeCardCellData replaceObjectAtIndex:[self indexForTextField:textField] - formFields.count withObject:textField.text];
     }
-    self.currentTextField = nil;
+    _currentTextField = nil;
 }
 
 - (void)nextPreviousTapped:(id)sender {
     
-    if (self.currentTextField == self.rangeUnitField) {
+    if (_currentTextField == _rangeUnitField) {
         [self setDopeUnits];
-    } else if (self.currentTextField == self.windInfoField) {
+    } else if (_currentTextField == _windInfoField) {
         [self setWindInfo];
-    } else if (self.currentTextField == self.leadInfoField) {
+    } else if (_currentTextField == _leadInfoField) {
         [self setLeadInfo];
     } 
         
-    int index = [self indexForTextField:self.currentTextField];
+    int index = [self indexForTextField:_currentTextField];
     
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
             index--;
             break;
         case 1: //next
-            if ([formFields containsObject:self.currentTextField]) {
+            if ([formFields containsObject:_currentTextField]) {
                 index++;
-            } else if (self.currentTextField.superview.superview.tag < [self.tableView numberOfRowsInSection:0] - 1) {
+            } else if (_currentTextField.superview.superview.tag < [self.tableView numberOfRowsInSection:0] - 1) {
                 index++;
-            } else if (self.currentTextField.tag == 3) { // if last textfield in last row in table, add new row if not empty string
-                int row = self.currentTextField.superview.superview.tag;
-                DopeCardRowEditCell *cell = (DopeCardRowEditCell *)self.currentTextField.superview.superview;
+            } else if (_currentTextField.tag == 3) { // if last textfield in last row in table, add new row if not empty string
+                int row = _currentTextField.superview.superview.tag;
+                DopeCardRowEditCell *cell = (DopeCardRowEditCell *)_currentTextField.superview.superview;
                 
                 if (![cell.rangeField.text isEqualToString:@""]) {
                     [dopeCardCellData addObject:@""];
@@ -384,12 +387,11 @@
 
                     index++;
                 } else {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Blank Range"
-                                                                    message:@"Enter a range to add a new row" 
-                                                                   delegate:nil 
-                                                          cancelButtonTitle:nil 
-                                                          otherButtonTitles:@"OK", nil];
-                    [alert show];
+                    [[[UIAlertView alloc] initWithTitle:@"Blank Range"
+                                                message:@"Enter a range to add a new row" 
+                                               delegate:nil 
+                                      cancelButtonTitle:nil 
+                                      otherButtonTitles:@"OK", nil] show];
                 }
             } else {
                 index++;
@@ -397,26 +399,26 @@
             break;
     }
 
-    self.currentTextField = [self textFieldForIndex:index];
-    [self.currentTextField becomeFirstResponder];
+    _currentTextField = [self textFieldForIndex:index];
+    [_currentTextField becomeFirstResponder];
 }
 
 - (void)doneTyping:(id)sender {
-    if (self.currentTextField == self.rangeUnitField) {
+    if (_currentTextField == _rangeUnitField) {
         [self setDopeUnits];
-    } else if (self.currentTextField == self.windInfoField) {
+    } else if (_currentTextField == _windInfoField) {
         [self setWindInfo];
-    } else if (self.currentTextField == self.leadInfoField) {
+    } else if (_currentTextField == _leadInfoField) {
         [self setLeadInfo];
     }
     
-    [self.currentTextField resignFirstResponder];
+    [_currentTextField resignFirstResponder];
 }
 
 -(void)flipSignTapped:(id)sender {
     NSDecimalNumber *flip = [NSDecimalNumber decimalNumberWithString:@"-1"];
-    NSDecimalNumber *number = [NSDecimalNumber decimalNumberWithString:self.currentTextField.text];
-    self.currentTextField.text = [[number decimalNumberByMultiplyingBy:flip] stringValue];
+    NSDecimalNumber *number = [NSDecimalNumber decimalNumberWithString:_currentTextField.text];
+    _currentTextField.text = [[number decimalNumberByMultiplyingBy:flip] stringValue];
 }
 
 -(UITextField*)textFieldForIndex:(int)index {
@@ -445,18 +447,18 @@
 # pragma mark Save Data
 
 - (IBAction)saveTapped:(id)sender {
-    if (![self.cardNameTextField.text isEqualToString:@""]) {
+    if (![_cardNameTextField.text isEqualToString:@""]) {
         DopeCard *newDopeCard       = _selectedDopeCard ? _selectedDopeCard : [DopeCard createEntity];
-        newDopeCard.name            = self.cardNameTextField.text;
-        newDopeCard.zero            = self.zeroTextField.text;
-        newDopeCard.muzzle_velocity = self.muzzleVelocityTextField.text;
-        newDopeCard.weather_info    = self.weatherInfoField.text;
-        newDopeCard.wind_info       = self.windInfoField.text;
-        newDopeCard.lead_info       = self.leadInfoField.text;
-        newDopeCard.notes           = self.notesTextField.text;
-        newDopeCard.range_unit      = self.rangeUnitField.text;
-        newDopeCard.drop_unit       = self.dropUnitField.text;
-        newDopeCard.drift_unit      = self.driftUnitField.text;    
+        newDopeCard.name            = _cardNameTextField.text;
+        newDopeCard.zero            = _zeroTextField.text;
+        newDopeCard.muzzle_velocity = _muzzleVelocityTextField.text;
+        newDopeCard.weather_info    = _weatherInfoField.text;
+        newDopeCard.wind_info       = _windInfoField.text;
+        newDopeCard.lead_info       = _leadInfoField.text;
+        newDopeCard.notes           = _notesTextField.text;
+        newDopeCard.range_unit      = _rangeUnitField.text;
+        newDopeCard.drop_unit       = _dropUnitField.text;
+        newDopeCard.drift_unit      = _driftUnitField.text;    
         
         // check if range is blank, remove row if true
         if ([[dopeCardCellData objectAtIndex:dopeCardCellData.count - 3] isEqualToString:@""])

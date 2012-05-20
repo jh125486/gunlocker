@@ -46,12 +46,12 @@
 }
 
 - (void)setTitle {
-    self.caliberLabel.text = _selectedCaliber;
+    _caliberLabel.text = _selectedCaliber;
     
     NSNumber *magazines = [Magazine aggregateOperation:@"sum:" 
                                            onAttribute:@"count" 
                                          withPredicate:_fetchedResultsController.fetchRequest.predicate];
-    self.brandCountLabel.text = [NSString stringWithFormat:@"%d brands / %@ magazines", [_fetchedResultsController.sections count], magazines];
+    _brandCountLabel.text = [NSString stringWithFormat:@"%d brands / %@ magazines", [_fetchedResultsController.sections count], magazines];
 }
 
 - (void)viewDidUnload {
@@ -116,8 +116,8 @@
 
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Magazine *magazine        = [_fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text       =  magazine.type;
-    if (![magazine.color isEqualToString:@""]) cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@)", cell.textLabel.text, magazine.color];
+    cell.textLabel.text       =  [NSString stringWithFormat:@"%@ (%d round)", magazine.type, [magazine.capacity intValue]];
+    if (![magazine.color isEqualToString:@""]) cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@", cell.textLabel.text, magazine.color];
     cell.detailTextLabel.text = [magazine.count stringValue];
 }
 

@@ -22,7 +22,7 @@
 - (void)setQuickDialogTableView:(QuickDialogTableView *)aQuickDialogTableView {
     [super setQuickDialogTableView:aQuickDialogTableView];
     
-    self.quickDialogTableView.backgroundColor = [UIColor colorWithRed:0.757 green:0.710 blue:0.588 alpha:1.000];
+    self.quickDialogTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
     self.quickDialogTableView.bounces = NO;
     self.quickDialogTableView.styleProvider = self;
 }
@@ -50,30 +50,31 @@
     QMultilineElement *actionPerformedText = [QMultilineElement new];
     actionPerformedText.title = @"Action performed";
     actionPerformedText.key = @"action_performed";
-
     
     [infoSection addElement:maintenanceDate];
     [infoSection addElement:roundCount];
-    
+    [_root addSection:infoSection];
+
     [descriptionSection addElement:actionPerformedText];
+    [_root addSection:descriptionSection];
     
-    QSection *malfunctionSection = [[QSection alloc] initWithTitle:@"Related malfunctions"];
+    
     NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
     malfunctions = [_selectedWeapon.malfunctions sortedArrayUsingDescriptors:sortDescriptors];
-    for(Malfunction *malfunction in malfunctions) {
-        NSString *title = [NSString stringWithFormat:@"%@ %@", malfunction.failure, [[malfunction.date distanceOfTimeInWords] lowercaseString]];
-        QBooleanElement *malfunctionElement = [[QBooleanElement alloc] initWithTitle:title BoolValue:NO];
-        malfunctionElement.controllerAction = @"linkedMalfunctionChanged:";
-        malfunctionElement.onImage  = [UIImage imageNamed:@"icon_link"];
-        malfunctionElement.offImage = [UIImage imageNamed:@"icon_delink"];
-        malfunctionElement.key = [NSString stringWithFormat:@"%d", [malfunctions indexOfObject:malfunction]];        
-        malfunctionElement.controllerAccessoryAction = @"linkedMalfunctionChanged:";
-        [malfunctionSection addElement:malfunctionElement];        
+    if ([malfunctions count] > 0) {
+        QSection *malfunctionSection = [[QSection alloc] initWithTitle:@"Related malfunctions"];
+        for(Malfunction *malfunction in malfunctions) {
+            NSString *title = [NSString stringWithFormat:@"%@ %@", malfunction.failure, [[malfunction.date distanceOfTimeInWords] lowercaseString]];
+            QBooleanElement *malfunctionElement = [[QBooleanElement alloc] initWithTitle:title BoolValue:NO];
+            malfunctionElement.controllerAction = @"linkedMalfunctionChanged:";
+            malfunctionElement.onImage  = [UIImage imageNamed:@"icon_link"];
+            malfunctionElement.offImage = [UIImage imageNamed:@"icon_delink"];
+            malfunctionElement.key = [NSString stringWithFormat:@"%d", [malfunctions indexOfObject:malfunction]];        
+            malfunctionElement.controllerAccessoryAction = @"linkedMalfunctionChanged:";
+            [malfunctionSection addElement:malfunctionElement];        
+        }
+        [_root addSection:malfunctionSection];
     }
-    
-    [_root addSection:infoSection];
-    [_root addSection:descriptionSection];
-    [_root addSection:malfunctionSection];
     
     self.root = _root;
     [self loadView];

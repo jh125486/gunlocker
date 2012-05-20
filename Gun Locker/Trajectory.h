@@ -24,6 +24,7 @@
     double tAtZero;
     double windXSpeed;
     double windZSpeed;
+    double leadXSpeed;
     double leadZSpeed;
     double mass;
     double sectionalArea;
@@ -51,6 +52,7 @@
 @property (nonatomic, retain) BallisticProfile *ballisticProfile;
 
 -(void)setup;
+-(void)setupWindAndLeading;
 -(void)calculateTrajectory;
 @end
 

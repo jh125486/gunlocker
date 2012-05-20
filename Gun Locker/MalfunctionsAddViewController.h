@@ -10,7 +10,7 @@
 #import "Weapon.h"
 #import "Malfunction.h"
 
-@interface MalfunctionsAddViewController : QuickDialogController
+@interface MalfunctionsAddViewController : QuickDialogController <QuickDialogStyleProvider> 
 
 @property (nonatomic, weak) Weapon *selectedWeapon;
 

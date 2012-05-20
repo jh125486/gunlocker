@@ -45,6 +45,8 @@
 #define TEMP_F_to_TEMP_R(x) (x + 459.67)
 
 #define KNOTS_to_MPH(x)     (x * (1.852/1.609344))
+#define KPH_to_MPH(x)       (x / 1.609344)
+#define MPS_to_MPH(x)       (x * 0.44704)
 
 #define VECTOR_LENGTH(x, y) (sqrt(pow(x, 2) + pow(y, 2)))
 

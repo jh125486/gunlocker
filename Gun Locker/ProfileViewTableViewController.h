@@ -22,6 +22,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *bulletWeightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dragModelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bcLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sgLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sgDirectionLabel;
 
 - (IBAction)deleteTapped:(id)sender;
 

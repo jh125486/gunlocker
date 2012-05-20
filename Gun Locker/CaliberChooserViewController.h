@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Caliber.h"
 
 @class CaliberChooserViewController;
 
@@ -15,14 +16,17 @@
 @end
 
 @interface CaliberChooserViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate> {
-	NSMutableArray *calibers;
-	NSUInteger selectedIndex;
+    NSArray *calibers;
+    NSArray *sections;
+    NSArray *searchResults;
 }
+
+@property (nonatomic, copy) NSString *savedSearchTerm;
+@property (nonatomic) NSInteger savedScopeButtonIndex;
+@property (nonatomic) BOOL searchWasActive;
 
 @property (nonatomic, weak) id <CaliberChooserViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSString *selectedCaliber;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;
-@property (nonatomic, copy) NSArray *searchResults;
 
 @end

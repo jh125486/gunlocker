@@ -15,8 +15,8 @@
 @implementation CardsViewController
 @synthesize fetchedResultsController;
 @synthesize firstInsert = _firstInsert;
-@synthesize segmentedTypeControl, selectedType;
-@synthesize noFilesImageView;
+@synthesize segmentedTypeControl = _segmentedTypeControl, selectedType = _selectedType;
+@synthesize noFilesImageView = _noFilesImageView;
 @synthesize tableView;
 @synthesize showPasscodeFlag;
 
@@ -30,48 +30,48 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImage *segmentSelected = [[UIImage imageNamed:@"selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)];
-    UIImage *segmentUnselected = [[UIImage imageNamed:@"unselected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)];
+    UIImage *segmentSelected = [[UIImage imageNamed:@"selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f)];
+    UIImage *segmentUnselected = [[UIImage imageNamed:@"unselected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f)];
     UIImage *segmentSelectedUnselected = [UIImage imageNamed:@"selected_unselected"];
     UIImage *segUnselectedSelected = [UIImage imageNamed:@"unselected_selected"];
     UIImage *segmentUnselectedUnselected = [UIImage imageNamed:@"unselected_unselected"];
     
-    [self.segmentedTypeControl setBackgroundImage:segmentUnselected forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [self.segmentedTypeControl setBackgroundImage:segmentSelected forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    [self.segmentedTypeControl setDividerImage:segmentUnselectedUnselected forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [self.segmentedTypeControl setDividerImage:segmentSelectedUnselected forLeftSegmentState:UIControlStateSelected rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [self.segmentedTypeControl setDividerImage:segUnselectedSelected forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [_segmentedTypeControl setBackgroundImage:segmentUnselected forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [_segmentedTypeControl setBackgroundImage:segmentSelected forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [_segmentedTypeControl setDividerImage:segmentUnselectedUnselected forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [_segmentedTypeControl setDividerImage:segmentSelectedUnselected forLeftSegmentState:UIControlStateSelected rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [_segmentedTypeControl setDividerImage:segUnselectedSelected forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     
     NSDictionary *normalAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      [UIFont fontWithName:@"AmericanTypewriter-Condensed" size:24.0],UITextAttributeFont,
+                                      [UIFont fontWithName:@"AmericanTypewriter-Condensed" size:22.0f], UITextAttributeFont,
                                       [UIColor darkGrayColor], UITextAttributeTextColor, 
-                                      [UIColor clearColor], UITextAttributeTextShadowColor,
-                                      [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
+                                      [UIColor lightGrayColor], UITextAttributeTextShadowColor,
+                                      [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)], UITextAttributeTextShadowOffset,
                                       nil];
-    [self.segmentedTypeControl setTitleTextAttributes:normalAttributes forState:UIControlStateNormal];
+    [_segmentedTypeControl setTitleTextAttributes:normalAttributes forState:UIControlStateNormal];
     
     NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [UIFont fontWithName:@"AmericanTypewriter-Condensed" size:24.0],UITextAttributeFont,
+                                        [UIFont fontWithName:@"AmericanTypewriter-Condensed" size:22.0f],UITextAttributeFont,
                                         [UIColor blackColor], UITextAttributeTextColor, 
-                                        [UIColor clearColor], UITextAttributeTextShadowColor,
-                                        [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
+                                        [UIColor lightTextColor], UITextAttributeTextShadowColor,
+                                        [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)], UITextAttributeTextShadowOffset,
                                         nil] ;
-    [self.segmentedTypeControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
+    [_segmentedTypeControl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
     
-    self.selectedType = [self.segmentedTypeControl titleForSegmentAtIndex:self.segmentedTypeControl.selectedSegmentIndex];
+    _selectedType = [_segmentedTypeControl titleForSegmentAtIndex:_segmentedTypeControl.selectedSegmentIndex];
     
     // sets initial segment
-    self.segmentedTypeControl.apportionsSegmentWidthsByContent = YES;
+    _segmentedTypeControl.apportionsSegmentWidthsByContent = YES;
     
     int segmentedUnitHeight = 32;
-	[self.segmentedTypeControl setFrame: CGRectMake(self.segmentedTypeControl.frame.origin.x,
-                                                    self.segmentedTypeControl.frame.origin.y,
-                                                    self.segmentedTypeControl.frame.size.width, 
+	[_segmentedTypeControl setFrame: CGRectMake(_segmentedTypeControl.frame.origin.x,
+                                                    _segmentedTypeControl.frame.origin.y,
+                                                    _segmentedTypeControl.frame.size.width, 
                                                     segmentedUnitHeight)];
-    [self.segmentedTypeControl setContentOffset:CGSizeMake(0, 3) forSegmentAtIndex:0];
-    [self.segmentedTypeControl setContentOffset:CGSizeMake(0, 3) forSegmentAtIndex:1];
-    [self.segmentedTypeControl setContentOffset:CGSizeMake(0, 3) forSegmentAtIndex:2];
-    [self.segmentedTypeControl setContentOffset:CGSizeMake(0, 3) forSegmentAtIndex:3];
+    [_segmentedTypeControl setContentOffset:CGSizeMake(0.0f, 3.0f) forSegmentAtIndex:0];
+    [_segmentedTypeControl setContentOffset:CGSizeMake(0.0f, 3.0f) forSegmentAtIndex:1];
+    [_segmentedTypeControl setContentOffset:CGSizeMake(0.0f, 3.0f) forSegmentAtIndex:2];
+    [_segmentedTypeControl setContentOffset:CGSizeMake(0.0f, 3.0f) forSegmentAtIndex:3];
         
     if([Weapon countOfEntities] == 0) // enable for deletions?
         self.navigationItem.leftBarButtonItem.enabled = NO;
@@ -107,7 +107,7 @@
 -(NSFetchedResultsController *)fetchedResultsController {
     if (fetchedResultsController != nil) return fetchedResultsController;
     
-    NSPredicate *typeFilter = [NSPredicate predicateWithFormat:@"type = %@", self.selectedType];
+    NSPredicate *typeFilter = [NSPredicate predicateWithFormat:@"type = %@", _selectedType];
     NSFetchRequest *weaponsRequest = [Weapon requestAllSortedBy:@"manufacturer.name,model" ascending:YES withPredicate:typeFilter];
     
     NSFetchedResultsController *aFRC = [[NSFetchedResultsController alloc] initWithFetchRequest:weaponsRequest 
@@ -128,18 +128,18 @@
         UINavigationController *destinationController = segue.destinationViewController;
 		WeaponAddEditViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
 		dst.delegate = self;
-        dst.weaponType = self.selectedType;
+        dst.weaponType = _selectedType;
 	} else if ([segueID isEqualToString:@"ShowWeapon"]) {
         WeaponShowViewController *dst = segue.destinationViewController;
-        self.navigationItem.title = self.selectedType;
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:self.selectedType style:UIBarButtonItemStyleBordered target:nil action:nil];
+        self.navigationItem.title = _selectedType;
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:_selectedType style:UIBarButtonItemStyleBordered target:nil action:nil];
         dst.selectedWeapon = [self.fetchedResultsController objectAtIndexPath:self.tableView.indexPathForSelectedRow];
         [dst setCardsViewController:self];
     } else if ([segueID isEqualToString:@"NFADetails"]) {
         CGPoint point = [sender convertPoint:CGPointZero toView:self.tableView]; 
         NSIndexPath *index = [self.tableView indexPathForRowAtPoint:point];
-        self.navigationItem.title = self.selectedType;
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:self.selectedType style:UIBarButtonItemStyleBordered target:nil action:nil];
+        self.navigationItem.title = _selectedType;
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:_selectedType style:UIBarButtonItemStyleBordered target:nil action:nil];
         NFAInformationViewController *dst = segue.destinationViewController;
         dst.selectedWeapon = [self.fetchedResultsController objectAtIndexPath:index];
     } else if ([segueID isEqualToString:@"ShowPhoto"]) {
@@ -163,8 +163,8 @@
 # pragma mark - segmented control
 
 - (IBAction)segmentedTypeControlClicked {
-    self.selectedType = [self.segmentedTypeControl titleForSegmentAtIndex:self.segmentedTypeControl.selectedSegmentIndex];
-    self.fetchedResultsController.fetchRequest.predicate = [NSPredicate predicateWithFormat:@"type = %@", self.selectedType];
+    _selectedType = [_segmentedTypeControl titleForSegmentAtIndex:_segmentedTypeControl.selectedSegmentIndex];
+    self.fetchedResultsController.fetchRequest.predicate = [NSPredicate predicateWithFormat:@"type = %@", _selectedType];
     
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {
@@ -257,8 +257,8 @@
     NSInteger count = [[[fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
     self.navigationItem.title = [NSString stringWithFormat:@"%d file%@ in folder", count, (count == 1) ? @"" : @"s"];
 
-    self.noFilesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/%@", self.selectedType]];
-    self.noFilesImageView.hidden = (count != 0);
+    _noFilesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/%@", _selectedType]];
+    _noFilesImageView.hidden = (count != 0);
     
     return count;
 }

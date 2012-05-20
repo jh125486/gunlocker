@@ -34,8 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    // scroll searchbar out of view
-    self.tableView.contentOffset = CGPointMake(0.0f, 44.0f);
+//    // scroll searchbar out of view
+//    self.tableView.contentOffset = CGPointMake(0.0f, 44.0f);
     
     manufacturers = [Manufacturer findAllSortedBy:@"name" ascending:YES];
     
@@ -188,6 +188,28 @@
                                scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
     
     return YES;
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
+    if (sectionTitle == nil) return nil;
+    
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.sectionHeaderHeight)];
+    headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background"]];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, headerView.frame.size.width - 20, tableView.sectionHeaderHeight)];
+	label.text = sectionTitle;
+	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:18.0];
+	label.shadowColor = [UIColor lightTextColor];
+    label.shadowOffset = CGSizeMake(0, 1);
+	label.backgroundColor = [UIColor clearColor];    
+	label.textColor = [UIColor blackColor];
+    
+	[headerView addSubview:label];
+	return headerView;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return ([self tableView:tableView titleForHeaderInSection:section] != nil) ? 23.0f : 0.0f;
 }
 
 @end

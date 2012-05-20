@@ -9,18 +9,19 @@
 #import "DopeTableTableViewController.h"
 
 @implementation DopeTableTableViewController
-@synthesize selectedProfile, currentWeather;
-@synthesize tempTextField, tempUnitControl;
-@synthesize pressureTextField, pressureUnitControl;
-@synthesize rhTextField;
-@synthesize altitudeTextField, altitudeUnitControl;
-@synthesize windSpeedTextField, windSpeedUnitControl, windDirectionTextField, windDirectionUnitControl;
-@synthesize leadingSpeedTextField, leadingSpeedUnitControl, leadingDirectionTextField, leadingDirectionUnitControl;
-@synthesize rangeStartStepper, rangeEndStepper, rangeStepStepper;
-@synthesize rangeUnitControl;
-@synthesize dropDriftUnitcontrol;
-@synthesize currentTextField;
-
+@synthesize selectedProfile = _selectedProfile, currentWeather = _currentWeather;
+@synthesize tempTextField = _tempTextField, tempUnitControl = _tempUnitControl;
+@synthesize pressureTextField = _pressureTextField, pressureUnitControl = _pressureUnitControl;
+@synthesize rhTextField = _rhTextField;
+@synthesize altitudeTextField = _altitudeTextField, altitudeUnitControl = _altitudeUnitControl;
+@synthesize windSpeedTextField = _windSpeedTextField, windSpeedUnitControl = _windSpeedUnitControl;
+@synthesize windDirectionTextField = _windDirectionTextField, windDirectionUnitControl = _windDirectionUnitControl;
+@synthesize leadingSpeedTextField = _leadingSpeedTextField, leadingSpeedUnitControl = _leadingSpeedUnitControl;
+@synthesize leadingDirectionTextField = _leadingDirectionTextField, leadingDirectionUnitControl = _leadingDirectionUnitControl;
+@synthesize rangeStartStepper = _rangeStartStepper, rangeEndStepper = _rangeEndStepper, rangeStepStepper = _rangeStepStepper;
+@synthesize rangeUnitControl = _rangeUnitControl;
+@synthesize dropDriftUnitcontrol = _dropDriftUnitcontrol;
+@synthesize currentTextField = _currentTextField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -34,47 +35,47 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
     
-    self.rangeStartStepper.Current = 100.f;
-    self.rangeStartStepper.Minimum = 0.0f;
-    self.rangeStartStepper.Maximum = 1000.0f;
+    _rangeStartStepper.Current = 100.f;
+    _rangeStartStepper.Minimum = 10.0f;
     
-    self.rangeEndStepper.Current = 500.f;
-    self.rangeEndStepper.Minimum = 100.0f;
-    self.rangeEndStepper.Maximum = 2000.0f;
+    _rangeEndStepper.Current = 500.f;
+    _rangeEndStepper.Maximum = 3000.0f;
 
-    self.rangeStepStepper.Current = 100.f;
-    self.rangeStepStepper.Minimum = 1.0f;
-    self.rangeStepStepper.Maximum = 250.0f;
+    _rangeStepStepper.Current = 100.f;
+    _rangeStepStepper.Step = 5.0f;
+    _rangeStepStepper.Minimum = 5.0f;
+    
+    [self setStepperRanges:nil];
     
     [self loadWeather];
     
-    formFields = [[NSMutableArray alloc] initWithObjects:self.tempTextField, 
-                                                        self.pressureTextField, 
-                                                        self.rhTextField, 
-                                                        self.altitudeTextField, 
-                                                        self.windSpeedTextField, 
-                                                        self.windDirectionTextField, 
-                                                        self.leadingSpeedTextField, 
-                                                        self.leadingDirectionTextField, 
+    formFields = [[NSMutableArray alloc] initWithObjects:_tempTextField, 
+                                                        _pressureTextField, 
+                                                        _rhTextField, 
+                                                        _altitudeTextField, 
+                                                        _windSpeedTextField, 
+                                                        _windDirectionTextField, 
+                                                        _leadingSpeedTextField, 
+                                                        _leadingDirectionTextField, 
                                                         nil];
     
     for(UITextField *field in formFields)
         field.delegate = self;
-    self.pressureTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    _pressureTextField.keyboardType = UIKeyboardTypeDecimalPad;
 
 }
 
 -(void)loadWeather {
-    if (self.currentWeather) {
-        self.tempTextField.text          = [NSString stringWithFormat:@"%.0f", TEMP_C_to_TEMP_F(self.currentWeather.tempC)];
-        self.pressureTextField.text      = [NSString stringWithFormat:@"%.2f", self.currentWeather.altimInHg];
-        self.rhTextField.text            = [NSString stringWithFormat:@"%.0f", self.currentWeather.relativeHumidity];
-        self.altitudeTextField.text      = [NSString stringWithFormat:@"%.0f", METERS_to_FEET(self.currentWeather.altitudeMeters)];
-        self.windSpeedTextField.text     = [NSString stringWithFormat:@"%.0f", self.currentWeather.windSpeedKnots];
-        self.windDirectionTextField.text = [NSString stringWithFormat:@"%.0f", self.currentWeather.windDirectionDegrees];
+    if (_currentWeather) {
+        _tempTextField.text          = [NSString stringWithFormat:@"%.0f", TEMP_C_to_TEMP_F(_currentWeather.tempC)];
+        _pressureTextField.text      = [NSString stringWithFormat:@"%.2f", _currentWeather.altimInHg];
+        _rhTextField.text            = [NSString stringWithFormat:@"%.0f", _currentWeather.relativeHumidity];
+        _altitudeTextField.text      = [NSString stringWithFormat:@"%.0f", METERS_to_FEET(_currentWeather.altitudeMeters)];
+        _windSpeedTextField.text     = [NSString stringWithFormat:@"%.0f", _currentWeather.windSpeedKnots];
+        _windDirectionTextField.text = [NSString stringWithFormat:@"%.0f", _currentWeather.windDirectionDegrees];
     } else {
-        self.tempTextField.text          = @"59";
-        self.pressureTextField.text      = @"29.92";
+        _tempTextField.text          = @"59";
+        _pressureTextField.text      = @"29.92";
     }
 }
 
@@ -113,45 +114,45 @@
     Trajectory *trajectory = [[Trajectory alloc] init];
     
     // XXX do all conversions for UnitControls
-    trajectory.rangeStart = self.rangeStartStepper.Current;
-    trajectory.rangeEnd =  self.rangeEndStepper.Current;
-    trajectory.rangeStep = self.rangeStepStepper.Current;
+    trajectory.rangeStart = _rangeStartStepper.Current;
+    trajectory.rangeEnd =  _rangeEndStepper.Current;
+    trajectory.rangeStep = _rangeStepStepper.Current;
 
-    trajectory.tempC = (self.tempUnitControl.selectedSegmentIndex == 0) ? TEMP_F_to_TEMP_C([self.tempTextField.text doubleValue]) : [self.tempTextField.text doubleValue];
+    trajectory.tempC = (_tempUnitControl.selectedSegmentIndex == 0) ? TEMP_F_to_TEMP_C([_tempTextField.text doubleValue]) : [_tempTextField.text doubleValue];
     
-    trajectory.relativeHumidity = [self.rhTextField.text doubleValue];
-    trajectory.pressureInhg = (self.pressureUnitControl.selectedSegmentIndex == 0) ? [self.pressureTextField.text doubleValue] : INHG_to_PA([self.pressureTextField.text doubleValue]/100);
-    trajectory.altitudeM = (self.altitudeUnitControl.selectedSegmentIndex == 0) ? FEET_to_METERS([self.altitudeTextField.text doubleValue]) : [self.altitudeTextField.text doubleValue];
+    trajectory.relativeHumidity = [_rhTextField.text doubleValue];
+    trajectory.pressureInhg = (_pressureUnitControl.selectedSegmentIndex == 0) ? [_pressureTextField.text doubleValue] : INHG_to_PA([_pressureTextField.text doubleValue]/100);
+    trajectory.altitudeM = (_altitudeUnitControl.selectedSegmentIndex == 0) ? FEET_to_METERS([_altitudeTextField.text doubleValue]) : [_altitudeTextField.text doubleValue];
 
-    trajectory.windSpeed = (self.windSpeedUnitControl.selectedSegmentIndex == 0) ? KNOTS_to_MPH([self.windSpeedTextField.text doubleValue]) : [self.windSpeedTextField.text doubleValue];
-    trajectory.windAngle = (self.windDirectionUnitControl.selectedSegmentIndex == 0) ? [self.windDirectionTextField.text doubleValue] : CLOCK_to_DEGREES([self.windDirectionTextField.text doubleValue]);
+    trajectory.windSpeed = (_windSpeedUnitControl.selectedSegmentIndex == 0) ? KNOTS_to_MPH([_windSpeedTextField.text doubleValue]) : [_windSpeedTextField.text doubleValue];
+    trajectory.windAngle = (_windDirectionUnitControl.selectedSegmentIndex == 0) ? [_windDirectionTextField.text doubleValue] : CLOCK_to_DEGREES([_windDirectionTextField.text doubleValue]);
     
-    trajectory.leadSpeed = (self.leadingSpeedUnitControl.selectedSegmentIndex == 0) ? KNOTS_to_MPH([self.leadingSpeedTextField.text doubleValue]) : [self.leadingSpeedTextField.text doubleValue];
-    trajectory.leadAngle = (self.leadingDirectionUnitControl.selectedSegmentIndex == 0) ? [self.leadingDirectionTextField.text doubleValue] : CLOCK_to_DEGREES([self.leadingDirectionTextField.text doubleValue]);
+    trajectory.leadSpeed = (_leadingSpeedUnitControl.selectedSegmentIndex == 0) ? KPH_to_MPH([_leadingSpeedTextField.text doubleValue]) : [_leadingSpeedTextField.text doubleValue];
+    trajectory.leadAngle = (_leadingDirectionUnitControl.selectedSegmentIndex == 0) ? [_leadingDirectionTextField.text doubleValue] : CLOCK_to_DEGREES([_leadingDirectionTextField.text doubleValue]);
     
-    trajectory.ballisticProfile = selectedProfile;
+    trajectory.ballisticProfile = _selectedProfile;
     
-    dst.rangeUnit = [[NSArray arrayWithObjects:@"Yards", @"Meters", nil] objectAtIndex:self.rangeUnitControl.selectedSegmentIndex];;
-    dst.dropDriftUnit = [[NSArray arrayWithObjects:@"Inches", @"MOA", @"Mils", nil] objectAtIndex:self.dropDriftUnitcontrol.selectedSegmentIndex];
+    dst.rangeUnit = [[NSArray arrayWithObjects:@"Yards", @"Meters", nil] objectAtIndex:_rangeUnitControl.selectedSegmentIndex];;
+    dst.dropDriftUnit = [[NSArray arrayWithObjects:@"Inches", @"MOA", @"Mils", nil] objectAtIndex:_dropDriftUnitcontrol.selectedSegmentIndex];
 
-    dst.tempString = [NSString stringWithFormat:@"%@º %@", self.tempTextField.text, 
-                      [[NSArray arrayWithObjects:@"F", @"C", nil] objectAtIndex:self.tempUnitControl.selectedSegmentIndex]];
+    dst.tempString = [NSString stringWithFormat:@"%@º %@", _tempTextField.text, 
+                      [[NSArray arrayWithObjects:@"F", @"C", nil] objectAtIndex:_tempUnitControl.selectedSegmentIndex]];
     
-    dst.altitudeString = [NSString stringWithFormat:@"%@ %@", self.altitudeTextField.text, 
-                          [[NSArray arrayWithObjects:@"ft", @"m", nil] objectAtIndex:self.altitudeUnitControl.selectedSegmentIndex]];
+    dst.altitudeString = [NSString stringWithFormat:@"%@ %@", _altitudeTextField.text, 
+                          [[NSArray arrayWithObjects:@"ft", @"m", nil] objectAtIndex:_altitudeUnitControl.selectedSegmentIndex]];
     
-    dst.pressureString = [NSString stringWithFormat:@"%@ %@", self.pressureTextField.text,
-                          [[NSArray arrayWithObjects:@"inHg", @"mb", nil] objectAtIndex:self.pressureUnitControl.selectedSegmentIndex]];
+    dst.pressureString = [NSString stringWithFormat:@"%@ %@", _pressureTextField.text,
+                          [[NSArray arrayWithObjects:@"inHg", @"mb", nil] objectAtIndex:_pressureUnitControl.selectedSegmentIndex]];
 
-    dst.windInfoString = [NSString stringWithFormat:@"%@ %@ from %@%@", self.windSpeedTextField.text, 
-                          [[NSArray arrayWithObjects:@"Knots", @"MPH", nil] objectAtIndex:self.windSpeedUnitControl.selectedSegmentIndex], 
-                          self.windDirectionTextField.text,
-                          [[NSArray arrayWithObjects:@"º", @" o'Clock", nil] objectAtIndex:windDirectionUnitControl.selectedSegmentIndex]];
+    dst.windInfoString = [NSString stringWithFormat:@"%@ %@ at %@%@", _windSpeedTextField.text, 
+                          [[NSArray arrayWithObjects:@"Knots", @"MPH", nil] objectAtIndex:_windSpeedUnitControl.selectedSegmentIndex], 
+                          _windDirectionTextField.text,
+                          [[NSArray arrayWithObjects:@"º", @" o'Clock", nil] objectAtIndex:_windDirectionUnitControl.selectedSegmentIndex]];
     
-    dst.leadInfoString = [NSString stringWithFormat:@"%@ %@ at %@%@", self.leadingSpeedTextField.text, 
-                          [[NSArray arrayWithObjects:@"Knots", @"MPH", nil] objectAtIndex:self.leadingSpeedUnitControl.selectedSegmentIndex], 
-                          self.leadingDirectionTextField.text, 
-                          [[NSArray arrayWithObjects:@"º", @" o'Clock", nil] objectAtIndex:self.leadingDirectionUnitControl.selectedSegmentIndex]];
+    dst.leadInfoString = [NSString stringWithFormat:@"%@ %@ at %@%@", _leadingSpeedTextField.text, 
+                          [[NSArray arrayWithObjects:@"Knots", @"MPH", nil] objectAtIndex:_leadingSpeedUnitControl.selectedSegmentIndex], 
+                          _leadingDirectionTextField.text, 
+                          [[NSArray arrayWithObjects:@"º", @" o'Clock", nil] objectAtIndex:_leadingDirectionUnitControl.selectedSegmentIndex]];
     
     dst.passedTrajectory = trajectory;
 }
@@ -192,17 +193,17 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.currentTextField = textField;    
+    _currentTextField = textField;    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([textField.text isEqualToString:@""]) textField.text = @"0";
 
-    self.currentTextField = nil;
+    _currentTextField = nil;
 }
 
 - (void) nextPreviousTapped:(id)sender {
-    int index = [formFields indexOfObject:currentTextField];
+    int index = [formFields indexOfObject:_currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
             if (index > 0) index--;
@@ -212,12 +213,12 @@
             break;
     }
     
-    self.currentTextField = [formFields objectAtIndex:index];
-    [self.currentTextField becomeFirstResponder];
+    _currentTextField = [formFields objectAtIndex:index];
+    [_currentTextField becomeFirstResponder];
 }
 
 - (void) doneTyping:(id)sender {    
-    [self.currentTextField resignFirstResponder];
+    [_currentTextField resignFirstResponder];
 }
 
 # pragma mark Actions
@@ -226,20 +227,22 @@
 }
 
 - (IBAction)setToDefaultEnvironmentTapped:(id)sender {
-    self.tempTextField.text = @"59";
-    self.tempUnitControl.selectedSegmentIndex = 0;
-    self.pressureTextField.text = @"29.92";
-    self.pressureUnitControl.selectedSegmentIndex = 0;
-    self.rhTextField.text = @"0";
-    self.altitudeTextField.text = @"0";
-    self.windSpeedTextField.text = @"0";
-    self.windDirectionTextField.text = @"0";
+    _tempTextField.text = @"59";
+    _tempUnitControl.selectedSegmentIndex = 0;
+    _pressureTextField.text = @"29.92";
+    _pressureUnitControl.selectedSegmentIndex = 0;
+    _rhTextField.text = @"0";
+    _altitudeTextField.text = @"0";
+    _windSpeedTextField.text = @"0";
+    _windDirectionTextField.text = @"0";
 }
 
 - (IBAction)setStepperRanges:(id)sender {
-    self.rangeStartStepper.Maximum = self.rangeEndStepper.Current - self.rangeStepStepper.Current;
-    self.rangeEndStepper.Minimum   = self.rangeStartStepper.Current + self.rangeStepStepper.Current;
-    self.rangeStepStepper.Maximum  = self.rangeEndStepper.Current - self.rangeStartStepper.Current;    
+    _rangeStartStepper.Maximum = _rangeEndStepper.Current - _rangeStepStepper.Current;
+    _rangeStartStepper.Step    = _rangeStepStepper.Current;
+    _rangeEndStepper.Minimum   = _rangeStartStepper.Current + _rangeStepStepper.Current;
+    _rangeStepStepper.Maximum  = _rangeEndStepper.Current - _rangeStartStepper.Current;
+    _rangeEndStepper.Step      = _rangeStepStepper.Current;
 }
 
 #pragma mark Table delegates

@@ -93,6 +93,8 @@
 		5348C69B1507188D00147AAF /* picker_overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5348C69A1507188D00147AAF /* picker_overlay.png */; };
 		5348C69D150719A600147AAF /* picker_footer_overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5348C69C150719A500147AAF /* picker_footer_overlay.png */; };
 		5348C6A8150824C900147AAF /* EnergyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5348C6A7150824C900147AAF /* EnergyViewController.m */; };
+		5353212F1566C05100BCAF29 /* Caliber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353212E1566C05100BCAF29 /* Caliber.m */; };
+		535321321568103100BCAF29 /* BallisticProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 535321311568103100BCAF29 /* BallisticProfile.m */; };
 		5356120E14F5B93600EC1ED4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5356120C14F5B93600EC1ED4 /* DataModel.xcdatamodeld */; };
 		53591A331521714600516C4C /* libQuickDialog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53591A30152170DC00516C4C /* libQuickDialog.a */; };
 		53591A40152181A000516C4C /* StampInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 53591A3F152181A000516C4C /* StampInfo.m */; };
@@ -101,13 +103,13 @@
 		537797201533A8150096BF7A /* LogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377971F1533A8150096BF7A /* LogsViewController.m */; };
 		5377972915362E1A0096BF7A /* icon_calculators@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5377972815362E190096BF7A /* icon_calculators@2x.png */; };
 		5377973E153798480096BF7A /* Model+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5377973D153798480096BF7A /* Model+Helpers.m */; };
-		537797441537D3B90096BF7A /* Caliber.m in Sources */ = {isa = PBXBuildFile; fileRef = 537797431537D3B90096BF7A /* Caliber.m */; };
 		537B1C5D151EAD6000A85E24 /* MaintenanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 537B1C5C151EAD6000A85E24 /* MaintenanceCell.m */; };
 		5380B3AA1521070600CD099D /* NFAInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5380B3A91521070600CD099D /* NFAInformationViewController.m */; };
 		53859F701501E11C00ABA0B1 /* icon_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 53859F6F1501E11C00ABA0B1 /* icon_settings.png */; };
 		53859F741504066100ABA0B1 /* brushed_steel_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 53859F731504066100ABA0B1 /* brushed_steel_background.png */; };
 		53859F7F1504354A00ABA0B1 /* MillerStabilityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53859F7E1504354A00ABA0B1 /* MillerStabilityViewController.m */; };
 		53859F811505687F00ABA0B1 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53859F801505687F00ABA0B1 /* CoreMotion.framework */; };
+		5389973B15681C6D00AC3112 /* Magazine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5389973A15681C6D00AC3112 /* Magazine.m */; };
 		538DA6F5154F444D0066F74A /* Test in Resources */ = {isa = PBXBuildFile; fileRef = 538DA6F4154F444D0066F74A /* Test */; };
 		538EACAA1549E628009B796B /* DopeTableTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EACA91549E628009B796B /* DopeTableTableViewController.m */; };
 		53908949151BB30C0048D5AE /* add_photo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 53908948151BB30C0048D5AE /* add_photo_highlight.png */; };
@@ -185,7 +187,6 @@
 		53E8314A1556F2A80062893B /* MillerTwistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E831491556F2A80062893B /* MillerTwistViewController.m */; };
 		53E8314D15585B9B0062893B /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E8314C15585B9B0062893B /* PhotoViewController.m */; };
 		53E8314F1558808B0062893B /* BackgroundFabricTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E8314E1558808B0062893B /* BackgroundFabricTexture.png */; };
-		53E83168155998D50062893B /* BallisticProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E83167155998D50062893B /* BallisticProfile.m */; };
 		53EBBD951516F36C00488E63 /* tableview_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD941516F36C00488E63 /* tableview_header.png */; };
 		53F241A915619DC30038A666 /* Weapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241A815619DC30038A666 /* Weapon.m */; };
 		53F241AC15619DC40038A666 /* Manufacturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241AB15619DC40038A666 /* Manufacturer.m */; };
@@ -202,7 +203,6 @@
 		53F9F42D1562F6080008430D /* MagazineListByBrandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F4271562F6060008430D /* MagazineListByBrandViewController.m */; };
 		53F9F42E1562F6080008430D /* MagazineListByCaliberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F4291562F6070008430D /* MagazineListByCaliberViewController.m */; };
 		53F9F42F1562F6080008430D /* MagazineShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F42B1562F6070008430D /* MagazineShowViewController.m */; };
-		53F9F4331562F8760008430D /* Magazine.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F4321562F8760008430D /* Magazine.m */; };
 		53FBDA10151D9FA200DD5180 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FBDA0F151D9FA200DD5180 /* Note.m */; };
 /* End PBXBuildFile section */
 
@@ -354,6 +354,10 @@
 		5348C69C150719A500147AAF /* picker_footer_overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picker_footer_overlay.png; sourceTree = "<group>"; };
 		5348C6A6150824C900147AAF /* EnergyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnergyViewController.h; sourceTree = "<group>"; };
 		5348C6A7150824C900147AAF /* EnergyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnergyViewController.m; sourceTree = "<group>"; };
+		5353212D1566C05100BCAF29 /* Caliber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Caliber.h; sourceTree = "<group>"; };
+		5353212E1566C05100BCAF29 /* Caliber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Caliber.m; sourceTree = "<group>"; };
+		535321301568103100BCAF29 /* BallisticProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfile.h; sourceTree = "<group>"; };
+		535321311568103100BCAF29 /* BallisticProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfile.m; sourceTree = "<group>"; };
 		5356120D14F5B93600EC1ED4 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		53591A24152170DB00516C4C /* QuickDialog.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QuickDialog.xcodeproj; path = QuickDialog/QuickDialog.xcodeproj; sourceTree = "<group>"; };
 		53591A3E152181A000516C4C /* StampInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StampInfo.h; sourceTree = "<group>"; };
@@ -367,8 +371,6 @@
 		5377972815362E190096BF7A /* icon_calculators@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_calculators@2x.png"; sourceTree = "<group>"; };
 		5377973C153798480096BF7A /* Model+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Model+Helpers.h"; sourceTree = "<group>"; };
 		5377973D153798480096BF7A /* Model+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Model+Helpers.m"; sourceTree = "<group>"; };
-		537797421537D3B90096BF7A /* Caliber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Caliber.h; sourceTree = "<group>"; };
-		537797431537D3B90096BF7A /* Caliber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Caliber.m; sourceTree = "<group>"; };
 		537B1C5B151EAD6000A85E24 /* MaintenanceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaintenanceCell.h; sourceTree = "<group>"; };
 		537B1C5C151EAD6000A85E24 /* MaintenanceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaintenanceCell.m; sourceTree = "<group>"; };
 		5380B3A81521070600CD099D /* NFAInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFAInformationViewController.h; sourceTree = "<group>"; };
@@ -378,6 +380,8 @@
 		53859F7D1504354A00ABA0B1 /* MillerStabilityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MillerStabilityViewController.h; sourceTree = "<group>"; };
 		53859F7E1504354A00ABA0B1 /* MillerStabilityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MillerStabilityViewController.m; sourceTree = "<group>"; };
 		53859F801505687F00ABA0B1 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		5389973915681C6D00AC3112 /* Magazine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Magazine.h; sourceTree = "<group>"; };
+		5389973A15681C6D00AC3112 /* Magazine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Magazine.m; sourceTree = "<group>"; };
 		538DA6F4154F444D0066F74A /* Test */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Test; path = "Gun Locker/Test"; sourceTree = "<group>"; };
 		538EACA81549E628009B796B /* DopeTableTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeTableTableViewController.h; sourceTree = "<group>"; };
 		538EACA91549E628009B796B /* DopeTableTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeTableTableViewController.m; sourceTree = "<group>"; };
@@ -499,8 +503,6 @@
 		53E8314B15585B9A0062893B /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
 		53E8314C15585B9B0062893B /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 		53E8314E1558808B0062893B /* BackgroundFabricTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackgroundFabricTexture.png; sourceTree = "<group>"; };
-		53E83166155998D50062893B /* BallisticProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfile.h; sourceTree = "<group>"; };
-		53E83167155998D50062893B /* BallisticProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfile.m; sourceTree = "<group>"; };
 		53EBBD941516F36C00488E63 /* tableview_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableview_header.png; sourceTree = "<group>"; };
 		53F241A715619DC30038A666 /* Weapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weapon.h; sourceTree = "<group>"; };
 		53F241A815619DC30038A666 /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
@@ -532,8 +534,6 @@
 		53F9F4291562F6070008430D /* MagazineListByCaliberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagazineListByCaliberViewController.m; sourceTree = "<group>"; };
 		53F9F42A1562F6070008430D /* MagazineShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagazineShowViewController.h; sourceTree = "<group>"; };
 		53F9F42B1562F6070008430D /* MagazineShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagazineShowViewController.m; sourceTree = "<group>"; };
-		53F9F4311562F8760008430D /* Magazine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Magazine.h; sourceTree = "<group>"; };
-		53F9F4321562F8760008430D /* Magazine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Magazine.m; sourceTree = "<group>"; };
 		53FBDA0E151D9FA200DD5180 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		53FBDA0F151D9FA200DD5180 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -820,6 +820,8 @@
 				5348C6A7150824C900147AAF /* EnergyViewController.m */,
 				53859F7D1504354A00ABA0B1 /* MillerStabilityViewController.h */,
 				53859F7E1504354A00ABA0B1 /* MillerStabilityViewController.m */,
+				53E831481556F2A80062893B /* MillerTwistViewController.h */,
+				53E831491556F2A80062893B /* MillerTwistViewController.m */,
 				53B5E165154369DE000D3A8C /* RangingSamplesViewController.h */,
 				53B5E166154369DE000D3A8C /* RangingSamplesViewController.m */,
 				53B5E15F15413158000D3A8C /* RangingViewController.h */,
@@ -828,8 +830,6 @@
 				53E831431556DEE80062893B /* ThornileyViewController.m */,
 				53E831451556DEF20062893B /* TKOFViewController.h */,
 				53E831461556DEF20062893B /* TKOFViewController.m */,
-				53E831481556F2A80062893B /* MillerTwistViewController.h */,
-				53E831491556F2A80062893B /* MillerTwistViewController.m */,
 			);
 			name = Calculators;
 			sourceTree = "<group>";
@@ -1017,8 +1017,8 @@
 			isa = PBXGroup;
 			children = (
 				53B5E16815460EAC000D3A8C /* Ballistics */,
-				537797421537D3B90096BF7A /* Caliber.h */,
-				537797431537D3B90096BF7A /* Caliber.m */,
+				5353212D1566C05100BCAF29 /* Caliber.h */,
+				5353212E1566C05100BCAF29 /* Caliber.m */,
 				53E8309A1553931C0062893B /* DopeCard.h */,
 				53E8309B1553931C0062893B /* DopeCard.m */,
 				53F9F4341562F88D0008430D /* Inventory */,
@@ -1034,10 +1034,10 @@
 		53B5E16815460EAC000D3A8C /* Ballistics */ = {
 			isa = PBXGroup;
 			children = (
+				535321301568103100BCAF29 /* BallisticProfile.h */,
+				535321311568103100BCAF29 /* BallisticProfile.m */,
 				53A0E688153A80DA00846421 /* Bullet.h */,
 				53A0E689153A80DA00846421 /* Bullet.m */,
-				53E83166155998D50062893B /* BallisticProfile.h */,
-				53E83167155998D50062893B /* BallisticProfile.m */,
 				53B5E18A1548A214000D3A8C /* Trajectory.h */,
 				53B5E18B1548A214000D3A8C /* Trajectory.m */,
 				530A0088154BB5130023FBE7 /* TrajectoryRange.h */,
@@ -1153,8 +1153,8 @@
 		53F9F4341562F88D0008430D /* Inventory */ = {
 			isa = PBXGroup;
 			children = (
-				53F9F4311562F8760008430D /* Magazine.h */,
-				53F9F4321562F8760008430D /* Magazine.m */,
+				5389973915681C6D00AC3112 /* Magazine.h */,
+				5389973A15681C6D00AC3112 /* Magazine.m */,
 				53AF045815616B4C00D702FD /* Ammunition.h */,
 				53AF045915616B4C00D702FD /* Ammunition.m */,
 			);
@@ -1401,7 +1401,6 @@
 				53D263451531EBD000ECA9EE /* DopeCardTableViewController.m in Sources */,
 				537797201533A8150096BF7A /* LogsViewController.m in Sources */,
 				5377973E153798480096BF7A /* Model+Helpers.m in Sources */,
-				537797441537D3B90096BF7A /* Caliber.m in Sources */,
 				53A0E66815390F8B00846421 /* BulletChooserViewController.m in Sources */,
 				53A0E66B153954F200846421 /* ProfileAddEditViewController.m in Sources */,
 				53A0E68A153A80DA00846421 /* Bullet.m in Sources */,
@@ -1423,7 +1422,6 @@
 				53E831471556DEF30062893B /* TKOFViewController.m in Sources */,
 				53E8314A1556F2A80062893B /* MillerTwistViewController.m in Sources */,
 				53E8314D15585B9B0062893B /* PhotoViewController.m in Sources */,
-				53E83168155998D50062893B /* BallisticProfile.m in Sources */,
 				53AF044A1560171200D702FD /* AFHTTPClient.m in Sources */,
 				53AF044B1560171200D702FD /* AFHTTPRequestOperation.m in Sources */,
 				53AF044C1560171200D702FD /* AFImageRequestOperation.m in Sources */,
@@ -1448,7 +1446,9 @@
 				53F9F42D1562F6080008430D /* MagazineListByBrandViewController.m in Sources */,
 				53F9F42E1562F6080008430D /* MagazineListByCaliberViewController.m in Sources */,
 				53F9F42F1562F6080008430D /* MagazineShowViewController.m in Sources */,
-				53F9F4331562F8760008430D /* Magazine.m in Sources */,
+				5353212F1566C05100BCAF29 /* Caliber.m in Sources */,
+				535321321568103100BCAF29 /* BallisticProfile.m in Sources */,
+				5389973B15681C6D00AC3112 /* Magazine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

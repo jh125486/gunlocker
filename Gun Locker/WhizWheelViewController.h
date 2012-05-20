@@ -19,6 +19,8 @@
     int rangeIndex;
     NSString *reticle;
     DataManager *dataManager;
+    double angleDegrees;
+    double speedMPH;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *tableBackgroundImage;

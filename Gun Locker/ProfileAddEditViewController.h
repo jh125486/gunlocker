@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "BallisticProfile.h"
 #import "Bullet.h"
+#import "Weapon.h"
 #import "BulletChooserViewController.h"
 #import "BulletBCEntryViewController.h"
-#import "Weapon.h"
+#import "MillerStabilityViewController.h"
 
 @class ProfileAddEditViewController;
 
@@ -27,6 +28,7 @@
     NSString *drag_model;
     NSMutableArray *formFields;
     NSArray *dragModels;
+    NSArray *sgDirections;
 }
 
 @property (nonatomic, weak) id <ProfileAddEditViewControllerDelegate> delegate;
@@ -50,6 +52,10 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *dragModelControl;
 @property (weak, nonatomic) IBOutlet UIView *bcButtonTopEdgeView;
 @property (weak, nonatomic) IBOutlet UIButton *bcButton;
+
+@property (weak, nonatomic) IBOutlet UITextField *sgTextField;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *sgDirectionControl;
+
 
 @property (weak, nonatomic) UITextField *currentTextField;
 

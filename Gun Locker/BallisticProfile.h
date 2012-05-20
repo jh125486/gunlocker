@@ -2,7 +2,7 @@
 //  BallisticProfile.h
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 5/8/12.
+//  Created by Jacob Hochstetler on 5/19/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -22,6 +22,8 @@
 @property (nonatomic, retain) NSNumber * sight_height_inches;
 @property (nonatomic, retain) NSNumber * zero;
 @property (nonatomic, retain) NSNumber * zero_theta;
+@property (nonatomic, retain) NSDecimalNumber * sg;
+@property (nonatomic, retain) NSString * sg_direction;
 @property (nonatomic, retain) Bullet *bullet;
 @property (nonatomic, retain) Weapon *weapon;
 

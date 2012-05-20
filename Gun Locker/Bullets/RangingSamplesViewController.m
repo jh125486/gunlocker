@@ -41,13 +41,27 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     NSArray *components = [cell.detailTextLabel.text componentsSeparatedByString:@" "];
     
-    if (indexPath.section == 0) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectSize" object:components];
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectSpans" object:components];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:(indexPath.section == 0) ? @"didSelectSize" : @"didSelectSpans" object:components];
     
     [self dismissModalViewControllerAnimated:YES];
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
+    if (sectionTitle == nil) return nil;
+
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.sectionHeaderHeight)];
+    headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background"]];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(4, 0, headerView.frame.size.width - 20, tableView.sectionHeaderHeight)];
+	label.text = sectionTitle;
+	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:18.0];
+	label.shadowColor = [UIColor lightTextColor];
+    label.shadowOffset = CGSizeMake(0, 1);
+	label.backgroundColor = [UIColor clearColor];    
+	label.textColor = [UIColor blackColor];
+    
+	[headerView addSubview:label];
+	return headerView;
 }
 
 @end

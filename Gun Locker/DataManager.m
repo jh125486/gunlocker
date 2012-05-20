@@ -40,7 +40,7 @@ static DataManager *sharedMyManager = nil;
         _directionTypes = [[NSArray alloc] initWithObjects:@"Degrees", @"Clocking", nil];
         _rangeUnits     = [[NSArray alloc] initWithObjects:@"Yards", @"Meters", @"Feet", nil];
         _dopeUnits      = [[NSArray alloc] initWithObjects:@"MOA", @"MILs", @"Inches", @"cm", nil];
-        _windUnits      = [[NSArray alloc] initWithObjects:@"MPH", @"km/h", @"MPS", @"Knots", nil];
+        _windUnits      = [[NSArray alloc] initWithObjects:@"MPH", @"km/h", @"m/s", @"Knots", nil];
         _leadUnits      = [[NSArray alloc] initWithObjects:@"MPH", @"km/h", @"Human",nil];
         _nfaTypes       = [[NSArray alloc] initWithObjects:@"SBR", @"SBS", @"Suppressor", @"Machinegun", @"DD", @"AOW",nil];
         _transferTypes  = [[NSArray alloc] initWithObjects:@"Form 1", @"Form 4", nil];
@@ -50,7 +50,7 @@ static DataManager *sharedMyManager = nil;
                                                                        nil];
                 
         NSMutableArray *degreesDirections = [[NSMutableArray alloc] init];        
-        for(int degree = 0; degree < 360; degree += 30)
+        for(int degree = 0; degree < 360; degree += 15)
             [degreesDirections addObject:[NSString stringWithFormat:@"%d°", degree]];
         NSMutableArray *clockDirections = [[NSMutableArray alloc] init];
         
@@ -62,7 +62,7 @@ static DataManager *sharedMyManager = nil;
         
         NSArray *humanSpeeds = [NSArray arrayWithObjects:@"At Rest", @"Walking", @"Jogging", @"Running", nil];
         NSMutableArray *otherSpeeds = [[NSMutableArray alloc] init];
-        for (int speed = 0; speed < 25; speed++)
+        for (int speed = 0; speed <= 30; speed++)
             [otherSpeeds addObject:[NSString stringWithFormat:@"%d ", speed]];
         
         _whizWheelPicker3 = [[NSDictionary alloc] initWithObjectsAndKeys:humanSpeeds, @"Human", 
@@ -71,10 +71,10 @@ static DataManager *sharedMyManager = nil;
                                                                          otherSpeeds, @"m/s",   
                                                                          otherSpeeds, @"Knots", nil];
         
-        _humanMPHSpeeds = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInt:0], @"At Rest", 
-                                                                       [NSNumber numberWithInt:3], @"Walking", 
-																	   [NSNumber numberWithInt:6], @"Jogging", 
-																	   [NSNumber numberWithInt:10], @"Running", nil];
+        _humanMPHSpeeds = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithDouble:0.0], @"At Rest", 
+                                                                       [NSNumber numberWithDouble:3.0], @"Walking", 
+																	   [NSNumber numberWithDouble:6.0], @"Jogging", 
+																	   [NSNumber numberWithDouble:10.0], @"Running", nil];
         
     }
     return self;

@@ -9,8 +9,10 @@
 #import "ProfileViewTableViewController.h"
 
 @implementation ProfileViewTableViewController
-@synthesize mvLabel, sightHeightLabel, zeroLabel, bulletDiameterLabel;
-@synthesize bulletWeightLabel, dragModelLabel, bcLabel, profile;
+@synthesize mvLabel = _mvLabel, sightHeightLabel = _sightHeightLabel, zeroLabel = _zeroLabel, bulletDiameterLabel = _bulletDiameterLabel;
+@synthesize bulletWeightLabel = _bulletWeightLabel, dragModelLabel = _dragModelLabel, bcLabel = _bcLabel, profile =_profile;
+@synthesize sgLabel = _sgLabel;
+@synthesize sgDirectionLabel = _sgDirectionLabel;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -33,16 +35,17 @@
 }
 
 -(void)loadProfile {
-    self.title = self.profile.name;
+    self.title = _profile.name;
     
-    // TODO set up labels with units
-    self.mvLabel.text = [[self.profile.muzzle_velocity stringValue] stringByAppendingString:@" fps"];
-    self.sightHeightLabel.text = [[self.profile.sight_height_inches stringValue] stringByAppendingString:@"\""];
-    self.zeroLabel.text = [[self.profile.zero stringValue] stringByAppendingString:@" yards"];
-    self.bulletDiameterLabel.text = [[self.profile.bullet_diameter_inches stringValue] stringByAppendingString:@"\""];
-    self.bulletWeightLabel.text = [[self.profile.bullet_weight stringValue] stringByAppendingString:@" grains"];
-    self.dragModelLabel.text = self.profile.drag_model;
-    self.bcLabel.text = [[Bullet bcToString:self.profile.bullet_bc] substringFromIndex:4];
+    _mvLabel.text = [[_profile.muzzle_velocity stringValue] stringByAppendingString:@" fps"];
+    _sightHeightLabel.text = [[_profile.sight_height_inches stringValue] stringByAppendingString:@"\""];
+    _zeroLabel.text = [[_profile.zero stringValue] stringByAppendingString:@" yards"];
+    _bulletDiameterLabel.text = [[_profile.bullet_diameter_inches stringValue] stringByAppendingString:@"\""];
+    _bulletWeightLabel.text = [[_profile.bullet_weight stringValue] stringByAppendingString:@" grains"];
+    _dragModelLabel.text = _profile.drag_model;
+    _bcLabel.text = [[Bullet bcToString:_profile.bullet_bc] substringFromIndex:4];
+    _sgLabel.text = [_profile.sg stringValue];
+    _sgDirectionLabel.text = _profile.sg_direction;
 }
 
 - (void)viewDidUnload {
@@ -54,6 +57,8 @@
     [self setDragModelLabel:nil];
     [self setBcLabel:nil];
     [self setProfile:nil];
+    [self setSgLabel:nil];
+    [self setSgDirectionLabel:nil];
     [super viewDidUnload];
 }
 
@@ -67,7 +72,7 @@
 	if ([segueID isEqualToString:@"EditProfile"]) {
         UINavigationController *destinationController = segue.destinationViewController;
 		ProfileAddEditViewController *dst = [[destinationController viewControllers] objectAtIndex:0];
-        dst.selectedProfile = self.profile;
+        dst.selectedProfile = _profile;
     }
 }
 
@@ -83,11 +88,7 @@
 #pragma mark - Table view data source
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return 60.0f;
-    } else {
-        return 30.0f;
-    }
+    return (section == 0) ? 60.0f : 30.0f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
@@ -95,7 +96,7 @@
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 44)];
         UILabel *manufacturer = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 22)];
         manufacturer.adjustsFontSizeToFitWidth = YES;
-        manufacturer.text = self.profile.weapon.manufacturer.name;
+        manufacturer.text = _profile.weapon.manufacturer.name;
         manufacturer.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
         manufacturer.minimumFontSize = 14.0f;
         manufacturer.shadowColor = [UIColor clearColor];
@@ -104,7 +105,7 @@
         
         UILabel *model = [[UILabel alloc] initWithFrame:CGRectMake(5, 30, headerView.frame.size.width - 20, 22)];
         model.adjustsFontSizeToFitWidth = YES;
-        model.text = [self.profile.weapon.description substringFromIndex:manufacturer.text.length + 1];
+        model.text = [_profile.weapon.description substringFromIndex:_profile.weapon.manufacturer.displayName.length + 1];
         model.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
         model.minimumFontSize = 14.0f;
         model.shadowColor = [UIColor clearColor];
@@ -119,7 +120,7 @@
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)];
         UILabel *bullet = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 24)];
         bullet.adjustsFontSizeToFitWidth = YES;
-        bullet.text =  (self.profile.bullet) ? self.profile.bullet.description : @"Bullet";
+        bullet.text =  (_profile.bullet) ? _profile.bullet.description : @"Bullet";
         bullet.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
         bullet.minimumFontSize = 14.0f;
         bullet.shadowColor = [UIColor clearColor];
@@ -137,7 +138,7 @@
 # pragma mark UIActionSheet
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == actionSheet.destructiveButtonIndex) {
-        [self.profile deleteEntity];
+        [_profile deleteEntity];
         [[NSManagedObjectContext defaultContext] save];
         [self.navigationController popViewControllerAnimated:YES];
     }

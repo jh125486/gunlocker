@@ -20,6 +20,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *twistRateTextField;
 @property (weak, nonatomic) IBOutlet UILabel *resultLabel;
 
+@property (weak, nonatomic) NSString *passedCaliber;
+@property (weak, nonatomic) NSString *passedWeight;
+@property (weak, nonatomic) NSString *passedMV;
+
 @property (weak, nonatomic) UITextField *currentTextField;
 
 - (IBAction)showResult:(id)sender;

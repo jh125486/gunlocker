@@ -15,6 +15,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     CMMotionManager *motionManager;
+    BOOL recordsDirty;
 }
 
 @property (strong, nonatomic) UIWindow *window;

@@ -148,7 +148,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return (_selectedWeapon) ? 23.0f : 46.0f;
+    return ([self tableView:self.tableView titleForHeaderInSection:section] != nil) ? ((_selectedWeapon) ? 23.0f : 46.0f) : 0.0f;
 }
 
 

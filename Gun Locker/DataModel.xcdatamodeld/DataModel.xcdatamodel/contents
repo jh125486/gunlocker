@@ -13,6 +13,8 @@
         <attribute name="drag_model" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="muzzle_velocity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sg" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="sg_direction" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sight_height_inches" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="zero" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="zero_theta" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -33,6 +35,7 @@
     <entity name="Caliber" representedClassName="Caliber" syncable="YES">
         <attribute name="diameter_inches" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="CommercialLoad" parentEntity="Load" syncable="YES">
         <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
@@ -67,6 +70,7 @@
     <entity name="Magazine" representedClassName="Magazine" syncable="YES">
         <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caliber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="capacity" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="250" defaultValueString="0" syncable="YES"/>
         <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="count" optional="YES" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
@@ -146,7 +150,7 @@
         <element name="DopeCard" positionX="160" positionY="192" width="128" height="135"/>
         <element name="Handload" positionX="-0" positionY="342" width="128" height="120"/>
         <element name="Load" positionX="-288" positionY="297" width="128" height="90"/>
-        <element name="Magazine" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="Magazine" positionX="160" positionY="192" width="128" height="135"/>
         <element name="Maintenance" positionX="340" positionY="9" width="128" height="120"/>
         <element name="Malfunction" positionX="178" positionY="-174" width="128" height="120"/>
         <element name="Manufacturer" positionX="160" positionY="192" width="128" height="60"/>

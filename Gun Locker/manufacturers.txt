@@ -42,6 +42,7 @@ Kahr Arms:USA
 Kel-Tec CNC Industries Inc:USA:Kel-Tec
 Kimber Manufacturing:USA:Kimber
 Knight's Armament Company:USA:KAC
+KRISS:USA
 LaRue Tactical:USA:LaRue
 Lewis Machine and Tool Company:USA:LMT
 Les Baer Custom:USA:Les Baer
@@ -58,7 +59,6 @@ O.F. Mossberg & Sons:USA:Mossberg
 Olympic Arms:USA
 Palmetto Arms:USA
 Para-Ordnance Manufacturing Inc:Canada:Para-Ordnance
-Patria:Finland
 Rangemaster Precision Arms:UK:RPA
 Remington Arms:USA
 RND Manufacturing:USA

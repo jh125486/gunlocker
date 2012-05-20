@@ -13,8 +13,7 @@
 @synthesize delegate = _delegate;
 @synthesize selectedCaliber = _selectedCaliber;
 @synthesize searchDisplayController;
-@synthesize searchBar;
-@synthesize searchResults = _searchResults;
+@synthesize searchWasActive = _searchWasActive, savedSearchTerm = _savedSearchTerm, savedScopeButtonIndex = _savedScopeButtonIndex;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -25,6 +24,10 @@
 }
 
 - (void)didReceiveMemoryWarning {
+    _searchWasActive       = [self.searchDisplayController isActive];
+    _savedSearchTerm       = [self.searchDisplayController.searchBar text];
+    _savedScopeButtonIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];
+    
     [super didReceiveMemoryWarning];
 }
 
@@ -32,20 +35,41 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.frame = CGRectMake(0,self.searchDisplayController.searchBar.bounds.size.height,320,480);
+    
+    if (_savedSearchTerm) {
+        [self.searchDisplayController setActive:_searchWasActive];
+        [self.searchDisplayController.searchBar setSelectedScopeButtonIndex:_savedScopeButtonIndex];
+        [self.searchDisplayController.searchBar setText:_savedSearchTerm];
+        
+        _savedSearchTerm = nil;
+    }
+    
+    sections = [[NSArray alloc] initWithObjects:@"Rimfire", @"Handgun", @"Rifle", @"Shotgun", nil];
+    NSMutableArray *calibersTemp = [[NSMutableArray alloc] initWithCapacity:[sections count]];
+    for (NSString *section in sections) {
+        [calibersTemp addObject:[Caliber findAllSortedBy:@"diameter_inches" 
+                                            ascending:YES 
+                                        withPredicate:[NSPredicate predicateWithFormat:@"type = %@", section]]];
+    }
+    calibers = [[NSArray alloc] initWithArray:calibersTemp];    
+}
 
-    // load calibers from file
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"calibers" ofType:@"txt"];
-    NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
     
-    calibers = [[content componentsSeparatedByString:@"\n"] mutableCopy];
-    
-    if([_selectedCaliber length] > 0 && ![calibers containsObject:_selectedCaliber])
-        [calibers insertObject:_selectedCaliber atIndex:0];
-    
-    selectedIndex = [calibers indexOfObject:_selectedCaliber];
+    // save the state of the search UI so that it can be restored if the view is re-created
+    _searchWasActive       = [self.searchDisplayController isActive];
+    _savedSearchTerm       = [self.searchDisplayController.searchBar text];
+    _savedScopeButtonIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];
 }
 
 - (void)viewDidUnload {
+    [self setSavedSearchTerm:nil];
+    [self setDelegate:nil];
+    [self setSelectedCaliber:nil];
+    [self setSearchDisplayController:nil];
+    
     [super viewDidUnload];
 }
 
@@ -55,62 +79,100 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+// helper to determine correct caliber
+- (Caliber *)caliberForTableView:(UITableView *)tableView andIndexPath:(NSIndexPath*)indexPath {
+    NSArray *caliberArray = tableView == self.tableView ? [calibers objectAtIndex:indexPath.section] : searchResults;
+    return [caliberArray objectAtIndex:indexPath.row];
 }
 
-- (void)filterContentForSearchText:(NSString*)searchText  scope:(NSString*)scope {
-    _searchResults = [calibers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF contains[cd] %@", searchText]];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return tableView == self.tableView ? [calibers count] : 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (tableView == self.searchDisplayController.searchResultsTableView) ? [_searchResults count] : [calibers count];
+    return tableView == self.tableView ? [[calibers objectAtIndex:section] count] : [searchResults count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return tableView == self.tableView ? [sections objectAtIndex:section] : nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"CaliberCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     
-    if (cell == nil)
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-
-    cell.textLabel.text = (tableView == self.searchDisplayController.searchResultsTableView) ? [_searchResults objectAtIndex:indexPath.row] : [calibers objectAtIndex:indexPath.row];
-    
-    cell.accessoryType = ([cell.textLabel.text isEqualToString:_selectedCaliber]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-	
+    [self configureCell:cell withCaliber:[self caliberForTableView:tableView andIndexPath:indexPath]];	
     return cell;
+}
+
+-(void)configureCell:(UITableViewCell*)cell withCaliber:(Caliber*)caliber {
+    cell.textLabel.text = caliber.name;
+    cell.detailTextLabel.text = caliber.type;
+    cell.accessoryType = [cell.textLabel.text isEqualToString:_selectedCaliber] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 }
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-	if (selectedIndex != NSNotFound) {
-		UITableViewCell *cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selectedIndex inSection:0]];
-		cell.accessoryType = UITableViewCellAccessoryNone;
-	}
-	selectedIndex = indexPath.row;
 	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-	cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
         
     [_delegate caliberChooserViewController:self didSelectCaliber:cell.textLabel.text];
 }
 
 #pragma mark - UISearchDisplayController delegate methods
 
+-(void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView {
+    searchResults = nil;
+}
+
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
     [self filterContentForSearchText:searchString 
-                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
-                                      objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
-    
+                               scope:[self.searchDisplayController.searchBar selectedScopeButtonIndex]];
     return YES;
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
     [self filterContentForSearchText:[self.searchDisplayController.searchBar text] 
-                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
-    
+                               scope:searchOption];
     return YES;
+}
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSInteger)scope {
+    NSPredicate *filter;
+    if (scope == 0) { // 'All'
+        filter = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+    } else { // type of cartridge/shell
+        filter = [NSPredicate predicateWithFormat:@"(type = %@) AND (name CONTAINS[cd] %@)", [sections objectAtIndex:scope -1], searchText];        
+    }
+
+    searchResults = [Caliber findAllSortedBy:@"diameter_inches" ascending:YES withPredicate:filter];
+    self.savedScopeButtonIndex = scope;
+}
+
+#pragma mark Tableview headerview
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
+    if (sectionTitle == nil) return nil;
+    
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, tableView.bounds.size.width, tableView.sectionHeaderHeight)];
+    headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background"]];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, 0.0f, headerView.frame.size.width - 20.0f, tableView.sectionHeaderHeight)];
+	label.text = sectionTitle;
+	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:18.0f];
+	label.shadowColor = [UIColor lightTextColor];
+    label.shadowOffset = CGSizeMake(0.0f, 1.0f);
+	label.backgroundColor = [UIColor clearColor];    
+	label.textColor = [UIColor blackColor];
+    
+	[headerView addSubview:label];
+	return headerView;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return ([self tableView:tableView titleForHeaderInSection:section] != nil) ? 23.0f : 0.0f;
 }
 
 @end

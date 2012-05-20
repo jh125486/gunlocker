@@ -19,6 +19,14 @@
     return self;
 }
 
+- (void)setQuickDialogTableView:(QuickDialogTableView *)aQuickDialogTableView {
+    [super setQuickDialogTableView:aQuickDialogTableView];
+    
+    self.quickDialogTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    self.quickDialogTableView.bounces = NO;
+    self.quickDialogTableView.styleProvider = self;
+}
+
 - (void)viewDidLoad {
     QRootElement *_root = [[QRootElement alloc] init];
 
@@ -84,4 +92,9 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+# pragma mark Quickdialog Style delegate
+
+-(void)cell:(UITableViewCell *)cell willAppearForElement:(QElement *)element atIndexPath:(NSIndexPath *)indexPath {
+    // quickdialog styling
+}
 @end

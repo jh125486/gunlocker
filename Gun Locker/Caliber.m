@@ -2,7 +2,7 @@
 //  Caliber.m
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 4/12/12.
+//  Created by Jacob Hochstetler on 5/18/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,7 +11,8 @@
 
 @implementation Caliber
 
-@dynamic name;
 @dynamic diameter_inches;
+@dynamic name;
+@dynamic type;
 
 @end

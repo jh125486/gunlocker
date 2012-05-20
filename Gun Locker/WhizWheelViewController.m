@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 #define CIRCULAR_TABLE_SIZE 1000
-#define PIXELS_PER_MIL -10
-#define PIXELS_PER_MOA -2
+#define PIXELS_PER_MIL 10
+#define PIXELS_PER_MOA 2
 #import "WhizWheelViewController.h"
 
 @implementation WhizWheelViewController
@@ -87,10 +87,7 @@
     self.speedType = [defaults objectForKey:@"speedType"];
     self.speedLabel.text = speedType;
     arraySpeeds = [dataManager.whizWheelPicker3 objectForKey:speedUnit];
-    
-    NSLog(@"whiz2 keys %@  whiz3 key %@", [dataManager.whizWheelPicker2 allKeys], [dataManager.whizWheelPicker3 allKeys]);
-    NSLog(@"size of ranges: %d directions %d speeds %d", [arrayRanges count], [arrayDirections count], [arraySpeeds count]);
-    
+        
     [rangesTableView reloadData];
     [directionsTableView reloadData];
     [speedTableView reloadData];
@@ -269,42 +266,58 @@
 
 - (void)showTrajectoryWithRecalc:(BOOL)recalc {
     if(recalc) {
-        // set up wind/leading speed/direction unit conversions
+        // convert direction 
+        if ([self.directionLabel.text isEqualToString:@"Clocking"]) {
+            angleDegrees =  CLOCK_to_DEGREES([self.lastSelectedDirectionCell.textLabel.text intValue]);
+        } else {
+            angleDegrees = [self.lastSelectedDirectionCell.textLabel.text intValue];
+        }
+
+        // convert speed units
+        if ([speedUnit isEqualToString:@"Human"]) {
+            speedMPH = [[dataManager.humanMPHSpeeds objectForKey:lastSelectedSpeedCell.textLabel.text] doubleValue]; 
+        } else if ([speedUnit isEqualToString:@"Knots"]) {
+            speedMPH = KNOTS_to_MPH([self.lastSelectedSpeedCell.textLabel.text doubleValue]);
+        } else if ([speedUnit isEqualToString:@"m/s"]) {
+            speedMPH = MPS_to_MPH([self.lastSelectedSpeedCell.textLabel.text doubleValue]);
+        } else if ([speedUnit isEqualToString:@"km/h"]) {
+            speedMPH = KPH_to_MPH([self.lastSelectedSpeedCell.textLabel.text doubleValue]);
+        } else { // MPH
+            speedMPH = [self.lastSelectedSpeedCell.textLabel.text doubleValue];
+        }
+    
+        // set up wind/leading speed/direction
         if ([speedType isEqualToString:@"Wind"]) {
-            trajectory.windSpeed = [self.lastSelectedSpeedCell.textLabel.text doubleValue];
-            trajectory.windAngle = [self.lastSelectedDirectionCell.textLabel.text doubleValue];
+            trajectory.windAngle = angleDegrees;
+            trajectory.windSpeed = speedMPH;
             trajectory.leadSpeed = 0.0;
         } else {
-            if ([speedUnit isEqualToString:@"Human"]) {
-                trajectory.leadSpeed = [[dataManager.humanMPHSpeeds objectForKey:lastSelectedSpeedCell.textLabel.text] doubleValue];
-            } else {                
-                trajectory.leadSpeed = [self.lastSelectedSpeedCell.textLabel.text doubleValue];
-            }
-            trajectory.leadAngle = [self.lastSelectedDirectionCell.textLabel.text doubleValue];
+            trajectory.leadAngle = angleDegrees;
+            trajectory.leadSpeed = speedMPH;
             trajectory.windSpeed = 0.0;
         }
         
-        [trajectory setup];
+        [trajectory setupWindAndLeading];
         [trajectory calculateTrajectory];
-        NSLog(@"Whiz Wheel: had to recalculate");
+        NSLog(@"Whiz Wheel: Recalculated Wind/Leading %.1f mph at %.1f degrees", speedMPH, angleDegrees);
     }
         
     TrajectoryRange *range = [trajectory.ranges objectAtIndex:rangeIndex];
     
-    NSLog(@"row %d\trange: %@\tdrop: \"%@\tdrift: %@\"", rangeIndex, range.range_yards, range.drop_inches, range.drift_inches);
+    NSLog(@"row %d\trange: %@\tdrop: %@\"\tdrift: %@\"", rangeIndex, range.range_yards, range.drop_inches, range.drift_inches);
     
     _dropInchesLabel.text  = range.drop_inches;
     _driftInchesLabel.text = range.drift_inches;
 
     if ([reticle isEqualToString:@"MOA"]) {
-        _reticlePOIImage.center = CGPointMake(160.5f + [range.drift_moa floatValue] * PIXELS_PER_MOA, 
-                                               74.5f + [range.drop_moa floatValue]  * PIXELS_PER_MOA);
+        _reticlePOIImage.center = CGPointMake(160.0f + [range.drift_moa floatValue] * PIXELS_PER_MOA +0.25f, 
+                                               74.0f - [range.drop_moa floatValue]  * PIXELS_PER_MOA +0.25f);
         _dropMOAMils.text  = range.drop_moa;
         _driftMOAMils.text = range.drift_moa;
         _dropUnitLabel.text = _driftUnitLabel.text = @"MOA";
     } else {
-        _reticlePOIImage.center = CGPointMake(160.5f + [range.drift_mils floatValue] * PIXELS_PER_MIL, 
-                                               74.5f + [range.drop_mils floatValue]  * PIXELS_PER_MIL);        
+        _reticlePOIImage.center = CGPointMake(160.0f + [range.drift_mils floatValue] * PIXELS_PER_MIL +0.25f, 
+                                               74.0f - [range.drop_mils floatValue]  * PIXELS_PER_MIL +0.25f);        
         _dropMOAMils.text  = range.drop_mils;
         _driftMOAMils.text = range.drift_mils;
         _dropUnitLabel.text = _driftUnitLabel.text = @"MILs";

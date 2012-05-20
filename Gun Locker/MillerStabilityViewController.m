@@ -9,9 +9,11 @@
 #import "MillerStabilityViewController.h"
 
 @implementation MillerStabilityViewController
-@synthesize bulletCaliberTextField, bulletLengthTextField, bulletWeightTextField, mvTextField, twistRateTextField;
-@synthesize resultLabel;
-@synthesize currentTextField;
+@synthesize bulletCaliberTextField = _bulletCaliberTextField, bulletLengthTextField = _bulletLengthTextField;
+@synthesize bulletWeightTextField = _bulletWeightTextField, mvTextField = _mvTextField, twistRateTextField = _twistRateTextField;
+@synthesize resultLabel = _resultLabel;
+@synthesize currentTextField = _currentTextField;
+@synthesize passedCaliber = _passedCaliber, passedWeight = _passedWeight, passedMV = _passedMV;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -28,19 +30,32 @@
     
     behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:0 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     
-    formFields = [NSArray arrayWithObjects:self.bulletCaliberTextField, self.bulletLengthTextField, self.bulletWeightTextField, self.mvTextField, self.twistRateTextField, nil];
+    formFields = [NSArray arrayWithObjects:_bulletCaliberTextField,
+                                           _bulletLengthTextField, 
+                                           _bulletWeightTextField, 
+										   _mvTextField, 
+										   _twistRateTextField, 
+										  nil];
      
     for (UITextField *field in formFields) {
         field.delegate = self;
         field.keyboardType = UIKeyboardTypeDecimalPad;
     }
-    self.bulletWeightTextField.keyboardType = self.mvTextField.keyboardType = self.twistRateTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _bulletWeightTextField.keyboardType = _mvTextField.keyboardType = _twistRateTextField.keyboardType = UIKeyboardTypeNumberPad;
 
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[formFields objectAtIndex:0] becomeFirstResponder];
+    
+    if (_passedCaliber && _passedWeight && _passedMV) {
+		_bulletCaliberTextField.text = _passedCaliber;
+		_bulletWeightTextField.text = _passedWeight;
+		_mvTextField.text = _passedMV;
+        [_bulletLengthTextField becomeFirstResponder];
+	} else {
+        [[formFields objectAtIndex:0] becomeFirstResponder];
+    }
 }
 
 - (void)viewDidUnload {
@@ -51,6 +66,10 @@
     [self setTwistRateTextField:nil];
     [self setResultLabel:nil];
     [self setCurrentTextField:nil];
+    [self setPassedCaliber:nil];
+    [self setPassedWeight:nil];
+    [self setPassedMV:nil];
+    
     [super viewDidUnload];
 }
 
@@ -60,13 +79,13 @@
 
 # pragma mark result
 - (IBAction)showResult:(id)sender {
-    float caliber = [bulletCaliberTextField.text floatValue];
-    float length  = [bulletLengthTextField.text floatValue];
-    float twist   = [twistRateTextField.text floatValue];
-    float weight  = [bulletWeightTextField.text floatValue];
+    float caliber = [_bulletCaliberTextField.text floatValue];
+    float length  = [_bulletLengthTextField.text floatValue];
+    float twist   = [_twistRateTextField.text floatValue];
+    float weight  = [_bulletWeightTextField.text floatValue];
     float tempFahrenheit = 59.0;
     float pressureHg = 29.92;
-    int   mv      = [mvTextField.text intValue];
+    int   mv      = [_mvTextField.text intValue];
     
     if((caliber>0) && (length>0) && (twist>0) && (weight>0) && (mv>0)) {
         float lengthInCalibers = length / caliber;
@@ -74,14 +93,13 @@
         
         float s = (30*weight)/(pow(twist/caliber, 2)*pow(caliber, 3) * lengthInCalibers * (1+pow(lengthInCalibers,2))) * correctiveFactor;
         
-        self.resultLabel.text = [NSString stringWithFormat:@"%.2f", s];        
-        self.resultLabel.textColor = ((s >= 1.3) && (s <= 2.0)) ? [UIColor greenColor] : [UIColor redColor];
+        _resultLabel.text = [NSString stringWithFormat:@"%.2f", s];        
+        _resultLabel.textColor = ((s >= 1.3) && (s <= 2.0)) ? [UIColor greenColor] : [UIColor redColor];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didCalculateSG" object:_resultLabel.text];
     } else {
-        self.resultLabel.text = @"n/a";
-        self.resultLabel.textColor = [UIColor whiteColor];
-        
+        _resultLabel.text = @"n/a";
+        _resultLabel.textColor = [UIColor whiteColor];
     }
-    
 }
 
 #pragma mark TextField delegates
@@ -120,15 +138,15 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.currentTextField = textField;    
+    _currentTextField = textField;    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.currentTextField = nil;
+    _currentTextField = nil;
 }
 
 - (void) nextPreviousTapped:(id)sender {
-    int index = [formFields indexOfObject:self.currentTextField];
+    int index = [formFields indexOfObject:_currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
             if (index > 0) index--;
@@ -138,12 +156,12 @@
             break;
     }
     
-    self.currentTextField = [formFields objectAtIndex:index];
-    [self.currentTextField becomeFirstResponder];
+    _currentTextField = [formFields objectAtIndex:index];
+    [_currentTextField becomeFirstResponder];
 }
 
 - (void) doneTyping:(id)sender {
-    [self.currentTextField resignFirstResponder];
+    [_currentTextField resignFirstResponder];
 }
 
 @end

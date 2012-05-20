@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
 
     //Register addNewNoteToArray to recieve "newNote" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewNote:) name:@"newNote" object:nil];
@@ -40,7 +40,7 @@
 
 - (void)setTitle {
     int count = _selectedWeapon ? [_selectedWeapon.notes count] : [Note countOfEntities];
-    self.title = [NSString stringWithFormat:@"Note%@ (%d)", (count == 1) ? @"" : @"s", count];
+    self.title = [NSString stringWithFormat:@"Notes (%d)", count];
     
     self.noNotesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Notes"]];
     self.noNotesImageView.hidden = (count != 0);

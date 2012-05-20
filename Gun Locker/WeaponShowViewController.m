@@ -159,12 +159,12 @@
                                         delegate:self
                                cancelButtonTitle:@"Cancel"
                           destructiveButtonTitle:nil
-                               otherButtonTitles:@"Pistol", @"Rifle", @"Shotgun", @"Miscellaneous", nil];
+                               otherButtonTitles:@"Handgun", @"Rifle", @"Shotgun", @"Miscellaneous", nil];
     [sheet showInView:[UIApplication sharedApplication].keyWindow];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSArray *categories =  [NSArray arrayWithObjects:@"Pistols", @"Rifles", @"Shotguns", @"Misc.", nil];
+    NSArray *categories =  [NSArray arrayWithObjects:@"Handguns", @"Rifles", @"Shotguns", @"Misc.", nil];
     if (buttonIndex < [categories count]) {
         selectedWeapon.type = weaponTypeLabel.text = [categories objectAtIndex:buttonIndex];
 
