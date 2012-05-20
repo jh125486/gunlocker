@@ -14,7 +14,7 @@
 @synthesize showPasscode;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [MagicalRecordHelpers setupCoreDataStackWithStoreNamed:@"GunLocker.sqlite"];
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"GunLocker.sqlite"];
     NSLog(@"\tMagicalRecord setup completed");
     recordsDirty = NO;
     
@@ -49,7 +49,7 @@
     locationManager.delegate = nil;
     [locationManager stopMonitoringSignificantLocationChanges];
     [locationManager stopUpdatingLocation];
-    [MagicalRecordHelpers cleanUp];
+    [MagicalRecord cleanUp];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -85,7 +85,7 @@
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    [MagicalRecordHelpers cleanUp];
+    [MagicalRecord cleanUp];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:@"tempWeaponDirty"];
     [defaults removeObjectForKey:@"tempWeapon"];
