@@ -10,17 +10,17 @@
 
 @implementation ConversionsViewController
 
-@synthesize length1UnitTextField, length2UnitTextField;
-@synthesize length1UnitButton, length1TextField;
-@synthesize length2UnitButton, length2TextField;
-@synthesize lengthUnitPicker;
+@synthesize length1UnitTextField = _length1UnitTextField, length2UnitTextField = _length2UnitTextField;
+@synthesize length1UnitButton = _length1UnitButton, length1TextField = _length1TextField;
+@synthesize length2UnitButton = _length2UnitButton, length2TextField = _length2TextField;
+@synthesize lengthUnitPicker = _lengthUnitPicker;
 
-@synthesize weight1UnitTextField, weight2UnitTextField;
-@synthesize weight1UnitButton, weight1TextField;
-@synthesize weight2UnitButton, weight2TextField;
-@synthesize weightUnitPicker;
+@synthesize weight1UnitTextField = _weight1UnitTextField, weight2UnitTextField = _weight2UnitTextField;
+@synthesize weight1UnitButton = _weight1UnitButton, weight1TextField = _weight1TextField;
+@synthesize weight2UnitButton = _weight2UnitButton, weight2TextField = _weight2TextField;
+@synthesize weightUnitPicker = _weightUnitPicker;
 
-@synthesize currentTextField;
+@synthesize currentTextField = _currentTextField;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -35,35 +35,48 @@
 
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
 
-    self.lengthUnitPicker = [[UIPickerView alloc] init];
-    self.weightUnitPicker = [[UIPickerView alloc] init];
-    self.lengthUnitPicker.showsSelectionIndicator = self.weightUnitPicker.showsSelectionIndicator = YES;
-    self.lengthUnitPicker.delegate = self.weightUnitPicker.delegate = self;
+    _lengthUnitPicker = [[UIPickerView alloc] init];
+    _weightUnitPicker = [[UIPickerView alloc] init];
+    _lengthUnitPicker.showsSelectionIndicator = _weightUnitPicker.showsSelectionIndicator = YES;
+    _lengthUnitPicker.delegate = _weightUnitPicker.delegate = self;
     
     
-    formFields = [NSArray arrayWithObjects:self.length1UnitTextField,
-                                           self.length2UnitTextField,
-                                           self.length1TextField, 
-                                           self.length2TextField,
-                                           self.weight1UnitTextField,
-                                           self.weight2UnitTextField,
-                                           self.weight2TextField, 
-                                           self.weight2TextField, nil];
+    formFields = [NSArray arrayWithObjects:_length1UnitTextField,
+                                           _length2UnitTextField,
+                                           _length1TextField, 
+                                           _length2TextField,
+                                           _weight1UnitTextField,
+                                           _weight2UnitTextField,
+                                           _weight1TextField, 
+                                           _weight2TextField, nil];
 
-    for(UITextField *field in formFields) {
+    for(UITextField *field in formFields)
         field.delegate = self;
-        field.keyboardType = UIKeyboardTypeDecimalPad;
-        field.enabled = NO;
-    }
     lastLengthSelected = lastWeightSelected = -1;
     
-    self.length1UnitTextField.enabled = self.length2UnitTextField.enabled = self.weight1UnitTextField.enabled = self.weight2UnitTextField.enabled = YES;
-    self.length1UnitTextField.inputView = self.length2UnitTextField.inputView = self.lengthUnitPicker;
-    self.weight1UnitTextField.inputView = self.weight2UnitTextField.inputView = self.weightUnitPicker;
+    _length1UnitTextField.enabled = _length2UnitTextField.enabled = _weight1UnitTextField.enabled = _weight2UnitTextField.enabled = YES;
+    _length1UnitTextField.inputView = _length2UnitTextField.inputView = _lengthUnitPicker;
+    _weight1UnitTextField.inputView = _weight2UnitTextField.inputView = _weightUnitPicker;
+
+    _length1TextField.enabled = _length2TextField.enabled = _weight1TextField.enabled = _weight2TextField.enabled = NO;
+    _length1TextField.keyboardType = _length2TextField.keyboardType = _weight1TextField.keyboardType = _weight2TextField.keyboardType = UIKeyboardTypeDecimalPad;
     
     lengthUnits = [NSArray arrayWithObjects:@"Meters", @"Yards", @"Feet", nil];
     weightUnits = [NSArray arrayWithObjects:@"Pounds", @"Grains", @"Kilograms", @"Grams", nil];
     
+    lengthConversionsToMeters = [[NSDictionary alloc] initWithObjectsAndKeys:[NSDecimalNumber decimalNumberWithString:@"1"], @"Meters",
+                                                                             [NSDecimalNumber decimalNumberWithString:@"1.0936133"], @"Yards",
+                                                                             [NSDecimalNumber decimalNumberWithString:@"3.2808399"], @"Feet",nil];
+
+    weightConversionsToGrams = [[NSDictionary alloc] initWithObjectsAndKeys:[NSDecimalNumber decimalNumberWithString:@"0.0022046226"], @"Pounds",
+                                                                            [NSDecimalNumber decimalNumberWithString:@"15.43235869"], @"Grains",
+                                                                            [NSDecimalNumber decimalNumberWithString:@"0.001"], @"Kilograms",
+                                                                            [NSDecimalNumber decimalNumberWithString:@"1"], @"Grams",nil];
+
+    [_lengthUnitPicker selectRow:0 inComponent:0 animated:NO];
+    [_lengthUnitPicker selectRow:0 inComponent:1 animated:NO];
+    [_weightUnitPicker selectRow:0 inComponent:0 animated:NO];
+    [_weightUnitPicker selectRow:0 inComponent:1 animated:NO];
 }
 
 - (void)viewDidUnload {
@@ -90,26 +103,18 @@
 
 #pragma mark TableView
 
--(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
-    if (sectionTitle == nil) return nil;
-    
-	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, tableView.bounds.size.width, tableView.sectionHeaderHeight)];
-    headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background"]];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, 0.0f, headerView.frame.size.width - 20.0f, tableView.sectionHeaderHeight)];
-	label.text = sectionTitle;
-	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:18.0f];
-	label.shadowColor = [UIColor lightTextColor];
-    label.shadowOffset = CGSizeMake(0.0f, 1.0f);
-	label.backgroundColor = [UIColor clearColor];    
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), 30.0f)];
+	tableView.sectionHeaderHeight = headerView.frame.size.height;
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5.0f, 6.0f, CGRectGetWidth(headerView.frame) - 20.0f, 24.0f)];
+	label.text = [self tableView:tableView titleForHeaderInSection:section];
+	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0f];
+	label.shadowColor = [UIColor clearColor];
+	label.backgroundColor = [UIColor clearColor];
 	label.textColor = [UIColor blackColor];
     
 	[headerView addSubview:label];
 	return headerView;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return ([self tableView:tableView titleForHeaderInSection:section] != nil) ? 23.0f : 0.0f;
 }
 
 #pragma mark TextField delegates
@@ -137,9 +142,9 @@
     
     if ([formFields indexOfObject:textField] == 0) {
         [control setEnabled:NO forSegmentAtIndex:0];
-    } else if ([formFields indexOfObject:textField] == ([formFields count] -1)) {
+    } else if ([formFields  lastObject] == textField) {
         [control setEnabled:NO forSegmentAtIndex:1];
-    } else if (![formFields containsObject:formFields]){
+    } else if (![formFields containsObject:textField]){
         controlItem = space;
     }
     
@@ -150,25 +155,43 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if (textField == self.length1TextField) {
+    if (textField == _length1TextField) {
         lastLengthSelected = 0;
-    } else if (textField == self.length2TextField) {
+    } else if (textField == _length2TextField) {
         lastLengthSelected = 1;
-    } else if (textField == self.weight1TextField) {
+    } else if (textField == _weight1TextField) {
         lastWeightSelected = 0;
-    } else if (textField == self.weight2TextField) {
+    } else if (textField == _weight2TextField) {
         lastWeightSelected = 1;
     }
     
-    self.currentTextField = textField;   
+    [self setButtonSelectedForTextField:textField andState:YES];
+    
+    _currentTextField = textField;   
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {    
-    self.currentTextField = nil;
+-(void)setButtonSelectedForTextField:(UITextField *)textField andState:(BOOL)state {
+    if (textField == _length1UnitTextField) {
+        [_length1UnitButton setSelected:state];
+    } else if (textField == _length2UnitTextField) {
+        [_length2UnitButton setSelected:state];
+    } else if (textField == _weight1UnitTextField) {
+        [_weight1UnitButton setSelected:state];
+    } else if (textField == _weight2UnitTextField) {
+        [_weight2UnitButton setSelected:state];
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [self setButtonSelectedForTextField:textField andState:NO];
+    
+    _currentTextField = nil;
 }
 
 - (void) nextPreviousTapped:(id)sender {
-    int index = [formFields indexOfObject:currentTextField];
+    [self setUnits];
+
+    int index = [formFields indexOfObject:_currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
             if (index > 0) index--;
@@ -178,50 +201,79 @@
             break;
     }
     
-    self.currentTextField = [formFields objectAtIndex:index];
-    [self.currentTextField becomeFirstResponder];
+    _currentTextField = [formFields objectAtIndex:index];
+    [_currentTextField becomeFirstResponder];
 }
 
-- (void) doneTyping:(id)sender {    
-    [self.currentTextField resignFirstResponder];
+- (void) doneTyping:(id)sender {
+    [self setUnits];
+    [_currentTextField resignFirstResponder];
+}
+
+-(void)setUnits {
+    if ((_currentTextField == _length1UnitTextField) || (_currentTextField == _length2UnitTextField)) {
+        [self setLengthUnits];
+    } else if ((_currentTextField == _weight1UnitTextField) || (_currentTextField == _weight2UnitTextField)) {
+        [self setWeightUnits];
+    }
 }
 
 #pragma mark Conversions
 
-- (IBAction)convertLength:(id)sender {
-    if (lastLengthSelected == 0) {
-        self.length2TextField.text = [NSString stringWithFormat:@"%f", [self.length1TextField.text doubleValue] * M_PI];
-    } else {
-        self.length1TextField.text = [NSString stringWithFormat:@"%f", [self.length2TextField.text doubleValue] * M_PI];
+- (IBAction)convertLength:(id)sender { 
+    if (lastLengthSelected == 0) { // left unit last edited
+        if ((_length1TextField.text.length == 0)) {
+            _length2TextField.text = @"0";
+        } else {
+            NSDecimalNumber *length1InMeters = [[NSDecimalNumber decimalNumberWithString:_length1TextField.text] decimalNumberByDividingBy:[lengthConversionsToMeters objectForKey:length1Unit]];
+            _length2TextField.text = [NSString stringWithFormat:@"%g", [[length1InMeters decimalNumberByMultiplyingBy:[lengthConversionsToMeters objectForKey:length2Unit]] doubleValue]];
+        }
+    } else { // right unit last edited        
+        if (_length2TextField.text.length == 0) {
+            _length1TextField.text = @"0";
+        } else {
+            NSDecimalNumber *length2InMeters = [[NSDecimalNumber decimalNumberWithString:_length2TextField.text] decimalNumberByDividingBy:[lengthConversionsToMeters objectForKey:length2Unit]];            
+            _length1TextField.text = [NSString stringWithFormat:@"%g", [[length2InMeters decimalNumberByMultiplyingBy:[lengthConversionsToMeters objectForKey:length1Unit]] doubleValue]];
+        }
     }
 }
 
 - (IBAction)convertWeight:(id)sender {
-    if (lastWeightSelected == 0) {
-        self.weight2TextField.text = [NSString stringWithFormat:@"%f", [self.weight1TextField.text doubleValue] * M_PI];
-    } else {
-        self.weight1TextField.text = [NSString stringWithFormat:@"%f", [self.weight2TextField.text doubleValue] * M_PI];
+    if (lastWeightSelected == 0) { // left unit last edited
+        if (_weight1TextField.text.length == 0) {
+            _weight2TextField.text = @"0";
+        } else {
+            NSDecimalNumber *length1InMeters = [[NSDecimalNumber decimalNumberWithString:_weight1TextField.text] decimalNumberByDividingBy:[weightConversionsToGrams objectForKey:weight1Unit]];
+            _weight2TextField.text = [NSString stringWithFormat:@"%g", [[length1InMeters decimalNumberByMultiplyingBy:[weightConversionsToGrams objectForKey:weight2Unit]] doubleValue]];            
+        }
+    } else { // right unit last edited
+        if (_weight2TextField.text.length == 0) {
+            _weight1TextField.text = @"0";
+        } else {
+            NSDecimalNumber *weight2InMeters = [[NSDecimalNumber decimalNumberWithString:_weight2TextField.text] decimalNumberByDividingBy:[weightConversionsToGrams objectForKey:weight2Unit]];
+            _weight1TextField.text = [NSString stringWithFormat:@"%g", [[weight2InMeters decimalNumberByMultiplyingBy:[weightConversionsToGrams objectForKey:weight1Unit]] doubleValue]];            
+        }
     }
 }
 
-- (IBAction)chooseUnit:(UIButton *)sender {
-    if (sender == self.length1UnitButton) {
-        [self.length1UnitTextField becomeFirstResponder];
-    } else if (sender == self.length2UnitButton) {
-        [self.length2UnitTextField becomeFirstResponder];
-    } else if (sender == self.weight1UnitButton) {
-        [self.weight1UnitTextField becomeFirstResponder];
-    } else if (sender == self.weight2UnitButton) {
-        [self.weight2UnitTextField becomeFirstResponder];
+- (IBAction)chooseUnitTapped:(UIButton *)sender {
+    if (sender == _length1UnitButton) {
+        [_length1UnitTextField becomeFirstResponder];
+    } else if (sender == _length2UnitButton) {
+        [_length2UnitTextField becomeFirstResponder];
+    } else if (sender == _weight1UnitButton) {
+        [_weight1UnitTextField becomeFirstResponder];
+    } else if (sender == _weight2UnitButton) {
+        [_weight2UnitTextField becomeFirstResponder];
     }
 }
 
 #pragma mark Pickerviews
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if (pickerView == self.lengthUnitPicker) {
+    if (pickerView == _lengthUnitPicker) {
         return [lengthUnits objectAtIndex:row];
-    } else if (pickerView == self.weightUnitPicker) {
+    } else if (pickerView == _weightUnitPicker) {
         return [weightUnits objectAtIndex:row];
     } else {
         return @"";
@@ -233,9 +285,9 @@
 }
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (pickerView == self.lengthUnitPicker) {
+    if (pickerView == _lengthUnitPicker) {
         return [lengthUnits count];
-    } else if (pickerView == self.weightUnitPicker) {
+    } else if (pickerView == _weightUnitPicker) {
         return [weightUnits count];
     } else {
         return 0;
@@ -243,21 +295,45 @@
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if (pickerView == self.lengthUnitPicker) {
-        if (lastLengthSelected == -1) self.length1TextField.enabled = self.length2TextField.enabled = YES;
-        self.length1UnitButton.titleLabel.text = [lengthUnits objectAtIndex:[self.lengthUnitPicker selectedRowInComponent:0]];
-        self.length2UnitButton.titleLabel.text = [lengthUnits objectAtIndex:[self.lengthUnitPicker selectedRowInComponent:1]];
-        self.length1UnitButton.titleLabel.textAlignment = self.length2UnitButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    if (pickerView == _lengthUnitPicker) {
         lastLengthSelected = component;
-        [self convertLength:nil];
-    } else if (pickerView == self.weightUnitPicker) {
-        if (lastWeightSelected == -1) self.length1TextField.enabled = self.length2TextField.enabled = YES;
-        self.weight1UnitButton.titleLabel.text = [weightUnits objectAtIndex:[self.weightUnitPicker selectedRowInComponent:0]];
-        self.weight2UnitButton.titleLabel.text = [weightUnits objectAtIndex:[self.weightUnitPicker selectedRowInComponent:1]];
-        self.weight1UnitButton.titleLabel.textAlignment = self.weight2UnitButton.titleLabel.textAlignment = UITextAlignmentCenter;
+        [self setLengthUnits];
+    } else if (pickerView == _weightUnitPicker) {
         lastWeightSelected = component;
-        [self convertWeight:nil];
+        [self setWeightUnits];
     }
+}
+
+-(void)setLengthUnits {
+    _length1TextField.enabled = _length2TextField.enabled = YES;
+    length1Unit = [lengthUnits objectAtIndex:[_lengthUnitPicker selectedRowInComponent:0]];
+    length2Unit = [lengthUnits objectAtIndex:[_lengthUnitPicker selectedRowInComponent:1]];
+    
+    [_length1UnitButton setTitle:length1Unit forState:UIControlStateNormal];
+    [_length1UnitButton setTitle:length1Unit forState:UIControlStateSelected];
+
+    [_length2UnitButton setTitle:length2Unit forState:UIControlStateNormal];
+    [_length2UnitButton setTitle:length2Unit forState:UIControlStateSelected];
+    
+    _length1UnitButton.titleLabel.textAlignment = _length2UnitButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    
+    [self convertLength:nil];
+}
+
+-(void)setWeightUnits {
+    _weight1TextField.enabled = _weight2TextField.enabled = YES;
+    weight1Unit = [weightUnits objectAtIndex:[_weightUnitPicker selectedRowInComponent:0]];
+    weight2Unit = [weightUnits objectAtIndex:[_weightUnitPicker selectedRowInComponent:1]];
+
+    [_weight1UnitButton setTitle:weight1Unit forState:UIControlStateNormal];
+    [_weight1UnitButton setTitle:weight1Unit forState:UIControlStateSelected];
+    
+    [_weight2UnitButton setTitle:weight2Unit forState:UIControlStateNormal];
+    [_weight2UnitButton setTitle:weight2Unit forState:UIControlStateSelected];
+
+    _weight1UnitButton.titleLabel.textAlignment = _weight2UnitButton.titleLabel.textAlignment = UITextAlignmentCenter;
+
+    [self convertWeight:nil];
 }
 
 @end

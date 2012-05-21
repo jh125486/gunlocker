@@ -12,6 +12,7 @@
 @synthesize brandTextField = _brandTextField;
 @synthesize typeTextField = _typeTextField;
 @synthesize caliberTextField = _caliberTextField;
+@synthesize capacityTextField = _capacityTextField;
 @synthesize colorTextField = _colorTextField;
 @synthesize countTextField = _countTextField;
 @synthesize selectedMagazine = _selectedMagazine;
@@ -30,7 +31,13 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
 
-    formFields = [[NSArray alloc] initWithObjects:_brandTextField, _typeTextField, _caliberTextField, _colorTextField, _countTextField, nil];
+    formFields = [[NSArray alloc] initWithObjects:_brandTextField, 
+                                                  _typeTextField, 
+                                                  _caliberTextField, 
+                                                  _capacityTextField,
+                                                  _colorTextField, 
+                                                  _countTextField, 
+                                                  nil];
     
     for(UITextField *field in formFields)
         field.delegate = self;
@@ -41,11 +48,12 @@
 
 -(void)loadMagazine {
     self.title = @"Edit Magazine";
-    _brandTextField.text   = _selectedMagazine.brand;
-    _typeTextField.text    = _selectedMagazine.type;
-	_colorTextField.text   = _selectedMagazine.color;
-    _caliberTextField.text = _selectedMagazine.caliber;
-    _countTextField.text   = [_selectedMagazine.count stringValue];
+    _brandTextField.text    = _selectedMagazine.brand;
+    _typeTextField.text     = _selectedMagazine.type;
+    _caliberTextField.text  = _selectedMagazine.caliber;
+	_colorTextField.text    = _selectedMagazine.color;
+    _capacityTextField.text = [_selectedMagazine.capacity stringValue];
+    _countTextField.text    = [_selectedMagazine.count stringValue];
 }
 
 - (void)viewDidUnload {
@@ -57,6 +65,7 @@
     [self setCurrentTextField:nil];
     [self setSelectedMagazine:nil];
     [self setSelectedCaliber:nil];
+    [self setCapacityTextField:nil];
     [super viewDidUnload];
 }
 
@@ -155,18 +164,33 @@
 }
 
 - (IBAction)savedTapped:(id)sender {
-    Magazine *ammunition = (_selectedMagazine) ? _selectedMagazine : [Magazine createEntity];
+    Magazine *magazine = (_selectedMagazine) ? _selectedMagazine : [Magazine createEntity];
     
-    ammunition.brand   = _brandTextField.text;
-    ammunition.type    = _typeTextField.text;
-	ammunition.color   = _colorTextField.text;
-    ammunition.caliber = _caliberTextField.text;
+    magazine.brand    = _brandTextField.text;
+    magazine.type     = _typeTextField.text;
+    magazine.caliber  = _caliberTextField.text;
+    magazine.capacity = [NSNumber numberWithInt:[_capacityTextField.text intValue]];
+    magazine.color    = _colorTextField.text;
     
     int count = [_countTextField.text integerValue];
     if (count < 0) count = 0;
-    ammunition.count   = [NSNumber numberWithInt:count];
+    magazine.count   = [NSNumber numberWithInt:count];
     
     [[NSManagedObjectContext defaultContext] save];
+//    
+// Fails to update FRC
+//    [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext) {
+//        
+//        Magazine *localMagazine = [magazine MR_inContext:localContext];
+//        localMagazine.brand   = _brandTextField.text;
+//        localMagazine.type    = _typeTextField.text;
+//        localMagazine.color   = _colorTextField.text;
+//        localMagazine.caliber = _caliberTextField.text;
+//        
+//        int count = [_countTextField.text integerValue];
+//        if (count < 0) count = 0;
+//        localMagazine.count   = [NSNumber numberWithInt:count];
+//    }];
     
     [self dismissModalViewControllerAnimated:YES];
 }

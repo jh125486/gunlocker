@@ -9,18 +9,19 @@
 #import "BallisticsViewController.h"
 
 @implementation BallisticsViewController
-@synthesize addNewProfileButton;
-@synthesize rangeLabel, rangeResult, rangeResultUnits;
-@synthesize tempLabel, windLabel, altitudeLabel, densityAltitudeLabel, rhLabel;
-@synthesize wxButton, wxStationLabel, wxIndicator, wxTimestampLabel;
-@synthesize chooseProfileButton, selectedProfileTextField;
+@synthesize addNewProfileButton = _addNewProfileButton;
+@synthesize rangeLabel = _rangeLabel, rangeResult = _rangeResult, rangeResultUnits = _rangeResultUnits;
+@synthesize tempLabel = _tempLabel, windLabel = _windLabel; 
+@synthesize altitudeLabel = _altitudeLabel, densityAltitudeLabel = _densityAltitudeLabel, rhLabel = _rhLabel;
+@synthesize wxButton = _wxButton, wxStationLabel = _wxStationLabel, wxIndicator = _wxIndicator, wxTimestampLabel = _wxTimestampLabel;
+@synthesize chooseProfileButton = _chooseProfileButton, selectedProfileTextField = _selectedProfileTextField;
 @synthesize selectedProfilePickerView = _selectedProfilePickerView;
-@synthesize selectedProfileWeaponLabel, selectedProfileNameLabel;
-@synthesize dopeCardsButton, whizWheelButton;
+@synthesize selectedProfileWeaponLabel = _selectedProfileWeaponLabel, selectedProfileNameLabel = _selectedProfileNameLabel;
+@synthesize dopeCardsButton = _dopeCardsButton, whizWheelButton = _whizWheelButton;
 
-@synthesize locationManager;
+@synthesize locationManager = _locationManager;
 @synthesize currentLocation = _currentLocation;
-@synthesize locationTimer;
+@synthesize locationTimer = _locationTimer;
 @synthesize currentWeather = _currentWeather;
 
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -40,7 +41,7 @@
     _selectedProfilePickerView = [[UIPickerView alloc] init];
     _selectedProfilePickerView.delegate = self;
     [_selectedProfilePickerView setShowsSelectionIndicator:YES];
-    self.selectedProfileTextField.inputView = _selectedProfilePickerView;
+    _selectedProfileTextField.inputView = _selectedProfilePickerView;
     UIToolbar* textFieldToolBarView = [[UIToolbar alloc] init];
     textFieldToolBarView.barStyle = UIBarStyleBlack;
     textFieldToolBarView.translucent = YES;
@@ -52,16 +53,16 @@
     UIBarButtonItem *done   = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
                                                                            target:self action:@selector(profileSelected:)];
     [textFieldToolBarView setItems:[NSArray arrayWithObjects:cancel, space, done, nil]];
-    self.selectedProfileTextField.inputAccessoryView = textFieldToolBarView;
+    _selectedProfileTextField.inputAccessoryView = textFieldToolBarView;
     
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
     //    locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    locationManager.distanceFilter = 3000.0f;
-    [locationManager startUpdatingLocation];
-    [locationManager startMonitoringSignificantLocationChanges];
-    self.locationTimer = [NSTimer scheduledTimerWithTimeInterval:300.0 
+    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    _locationManager.distanceFilter = 3000.0f;
+    [_locationManager startUpdatingLocation];
+    [_locationManager startMonitoringSignificantLocationChanges];
+    _locationTimer = [NSTimer scheduledTimerWithTimeInterval:300.0 
                                                           target:self 
                                                         selector:@selector(stopUpdatingLocations) 
                                                         userInfo:nil 
@@ -86,9 +87,9 @@
         [self resetChooseProfileButton];
     }        
     
-    self.chooseProfileButton.enabled = (profiles.count != 0);
+    _chooseProfileButton.enabled = (profiles.count != 0);
     
-    self.addNewProfileButton.enabled = ([Weapon countOfEntities] != 0);
+    _addNewProfileButton.enabled = ([Weapon countOfEntities] != 0);
     
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 }
@@ -98,9 +99,9 @@
     
     //crash for some reason
 //    if (_currentWeather && _currentWeather.goodData) {
-//        self.wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", [[_currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
+//        _wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", [[_currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
 //    } else {
-//        self.wxTimestampLabel.text = @"";
+//        _wxTimestampLabel.text = @"";
 //    }
 }
 
@@ -131,9 +132,9 @@
 
 - (void)setRange:(NSNotification*)notification {
     NSArray *passedRange = [notification object];
-    rangeResult = [passedRange objectAtIndex:0];
-    rangeResultUnits = [passedRange objectAtIndex:1];
-    self.rangeLabel.text = [NSString stringWithFormat:@"%.0f %@", [rangeResult floatValue], rangeResultUnits];
+    _rangeResult = [passedRange objectAtIndex:0];
+    _rangeResultUnits = [passedRange objectAtIndex:1];
+    _rangeLabel.text = [NSString stringWithFormat:@"%.0f %@", [_rangeResult floatValue], _rangeResultUnits];
 }
 
 - (IBAction)chooseProfileTapped:(id)sender {
@@ -146,37 +147,37 @@
         sheet.actionSheetStyle = UIActionSheetStyleAutomatic;
         [sheet showInView:[UIApplication sharedApplication].keyWindow];
     } else {
-        [self.selectedProfileTextField becomeFirstResponder];
+        [_selectedProfileTextField becomeFirstResponder];
     }
 }
 
 - (void)profileSelected:(id)sender {
-    selectedProfile = [profiles objectAtIndex:[self.selectedProfilePickerView selectedRowInComponent:0]];
-    self.selectedProfileWeaponLabel.text = [selectedProfile.weapon description];
-    self.selectedProfileNameLabel.text = selectedProfile.name;
+    selectedProfile = [profiles objectAtIndex:[_selectedProfilePickerView selectedRowInComponent:0]];
+    _selectedProfileWeaponLabel.text = [selectedProfile.weapon description];
+    _selectedProfileNameLabel.text = selectedProfile.name;
     
-    [self.chooseProfileButton setTitle:@"" forState:UIControlStateNormal];
-    [self.chooseProfileButton setTitle:@"" forState:UIControlStateHighlighted];
-    [self.chooseProfileButton setTitle:@"" forState:UIControlStateSelected];
+    [_chooseProfileButton setTitle:@"" forState:UIControlStateNormal];
+    [_chooseProfileButton setTitle:@"" forState:UIControlStateHighlighted];
+    [_chooseProfileButton setTitle:@"" forState:UIControlStateSelected];
 //    chooseProfileButton.titleLabel.textAlignment = UITextAlignmentCenter;
-    self.dopeCardsButton.enabled = YES;
-    self.whizWheelButton.enabled = YES;
-    [self.selectedProfileTextField resignFirstResponder];
+    _dopeCardsButton.enabled = YES;
+    _whizWheelButton.enabled = YES;
+    [_selectedProfileTextField resignFirstResponder];
 }
 
 -(void)resetChooseProfileButton {
     selectedProfile = nil;
-    [self.chooseProfileButton setTitle:@"Choose a Profile" forState:UIControlStateNormal];
-    [self.chooseProfileButton setTitle:@"Choose a Profile" forState:UIControlStateHighlighted];
-    [self.chooseProfileButton setTitle:@"Choose a Profile" forState:UIControlStateSelected];
-    self.selectedProfileWeaponLabel.text = @"";
-    self.selectedProfileNameLabel.text = @"";
-    self.dopeCardsButton.enabled = NO;
-    self.whizWheelButton.enabled = NO;
+    [_chooseProfileButton setTitle:@"Choose a Profile" forState:UIControlStateNormal];
+    [_chooseProfileButton setTitle:@"Choose a Profile" forState:UIControlStateHighlighted];
+    [_chooseProfileButton setTitle:@"Choose a Profile" forState:UIControlStateSelected];
+    _selectedProfileWeaponLabel.text = @"";
+    _selectedProfileNameLabel.text = @"";
+    _dopeCardsButton.enabled = NO;
+    _whizWheelButton.enabled = NO;
 }
 
 - (void)profileCancel:(id)sender {
-    [self.selectedProfileTextField resignFirstResponder];
+    [_selectedProfileTextField resignFirstResponder];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -214,8 +215,8 @@
     if(error.code == kCLErrorDenied) {
         [self stopUpdatingLocations];
         [self resetWX];
-        self.wxButton.enabled = self.wxTimestampLabel.hidden = NO;
-        self.wxTimestampLabel.text = @"Location services disabled";
+        _wxButton.enabled = _wxTimestampLabel.hidden = NO;
+        _wxTimestampLabel.text = @"Location services disabled";
     } else if(error.code == kCLErrorLocationUnknown) {
         // retry
     } else {
@@ -229,10 +230,10 @@
 }
 
 - (void)stopUpdatingLocations { 
-    locationManager.delegate = nil;
-    [locationManager stopMonitoringSignificantLocationChanges];
-    [locationManager stopUpdatingLocation]; 
-    [locationTimer invalidate]; 
+    _locationManager.delegate = nil;
+    [_locationManager stopMonitoringSignificantLocationChanges];
+    [_locationManager stopUpdatingLocation]; 
+    [_locationTimer invalidate]; 
 }
 
 #pragma mark - ProfileAddEditViewController delegate
@@ -247,7 +248,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     if (section != 0) return nil;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, self.tableView.sectionFooterHeight)];
-    [view addSubview:self.wxTimestampLabel];
+    [view addSubview:_wxTimestampLabel];
     return view;
 }
 
@@ -312,7 +313,7 @@
             break;
         case 1:
             // choose a different profile
-            [self.selectedProfileTextField becomeFirstResponder];
+            [_selectedProfileTextField becomeFirstResponder];
             break;
         default:
             break;
@@ -338,9 +339,9 @@
 #pragma mark WX
 
 - (IBAction)getWX:(id)sender {
-    self.wxStationLabel.hidden = self.wxTimestampLabel.hidden = YES;
-    [self.wxIndicator startAnimating];
-    self.wxButton.enabled = NO;
+    _wxStationLabel.hidden = _wxTimestampLabel.hidden = YES;
+    [_wxIndicator startAnimating];
+    _wxButton.enabled = NO;
 
     NSLog(@"Getting weather for Lat %f Long %f", _currentLocation.coordinate.latitude, _currentLocation.coordinate.longitude);
 
@@ -362,29 +363,29 @@
 
                 _currentWeather = [[Weather alloc] initClosetWeatherFromMetarArray:weatherArray andLocation:_currentLocation];
 
-                self.tempLabel.text = [NSString stringWithFormat:@"%.0fº F", TEMP_C_to_TEMP_F(_currentWeather.tempC)];
-                self.rhLabel.text   = [NSString stringWithFormat:@"%.0f%%", _currentWeather.relativeHumidity];
-                self.windLabel.text = [NSString stringWithFormat:@"%.0f knots from %@", _currentWeather.windSpeedKnots, 
+                _tempLabel.text = [NSString stringWithFormat:@"%.0fº F", TEMP_C_to_TEMP_F(_currentWeather.tempC)];
+                _rhLabel.text   = [NSString stringWithFormat:@"%.0f%%", _currentWeather.relativeHumidity];
+                _windLabel.text = [NSString stringWithFormat:@"%.0f knots from %@", _currentWeather.windSpeedKnots, 
                                                      [_currentWeather cardinalDirectionFromDegrees:_currentWeather.windDirectionDegrees]];
-                self.altitudeLabel.text = [NSString stringWithFormat:@"%.0f'%", METERS_to_FEET(_currentWeather.altitudeMeters)];
-                self.densityAltitudeLabel.text = [NSString stringWithFormat:@"%.0f'%", _currentWeather.densityAltitude];
-                self.wxStationLabel.text = [NSString stringWithFormat:@"%@ (%.0f km)", _currentWeather.stationID, _currentWeather.kmFromStation];
-                self.wxTimestampLabel.hidden = self.wxStationLabel.hidden = NO;
-                [self.wxIndicator stopAnimating];
-                self.wxButton.enabled = YES;
-                self.wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", [[_currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
+                _altitudeLabel.text = [NSString stringWithFormat:@"%.0f'%", METERS_to_FEET(_currentWeather.altitudeMeters)];
+                _densityAltitudeLabel.text = [NSString stringWithFormat:@"%.0f'%", _currentWeather.densityAltitude];
+                _wxStationLabel.text = [NSString stringWithFormat:@"%@ (%.0f km)", _currentWeather.stationID, _currentWeather.kmFromStation];
+                _wxTimestampLabel.hidden = _wxStationLabel.hidden = NO;
+                [_wxIndicator stopAnimating];
+                _wxButton.enabled = YES;
+                _wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", [[_currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
 
-                self.wxButton.titleLabel.text = @"↻ WX";
+                _wxButton.titleLabel.text = @"↻ WX";
 
             } else { // errors with weather.aero
                NSLog(@"! Problem with METAR data from weather.aero: %@\n", metarArray);
                 [self resetWX];
-                self.wxTimestampLabel.text = @"Error processing weather data: dataservice down";
+                _wxTimestampLabel.text = @"Error processing weather data: dataservice down";
            }
         } else {      // network errors       
             NSLog(@"! Error: %@", operation.error.localizedDescription);
             [self resetWX];
-            self.wxTimestampLabel.text = operation.error.localizedDescription;
+            _wxTimestampLabel.text = operation.error.localizedDescription;
         }
     };
     
@@ -394,15 +395,15 @@
 -(void)resetWX {
     _currentWeather = nil;
     
-    [self.wxIndicator stopAnimating];
-    self.tempLabel.text            = @"n/a";
-    self.rhLabel.text              = @"n/a";
-    self.windLabel.text            = @"n/a";
-    self.altitudeLabel.text        = @"n/a";
-    self.densityAltitudeLabel.text = @"n/a";
-    self.wxTimestampLabel.hidden   = NO;
-    self.wxButton.enabled          = YES;
-    self.wxButton.titleLabel.text  = @"⇣ WX";
+    [_wxIndicator stopAnimating];
+    _tempLabel.text            = @"n/a";
+    _rhLabel.text              = @"n/a";
+    _windLabel.text            = @"n/a";
+    _altitudeLabel.text        = @"n/a";
+    _densityAltitudeLabel.text = @"n/a";
+    _wxTimestampLabel.hidden   = NO;
+    _wxButton.enabled          = YES;
+    _wxButton.titleLabel.text  = @"⇣ WX";
 }
 
 @end

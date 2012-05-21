@@ -17,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *brandLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *capacityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *colorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *caliberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;

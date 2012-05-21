@@ -11,6 +11,7 @@
 @implementation MagazineShowViewController
 @synthesize brandLabel = _brandLabel;
 @synthesize typeLabel = _typeLabel;
+@synthesize capacityLabel = _capacityLabel;
 @synthesize colorLabel = _colorLabel;
 @synthesize caliberLabel = _caliberLabel;
 @synthesize countLabel = _countLabel;
@@ -54,10 +55,11 @@
 }
 
 -(void)loadMagazine {
-    _brandLabel.text   = _selectedMagazine.brand;
-    _typeLabel.text    = _selectedMagazine.type;
-    _caliberLabel.text = _selectedMagazine.caliber;
-    _colorLabel.text   = _selectedMagazine.color;
+    _brandLabel.text    = _selectedMagazine.brand;
+    _typeLabel.text     = _selectedMagazine.type;
+    _caliberLabel.text  = _selectedMagazine.caliber;
+    _capacityLabel.text = [_selectedMagazine.capacity stringValue];
+    _colorLabel.text    = _selectedMagazine.color;
     [self setCount];
 }
 
@@ -74,6 +76,7 @@
     [self setCountLabel:nil];
     [self setSellMagazinesButton:nil];
     [self setSelectedMagazine:nil];
+    [self setCapacityLabel:nil];
     [super viewDidUnload];
 }
 

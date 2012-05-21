@@ -25,7 +25,6 @@
 @synthesize stampViewContainer;
 @synthesize stampSerialNumberLabel;
 @synthesize stampDateLabel;
-@synthesize weapon;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -35,17 +34,16 @@
     return self;
 }
 
-- (void)configureWithWeapon:(Weapon *)aWeapon {
-    self.weapon = aWeapon;
+- (void)configureWithWeapon:(Weapon *)weapon {
     self.manufacturerLabel.text = weapon.manufacturer.displayName;
 	self.modelLabel.text = [NSString stringWithFormat:@"%@", weapon.model];
     self.caliberLabel.text =  weapon.caliber ? weapon.caliber : @"n/a";
     
-    if ((weapon.barrel_length > 0) && !([weapon.threaded_barrel_pitch isEqualToString:@""])) {
-        self.barrelInfoLabel.text = [NSString stringWithFormat:@"%@\" threaded %@", aWeapon.barrel_length, aWeapon.threaded_barrel_pitch];
+    if ((weapon.barrel_length > 0) && (weapon.threaded_barrel_pitch.length > 0)) {
+        self.barrelInfoLabel.text = [NSString stringWithFormat:@"%@\" threaded %@", weapon.barrel_length, weapon.threaded_barrel_pitch];
     } else if (weapon.barrel_length > 0) {
         self.barrelInfoLabel.text = [NSString stringWithFormat:@"%@\"", weapon.barrel_length];
-    } else if (!([weapon.threaded_barrel_pitch isEqualToString:@""])) {
+    } else if (weapon.threaded_barrel_pitch.length > 0) {
         self.barrelInfoLabel.text = [NSString stringWithFormat:@"threaded %@", weapon.threaded_barrel_pitch];
     } else {
         self.barrelInfoLabel.text = @"n/a";

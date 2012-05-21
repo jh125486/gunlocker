@@ -40,18 +40,18 @@
     double gravity = -32.174;
 
     // Numerical Integration variables
-    double t = 0;
-    double dt = 1 / vInitial; // The solution accuracy generally doesn't suffer if its within a foot for each second of time.
-    double y=0, x=0;
+    double t = 0.0;
+    double dt = 0.0; // The solution accuracy generally doesn't suffer if its within a foot for each second of time.
+    double y=0.0, x=0.0;
     
     // State variables for each integration loop.
-    double v=0, vx=0, vy=0; // velocity
+    double v=0.0, vx=0.0, vy=0.0; // velocity
     
     double vx1=0, vy1=0;// Last frame's velocity, used for computing average velocity.
     
-    double dv=0, dvx=0, dvy=0; // acceleration
-    double gx=0, gy=0; // Gravitational acceleration
-    double theta = 0; // The actual angle of the bore.
+    double dv=0.0, dvx=0.0, dvy=0.0; // acceleration
+    double gx=0.0, gy=0.0; // Gravitational acceleration
+    double theta = 0.0; // The actual angle of the bore.
     double zero = YARDS_to_FEET([self.zero doubleValue]);
     
     BOOL thetaFound = FALSE; // We know it's time to quit our successive approximation loop when this is true.
@@ -67,14 +67,14 @@
         gx = gravity * sin(theta);
         gy = gravity * cos(theta);
         
-        t = 0;
-        x = 0;
+        t = 0.0;
+        x = 0.0;
         y = yInitial;
         while (x <= zero) {
             vy1 = vy;
             vx1 = vx;
             v = VECTOR_LENGTH(vx, vy);
-            dt=1/v;
+            dt=1.0/v;
             
             dv =  [self getBCWithSpeedOfSound:1116.45 andVelocity:v];
             dv += [self extraDragRetardationWithVelocity:v];
@@ -258,5 +258,16 @@
     NSString *distance = [[self date] distanceOfTimeInWords];
     [self didAccessValueForKey:@"date"];
     return distance;
+}
+@end
+
+@implementation NSString (helper)
+-(int)lengthAfterDecimal {
+    NSArray *components = [self componentsSeparatedByString:@"."];
+    if ([components count] == 1) {
+        return 0;
+    } else {
+        return [[components objectAtIndex:1] length];
+    }
 }
 @end

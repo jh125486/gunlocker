@@ -28,7 +28,7 @@
     NSString *closestStation;
     _kmFromStation = MAXFLOAT;
     float distanceKM;
-    NSArray *stationWeatherArray = [NSArray alloc];
+    NSArray *stationWeatherArray;
     
     // rolls through returned stations and find closest station
     for (NSString *stationWeather in metars) {

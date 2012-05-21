@@ -58,11 +58,11 @@
     double testLeadZ =0.0, testLeadX =0.0;
     
     double t = 0.0;
-    double dt = 0.5 / vInitial;
+    double dt = 0.0;
 
     double v  = vInitial;
-    double vx = vInitial * cos([_ballisticProfile.zero_theta doubleValue]);
-    double vy = vInitial * sin([_ballisticProfile.zero_theta doubleValue]);
+    double vx = v * cos([_ballisticProfile.zero_theta doubleValue]);
+    double vy = v * sin([_ballisticProfile.zero_theta doubleValue]);
     double vx1 = 0.0, vy1 = 0.0;
 
     double dv  = 0.0, dvx = 0.0, dvy = 0.0;

@@ -49,7 +49,6 @@
     locationManager.delegate = nil;
     [locationManager stopMonitoringSignificantLocationChanges];
     [locationManager stopUpdatingLocation];
-    [MagicalRecord cleanUp];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -261,7 +260,6 @@
         newWeapon2.photo = UIImagePNGRepresentation(photo);
         // Create a thumbnail version of the image for the object.
         size = photo.size;
-        ratio = 0;
         ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
         rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
         UIGraphicsBeginImageContext(rect.size);
@@ -286,7 +284,6 @@
         newWeapon3.photo = UIImagePNGRepresentation(photo);
         // Create a thumbnail version of the image for the object.
         size = photo.size;
-        ratio = 0;
         ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
         rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
         UIGraphicsBeginImageContext(rect.size);
@@ -310,7 +307,6 @@
         newWeapon4.photo = UIImagePNGRepresentation(photo);
         // Create a thumbnail version of the image for the object.
         size = photo.size;
-        ratio = 0;
         ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
         rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
         UIGraphicsBeginImageContext(rect.size);

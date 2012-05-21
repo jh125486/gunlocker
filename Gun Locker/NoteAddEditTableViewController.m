@@ -9,10 +9,10 @@
 #import "NoteAddEditTableViewController.h"
 
 @implementation NoteAddEditTableViewController
-@synthesize titleTextField;
-@synthesize bodyTextView;
-@synthesize fakePlaceholderLabel;
-@synthesize passedNote;
+@synthesize titleTextField = _titleTextField;
+@synthesize bodyTextView = _bodyTextView;
+@synthesize fakePlaceholderLabel = _fakePlaceholderLabel;
+@synthesize passedNote = _passedNote;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -23,24 +23,27 @@
 }
 
 - (void)viewDidLoad {
-    [self.titleTextField becomeFirstResponder];
-    self.bodyTextView.delegate = self;
-    self.bodyTextView.scrollEnabled = NO;
+    [_titleTextField becomeFirstResponder];
+    _bodyTextView.delegate = self;
+    _bodyTextView.scrollEnabled = NO;
     
-    if (self.passedNote) {
-        self.titleTextField.text = self.passedNote.title;
-        self.bodyTextView.text = self.passedNote.body;
-        self.fakePlaceholderLabel.hidden = ([self.bodyTextView.text isEqualToString:@""]) ? NO : YES;
-        self.title = @"Note";
-    }
+    if (_passedNote) [self loadNote];
 
     [super viewDidLoad];
+}
+
+-(void)loadNote {
+    _titleTextField.text = _passedNote.title;
+    _bodyTextView.text   = _passedNote.body;
+    _fakePlaceholderLabel.hidden = ([_bodyTextView.text isEqualToString:@""]) ? NO : YES;
+    self.title = @"Note";
 }
 
 - (void)viewDidUnload {
     [self setFakePlaceholderLabel:nil];
     [self setTitleTextField:nil];
     [self setBodyTextView:nil];
+	[self setPassedNote:nil];
     [super viewDidUnload];
 }
 
@@ -48,18 +51,17 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
 - (IBAction)doneTapped:(id)sender {
-    if (self.passedNote) {
-        self.passedNote.date  = [NSDate date];
-        self.passedNote.title = self.titleTextField.text;
-        self.passedNote.body  = self.bodyTextView.text;
+    if (_passedNote) {
+        _passedNote.date  = [NSDate date];
+        _passedNote.title = _titleTextField.text;
+        _passedNote.body  = _bodyTextView.text;
         [[NSManagedObjectContext defaultContext] save];
-    } else if (![self.titleTextField.text isEqualToString:@""] && ![self.bodyTextView.text isEqualToString:@""]) {
+    } else if (![_titleTextField.text isEqualToString:@""] && ![_bodyTextView.text isEqualToString:@""]) {
         Note *newNote = [Note createEntity];
         newNote.date  = [NSDate date];
-        newNote.title = self.titleTextField.text;
-        newNote.body  = self.bodyTextView.text;
+        newNote.title = _titleTextField.text;
+        newNote.body  = _bodyTextView.text;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"newNote" object:newNote];
     }
             
@@ -69,16 +71,18 @@
 
 #pragma mark - TextView delegate
 - (void)textViewDidChange:(UITextView *)textView {
-    self.fakePlaceholderLabel.hidden = ([textView.text isEqualToString:@""]) ? NO : YES;
+    _fakePlaceholderLabel.hidden = ([textView.text isEqualToString:@""]) ? NO : YES;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     NSString* newText = [textView.text stringByReplacingCharactersInRange:range withString:text];
     
-    CGSize tallerSize = CGSizeMake(textView.frame.size.width - 15, textView.frame.size.height * 2);
-    CGSize newSize = [newText sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:UILineBreakModeWordWrap];
+    int newLineCount = [newText length] - [[newText stringByReplacingOccurrencesOfString:@"\n" withString:@""] length];
+    if (newLineCount >= 4) return NO;
     
-    return (newSize.height > textView.frame.size.height) ? NO : YES;
+    CGSize tallerSize = CGSizeMake(textView.frame.size.width -19, textView.frame.size.height * 2);
+    CGSize newSize = [newText sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:UILineBreakModeCharacterWrap];
+    return (newSize.height > (CGRectGetHeight(textView.frame))) ? NO : YES;
 }
 
 @end

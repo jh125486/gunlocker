@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *brandTextField;
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *caliberTextField;
+@property (weak, nonatomic) IBOutlet UITextField *capacityTextField;
 @property (weak, nonatomic) IBOutlet UITextField *colorTextField;
 @property (weak, nonatomic) IBOutlet UITextField *countTextField;
 

@@ -11,9 +11,15 @@
 @interface ConversionsViewController : UITableViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
     NSArray *lengthUnits;
     NSArray *weightUnits;
+    NSDictionary *lengthConversionsToMeters;
+    NSDictionary *weightConversionsToGrams;
     int lastLengthSelected;
     int lastWeightSelected;
     NSArray *formFields;
+    NSString *length1Unit;
+    NSString *length2Unit;
+    NSString *weight1Unit;
+    NSString *weight2Unit;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *length1UnitTextField;
@@ -36,6 +42,6 @@
 - (IBAction)convertLength:(id)sender;
 - (IBAction)convertWeight:(id)sender;
 
-- (IBAction)chooseUnit:(UIButton *)sender;
+- (IBAction)chooseUnitTapped:(UIButton *)sender;
 
 @end

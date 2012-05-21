@@ -28,8 +28,6 @@
 @property (nonatomic, strong) IBOutlet UIButton *stampViewButton;
 @property (nonatomic, strong) IBOutlet UILabel *stampDateLabel;
 @property (nonatomic, strong) IBOutlet UILabel *stampSerialNumberLabel;
-@property (nonatomic, strong) Weapon *weapon;
-
 
 - (void)configureWithWeapon:(Weapon *)aWeapon;
 @end
