@@ -10,16 +10,15 @@
 
 @interface TrajectoryRange : NSObject
 
-@property (nonatomic, strong) NSString *range_yards;
-@property (nonatomic, strong) NSString *range_m;
-@property (nonatomic, strong) NSString *drop_inches;
-@property (nonatomic, strong) NSString *drop_moa;
-@property (nonatomic, strong) NSString *drop_mils;
-@property (nonatomic, strong) NSString *drift_inches;
-@property (nonatomic, strong) NSString *drift_moa;
-@property (nonatomic, strong) NSString *drift_mils;
-@property (nonatomic, strong) NSString *velocity_fps;
-@property (nonatomic, strong) NSString *energy_ftlbs;
-@property (nonatomic, strong) NSString *time;
+@property (nonatomic, assign) double range;
+@property (nonatomic, assign) double drop_inches;
+@property (nonatomic, assign) double drop_moa;
+@property (nonatomic, assign) double drop_mils;
+@property (nonatomic, assign) double drift_inches;
+@property (nonatomic, assign) double drift_moa;
+@property (nonatomic, assign) double drift_mils;
+@property (nonatomic, assign) double velocity_fps;
+@property (nonatomic, assign) double energy_ftlbs;
+@property (nonatomic, assign) double time;
 
 @end

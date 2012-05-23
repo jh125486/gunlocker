@@ -57,6 +57,7 @@
         _passedNote.title = _titleTextField.text;
         _passedNote.body  = _bodyTextView.text;
         [[NSManagedObjectContext defaultContext] save];
+        [TestFlight passCheckpoint:@"Note edited"];
     } else if (![_titleTextField.text isEqualToString:@""] && ![_bodyTextView.text isEqualToString:@""]) {
         Note *newNote = [Note createEntity];
         newNote.date  = [NSDate date];
@@ -64,7 +65,7 @@
         newNote.body  = _bodyTextView.text;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"newNote" object:newNote];
     }
-            
+         
     [self.navigationController popViewControllerAnimated:YES];
 }
 

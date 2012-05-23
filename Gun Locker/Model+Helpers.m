@@ -52,7 +52,7 @@
     double dv=0.0, dvx=0.0, dvy=0.0; // acceleration
     double gx=0.0, gy=0.0; // Gravitational acceleration
     double theta = 0.0; // The actual angle of the bore.
-    double zero = YARDS_to_FEET([self.zero doubleValue]);
+    double zero = (self.zero_unit.intValue == 0) ? YARDS_to_FEET(self.zero.doubleValue) : METERS_to_FEET(self.zero.doubleValue);
     
     BOOL thetaFound = FALSE; // We know it's time to quit our successive approximation loop when this is true.
     

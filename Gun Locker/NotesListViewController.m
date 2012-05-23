@@ -147,7 +147,8 @@
 - (void) addNewNote:(NSNotification*) notification {
     Note *newNote = [notification object];
     newNote.weapon = _selectedWeapon;
-    [[NSManagedObjectContext defaultContext] save];  
+    [[NSManagedObjectContext defaultContext] save];
+    [TestFlight passCheckpoint:@"New Note saved"];
 }
 
 @end

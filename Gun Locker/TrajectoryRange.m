@@ -10,7 +10,7 @@
 
 @implementation TrajectoryRange
 
-@synthesize range_m, range_yards;
+@synthesize range;
 @synthesize drop_inches, drop_moa, drop_mils;
 @synthesize drift_inches, drift_moa, drift_mils;
 @synthesize velocity_fps;

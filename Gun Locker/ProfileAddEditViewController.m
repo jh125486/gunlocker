@@ -114,7 +114,8 @@
     _muzzleVelocityTextField.text = [_selectedProfile.muzzle_velocity stringValue];
     _siteHeightTextField.text     = [_selectedProfile.sight_height_inches stringValue];
     _zeroDistanceTextField.text   = [_selectedProfile.zero stringValue];
-            
+    [_zeroDistanceUnitControl setSelectedSegmentIndex:_selectedProfile.zero_unit.intValue];
+    
     if (_selectedBullet) {
         [_bulletButton setTitle:_selectedBullet.description forState:UIControlStateNormal];
     } else {
@@ -125,7 +126,7 @@
     _dragModelControl.selectedSegmentIndex = [dragModels indexOfObject:drag_model];
     [self setBCButtonTitle:[Bullet bcToString:_selectedProfile.bullet_bc]];
     _sgTextField.text = [_selectedProfile.sg stringValue];
-    _sgDirectionControl.selectedSegmentIndex = [sgDirections indexOfObject:_selectedProfile.sg_direction];
+    _sgDirectionControl.selectedSegmentIndex = [sgDirections indexOfObject:_selectedProfile.sg_twist_direction];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -217,10 +218,11 @@
     
     profile.name = self.nameTextField.text;
     profile.weapon = selectedWeapon;
-    profile.muzzle_velocity = [NSNumber numberWithInteger:[_muzzleVelocityTextField.text intValue]];
-    profile.sight_height_inches = [NSNumber numberWithDouble:[_siteHeightTextField.text doubleValue]];
-    profile.zero = [NSNumber numberWithInteger:[_zeroDistanceTextField.text integerValue]];
-
+    profile.muzzle_velocity = [NSNumber numberWithInteger:_muzzleVelocityTextField.text.intValue];
+    profile.sight_height_inches = [NSNumber numberWithDouble:_siteHeightTextField.text.doubleValue];
+    profile.zero = [NSNumber numberWithInteger:_zeroDistanceTextField.text.intValue];
+    profile.zero_unit = [NSNumber numberWithInteger:_zeroDistanceUnitControl.selectedSegmentIndex];
+    
     if (_selectedBullet != nil) { // either link selectedBullet to the profile or set the manually entered bullet data
         profile.bullet = _selectedBullet;
         profile.bullet_bc = [_selectedBullet.ballistic_coefficient objectForKey:drag_model];
@@ -229,10 +231,10 @@
     }
     
     profile.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:_diameterTextField.text];
-    profile.bullet_weight = [NSNumber numberWithInteger:[_weightTextField.text intValue]];
+    profile.bullet_weight = [NSNumber numberWithInteger:_weightTextField.text.intValue];
     profile.drag_model = drag_model;
 	profile.sg = [NSDecimalNumber decimalNumberWithString:_sgTextField.text];
-	profile.sg_direction = [sgDirections objectAtIndex:_sgDirectionControl.selectedSegmentIndex];
+	profile.sg_twist_direction = [sgDirections objectAtIndex:_sgDirectionControl.selectedSegmentIndex];
 
     [profile calculateTheta];
     

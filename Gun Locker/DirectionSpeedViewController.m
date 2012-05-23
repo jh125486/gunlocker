@@ -35,12 +35,10 @@
     
     // two different styles of labels: Degrees / Clock
     NSMutableArray *degreeLabels = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 360; i +=15) 
-        [degreeLabels addObject:[NSString stringWithFormat:@"%dº", i]];
+    for (int i = 0; i < 360; i +=15) [degreeLabels addObject:[NSString stringWithFormat:@"%dº", i]];
     
-    NSMutableArray *clockLabels = [[NSMutableArray alloc] initWithObjects:@"12\no'Clock", nil];
-    for (int i = 1; i < 12; i++) 
-        [clockLabels addObject:[NSString stringWithFormat:@"%d\no'Clock", i]];
+    NSMutableArray *clockLabels = [[NSMutableArray alloc] initWithObjects:@"12\no'clock", nil];
+    for (int i = 1; i < 12; i++) [clockLabels addObject:[NSString stringWithFormat:@"%d\no'clock", i]];
     
     labels = [[NSArray alloc] initWithObjects:degreeLabels, clockLabels, nil];
     

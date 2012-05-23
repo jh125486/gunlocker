@@ -12,7 +12,9 @@
 #import "BallisticProfile.h"
 #import "ProfileAddEditViewController.h"
 
-@interface ProfileViewTableViewController : UITableViewController <UIActionSheetDelegate>
+@interface ProfileViewTableViewController : UITableViewController <UIActionSheetDelegate> {
+    DataManager *dataManager;
+}
 
 @property (weak, nonatomic) BallisticProfile *profile;
 @property (weak, nonatomic) IBOutlet UILabel *mvLabel;

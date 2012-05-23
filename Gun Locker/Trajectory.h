@@ -39,6 +39,7 @@
 @property (nonatomic, assign) double relativeHumidity;
 @property (nonatomic, assign) double tempC;
 @property (nonatomic, assign) double altitudeM;
+@property (nonatomic, assign) int rangeUnit;
 @property (nonatomic, assign) int rangeStart;
 @property (nonatomic, assign) int rangeEnd;
 @property (nonatomic, assign) int rangeStep;

@@ -9,17 +9,17 @@
 #import "DopeCardTableViewController.h"
 
 @implementation DopeCardTableViewController
-@synthesize dopeCardSectionHeaderView;
-@synthesize weaponLabel;
-@synthesize zeroLabel;
-@synthesize mvLabel;
-@synthesize weatherLabel;
-@synthesize windInfoLabel;
-@synthesize leadInfoLabel;
-@synthesize notesLabel;
-@synthesize rangeLabel;
-@synthesize dropLabel;
-@synthesize driftLabel;
+@synthesize dopeCardSectionHeaderView = _dopeCardSectionHeaderView;
+@synthesize weaponLabel = _weaponLabel;
+@synthesize zeroLabel = _zeroLabel;
+@synthesize mvLabel = _mvLabel;
+@synthesize weatherLabel = _weatherLabel;
+@synthesize windInfoLabel = _windInfoLabel;
+@synthesize leadInfoLabel = _leadInfoLabel;
+@synthesize notesLabel = _notesLabel;
+@synthesize rangeLabel = _rangeLabel;
+@synthesize dropLabel = _dropLabel;
+@synthesize driftLabel = _driftLabel;
 @synthesize selectedDopeCard = _dopeCard;
 
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -32,6 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    dataManager = [DataManager sharedManager];
     
     //Register updateDopeCard to receive "editedDopeCard" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateDopeCard:) name:@"editedDopeCard" object:nil];    
@@ -45,16 +46,18 @@
 
 - (void)loadDopeCard {
     self.title = _dopeCard.name;
-    self.weaponLabel.text = _dopeCard.weapon.description;
-    if (_dopeCard.zero.length > 0) self.zeroLabel.text = [NSString stringWithFormat:@"%@ %@", _dopeCard.zero, _dopeCard.range_unit];
-    if (_dopeCard.muzzle_velocity.length > 0) self.mvLabel.text = [_dopeCard.muzzle_velocity stringByAppendingString:@" fps"];
-    if (_dopeCard.weather_info.length > 0) self.weatherLabel.text = _dopeCard.weather_info;
-    if (_dopeCard.wind_info.length > 0) self.windInfoLabel.text = _dopeCard.wind_info;
-    if (_dopeCard.lead_info.length > 0) self.leadInfoLabel.text = _dopeCard.lead_info;
-    if (_dopeCard.notes.length > 0) self.notesLabel.text = _dopeCard.notes;
-    self.rangeLabel.text = _dopeCard.range_unit;
-    self.dropLabel.text  = _dopeCard.drop_unit;
-    self.driftLabel.text = _dopeCard.drift_unit;
+    _weaponLabel.text = _dopeCard.weapon.description;
+    if (_dopeCard.zero.length > 0) _zeroLabel.text = [NSString stringWithFormat:@"%@ %@", 
+                                                      _dopeCard.zero, 
+                                                      [dataManager.rangeUnits objectAtIndex:_dopeCard.zero_unit.intValue]];
+    if (_dopeCard.muzzle_velocity.length > 0) _mvLabel.text = [_dopeCard.muzzle_velocity stringByAppendingString:@" fps"];
+    if (_dopeCard.weather_info.length > 0) _weatherLabel.text = _dopeCard.weather_info;
+    if (_dopeCard.wind_info.length > 0) _windInfoLabel.text = _dopeCard.wind_info;
+    if (_dopeCard.lead_info.length > 0) _leadInfoLabel.text = _dopeCard.lead_info;
+    if (_dopeCard.notes.length > 0) _notesLabel.text = _dopeCard.notes;
+    _rangeLabel.text = _dopeCard.range_unit;
+    _dropLabel.text  = _dopeCard.drop_unit;
+    _driftLabel.text = _dopeCard.drift_unit;
     [self.tableView reloadData];
 }
 
@@ -124,11 +127,11 @@
 }  
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return self.dopeCardSectionHeaderView;
+    return _dopeCardSectionHeaderView;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return CGRectGetHeight(self.dopeCardSectionHeaderView.frame);
+    return CGRectGetHeight(_dopeCardSectionHeaderView.frame);
 }
 
 @end

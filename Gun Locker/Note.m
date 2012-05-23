@@ -9,7 +9,6 @@
 #import "Note.h"
 #import "Weapon.h"
 
-
 @implementation Note
 
 @dynamic date;

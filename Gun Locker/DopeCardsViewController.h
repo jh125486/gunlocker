@@ -12,7 +12,9 @@
 #import "DopeCardsAddEditViewController.h"
 #import "DopeCardTableViewController.h"
 
-@interface DopeCardsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+@interface DopeCardsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate> {
+    DataManager *dataManager;
+}
 
 @property (weak, nonatomic) IBOutlet UIImageView *noDopeCardsImageView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

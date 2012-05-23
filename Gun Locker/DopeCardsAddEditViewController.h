@@ -15,10 +15,6 @@
     NSArray *dope_units;
     NSArray *wind_units;
     NSMutableArray *wind_directions;
-    
-//    NSMutableArray *dopeFields;
-//    
-//    NSMutableArray *dopeCardRows;
     NSArray *formFields;
     
     NSMutableArray *dopeCardCellData;
@@ -27,19 +23,24 @@
 
 @property (strong, nonatomic) IBOutlet UIView *sectionHeader;
 @property (weak, nonatomic) IBOutlet UITextField *cardNameTextField;
+
 @property (weak, nonatomic) IBOutlet UITextField *zeroTextField;
+@property (weak, nonatomic) IBOutlet UITextField *zeroUnitField;
+@property (strong, nonatomic) UIPickerView *zeroUnitPickerView;
+
 @property (weak, nonatomic) IBOutlet UITextField *muzzleVelocityTextField;
 @property (weak, nonatomic) IBOutlet UITextField *weatherInfoField;
 @property (weak, nonatomic) IBOutlet UITextField *rangeUnitField;
+
 @property (weak, nonatomic) IBOutlet UITextField *dropUnitField;
 @property (weak, nonatomic) IBOutlet UITextField *driftUnitField;
-@property (retain, nonatomic) UIPickerView *dopeUnitPickerView;
+@property (strong, nonatomic) UIPickerView *dopeUnitPickerView;
 
 @property (weak, nonatomic) IBOutlet UITextField *windInfoField;
-@property (retain, nonatomic) UIPickerView *windInfoPickerView;
+@property (strong, nonatomic) UIPickerView *windInfoPickerView;
 
 @property (weak, nonatomic) IBOutlet UITextField *leadInfoField;
-@property (retain, nonatomic) UIPickerView *leadInfoPickerView;
+@property (strong, nonatomic) UIPickerView *leadInfoPickerView;
 
 @property (weak, nonatomic) IBOutlet UITextField *notesTextField;
 

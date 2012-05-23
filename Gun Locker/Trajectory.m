@@ -11,7 +11,7 @@
 @implementation Trajectory
 
 @synthesize pressureInhg = _pressureInhg, relativeHumidity = _relativeHumidity, tempC = _tempC, altitudeM = _altitudeM;
-@synthesize rangeEnd = _rangeEnd, rangeStart = _rangeStart, rangeStep = _rangeStep;
+@synthesize rangeUnit = _rangeUnit, rangeStart = _rangeStart, rangeEnd = _rangeEnd, rangeStep = _rangeStep;
 @synthesize targetSpeed = _leadSpeed, targetAngle = _leadAngle, windSpeed = _windSpeed, windAngle = _windAngle, shootingAngle = _shootingAngle;
 @synthesize ranges = _ranges, ballisticProfile = _ballisticProfile, setupCompleted = _setupCompleted;
 
@@ -21,6 +21,8 @@
     }
     return self;
 }
+
+#pragma mark Setup
 
 -(void)setup {
     gravity = METERS_to_FEET([self gravityFromAltitudeInMeters:_altitudeM]);
@@ -40,22 +42,24 @@
 }
 
 - (void)setupWindAndLeading {
-    windXSpeed = MPH_to_FPS(cos(DEGREES_to_RAD(_windAngle)) * _windSpeed);
-    
+    windXSpeed = -MPH_to_FPS(cos(DEGREES_to_RAD(_windAngle)) * _windSpeed);
+    NSLog(@"windspeed downrange: %g", windXSpeed);
     // wind from rear doesn't affect bullet as much
     // probably should be developed from sectional area
     if (windXSpeed > 0) windXSpeed *= 0.25;
     
-    windZSpeed = MPH_to_FPS(sin(DEGREES_to_RAD(_windAngle)) * _windSpeed);
+    windZSpeed = -MPH_to_FPS(sin(DEGREES_to_RAD(_windAngle)) * _windSpeed);
+    NSLog(@"windspeed to the right: %g", windZSpeed);
     
     leadXSpeed = MPH_to_FPS(cos(DEGREES_to_RAD(_leadAngle)) * _leadSpeed);
     leadZSpeed = MPH_to_FPS(sin(DEGREES_to_RAD(_leadAngle)) * _leadSpeed);
 }
 
+#pragma mark Calculate
 -(void)calculateTrajectory {
     if(!_setupCompleted) [self setup];
 
-    double testLeadZ =0.0, testLeadX =0.0;
+//    double testLeadZ =0.0, testLeadX =0.0;
     
     double t = 0.0;
     double dt = 0.0;
@@ -70,9 +74,9 @@
     double x   = 0.0;
     double y   = yInitial;
 	double z   = 0.0;
+    double xInRangeUnit;
     double spinDrift = 1.25 * ([_ballisticProfile.sg doubleValue] + 1.2);
-    double spinDriftDirection = [_ballisticProfile.sg_direction isEqualToString:@"RH"] ? 1 : -1;
-	double dropMOA = 0.0, driftMOA = 0.0;
+    double spinDriftDirection = [_ballisticProfile.sg_twist_direction isEqualToString:@"RH"] ? 1 : -1;
 	
     double gx = gravity * sin(DEGREES_to_RAD(_shootingAngle) + [_ballisticProfile.zero_theta doubleValue]);
     double gy = gravity * cos(DEGREES_to_RAD(_shootingAngle) + [_ballisticProfile.zero_theta doubleValue]);
@@ -98,26 +102,25 @@
     
         t += dt;
         
-        if (FEET_to_YARDS(x) >= n) {            
-            if ((lround(x) % _rangeStep) == 0) {
+        xInRangeUnit = (_rangeUnit == 0) ? FEET_to_YARDS(x) : FEET_to_METERS(x);
+        
+        if (xInRangeUnit >= n) {            
+            if ((lround(xInRangeUnit) % _rangeStep) == 0) {
                 TrajectoryRange *range = [[TrajectoryRange alloc] init];
                 
-                range.range_yards   = [NSString stringWithFormat:@"%.0f", FEET_to_YARDS(x)];
-                range.range_m       = [NSString stringWithFormat:@"%.0f", FEET_to_METERS(x)];
+                range.range = xInRangeUnit;
                 
-                range.drop_inches   = [NSString stringWithFormat:@"%.1f", FEET_to_INCHES(y)];
-                dropMOA  = RAD_to_MOA(atan2(y, x));                
-                range.drop_moa      = [NSString stringWithFormat:@"%.1f", dropMOA];
-                range.drop_mils     = [NSString stringWithFormat:@"%.1f", MOA_to_MIL(dropMOA)];
+                range.drop_inches   = FEET_to_INCHES(y);        
+                range.drop_moa      = RAD_to_MOA(atan2(y, x));
+                range.drop_mils     = MOA_to_MIL(range.drop_moa);
                 
-                range.drift_inches  = [NSString stringWithFormat:@"%.1f", FEET_to_INCHES(z)];
-                driftMOA = RAD_to_MOA(atan2(z, x)); 
-                range.drift_moa     = [NSString stringWithFormat:@"%.1f", driftMOA];
-                range.drift_mils    = [NSString stringWithFormat:@"%.1f", MOA_to_MIL(driftMOA)];
+                range.drift_inches  = FEET_to_INCHES(z);
+                range.drift_moa     = RAD_to_MOA(atan2(z, x));
+                range.drift_mils    = MOA_to_MIL(range.drift_moa);
                 
-                range.velocity_fps  = [NSString stringWithFormat:@"%.1f", v];
-                range.energy_ftlbs  = [NSString stringWithFormat:@"%.0f", [self energyAtVelocity:v]];
-                range.time          = [NSString stringWithFormat:@"%.3f", t];
+                range.velocity_fps  = v;
+                range.energy_ftlbs  = [self energyAtVelocity:v];
+                range.time          = t;
 
                 [_ranges addObject:range];
              }
@@ -140,18 +143,19 @@
 		y += dt * (vy + vy1)/2.0;
 
         
-        //TESTING
-        testLeadZ += leadZSpeed * dt;
-        testLeadX += leadXSpeed * dt;
+//        //TESTING
+//        testLeadZ += leadZSpeed * dt;
+//        testLeadX += leadXSpeed * dt;
         
         
 		// break if vertical velocity 3 times greater than horizontal velocity 
 		if (fabs(vy) > fabs(3.0 * vx)) break; 
 	}
     
-    NSLog(@"Total Z travelled: %f\"\tTotal X travelled: %f\"", testLeadZ, testLeadX);
+//    NSLog(@"Total Z travelled: %g\"\tTotal X travelled: %g\"", testLeadZ, testLeadX);
 }
 
+# pragma mark helpers
 // adjusted extra drag retardation to match jbm as close as possible
 -(double)extraDragRetardationWithVelocity:(double)v {
     return (airDensity * sectionalArea / (4*bulletMass)) * v * pow(vInitial/v, 4.0) * pow(v/speedOfSound, 2.5);

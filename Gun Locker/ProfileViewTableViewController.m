@@ -24,6 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    dataManager = [DataManager sharedManager];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
 }
@@ -39,13 +40,15 @@
     
     _mvLabel.text = [[_profile.muzzle_velocity stringValue] stringByAppendingString:@" fps"];
     _sightHeightLabel.text = [[_profile.sight_height_inches stringValue] stringByAppendingString:@"\""];
-    _zeroLabel.text = [[_profile.zero stringValue] stringByAppendingString:@" yards"];
+    _zeroLabel.text = [NSString  stringWithFormat:@"%d %@",
+                       _profile.zero.intValue,
+                       [dataManager.rangeUnits objectAtIndex:_profile.zero_unit.intValue]];
     _bulletDiameterLabel.text = [[_profile.bullet_diameter_inches stringValue] stringByAppendingString:@"\""];
     _bulletWeightLabel.text = [[_profile.bullet_weight stringValue] stringByAppendingString:@" grains"];
     _dragModelLabel.text = _profile.drag_model;
     _bcLabel.text = [[Bullet bcToString:_profile.bullet_bc] substringFromIndex:4];
     _sgLabel.text = [_profile.sg stringValue];
-    _sgDirectionLabel.text = _profile.sg_direction;
+    _sgDirectionLabel.text = _profile.sg_twist_direction;
 }
 
 - (void)viewDidUnload {

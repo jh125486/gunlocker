@@ -12,7 +12,9 @@
 #import "DopeCardsAddEditViewController.h"
 #import "Weapon.h"
 
-@interface DopeCardTableViewController : UITableViewController
+@interface DopeCardTableViewController : UITableViewController {
+    DataManager *dataManager;
+}
 
 @property (strong, nonatomic) IBOutlet UIView *dopeCardSectionHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *weaponLabel;

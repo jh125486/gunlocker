@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#define TESTING 1
+
 #import "AppDelegate.h"
 
 @implementation AppDelegate
@@ -14,6 +16,15 @@
 @synthesize showPasscode;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [TestFlight takeOff:@"c9a944113920e415692190a4b0e2e8cc_OTIzOTUyMDEyLTA1LTIyIDAyOjA4OjEyLjk0NzA1OA"];
+    
+    #ifdef TESTING
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+    #pragma clang diagnostic pop
+    #endif
+    
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"GunLocker.sqlite"];
     NSLog(@"\tMagicalRecord setup completed");
     recordsDirty = NO;
@@ -319,13 +330,14 @@
         ballisticProfile1.drag_model = @"G7";
         ballisticProfile1.muzzle_velocity = [NSNumber numberWithInt:3240];
         ballisticProfile1.zero = [NSNumber numberWithInt:100];
+        ballisticProfile1.zero_unit = [NSNumber numberWithInt:0];
         ballisticProfile1.sight_height_inches = [NSNumber numberWithDouble:1.5];
         ballisticProfile1.name = @"55 grain M193 ";
         ballisticProfile1.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.272"]];
         ballisticProfile1.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
         ballisticProfile1.weapon = [[Weapon findAll] objectAtIndex:1];
         ballisticProfile1.sg = [NSDecimalNumber decimalNumberWithString:@"1.5"];
-        ballisticProfile1.sg_direction =@"RH";
+        ballisticProfile1.sg_twist_direction =@"RH";
         [ballisticProfile1 calculateTheta];
         
         BallisticProfile *ballisticProfile2 = [BallisticProfile createEntity];
@@ -334,13 +346,14 @@
         ballisticProfile2.drag_model = @"G7";
         ballisticProfile2.muzzle_velocity = [NSNumber numberWithInt:2900];
         ballisticProfile2.zero = [NSNumber numberWithInt:100];
+        ballisticProfile2.zero_unit = [NSNumber numberWithInt:0];
         ballisticProfile2.sight_height_inches = [NSNumber numberWithDouble:2.6];
         ballisticProfile2.name = @"62 grain SS109";
         ballisticProfile2.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.151"]];
         ballisticProfile2.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
         ballisticProfile2.weapon = [[Weapon findAll] objectAtIndex:0];
         ballisticProfile2.sg = [NSDecimalNumber decimalNumberWithString:@"1.2"];
-        ballisticProfile2.sg_direction =@"RH";
+        ballisticProfile2.sg_twist_direction =@"RH";
         [ballisticProfile2 calculateTheta];
         
         [[NSManagedObjectContext defaultContext] save];

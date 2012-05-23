@@ -14,10 +14,11 @@
         <attribute name="muzzle_velocity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sg" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sg_direction" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sg_twist_direction" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sight_height_inches" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="zero" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="zero_theta" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="zero_unit" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="bullet" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Bullet" inverseName="ballistic_profile" inverseEntity="Bullet" syncable="YES"/>
         <relationship name="weapon" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="ballistic_profile" inverseEntity="Weapon" syncable="YES"/>
     </entity>
@@ -53,6 +54,7 @@
         <attribute name="weather_info" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="wind_info" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zero" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="zero_unit" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="weapon" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="dope_cards" inverseEntity="Weapon" syncable="YES"/>
     </entity>
     <entity name="Handload" parentEntity="Load" syncable="YES">
@@ -147,7 +149,7 @@
         <element name="Bullet" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Caliber" positionX="160" positionY="192" width="128" height="60"/>
         <element name="CommercialLoad" positionX="63" positionY="240" width="128" height="75"/>
-        <element name="DopeCard" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="DopeCard" positionX="160" positionY="192" width="128" height="240"/>
         <element name="Handload" positionX="-0" positionY="342" width="128" height="120"/>
         <element name="Load" positionX="-288" positionY="297" width="128" height="90"/>
         <element name="Magazine" positionX="160" positionY="192" width="128" height="135"/>

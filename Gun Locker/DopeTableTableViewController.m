@@ -115,10 +115,11 @@
 
         Trajectory *trajectory = [[Trajectory alloc] init];
         
-        // XXX do all conversions for UnitControls
+        // do all conversions for UnitControls
+        trajectory.rangeUnit  = _rangeUnitControl.selectedSegmentIndex;
         trajectory.rangeStart = _rangeStartStepper.Current;
-        trajectory.rangeEnd =  _rangeEndStepper.Current;
-        trajectory.rangeStep = _rangeStepStepper.Current;
+        trajectory.rangeEnd   = _rangeEndStepper.Current;
+        trajectory.rangeStep  = _rangeStepStepper.Current;
 
         trajectory.tempC = (_tempUnitControl.selectedSegmentIndex == 0) ? TEMP_F_to_TEMP_C([_tempTextField.text doubleValue]) : [_tempTextField.text doubleValue];
         
@@ -146,18 +147,20 @@
         dst.pressureString = [NSString stringWithFormat:@"%@ %@", _pressureTextField.text,
                               [[NSArray arrayWithObjects:@"inHg", @"mb", nil] objectAtIndex:_pressureUnitControl.selectedSegmentIndex]];
 
-        dst.windInfoString = [NSString stringWithFormat:@"%@ %@ at %@%@", _windSpeedTextField.text, 
+        dst.windInfoString = [NSString stringWithFormat:@"%@ %@ from %@%@", _windSpeedTextField.text, 
                               [[NSArray arrayWithObjects:@"Knots", @"MPH", nil] objectAtIndex:_windSpeedUnitControl.selectedSegmentIndex], 
                               _windDirectionTextField.text,
-                              [[NSArray arrayWithObjects:@"º", @" o'Clock", nil] objectAtIndex:_windDirectionTypeControl.selectedSegmentIndex]];
+                              [[NSArray arrayWithObjects:@"º", @" o'clock", nil] objectAtIndex:_windDirectionTypeControl.selectedSegmentIndex]];
         
-        dst.targetInfoString = [NSString stringWithFormat:@"%@ %@ at %@%@", _targetSpeedTextField.text, 
+        dst.targetInfoString = [NSString stringWithFormat:@"%@ %@ from %@%@", _targetSpeedTextField.text, 
                               [[NSArray arrayWithObjects:@"Knots", @"MPH", nil] objectAtIndex:_targetSpeedUnitControl.selectedSegmentIndex], 
                               _targetDirectionTextField.text, 
-                              [[NSArray arrayWithObjects:@"º", @" o'Clock", nil] objectAtIndex:_targetDirectionTypeControl.selectedSegmentIndex]];
+                              [[NSArray arrayWithObjects:@"º", @" o'clock", nil] objectAtIndex:_targetDirectionTypeControl.selectedSegmentIndex]];
         
         dst.passedTrajectory = trajectory;
+        [TestFlight passCheckpoint:@"Dope Table Calculated"];
     } else if ([segueID isEqualToString:@"WindModal"]) {
+        [TestFlight passCheckpoint:@"Direction/Speed Modal Viewed"];
         DirectionSpeedViewController *dst = segue.destinationViewController;
         dst.resultType = @"Wind";
         dst.speedUnit  = _windSpeedUnitControl.selectedSegmentIndex;
@@ -166,6 +169,7 @@
         dst.directionValue = [_windDirectionTextField.text intValue];
         dst.delegate = self;
     } else if ([segueID isEqualToString:@"LeadModal"]) {
+        [TestFlight passCheckpoint:@"Direction/Speed Modal Viewed"];
         DirectionSpeedViewController *dst = segue.destinationViewController;
         dst.resultType = @"Target";
         dst.speedUnit  = _targetSpeedUnitControl.selectedSegmentIndex;
@@ -221,7 +225,7 @@
     _currentTextField = nil;
 }
 
-- (void) nextPreviousTapped:(id)sender {
+- (void)nextPreviousTapped:(id)sender {
     int index = [formFields indexOfObject:_currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
@@ -236,7 +240,7 @@
     [_currentTextField becomeFirstResponder];
 }
 
-- (void) doneTyping:(id)sender {    
+- (void)doneTyping:(id)sender {    
     [_currentTextField resignFirstResponder];
 }
 

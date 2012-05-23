@@ -11,7 +11,8 @@
 @implementation DopeCardsAddEditViewController
 @synthesize sectionHeader = _sectionHeader;
 @synthesize cardNameTextField = _cardNameTextField;
-@synthesize zeroTextField = _zeroTextField, muzzleVelocityTextField = _muzzleVelocityTextField;
+@synthesize zeroTextField = _zeroTextField, zeroUnitField = _zeroUnitField, zeroUnitPickerView = _zeroUnitPickerView;
+@synthesize muzzleVelocityTextField = _muzzleVelocityTextField;
 @synthesize weatherInfoField = _weatherInfoField;
 @synthesize windInfoField = _windInfoField, leadInfoField = _leadInfoField;
 @synthesize notesTextField = _notesTextField;
@@ -43,20 +44,23 @@
     dopeCardCellData = [[NSMutableArray alloc] init];
     
     // inputView pickers
+    _zeroUnitPickerView = [[UIPickerView alloc] init];
     _dopeUnitPickerView = [[UIPickerView alloc] init];    
     _windInfoPickerView = [[UIPickerView alloc] init];
     _leadInfoPickerView = [[UIPickerView alloc] init];
     
-    _dopeUnitPickerView.delegate   = _windInfoPickerView.delegate   = _leadInfoPickerView.delegate   = self;
-    _dopeUnitPickerView.dataSource = _windInfoPickerView.dataSource = _leadInfoPickerView.dataSource = self;
-    _dopeUnitPickerView.showsSelectionIndicator = _windInfoPickerView.showsSelectionIndicator = _leadInfoPickerView.showsSelectionIndicator = YES;
+    _zeroUnitPickerView.delegate = _dopeUnitPickerView.delegate   = _windInfoPickerView.delegate   = _leadInfoPickerView.delegate   = self;
+    _zeroUnitPickerView.dataSource = _dopeUnitPickerView.dataSource = _windInfoPickerView.dataSource = _leadInfoPickerView.dataSource = self;
+    _zeroUnitPickerView.showsSelectionIndicator = _dopeUnitPickerView.showsSelectionIndicator = _windInfoPickerView.showsSelectionIndicator = _leadInfoPickerView.showsSelectionIndicator = YES;
     
+    _zeroUnitField.inputView = _zeroUnitPickerView;
     _rangeUnitField.inputView = _dropUnitField.inputView = _driftUnitField.inputView = _dopeUnitPickerView;
     _windInfoField.inputView  = _windInfoPickerView;
     _leadInfoField.inputView  = _leadInfoPickerView;
     
     formFields = [[NSArray alloc] initWithObjects:_cardNameTextField, 
-                                                  _zeroTextField, 
+                                                  _zeroTextField,
+                                                  _zeroUnitField,
                                                   _muzzleVelocityTextField,
                                                   _weatherInfoField,
                                                   _windInfoField, 
@@ -89,17 +93,16 @@
     _dropUnitField.text           = _selectedDopeCard.drop_unit;
     _driftUnitField.text          = _selectedDopeCard.drift_unit;
     
+    [_zeroUnitPickerView selectRow:_selectedDopeCard.zero_unit.intValue inComponent:0 animated:NO];
+    [self setZeroUnit];
+    
     if (_selectedDopeCard.wind_info) {
         NSArray *windInfoArray = [_selectedDopeCard.wind_info componentsSeparatedByString:@" "];
         int speed      = [[windInfoArray objectAtIndex:0] intValue];
         NSString *unit = [windInfoArray objectAtIndex:1];
         int direction  = [[windInfoArray objectAtIndex:3] intValue];    
 
-        if ([windInfoArray count] == 4) { // direction in degrees
-                direction /= 30.0f;
-                direction = roundf(direction);
-                if (direction == 0) direction = 12;
-        }
+        if ([windInfoArray count] == 4) direction = DEGREES_TO_CLOCK(direction);
             
         [_windInfoPickerView selectRow:speed inComponent:0 animated:NO];
         [_windInfoPickerView selectRow:[wind_units indexOfObject:unit] inComponent:1 animated:NO];
@@ -113,11 +116,7 @@
         NSString *unit = [leadInfoArray objectAtIndex:1];
         int direction  = [[leadInfoArray objectAtIndex:3] intValue];    
         
-        if ([leadInfoArray count] == 4) { // direction in degrees
-            direction /= 30.0f;
-            direction = roundf(direction);
-            if (direction == 0) direction = 12;
-        }
+        if ([leadInfoArray count] == 4) direction = DEGREES_TO_CLOCK(direction);
 
         [_leadInfoPickerView selectRow:speed inComponent:0 animated:NO];
         [_leadInfoPickerView selectRow:[wind_units indexOfObject:unit] inComponent:1 animated:NO];
@@ -132,6 +131,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setCardNameTextField:nil];
     [self setZeroTextField:nil];
+    [self setZeroUnitField:nil];
+    [self setZeroUnitPickerView:nil];
     [self setMuzzleVelocityTextField:nil];
     [self setWeatherInfoField:nil];
     [self setWindInfoField:nil];
@@ -141,6 +142,9 @@
     [self setDropUnitField:nil];
     [self setDriftUnitField:nil];
     [self setSectionHeader:nil];
+    [self setDopeUnitPickerView:nil];
+    [self setWindInfoPickerView:nil];
+    [self setLeadInfoPickerView:nil];
     [self setTableView:nil];
     [super viewDidUnload];
 }
@@ -200,16 +204,18 @@
 #pragma mark - Picker view methods
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 3;
+    return (pickerView == _zeroUnitPickerView) ? 1 : 3;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (pickerView == _dopeUnitPickerView) {
+    if (pickerView == _zeroUnitPickerView) {
+        return [range_units count];
+    } else if (pickerView == _dopeUnitPickerView) {
         return (component == 0) ? [range_units count] : [dope_units count];
     } else { // wind picker
         switch (component) {
             case 0: // speed
-                return 15;
+                return 25;
                 break;
             case 1: // units
                 return [wind_units count];
@@ -225,7 +231,9 @@
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if (pickerView == _dopeUnitPickerView) {
+    if (pickerView == _zeroUnitPickerView) {
+        return [range_units objectAtIndex:row];
+    } else if (pickerView == _dopeUnitPickerView) {
         return (component == 0) ? [range_units objectAtIndex:row] : [dope_units objectAtIndex:row];
     } else { // wind picker
         switch (component) {
@@ -246,7 +254,9 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if (pickerView == _dopeUnitPickerView) {
+    if (pickerView == _zeroUnitPickerView) {
+        [self setZeroUnit];
+    } else if (pickerView == _dopeUnitPickerView) {
         [self setDopeUnits];
     } else if (pickerView == _windInfoPickerView) {
         [self setWindInfo];
@@ -256,7 +266,9 @@
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
-    if (pickerView == _dopeUnitPickerView) {
+    if (pickerView == _zeroUnitPickerView) {
+        return 284.f;
+    } else if (pickerView == _dopeUnitPickerView) {
         return 95.0f;
     } else {
         switch (component) {
@@ -276,20 +288,24 @@
     }
 }
 
-- (void)setDopeUnits {
+-(void)setZeroUnit {
+    _zeroUnitField.text = [range_units objectAtIndex:[_zeroUnitPickerView selectedRowInComponent:0]];
+}
+
+-(void)setDopeUnits {
     _rangeUnitField.text = [range_units objectAtIndex:[_dopeUnitPickerView selectedRowInComponent:0]];
     _dropUnitField.text  = [dope_units objectAtIndex:[_dopeUnitPickerView selectedRowInComponent:1]];
     _driftUnitField.text = [dope_units objectAtIndex:[_dopeUnitPickerView selectedRowInComponent:2]];
 }
 
-- (void)setWindInfo {
+-(void)setWindInfo {
     _windInfoField.text = [NSString stringWithFormat:@"%d %@ at %@", 
                                [_windInfoPickerView selectedRowInComponent:0],
                                [wind_units objectAtIndex:[_windInfoPickerView selectedRowInComponent:1]],
                                [wind_directions objectAtIndex:[_windInfoPickerView selectedRowInComponent:2]]];
 }
 
-- (void)setLeadInfo {
+-(void)setLeadInfo {
     _leadInfoField.text = [NSString stringWithFormat:@"%d %@ at %@", 
                                [_leadInfoPickerView selectedRowInComponent:0],
                                [wind_units objectAtIndex:[_leadInfoPickerView selectedRowInComponent:1]],
@@ -353,8 +369,9 @@
 }
 
 - (void)nextPreviousTapped:(id)sender {
-    
-    if (_currentTextField == _rangeUnitField) {
+    if (_currentTextField == _zeroTextField) {
+        [self setZeroUnit];  
+    } else if (_currentTextField == _rangeUnitField) {
         [self setDopeUnits];
     } else if (_currentTextField == _windInfoField) {
         [self setWindInfo];
@@ -451,6 +468,7 @@
         DopeCard *newDopeCard       = _selectedDopeCard ? _selectedDopeCard : [DopeCard createEntity];
         newDopeCard.name            = _cardNameTextField.text;
         newDopeCard.zero            = _zeroTextField.text;
+        newDopeCard.zero_unit       = [NSNumber numberWithInt:[_zeroUnitPickerView selectedRowInComponent:0]];
         newDopeCard.muzzle_velocity = _muzzleVelocityTextField.text;
         newDopeCard.weather_info    = _weatherInfoField.text;
         newDopeCard.wind_info       = _windInfoField.text;
@@ -480,6 +498,5 @@
 - (IBAction)cancelTapped:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
 }
-
 
 @end

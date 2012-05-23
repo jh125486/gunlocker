@@ -9,9 +9,9 @@
 #import "DopeCardsViewController.h"
 
 @implementation DopeCardsViewController
-@synthesize noDopeCardsImageView;
+@synthesize noDopeCardsImageView = _noDopeCardsImageView;
 @synthesize tableView;
-@synthesize selectedWeapon;
+@synthesize selectedWeapon = _selectedWeapon;
 @synthesize fetchedResultsController = _fetchedResultsController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -24,11 +24,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    dataManager = [DataManager sharedManager];
 
     //Register addNewDopeCardToArray to recieve "addNewDopeCard" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewDopeCard:) name:@"newDopeCard" object:nil];
 
-    if (!selectedWeapon) self.navigationItem.rightBarButtonItem = nil;
+    if (!_selectedWeapon) self.navigationItem.rightBarButtonItem = nil;
     
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
@@ -47,8 +49,8 @@
     int count = [_fetchedResultsController.fetchedObjects count];
     self.title = [NSString stringWithFormat:@"Dope Cards (%d)", count];
     
-    self.noDopeCardsImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/DopeCards"]];
-    self.noDopeCardsImageView.hidden = (count != 0);
+    _noDopeCardsImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/DopeCards"]];
+    _noDopeCardsImageView.hidden = (count != 0);
     self.tableView.hidden = (count == 0);
 }
 
@@ -82,7 +84,7 @@
 // can only add dopeCard from weapon view, so no worry about updating sections
 - (void) addNewDopeCard:(NSNotification*) notification {
     DopeCard *newDopeCard = [notification object];
-    newDopeCard.weapon = self.selectedWeapon;
+    newDopeCard.weapon = _selectedWeapon;
     
     [[NSManagedObjectContext defaultContext] save];
 }
@@ -123,7 +125,10 @@
     cell.textLabel.text = dopeCard.name;
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:20];
     cell.textLabel.textColor = [UIColor blackColor];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Zero: %@ %@ / Wind: %@", dopeCard.zero, [dopeCard.range_unit lowercaseString], dopeCard.wind_info];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Zero: %@ %@ / Wind: %@", 
+                                 dopeCard.zero, 
+                                 [dataManager.rangeUnits objectAtIndex:[dopeCard.zero_unit intValue]],
+                                 dopeCard.wind_info];
     cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:15];
     cell.detailTextLabel.textColor = [UIColor darkGrayColor];
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -144,19 +149,19 @@
 - (NSFetchedResultsController *)fetchedResultsController {
     if (_fetchedResultsController != nil) return _fetchedResultsController;
 
-    NSPredicate *typeFilter = (self.selectedWeapon) ? [NSPredicate predicateWithFormat:@"weapon = %@", self.selectedWeapon] : nil;
+    NSPredicate *typeFilter = (_selectedWeapon) ? [NSPredicate predicateWithFormat:@"weapon = %@", self.selectedWeapon] : nil;
     
-    NSFetchRequest *fetchRequest = [DopeCard requestAllSortedBy:(self.selectedWeapon) ? @"name" : @"weapon" ascending:YES 
+    NSFetchRequest *fetchRequest = [DopeCard requestAllSortedBy:(_selectedWeapon) ? @"name" : @"weapon" ascending:YES 
                                                   withPredicate:typeFilter];
-    NSString *cacheName = (self.selectedWeapon) ? [NSString stringWithFormat:@"DopeCards%@", self.selectedWeapon] : @"DopeCards";
+    NSString *cacheName = (_selectedWeapon) ? [NSString stringWithFormat:@"DopeCards%@", _selectedWeapon] : @"DopeCards";
     fetchRequest.fetchBatchSize = 20;
     
-    NSString *sectionNameKeyPath = (self.selectedWeapon) ? nil : @"weapon.description";
+    NSString *sectionNameKeyPath = (_selectedWeapon) ? nil : @"weapon.description";
     
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
-                                                                        managedObjectContext:[NSManagedObjectContext defaultContext] 
-                                                                          sectionNameKeyPath:sectionNameKeyPath
-                                                                                   cacheName:cacheName];
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest 
+                                                                    managedObjectContext:[NSManagedObjectContext defaultContext] 
+                                                                      sectionNameKeyPath:sectionNameKeyPath
+                                                                               cacheName:cacheName];
     
     _fetchedResultsController.delegate = self;
     
@@ -201,7 +206,6 @@
             break;
     }
 }
-
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
