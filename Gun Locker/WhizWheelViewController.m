@@ -290,10 +290,10 @@
         if ([speedType isEqualToString:@"Wind"]) {
             trajectory.windAngle = angleDegrees;
             trajectory.windSpeed = speedMPH;
-            trajectory.leadSpeed = 0.0;
+            trajectory.targetSpeed = 0.0;
         } else {
-            trajectory.leadAngle = angleDegrees;
-            trajectory.leadSpeed = speedMPH;
+            trajectory.targetAngle = angleDegrees;
+            trajectory.targetSpeed = speedMPH;
             trajectory.windSpeed = 0.0;
         }
         

@@ -10,9 +10,17 @@
 #import "BallisticProfile.h"
 #import "DopeTableGeneratedTableViewController.h"
 #import "TextStepperField.h"
+#import "DirectionSpeedViewController.h"
 #import "Weather.h"
 
-@interface DopeTableTableViewController : UITableViewController <UITextFieldDelegate> {
+@class DopeTableTableViewController;
+
+@protocol DopeTableTableViewControllerProtocol <NSObject>
+-(void)windSetWithDirectionType:(int)directionType andDirection:(int)direction andSpeedType:(int)speedType andSpeed:(int)speed;
+-(void)targetSetWithDirectionType:(int)directionType andDirection:(int)direction andSpeedType:(int)speedType andSpeed:(int)speed;
+@end
+
+@interface DopeTableTableViewController : UITableViewController <UITextFieldDelegate, DirectionSpeedProtocol> {
     NSMutableArray *formFields;
 }
 
@@ -29,11 +37,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *windSpeedTextField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *windSpeedUnitControl;
 @property (weak, nonatomic) IBOutlet UITextField *windDirectionTextField;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *windDirectionUnitControl;
-@property (weak, nonatomic) IBOutlet UITextField *leadingSpeedTextField;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *leadingSpeedUnitControl;
-@property (weak, nonatomic) IBOutlet UITextField *leadingDirectionTextField;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *leadingDirectionUnitControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *windDirectionTypeControl;
+@property (weak, nonatomic) IBOutlet UITextField *targetSpeedTextField;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *targetSpeedUnitControl;
+@property (weak, nonatomic) IBOutlet UITextField *targetDirectionTextField;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *targetDirectionTypeControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *rangeUnitControl;
 @property (weak, nonatomic) IBOutlet TextStepperField *rangeStartStepper;
 @property (weak, nonatomic) IBOutlet TextStepperField *rangeEndStepper;

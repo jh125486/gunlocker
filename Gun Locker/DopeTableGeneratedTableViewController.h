@@ -25,7 +25,7 @@
 @property (weak, nonatomic) NSString *altitudeString;
 @property (weak, nonatomic) NSString *dropDriftUnit;
 @property (weak, nonatomic) NSString *windInfoString;
-@property (weak, nonatomic) NSString *leadInfoString;
+@property (weak, nonatomic) NSString *targetInfoString;
 
 @property (weak, nonatomic) IBOutlet UILabel *rangeUnitLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dropUnitLabel;

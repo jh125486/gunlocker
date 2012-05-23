@@ -210,12 +210,9 @@
     [_currentTextField resignFirstResponder];
 }
 
--(void)setUnits {
-    if ((_currentTextField == _length1UnitTextField) || (_currentTextField == _length2UnitTextField)) {
-        [self setLengthUnits];
-    } else if ((_currentTextField == _weight1UnitTextField) || (_currentTextField == _weight2UnitTextField)) {
-        [self setWeightUnits];
-    }
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    int numberOfDecimals = [[[textField.text stringByAppendingString:string] componentsSeparatedByString:@"."] count] - 1;
+    return numberOfDecimals <= 1;
 }
 
 #pragma mark Conversions
@@ -300,6 +297,14 @@
         [self setLengthUnits];
     } else if (pickerView == _weightUnitPicker) {
         lastWeightSelected = component;
+        [self setWeightUnits];
+    }
+}
+
+-(void)setUnits {
+    if ((_currentTextField == _length1UnitTextField) || (_currentTextField == _length2UnitTextField)) {
+        [self setLengthUnits];
+    } else if ((_currentTextField == _weight1UnitTextField) || (_currentTextField == _weight2UnitTextField)) {
         [self setWeightUnits];
     }
 }

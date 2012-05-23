@@ -12,7 +12,7 @@
 
 @synthesize pressureInhg = _pressureInhg, relativeHumidity = _relativeHumidity, tempC = _tempC, altitudeM = _altitudeM;
 @synthesize rangeEnd = _rangeEnd, rangeStart = _rangeStart, rangeStep = _rangeStep;
-@synthesize leadSpeed = _leadSpeed, leadAngle = _leadAngle, windSpeed = _windSpeed, windAngle = _windAngle, shootingAngle = _shootingAngle;
+@synthesize targetSpeed = _leadSpeed, targetAngle = _leadAngle, windSpeed = _windSpeed, windAngle = _windAngle, shootingAngle = _shootingAngle;
 @synthesize ranges = _ranges, ballisticProfile = _ballisticProfile, setupCompleted = _setupCompleted;
 
 -(id)init {

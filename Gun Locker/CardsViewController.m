@@ -30,6 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.decelerationRate = UIScrollViewDecelerationRateFast;
+    
     UIImage *segmentSelected = [[UIImage imageNamed:@"selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f)];
     UIImage *segmentUnselected = [[UIImage imageNamed:@"unselected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f)];
     UIImage *segmentSelectedUnselected = [UIImage imageNamed:@"selected_unselected"];
@@ -262,6 +264,5 @@
     
     return count;
 }
-
 
 @end

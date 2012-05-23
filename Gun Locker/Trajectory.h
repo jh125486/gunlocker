@@ -42,8 +42,8 @@
 @property (nonatomic, assign) int rangeStart;
 @property (nonatomic, assign) int rangeEnd;
 @property (nonatomic, assign) int rangeStep;
-@property (nonatomic, assign) double leadSpeed;
-@property (nonatomic, assign) double leadAngle;
+@property (nonatomic, assign) double targetSpeed;
+@property (nonatomic, assign) double targetAngle;
 @property (nonatomic, assign) double windSpeed;
 @property (nonatomic, assign) double windAngle;
 @property (nonatomic, assign) double shootingAngle;

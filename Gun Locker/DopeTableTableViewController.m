@@ -15,9 +15,9 @@
 @synthesize rhTextField = _rhTextField;
 @synthesize altitudeTextField = _altitudeTextField, altitudeUnitControl = _altitudeUnitControl;
 @synthesize windSpeedTextField = _windSpeedTextField, windSpeedUnitControl = _windSpeedUnitControl;
-@synthesize windDirectionTextField = _windDirectionTextField, windDirectionUnitControl = _windDirectionUnitControl;
-@synthesize leadingSpeedTextField = _leadingSpeedTextField, leadingSpeedUnitControl = _leadingSpeedUnitControl;
-@synthesize leadingDirectionTextField = _leadingDirectionTextField, leadingDirectionUnitControl = _leadingDirectionUnitControl;
+@synthesize windDirectionTextField = _windDirectionTextField, windDirectionTypeControl = _windDirectionTypeControl;
+@synthesize targetSpeedTextField = _targetSpeedTextField, targetSpeedUnitControl = _targetSpeedUnitControl;
+@synthesize targetDirectionTextField = _targetDirectionTextField, targetDirectionTypeControl = _targetDirectionTypeControl;
 @synthesize rangeStartStepper = _rangeStartStepper, rangeEndStepper = _rangeEndStepper, rangeStepStepper = _rangeStepStepper;
 @synthesize rangeUnitControl = _rangeUnitControl;
 @synthesize dropDriftUnitcontrol = _dropDriftUnitcontrol;
@@ -53,10 +53,10 @@
                                                         _pressureTextField, 
                                                         _rhTextField, 
                                                         _altitudeTextField, 
+                                                        _windDirectionTextField,
                                                         _windSpeedTextField, 
-                                                        _windDirectionTextField, 
-                                                        _leadingSpeedTextField, 
-                                                        _leadingDirectionTextField, 
+                                                        _targetDirectionTextField, 
+                                                        _targetSpeedTextField, 
                                                         nil];
     
     for(UITextField *field in formFields)
@@ -94,11 +94,11 @@
     [self setWindSpeedTextField:nil];
     [self setWindSpeedUnitControl:nil];
     [self setWindDirectionTextField:nil];
-    [self setWindDirectionUnitControl:nil];
-    [self setLeadingSpeedTextField:nil];
-    [self setLeadingSpeedUnitControl:nil];
-    [self setLeadingDirectionTextField:nil];
-    [self setLeadingDirectionUnitControl:nil];
+    [self setWindDirectionTypeControl:nil];
+    [self setTargetSpeedTextField:nil];
+    [self setTargetSpeedUnitControl:nil];
+    [self setTargetDirectionTextField:nil];
+    [self setTargetDirectionTypeControl:nil];
     [self setDropDriftUnitcontrol:nil];
     [super viewDidUnload];
 }
@@ -109,52 +109,71 @@
 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    DopeTableGeneratedTableViewController *dst =[[segue.destinationViewController viewControllers] objectAtIndex:0];
+    NSString *segueID = [segue identifier];
+    if ([segueID isEqualToString:@"CalculateTrajectory"]) {
+        DopeTableGeneratedTableViewController *dst =[[segue.destinationViewController viewControllers] objectAtIndex:0];
 
-    Trajectory *trajectory = [[Trajectory alloc] init];
-    
-    // XXX do all conversions for UnitControls
-    trajectory.rangeStart = _rangeStartStepper.Current;
-    trajectory.rangeEnd =  _rangeEndStepper.Current;
-    trajectory.rangeStep = _rangeStepStepper.Current;
+        Trajectory *trajectory = [[Trajectory alloc] init];
+        
+        // XXX do all conversions for UnitControls
+        trajectory.rangeStart = _rangeStartStepper.Current;
+        trajectory.rangeEnd =  _rangeEndStepper.Current;
+        trajectory.rangeStep = _rangeStepStepper.Current;
 
-    trajectory.tempC = (_tempUnitControl.selectedSegmentIndex == 0) ? TEMP_F_to_TEMP_C([_tempTextField.text doubleValue]) : [_tempTextField.text doubleValue];
-    
-    trajectory.relativeHumidity = [_rhTextField.text doubleValue];
-    trajectory.pressureInhg = (_pressureUnitControl.selectedSegmentIndex == 0) ? [_pressureTextField.text doubleValue] : INHG_to_PA([_pressureTextField.text doubleValue]/100);
-    trajectory.altitudeM = (_altitudeUnitControl.selectedSegmentIndex == 0) ? FEET_to_METERS([_altitudeTextField.text doubleValue]) : [_altitudeTextField.text doubleValue];
+        trajectory.tempC = (_tempUnitControl.selectedSegmentIndex == 0) ? TEMP_F_to_TEMP_C([_tempTextField.text doubleValue]) : [_tempTextField.text doubleValue];
+        
+        trajectory.relativeHumidity = [_rhTextField.text doubleValue];
+        trajectory.pressureInhg = (_pressureUnitControl.selectedSegmentIndex == 0) ? [_pressureTextField.text doubleValue] : INHG_to_PA([_pressureTextField.text doubleValue]/100);
+        trajectory.altitudeM = (_altitudeUnitControl.selectedSegmentIndex == 0) ? FEET_to_METERS([_altitudeTextField.text doubleValue]) : [_altitudeTextField.text doubleValue];
 
-    trajectory.windSpeed = (_windSpeedUnitControl.selectedSegmentIndex == 0) ? KNOTS_to_MPH([_windSpeedTextField.text doubleValue]) : [_windSpeedTextField.text doubleValue];
-    trajectory.windAngle = (_windDirectionUnitControl.selectedSegmentIndex == 0) ? [_windDirectionTextField.text doubleValue] : CLOCK_to_DEGREES([_windDirectionTextField.text doubleValue]);
-    
-    trajectory.leadSpeed = (_leadingSpeedUnitControl.selectedSegmentIndex == 0) ? KPH_to_MPH([_leadingSpeedTextField.text doubleValue]) : [_leadingSpeedTextField.text doubleValue];
-    trajectory.leadAngle = (_leadingDirectionUnitControl.selectedSegmentIndex == 0) ? [_leadingDirectionTextField.text doubleValue] : CLOCK_to_DEGREES([_leadingDirectionTextField.text doubleValue]);
-    
-    trajectory.ballisticProfile = _selectedProfile;
-    
-    dst.rangeUnit = [[NSArray arrayWithObjects:@"Yards", @"Meters", nil] objectAtIndex:_rangeUnitControl.selectedSegmentIndex];;
-    dst.dropDriftUnit = [[NSArray arrayWithObjects:@"Inches", @"MOA", @"Mils", nil] objectAtIndex:_dropDriftUnitcontrol.selectedSegmentIndex];
+        trajectory.windSpeed = (_windSpeedUnitControl.selectedSegmentIndex == 0) ? KNOTS_to_MPH([_windSpeedTextField.text doubleValue]) : [_windSpeedTextField.text doubleValue];
+        trajectory.windAngle = (_windDirectionTypeControl.selectedSegmentIndex == 0) ? [_windDirectionTextField.text doubleValue] : CLOCK_to_DEGREES([_windDirectionTextField.text doubleValue]);
+        
+        trajectory.targetSpeed = (_targetSpeedUnitControl.selectedSegmentIndex == 0) ? KPH_to_MPH([_targetSpeedTextField.text doubleValue]) : [_targetSpeedTextField.text doubleValue];
+        trajectory.targetAngle = (_targetDirectionTypeControl.selectedSegmentIndex == 0) ? [_targetDirectionTextField.text doubleValue] : CLOCK_to_DEGREES([_targetDirectionTextField.text doubleValue]);
+        
+        trajectory.ballisticProfile = _selectedProfile;
+        
+        dst.rangeUnit = [[NSArray arrayWithObjects:@"Yards", @"Meters", nil] objectAtIndex:_rangeUnitControl.selectedSegmentIndex];;
+        dst.dropDriftUnit = [[NSArray arrayWithObjects:@"Inches", @"MOA", @"Mils", nil] objectAtIndex:_dropDriftUnitcontrol.selectedSegmentIndex];
 
-    dst.tempString = [NSString stringWithFormat:@"%@º %@", _tempTextField.text, 
-                      [[NSArray arrayWithObjects:@"F", @"C", nil] objectAtIndex:_tempUnitControl.selectedSegmentIndex]];
-    
-    dst.altitudeString = [NSString stringWithFormat:@"%@ %@", _altitudeTextField.text, 
-                          [[NSArray arrayWithObjects:@"ft", @"m", nil] objectAtIndex:_altitudeUnitControl.selectedSegmentIndex]];
-    
-    dst.pressureString = [NSString stringWithFormat:@"%@ %@", _pressureTextField.text,
-                          [[NSArray arrayWithObjects:@"inHg", @"mb", nil] objectAtIndex:_pressureUnitControl.selectedSegmentIndex]];
+        dst.tempString = [NSString stringWithFormat:@"%@º %@", _tempTextField.text, 
+                          [[NSArray arrayWithObjects:@"F", @"C", nil] objectAtIndex:_tempUnitControl.selectedSegmentIndex]];
+        
+        dst.altitudeString = [NSString stringWithFormat:@"%@ %@", _altitudeTextField.text, 
+                              [[NSArray arrayWithObjects:@"ft", @"m", nil] objectAtIndex:_altitudeUnitControl.selectedSegmentIndex]];
+        
+        dst.pressureString = [NSString stringWithFormat:@"%@ %@", _pressureTextField.text,
+                              [[NSArray arrayWithObjects:@"inHg", @"mb", nil] objectAtIndex:_pressureUnitControl.selectedSegmentIndex]];
 
-    dst.windInfoString = [NSString stringWithFormat:@"%@ %@ at %@%@", _windSpeedTextField.text, 
-                          [[NSArray arrayWithObjects:@"Knots", @"MPH", nil] objectAtIndex:_windSpeedUnitControl.selectedSegmentIndex], 
-                          _windDirectionTextField.text,
-                          [[NSArray arrayWithObjects:@"º", @" o'Clock", nil] objectAtIndex:_windDirectionUnitControl.selectedSegmentIndex]];
-    
-    dst.leadInfoString = [NSString stringWithFormat:@"%@ %@ at %@%@", _leadingSpeedTextField.text, 
-                          [[NSArray arrayWithObjects:@"Knots", @"MPH", nil] objectAtIndex:_leadingSpeedUnitControl.selectedSegmentIndex], 
-                          _leadingDirectionTextField.text, 
-                          [[NSArray arrayWithObjects:@"º", @" o'Clock", nil] objectAtIndex:_leadingDirectionUnitControl.selectedSegmentIndex]];
-    
-    dst.passedTrajectory = trajectory;
+        dst.windInfoString = [NSString stringWithFormat:@"%@ %@ at %@%@", _windSpeedTextField.text, 
+                              [[NSArray arrayWithObjects:@"Knots", @"MPH", nil] objectAtIndex:_windSpeedUnitControl.selectedSegmentIndex], 
+                              _windDirectionTextField.text,
+                              [[NSArray arrayWithObjects:@"º", @" o'Clock", nil] objectAtIndex:_windDirectionTypeControl.selectedSegmentIndex]];
+        
+        dst.targetInfoString = [NSString stringWithFormat:@"%@ %@ at %@%@", _targetSpeedTextField.text, 
+                              [[NSArray arrayWithObjects:@"Knots", @"MPH", nil] objectAtIndex:_targetSpeedUnitControl.selectedSegmentIndex], 
+                              _targetDirectionTextField.text, 
+                              [[NSArray arrayWithObjects:@"º", @" o'Clock", nil] objectAtIndex:_targetDirectionTypeControl.selectedSegmentIndex]];
+        
+        dst.passedTrajectory = trajectory;
+    } else if ([segueID isEqualToString:@"WindModal"]) {
+        DirectionSpeedViewController *dst = segue.destinationViewController;
+        dst.resultType = @"Wind";
+        dst.speedUnit  = _windSpeedUnitControl.selectedSegmentIndex;
+        dst.speedValue = [_windSpeedTextField.text intValue];
+        dst.directionType = _windDirectionTypeControl.selectedSegmentIndex;
+        dst.directionValue = [_windDirectionTextField.text intValue];
+        dst.delegate = self;
+    } else if ([segueID isEqualToString:@"LeadModal"]) {
+        DirectionSpeedViewController *dst = segue.destinationViewController;
+        dst.resultType = @"Target";
+        dst.speedUnit  = _targetSpeedUnitControl.selectedSegmentIndex;
+        dst.speedValue = [_targetSpeedTextField.text intValue];
+        dst.directionType = _targetDirectionTypeControl.selectedSegmentIndex;
+        dst.directionValue = [_targetDirectionTextField.text intValue];
+        dst.delegate = self;
+    }
 }
 
 #pragma mark TextField delegates
@@ -259,6 +278,22 @@
     
 	[headerView addSubview:label];
 	return headerView;
+}
+
+#pragma mark DirectionSpeedProtocol Delegate methods
+
+-(void)windSetWithDirectionType:(int)directionType andDirection:(int)direction andSpeedType:(int)speedType andSpeed:(int)speed {
+    _windDirectionTypeControl.selectedSegmentIndex = directionType;
+    _windDirectionTextField.text = [NSString stringWithFormat:@"%d", direction];
+    _windSpeedUnitControl.selectedSegmentIndex = speedType;
+    _windSpeedTextField.text = [NSString stringWithFormat:@"%d", speed];
+}
+
+-(void)targetSetWithDirectionType:(int)directionType andDirection:(int)direction andSpeedType:(int)speedType andSpeed:(int)speed {
+    _targetDirectionTypeControl.selectedSegmentIndex = directionType;
+    _targetDirectionTextField.text = [NSString stringWithFormat:@"%d", direction];
+    _targetSpeedUnitControl.selectedSegmentIndex = speedType;
+    _targetSpeedTextField.text = [NSString stringWithFormat:@"%d", speed];    
 }
 
 @end

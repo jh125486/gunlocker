@@ -18,7 +18,8 @@
 @interface CardsViewController : UIViewController <WeaponAddViewControllerDelegate, 
                                                    NSFetchedResultsControllerDelegate, 
                                                    KKPasscodeViewControllerDelegate, 
-                                                   UITableViewDataSource, UITableViewDelegate> {
+                                                   UITableViewDataSource, UITableViewDelegate,
+                                                   UIScrollViewDelegate> {
 	NSFetchedResultsController *fetchedResultsController;
     BOOL _firstInsert;
 }
