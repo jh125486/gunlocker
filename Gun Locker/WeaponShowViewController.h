@@ -21,7 +21,6 @@
 
 @interface WeaponShowViewController : UITableViewController <WeaponAddViewControllerDelegate, UIActionSheetDelegate>
 
-
 @property (weak, nonatomic) IBOutlet UILabel *modelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *manufacturerLabel;
 @property (weak, nonatomic) IBOutlet UITableViewCell *nfaCell;
@@ -33,9 +32,14 @@
 @property (weak, nonatomic) IBOutlet UIButton *quickCleanButton;
 @property (weak, nonatomic) IBOutlet UILabel *weaponTypeLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *lastCleanedDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastCleanedCountLabel;
+
 @property (assign, nonatomic) CardsViewController *cardsViewController;
 @property (strong, nonatomic) Weapon *selectedWeapon;
 
 - (IBAction)roundCountAdjust:(id)sender;
 - (IBAction)changeWeaponTypeTapped:(id)sender;
+- (IBAction)cleanNowTapped:(id)sender;
+
 @end

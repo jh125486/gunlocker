@@ -123,6 +123,8 @@
         <attribute name="caliber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="finish" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="indexLetter" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="last_cleaned_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="last_cleaned_round_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="model" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photo" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
@@ -158,6 +160,6 @@
         <element name="Manufacturer" positionX="160" positionY="192" width="128" height="60"/>
         <element name="Note" positionX="-549" positionY="333" width="128" height="105"/>
         <element name="StampInfo" positionX="-603" positionY="63" width="128" height="165"/>
-        <element name="Weapon" positionX="-324" positionY="-111" width="128" height="360"/>
+        <element name="Weapon" positionX="-324" positionY="-111" width="128" height="420"/>
     </elements>
 </model>

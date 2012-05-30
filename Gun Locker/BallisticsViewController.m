@@ -19,8 +19,6 @@
 @synthesize selectedProfileWeaponLabel = _selectedProfileWeaponLabel, selectedProfileNameLabel = _selectedProfileNameLabel;
 @synthesize dopeCardsButton = _dopeCardsButton, whizWheelButton = _whizWheelButton;
 
-@synthesize locationManager = _locationManager;
-@synthesize currentLocation = _currentLocation;
 @synthesize locationTimer = _locationTimer;
 @synthesize currentWeather = _currentWeather;
 
@@ -34,6 +32,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    #ifdef DEBUG
+        if([BallisticProfile countOfEntities] == 0) [self loadTestProfiles];
+    #endif
+
+    dataManager = [DataManager sharedManager];
     
     self.title = @"Ballistics";
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
@@ -55,20 +59,19 @@
     [textFieldToolBarView setItems:[NSArray arrayWithObjects:cancel, space, done, nil]];
     _selectedProfileTextField.inputAccessoryView = textFieldToolBarView;
     
-    _locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
+    locationManager = dataManager.locationManager;
+    locationManager.delegate = self;
     //    locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
-    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    _locationManager.distanceFilter = 3000.0f;
-    [_locationManager startUpdatingLocation];
-    [_locationManager startMonitoringSignificantLocationChanges];
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    locationManager.distanceFilter = 3000.0f;
+    [locationManager startUpdatingLocation];
+    [locationManager startMonitoringSignificantLocationChanges];
     _locationTimer = [NSTimer scheduledTimerWithTimeInterval:300.0 
-                                                          target:self 
-                                                        selector:@selector(stopUpdatingLocations) 
-                                                        userInfo:nil 
-                                                         repeats:NO];
-    
-    
+                                                      target:self 
+                                                    selector:@selector(stopUpdatingLocations) 
+                                                    userInfo:nil 
+                                                     repeats:NO];
+        
     //Register setRange to recieve "setRange" notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];    
 }
@@ -107,6 +110,7 @@
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self stopUpdatingLocations];
     [self setWxButton:nil];
     [self setTempLabel:nil];
     [self setWindLabel:nil];
@@ -119,10 +123,12 @@
     [self setWhizWheelButton:nil];
     [self setRangeLabel:nil];
     [self setSelectedProfileTextField:nil];
-    [self stopUpdatingLocations];
-    [self setAddNewProfileButton:nil];
+    [self setSelectedProfilePickerView:nil];
     [self setSelectedProfileWeaponLabel:nil];
+    [self setAddNewProfileButton:nil];
     [self setSelectedProfileNameLabel:nil];
+    [self setWxButton:nil];
+    [self setCurrentWeather:nil];
     [super viewDidUnload];
 }
 
@@ -204,8 +210,6 @@
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    _currentLocation = newLocation;
-    
     if(newLocation.horizontalAccuracy <= 100.0f)
         [self stopUpdatingLocations];
     [self getWX:nil];
@@ -230,9 +234,9 @@
 }
 
 - (void)stopUpdatingLocations { 
-    _locationManager.delegate = nil;
-    [_locationManager stopMonitoringSignificantLocationChanges];
-    [_locationManager stopUpdatingLocation]; 
+    locationManager.delegate = nil;
+    [locationManager stopMonitoringSignificantLocationChanges];
+    [locationManager stopUpdatingLocation]; 
     [_locationTimer invalidate]; 
 }
 
@@ -300,7 +304,7 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
-//    NSLog(@"Selected profile: %@. Index of selected profile: %i", [profiles objectAtIndex:row], row);
+//    DebugLog(@"Selected profile: %@. Index of selected profile: %i", [profiles objectAtIndex:row], row);
 }
 
 #pragma mark UIActionSheet
@@ -323,17 +327,12 @@
 #pragma mark Table delegates
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
-	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
-	tableView.sectionHeaderHeight = headerView.frame.size.height;
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 24)];
-	label.text = [self tableView:tableView titleForHeaderInSection:section];
-	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
-	label.shadowColor = [UIColor clearColor];
-	label.backgroundColor = [UIColor clearColor];
-	label.textColor = [UIColor blackColor];
-    
-	[headerView addSubview:label];
-	return headerView;
+    TableViewHeaderViewGrouped *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped" 
+                                                                            owner:self 
+                                                                          options:nil] 
+                                              objectAtIndex:0];
+    headerView.headerTitleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    return headerView;
 }
 
 #pragma mark WX
@@ -342,10 +341,15 @@
     _wxStationLabel.hidden = _wxTimestampLabel.hidden = YES;
     [_wxIndicator startAnimating];
     _wxButton.enabled = NO;
+    
+    DebugLog(@"Getting weather for Lat %f Long %f", 
+             dataManager.locationManager.location.coordinate.latitude, 
+             dataManager.locationManager.location.coordinate.longitude);
 
-    NSLog(@"Getting weather for Lat %f Long %f", _currentLocation.coordinate.latitude, _currentLocation.coordinate.longitude);
-
-    NSString *unescapedURL = [NSString stringWithFormat:@"http://weather.aero/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=csv&radialDistance=30;%f,%f&hoursBeforeNow=2&fields=observation_time,station_id,latitude,longitude,temp_c,dewpoint_c,wind_dir_degrees,wind_speed_kt,altim_in_hg", _currentLocation.coordinate.longitude, _currentLocation.coordinate.latitude];
+    
+    NSString *unescapedURL = [NSString stringWithFormat:@"http://weather.aero/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=csv&radialDistance=30;%f,%f&hoursBeforeNow=2&fields=observation_time,station_id,latitude,longitude,temp_c,dewpoint_c,wind_dir_degrees,wind_speed_kt,altim_in_hg", 
+                              dataManager.locationManager.location.coordinate.longitude, 
+                              dataManager.locationManager.location.coordinate.latitude];
     
     NSURL *url = [NSURL URLWithString:[unescapedURL stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -361,7 +365,8 @@
                 
                 NSArray *weatherArray = [metarArray subarrayWithRange:NSMakeRange(6, count)]; 
 
-                _currentWeather = [[Weather alloc] initClosetWeatherFromMetarArray:weatherArray andLocation:_currentLocation];
+                _currentWeather = [[Weather alloc] initClosetWeatherFromMetarArray:weatherArray 
+                                                                       andLocation:dataManager.locationManager.location];
 
                 _tempLabel.text = [NSString stringWithFormat:@"%.0fº F", TEMP_C_to_TEMP_F(_currentWeather.tempC)];
                 _rhLabel.text   = [NSString stringWithFormat:@"%.0f%%", _currentWeather.relativeHumidity];
@@ -378,12 +383,12 @@
                 _wxButton.titleLabel.text = @"↻ WX";
 
             } else { // errors with weather.aero
-               NSLog(@"! Problem with METAR data from weather.aero: %@\n", metarArray);
+               DebugLog(@"! Problem with METAR data from weather.aero: %@\n", metarArray);
                 [self resetWX];
                 _wxTimestampLabel.text = @"Error processing weather data: dataservice down";
            }
         } else {      // network errors       
-            NSLog(@"! Error: %@", operation.error.localizedDescription);
+            DebugLog(@"! Error: %@", operation.error.localizedDescription);
             [self resetWX];
             _wxTimestampLabel.text = operation.error.localizedDescription;
         }
@@ -406,4 +411,41 @@
     _wxButton.titleLabel.text  = @"⇣ WX";
 }
 
+
+#pragma mark TESTING Profiles below
+
+-(void)loadTestProfiles {
+    BallisticProfile *ballisticProfile1 = [BallisticProfile createEntity];
+    ballisticProfile1.bullet_weight = [NSNumber numberWithInt:55.0];
+    ballisticProfile1.drag_model = @"G7";
+    ballisticProfile1.muzzle_velocity = [NSNumber numberWithInt:3240];
+    ballisticProfile1.zero = [NSNumber numberWithInt:100];
+    ballisticProfile1.zero_unit = [NSNumber numberWithInt:0];
+    ballisticProfile1.sight_height_inches = [NSNumber numberWithDouble:1.5];
+    ballisticProfile1.name = @"55 grain M193 ";
+    ballisticProfile1.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.272"]];
+    ballisticProfile1.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
+    ballisticProfile1.weapon = [[Weapon findAll] objectAtIndex:1];
+    ballisticProfile1.sg = [NSDecimalNumber decimalNumberWithString:@"1.5"];
+    ballisticProfile1.sg_twist_direction =@"RH";
+    [ballisticProfile1 calculateTheta];
+    
+    BallisticProfile *ballisticProfile2 = [BallisticProfile createEntity];
+    
+    ballisticProfile2.bullet_weight = [NSNumber numberWithInt:62.0f];
+    ballisticProfile2.drag_model = @"G7";
+    ballisticProfile2.muzzle_velocity = [NSNumber numberWithInt:2900];
+    ballisticProfile2.zero = [NSNumber numberWithInt:100];
+    ballisticProfile2.zero_unit = [NSNumber numberWithInt:0];
+    ballisticProfile2.sight_height_inches = [NSNumber numberWithDouble:2.6];
+    ballisticProfile2.name = @"62 grain SS109";
+    ballisticProfile2.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.151"]];
+    ballisticProfile2.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
+    ballisticProfile2.weapon = [[Weapon findAll] objectAtIndex:0];
+    ballisticProfile2.sg = [NSDecimalNumber decimalNumberWithString:@"1.2"];
+    ballisticProfile2.sg_twist_direction =@"RH";
+    [ballisticProfile2 calculateTheta];
+    
+    [[NSManagedObjectContext defaultContext] save];
+} 
 @end

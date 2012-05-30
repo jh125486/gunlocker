@@ -30,6 +30,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    #ifdef DEBUG
+        if([Weapon countOfEntities] == 0) [self loadTestWeapons];
+    #endif
+    
     self.tableView.decelerationRate = UIScrollViewDecelerationRateFast;
     
     UIImage *segmentSelected = [[UIImage imageNamed:@"selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f)];
@@ -89,6 +94,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self segmentedTypeControlClicked];
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [TestFlight passCheckpoint:@"CardsView disappeared"];
 }
 
 - (void)viewDidUnload {
@@ -173,6 +182,8 @@
         // handle error!
     }
     
+    [TestFlight passCheckpoint:[NSString stringWithFormat:@"Cards viewed: %@", _selectedType]];
+
     [self.tableView reloadData];
     [self.tableView flashScrollIndicators];
 }
@@ -264,5 +275,115 @@
     
     return count;
 }
+                       
+#pragma mark TESTING WEAPONS below
+
+-(void)loadTestWeapons {
+   dispatch_async(dispatch_get_main_queue(), ^{
+       [Weapon truncateAll];
+       [BallisticProfile truncateAll];
+       [[NSManagedObjectContext defaultContext] save];
+       
+       NSArray *calibers = [Caliber findAllSortedBy:@"diameter_inches" ascending:YES];
+       
+       DebugLog(@"Creating Test Weapon 1");
+       Weapon *newWeapon1 = [Weapon createEntity];
+       newWeapon1.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
+       newWeapon1.model = @"M14 EBR";
+       newWeapon1.caliber = [[calibers objectAtIndex:arc4random() % [calibers count]] name];
+       newWeapon1.type = @"Rifles";
+       newWeapon1.barrel_length = [NSNumber numberWithDouble:18.0f];
+       newWeapon1.finish = @"FDE";
+       newWeapon1.threaded_barrel_pitch = @"5/8 x 24 LH";
+       newWeapon1.serial_number = [NSString randomStringWithLength:12];
+       newWeapon1.purchased_price = [NSDecimalNumber decimalNumberWithString:@"1800.00"];
+       newWeapon1.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
+       
+       UIImage *photo = [UIImage imageNamed:@"Test/test1.jpg"];
+       newWeapon1.photo = UIImagePNGRepresentation(photo);
+       // Create a thumbnail version of the image for the object.
+       CGSize size = photo.size;
+       CGFloat ratio = 0;
+       ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
+       CGRect rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
+       UIGraphicsBeginImageContext(rect.size);
+       [photo drawInRect:rect];
+       newWeapon1.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
+       UIGraphicsEndImageContext();   
+       
+       DebugLog(@"Creating Test Weapon 2");
+       Weapon *newWeapon2 = [Weapon createEntity];
+       newWeapon2.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
+       newWeapon2.model = @"Vector CRB/SO";
+       newWeapon2.caliber = [[calibers objectAtIndex:arc4random() % [calibers count]] name];
+       newWeapon2.type = @"Rifles";
+       newWeapon2.barrel_length = [NSNumber numberWithDouble:16.0f];
+       newWeapon2.finish = @"Wood Furniture";
+       newWeapon2.threaded_barrel_pitch = @"1/2 x 28 LH";
+       newWeapon2.serial_number = [NSString randomStringWithLength:12];
+       newWeapon2.purchased_price = [NSDecimalNumber decimalNumberWithString:@"900.00"];
+       newWeapon2.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
+       
+       photo = [UIImage imageNamed:@"Test/test2.jpg"];
+       newWeapon2.photo = UIImagePNGRepresentation(photo);
+       // Create a thumbnail version of the image for the object.
+       size = photo.size;
+       ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
+       rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
+       UIGraphicsBeginImageContext(rect.size);
+       [photo drawInRect:rect];
+       newWeapon2.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
+       UIGraphicsEndImageContext();
+       
+       DebugLog(@"Creating Test Weapon 3");
+       Weapon *newWeapon3 = [Weapon createEntity];
+       newWeapon3.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
+       newWeapon3.model = @"1911 Series 80";
+       newWeapon3.caliber = [[calibers objectAtIndex:arc4random() % [calibers count]] name];
+       newWeapon3.type = @"Handguns";
+       newWeapon3.barrel_length = [NSNumber numberWithDouble:5.2f];
+       newWeapon3.finish = @"Stainless/Black";
+       newWeapon3.threaded_barrel_pitch = @"3 lug";
+       newWeapon3.serial_number = [NSString randomStringWithLength:12];
+       newWeapon3.purchased_price = [NSDecimalNumber decimalNumberWithString:@"13000.00"];
+       newWeapon3.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
+       
+       photo = [UIImage imageNamed:@"Test/test3.jpg"];
+       newWeapon3.photo = UIImagePNGRepresentation(photo);
+       // Create a thumbnail version of the image for the object.
+       size = photo.size;
+       ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
+       rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
+       UIGraphicsBeginImageContext(rect.size);
+       [photo drawInRect:rect];
+       newWeapon3.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
+       UIGraphicsEndImageContext();
+       
+       DebugLog(@"Creating Test Weapon 4");
+       Weapon *newWeapon4 = [Weapon createEntity];
+       newWeapon4.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
+       newWeapon4.model = @"Super Shorty";
+       newWeapon4.caliber = [[calibers objectAtIndex:arc4random() % [calibers count]] name];
+       newWeapon4.type = @"Shotguns";
+       newWeapon4.barrel_length = [NSNumber numberWithDouble:9.5f];
+       newWeapon4.finish = @"Stainless/Black";
+       newWeapon4.serial_number = [NSString randomStringWithLength:12];
+       newWeapon4.purchased_price = [NSDecimalNumber decimalNumberWithString:@"13000.00"];
+       newWeapon4.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
+       
+       photo = [UIImage imageNamed:@"Test/test4.jpg"];
+       newWeapon4.photo = UIImagePNGRepresentation(photo);
+       // Create a thumbnail version of the image for the object.
+       size = photo.size;
+       ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
+       rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
+       UIGraphicsBeginImageContext(rect.size);
+       [photo drawInRect:rect];
+       newWeapon4.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
+       UIGraphicsEndImageContext();
+       
+       [[NSManagedObjectContext defaultContext] save];
+   });
+}                       
 
 @end

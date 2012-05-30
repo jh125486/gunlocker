@@ -269,19 +269,12 @@
 }
 
 #pragma mark Table delegates
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
-	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
-	tableView.sectionHeaderHeight = headerView.frame.size.height;
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 24)];
-	label.text = [self tableView:tableView titleForHeaderInSection:section];
-	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
-	label.shadowColor = [UIColor clearColor];
-	label.backgroundColor = [UIColor clearColor];
-	label.textColor = [UIColor blackColor];
+    TableViewHeaderViewGrouped *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped" owner:self options:nil] 
+                                              objectAtIndex:0];
     
-	[headerView addSubview:label];
-	return headerView;
+    headerView.headerTitleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    return headerView;
 }
 
 #pragma mark DirectionSpeedProtocol Delegate methods

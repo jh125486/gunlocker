@@ -40,52 +40,28 @@
     NSMutableArray *clockLabels = [[NSMutableArray alloc] initWithObjects:@"12\no'clock", nil];
     for (int i = 1; i < 12; i++) [clockLabels addObject:[NSString stringWithFormat:@"%d\no'clock", i]];
     
-    labels = [[NSArray alloc] initWithObjects:degreeLabels, clockLabels, nil];
+    directionLabels = [[NSArray alloc] initWithObjects:degreeLabels, clockLabels, nil];
     
-    _directionTypeControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(20.f, 44.f, 280.f, 44.f)];
-    [_directionTypeControl addTarget:self action:@selector(directionTypeChanged:) forControlEvents:UIControlEventValueChanged];
-    [_directionTypeControl insertSegmentWithTitle:@"Degrees" atIndex:0 animated:YES];
-    [_directionTypeControl insertSegmentWithTitle:@"Clock Positions" atIndex:1 animated:YES];    
-    [_directionTypeControl setSelectedSegmentIndex:_directionType];
-    [_directionTypeControl setSegmentedControlStyle:UISegmentedControlStyleBar];
-    [_directionTypeControl setTintColor:[UIColor darkGrayColor]];
-    [self.view addSubview:_directionTypeControl];
+    _speedSlider.increment = 1;
+    _speedSlider.labelStep = 5;
     
-    _speedSlider = [[JHSlider alloc] initWithFrame:CGRectMake(10.f, 390.f, 170.f, 60.f) andIncrement:1 andLabelStep:5];
-    [_speedSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
-    [_speedSlider setBackgroundColor: [UIColor clearColor]];
-    [_speedSlider setMinimumValue: 0.0f];
-    [_speedSlider setMaximumValue: 25.0f];
-    [_speedSlider setContinuous: YES];
+    int imageStepNumber = round(_speedValue/_speedSlider.labelStep) * _speedSlider.labelStep;
+    _speedImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_%d", _resultType, imageStepNumber]];    
+    
+    [_speedUnitControl setTitle:[_resultType isEqualToString:@"Wind"] ? @"Knots" : @"KPH" forSegmentAtIndex:0];
+    
+    [_directionTypeControl setSelectedSegmentIndex:_directionType];    
     [_speedSlider setValue: _speedValue];
-    [_speedSlider setMaximumTrackTintColor: [UIColor whiteColor]];
-    [_speedSlider setThumbTintColor: [UIColor darkGrayColor]];
-    [_speedSlider setMinimumTrackTintColor: [UIColor blackColor]];    
-    [self.view addSubview:_speedSlider];
-
-    _speedImage = [[UIImageView alloc] initWithFrame:CGRectMake(5.f, 350.f, 120.f, 60.f)];
-    _speedImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_%g",
-                                           _resultType,
-                                           round(_speedValue/_speedSlider.labelStep) * _speedSlider.labelStep]];    
-    [self.view addSubview:_speedImage];
-    
-    _speedUnitControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(190.f, 410.f, 120.f, 44.f)];
-    [_speedUnitControl addTarget:self action:@selector(speedUnitChanged:) forControlEvents:UIControlEventValueChanged];
-    [_speedUnitControl insertSegmentWithTitle:[_resultType isEqualToString:@"Wind"] ? @"Knots" : @"KPH" atIndex:0 animated:NO];
-    [_speedUnitControl insertSegmentWithTitle:@"MPH" atIndex:1 animated:NO];
     [_speedUnitControl setSelectedSegmentIndex:_speedUnit];
-    [_speedUnitControl setSegmentedControlStyle:UISegmentedControlStyleBar];
-    [_speedUnitControl setTintColor:[UIColor darkGrayColor]];
-    [self.view addSubview:_speedUnitControl];
     
-    _directionTypeControl.selectedSegmentIndex = _directionType;
-    directionIndex = round(_directionValue * ([[labels objectAtIndex:_directionTypeControl.selectedSegmentIndex] count]/360.f));
+    directionIndex = round(_directionValue * ([[directionLabels objectAtIndex:_directionTypeControl.selectedSegmentIndex] count]/360.f));
     
     [self directionTypeChanged:nil];
     [self setTitleLabel];
 }
 
 - (void)viewDidUnload {
+    [TestFlight passCheckpoint:@"Direction/Speed modal unloaded"];
     [self setDelegate:nil];
     [self setTitle1Label:nil];
     [self setTitle2Label:nil];
@@ -105,7 +81,7 @@
 -(void)setTitleLabel {
     _title1Label.text = [NSString stringWithFormat:@"%@ from %@", 
                                 _resultType, 
-                                [[labels objectAtIndex:_directionTypeControl.selectedSegmentIndex] objectAtIndex:directionIndex]];
+                                [[directionLabels objectAtIndex:_directionTypeControl.selectedSegmentIndex] objectAtIndex:directionIndex]];
     
     _title2Label.text = [NSString stringWithFormat:@"%g %@",
                         roundf(_speedValue),
@@ -119,7 +95,7 @@
 }
 
 - (IBAction)setTapped:(id)sender {
-    int speed = [[[labels objectAtIndex:_directionTypeControl.selectedSegmentIndex] objectAtIndex:directionIndex] intValue];
+    int speed = [[[directionLabels objectAtIndex:_directionTypeControl.selectedSegmentIndex] objectAtIndex:directionIndex] intValue];
     
     if ([_resultType isEqualToString:@"Wind"]) {
         [_delegate windSetWithDirectionType:_directionTypeControl.selectedSegmentIndex 
@@ -138,15 +114,15 @@
 }
 
 -(void)directionTypeChanged:(UISegmentedControl *)control {
-    int prevLabelCount = [[labels objectAtIndex:!_directionTypeControl.selectedSegmentIndex] count];
-    int currentLabelCount = [[labels objectAtIndex:_directionTypeControl.selectedSegmentIndex] count]; 
+    int prevLabelCount = [[directionLabels objectAtIndex:!_directionTypeControl.selectedSegmentIndex] count];
+    int currentLabelCount = [[directionLabels objectAtIndex:_directionTypeControl.selectedSegmentIndex] count]; 
     int newIndex = (control) ? roundf(directionIndex / (float)prevLabelCount * currentLabelCount) : directionIndex;
 
     if (_wheel) [_wheel removeFromSuperview];    
-    _wheel = [[JHRotaryWheel alloc] initWithFrame:CGRectMake(0.f, 0.f, 200.f, 200.f)  
+    _wheel = [[JHRotaryWheel alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 320.f)  
                                       andDelegate:self 
-                                       withLabels:[labels objectAtIndex:_directionTypeControl.selectedSegmentIndex]];
-    _wheel.center = CGPointMake(160.f, 240.f);
+                                       withLabels:[directionLabels objectAtIndex:_directionTypeControl.selectedSegmentIndex]];
+    _wheel.center = CGPointMake(160.f, 232.f);
     [self.view addSubview:_wheel];    
     
     directionIndex = newIndex;

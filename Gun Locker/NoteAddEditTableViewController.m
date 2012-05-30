@@ -25,7 +25,9 @@
 - (void)viewDidLoad {
     [_titleTextField becomeFirstResponder];
     _bodyTextView.delegate = self;
-    _bodyTextView.scrollEnabled = NO;
+    
+    _bodyTextView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Notes_TextView"]];
+    _bodyTextView.contentInset = UIEdgeInsetsMake(-10, 10, 30, 10);
     
     if (_passedNote) [self loadNote];
 
@@ -35,7 +37,7 @@
 -(void)loadNote {
     _titleTextField.text = _passedNote.title;
     _bodyTextView.text   = _passedNote.body;
-    _fakePlaceholderLabel.hidden = ([_bodyTextView.text isEqualToString:@""]) ? NO : YES;
+    [self textViewDidChange:_bodyTextView];
     self.title = @"Note";
 }
 
@@ -75,15 +77,15 @@
     _fakePlaceholderLabel.hidden = ([textView.text isEqualToString:@""]) ? NO : YES;
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    NSString* newText = [textView.text stringByReplacingCharactersInRange:range withString:text];
-    
-    int newLineCount = [newText length] - [[newText stringByReplacingOccurrencesOfString:@"\n" withString:@""] length];
-    if (newLineCount >= 4) return NO;
-    
-    CGSize tallerSize = CGSizeMake(textView.frame.size.width -19, textView.frame.size.height * 2);
-    CGSize newSize = [newText sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:UILineBreakModeCharacterWrap];
-    return (newSize.height > (CGRectGetHeight(textView.frame))) ? NO : YES;
-}
+//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+//    NSString* newText = [textView.text stringByReplacingCharactersInRange:range withString:text];
+//    
+//    int newLineCount = [newText length] - [[newText stringByReplacingOccurrencesOfString:@"\n" withString:@""] length];
+//    if (newLineCount >= 4) return NO;
+//    
+//    CGSize tallerSize = CGSizeMake(textView.frame.size.width -19, textView.frame.size.height * 2);
+//    CGSize newSize = [newText sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:UILineBreakModeCharacterWrap];
+//    return (newSize.height > (CGRectGetHeight(textView.frame))) ? NO : YES;
+//}
 
 @end

@@ -14,6 +14,7 @@
 @synthesize resultLabel = _resultLabel;
 @synthesize currentTextField = _currentTextField;
 @synthesize passedCaliber = _passedCaliber, passedWeight = _passedWeight, passedMV = _passedMV;
+@synthesize resultView = _resultView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -70,6 +71,7 @@
     [self setPassedWeight:nil];
     [self setPassedMV:nil];
     
+    [self setResultView:nil];
     [super viewDidUnload];
 }
 
@@ -104,12 +106,6 @@
 
 #pragma mark TextField delegates
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    UIToolbar* textFieldToolBarView = [[UIToolbar alloc] init];
-    textFieldToolBarView.barStyle = UIBarStyleBlack;
-    textFieldToolBarView.translucent = YES;
-    textFieldToolBarView.tintColor = nil;
-    [textFieldToolBarView sizeToFit];
-    
     UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
                                                                              NSLocalizedString(@"Previous",@"Previous form field"),
                                                                              NSLocalizedString(@"Next",@"Next form field"),                                         
@@ -119,20 +115,30 @@
     control.momentary = YES;
     [control addTarget:self action:@selector(nextPreviousTapped:) forControlEvents:UIControlEventValueChanged];     
     
-    UIBarButtonItem *controlItem = [[UIBarButtonItem alloc] initWithCustomView:control];
-    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
+    UIBarButtonItem *controlItem = [[UIBarButtonItem alloc] initWithCustomView:control];    
+    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace 
+                                                                           target:nil 
+                                                                           action:nil];
     UIBarButtonItem *done  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-                                                                           target:self action:@selector(doneTyping:)];
+                                                                           target:self 
+                                                                           action:@selector(doneTyping:)];
     
     if ([formFields indexOfObject:textField] == 0) {
         [control setEnabled:NO forSegmentAtIndex:0];
-    } else if ([formFields lastObject]== textField) {
+    } else if ([formFields lastObject] == textField) {
         [control setEnabled:NO forSegmentAtIndex:1];
     }
     
-    [textFieldToolBarView setItems:[NSArray arrayWithObjects:controlItem, space, done, nil]];
-    textField.inputAccessoryView = textFieldToolBarView;
+    UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 300.f, 88.f)];
+    UIToolbar* textFieldToolBarView1 = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 44.f)];
+    UIToolbar* textFieldToolBarView2 = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 44.f, 320.f, 44.f)];
+    textFieldToolBarView1.barStyle = UIBarStyleBlackOpaque;
+    textFieldToolBarView2.barStyle = UIBarStyleBlackTranslucent;
+    [textFieldToolBarView1 addSubview:_resultView];
+    [textFieldToolBarView2 setItems:[NSArray arrayWithObjects:controlItem, space, done, nil]];
+    [tempView addSubview:textFieldToolBarView1];    
+    [tempView addSubview:textFieldToolBarView2];
+    textField.inputAccessoryView = tempView;
     
     return YES;
 }

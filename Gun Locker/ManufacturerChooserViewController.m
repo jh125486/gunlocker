@@ -68,11 +68,21 @@
 
 #pragma TableView methods
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if(([[self.sectionsArray objectAtIndex:section] count] == 0) || (tableView == self.searchDisplayController.searchResultsTableView)) {
+    if(([[self.sectionsArray objectAtIndex:section] count] == 0) || 
+       (tableView == self.searchDisplayController.searchResultsTableView)) {
         return nil;
     } else {
         return [[collation sectionTitles] objectAtIndex:section];
     }
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    TableViewHeaderViewPlain *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewPlain" 
+                                                                          owner:self 
+                                                                        options:nil] 
+                                            objectAtIndex:0];
+    headerView.headerTitleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    return headerView;
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
@@ -188,28 +198,6 @@
                                scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
     
     return YES;
-}
-
--(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
-    if (sectionTitle == nil) return nil;
-    
-	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.sectionHeaderHeight)];
-    headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background"]];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, headerView.frame.size.width - 20, tableView.sectionHeaderHeight)];
-	label.text = sectionTitle;
-	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:18.0];
-	label.shadowColor = [UIColor lightTextColor];
-    label.shadowOffset = CGSizeMake(0, 1);
-	label.backgroundColor = [UIColor clearColor];    
-	label.textColor = [UIColor blackColor];
-    
-	[headerView addSubview:label];
-	return headerView;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return ([self tableView:tableView titleForHeaderInSection:section] != nil) ? 23.0f : 0.0f;
 }
 
 @end

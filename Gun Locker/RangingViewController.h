@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *resultLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *resultUnitControl;
 
+@property (strong, nonatomic) IBOutlet UIView *resultView;
 @property (weak, nonatomic) UITextField *currentTextField;
 
 - (IBAction)showRangeEstimate:(id)sender;

@@ -165,6 +165,7 @@
     [[NSManagedObjectContext defaultContext] save];
     
     [self dismissModalViewControllerAnimated:YES];
+    [TestFlight passCheckpoint:@"New Ammunition Saved"];
 }
 
 @end

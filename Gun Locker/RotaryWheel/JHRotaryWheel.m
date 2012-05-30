@@ -32,13 +32,16 @@ static float maxAlphaValue = 1.f;
 
 - (id)initWithFrame:(CGRect)frame andDelegate:(id)delegate withLabels:(NSArray *)labels{
     if ((self = [super initWithFrame:frame])) {
-        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Background"]];
+        UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Background"]];
+        background.center = CGPointMake(self.frame.size.width/2.f, self.frame.size.height/2.f);
+        [self addSubview:background];
+        
         _currentSector = 0;
         _labels = labels;
         _numberOfSections = [_labels count];
         _delegate = delegate;
         _sectorLabels = [[NSMutableArray alloc] initWithCapacity:_numberOfSections];
-        
+
         [self drawWheel];
         [self drawLabels];
         oldAlphaValue = minAlphaValue;
@@ -53,7 +56,7 @@ static float maxAlphaValue = 1.f;
     CGFloat angleSize = 2.0f*M_PI/_numberOfSections;
 
     for (int i = 0; i < _numberOfSections; i++) {
-        UILabel *im = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_container.frame)/2.0f, 20.0f)];
+        UILabel *im = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_container.frame)/2.0f - 60.f, 20.0f)];
         if (i == 0) {
             im.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BottomArrow.png"]];
         } else if (i == _numberOfSections / 2.f) {
@@ -82,25 +85,30 @@ static float maxAlphaValue = 1.f;
 }
 
 -(void)drawLabels {
-    BOOL skipOdd = (_numberOfSections > 12);
+    if (_numberOfSections > 12) {
+        skipLabels = YES;
+        skipCount = (int)round(_numberOfSections / 4);
+    }
+    
     CGFloat angle = 2.0f*M_PI/[_labels count];
     UIView *outerLabelsView = [[UIView alloc] initWithFrame:self.frame];    
 
     for (int i = 0; i < _numberOfSections; i++) {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 160.0f, 60.0f)];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 60.0f, 60.0f)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 160.0f, 50.0f)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 60.0f, 50.0f)];
         [view addSubview:label];
         
         label.backgroundColor = [UIColor clearColor];
         label.numberOfLines = 2;
         label.text = [[[_labels objectAtIndex:i] componentsSeparatedByString:@"\n"] objectAtIndex:0];
         label.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:20.0f];
-        if ((skipOdd ) && (i % 2)) {
-            label.alpha = 0.f;
+        if (skipLabels  && (i % skipCount)) {
+            label.text = @"•";
+            label.alpha = minAlphaValue;
         } else {
             label.alpha = minAlphaValue;            
         }
-        
+
         label.shadowColor = [UIColor whiteColor];
         label.shadowOffset = CGSizeMake(0.f, 0.f);
         
@@ -113,8 +121,10 @@ static float maxAlphaValue = 1.f;
         label.layer.anchorPoint = CGPointMake(1.0f, 0.5f);
         label.transform = CGAffineTransformMakeRotation(angle * -i - M_PI_2);
         
+        [label setUserInteractionEnabled:YES];
         [_sectorLabels addObject:label];
         
+        [view setUserInteractionEnabled:NO];
         [outerLabelsView addSubview:view];
     }
     [outerLabelsView setUserInteractionEnabled:NO];
@@ -177,7 +187,32 @@ static float maxAlphaValue = 1.f;
     CGPoint touchPoint = [touch locationInView:self]; // 1 - Get touch position
     float distance = [self calculateDistanceFromCenter:touchPoint];
     // Filter out touches too close to the center
-    if (distance < 40 || distance > 100) return NO;
+    if (distance < 40) return NO;
+    if (distance > 100) { // touched label
+        float x = touchPoint.x - _container.center.x;
+        float y = touchPoint.y - _container.center.y;
+        float radians = atan2(y,x);
+
+        int sectorNumber;
+        for (JHSector *sector in _sectors) {
+            if (sector.minValue > 0 && sector.maxValue < 0) { // 4 - Check for anomaly (occurs with even number of sectors)
+                if (sector.maxValue > radians || sector.minValue < radians) {
+                    // 5 - Find the quadrant (positive or negative)
+                    sectorNumber = sector.sectorNumber;
+                }
+            } else if ([sector contains:radians]) { // 6 - All non-anomalous cases
+                sectorNumber = sector.sectorNumber;
+            }
+        }
+        
+        sectorNumber -= _numberOfSections/2.f;
+        if (sectorNumber < 0) sectorNumber += _numberOfSections;
+        int difference = _currentSector - sectorNumber;
+
+        (difference < 0) ? [self rotateCCW:abs(difference)] : [self rotateCW:difference];
+                
+        return NO;
+    }
     
     // 2 - Calculate distance from center
     float x = touchPoint.x - _container.center.x;
@@ -196,8 +231,8 @@ static float maxAlphaValue = 1.f;
 //    // Filter out touches too close to the center
 //    if (distance < 40 || distance > 100) return NO;
 
-    float x = touchPoint.x  - _container.center.x;
-    float y = touchPoint.y  - _container.center.y;
+    float x = touchPoint.x - _container.center.x;
+    float y = touchPoint.y - _container.center.y;
     float angleDifference = deltaAngle - atan2(y,x);
     _container.transform = CGAffineTransformRotate(_startTransform, -angleDifference);
     
@@ -317,7 +352,11 @@ static float maxAlphaValue = 1.f;
 -(void)resetLabelForIndex:(int)index {
     UILabel *label = [_sectorLabels objectAtIndex:index];
     label.alpha = oldAlphaValue;
-    label.text = [[[_labels objectAtIndex:index] componentsSeparatedByString:@"\n"] objectAtIndex:0];
+    if (skipLabels && (index % skipCount)) {
+        label.text = @"•";
+    } else {
+        label.text = [[[_labels objectAtIndex:index] componentsSeparatedByString:@"\n"] objectAtIndex:0];        
+    }
     label.numberOfLines = 1;
     label.shadowOffset = CGSizeMake(0.f, 0.f);
 }
@@ -326,9 +365,17 @@ static float maxAlphaValue = 1.f;
     UILabel *label = [_sectorLabels objectAtIndex:index];
     oldAlphaValue = label.alpha;
     label.alpha = maxAlphaValue;
-    label.text = [_labels objectAtIndex:index];
+
+    if (skipLabels && (index % (skipCount/2))) {
+        label.text = @"•";
+    }else {
+        label.text = [_labels objectAtIndex:index];
+    }
+    
     label.numberOfLines = 2;
     label.shadowOffset = CGSizeMake(0.f, 1.f);
 }
+
+
 
 @end

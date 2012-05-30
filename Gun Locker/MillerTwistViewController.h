@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *resultLabel;
 
 @property (weak, nonatomic) UITextField *currentTextField;
+@property (weak, nonatomic) IBOutlet UIView *resultView;
 
 - (IBAction)showResult:(id)sender;
 

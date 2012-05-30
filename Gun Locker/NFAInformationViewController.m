@@ -9,10 +9,9 @@
 #import "NFAInformationViewController.h"
 
 @implementation NFAInformationViewController
-@synthesize line1Label;
-@synthesize line2Label;
-@synthesize selectedWeapon;
-@synthesize timeLineFooterLabel;
+@synthesize line1Label = _line1Label, line2Label = _line2Label;
+@synthesize selectedWeapon = _selectedWeapon;
+@synthesize timeLineFooterLabel = _timeLineFooterLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,28 +30,20 @@
         UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 31)];
         footerView.backgroundColor = [UIColor clearColor];
         footerView.autoresizesSubviews = YES;
-        self.timeLineFooterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 31)];
-        self.timeLineFooterLabel.backgroundColor = [UIColor clearColor];
-        self.timeLineFooterLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0];
-        self.timeLineFooterLabel.textAlignment = UITextAlignmentCenter;
-        self.timeLineFooterLabel.textColor = [UIColor colorWithRed:0.298039 green:0.337255 blue:0.423529 alpha:1];
-        self.timeLineFooterLabel.shadowColor = [UIColor whiteColor];
-        self.timeLineFooterLabel.shadowOffset = CGSizeMake(0, 1);
-        self.timeLineFooterLabel.text = @"";
-        self.timeLineFooterLabel.adjustsFontSizeToFitWidth = YES;
-        [footerView addSubview:self.timeLineFooterLabel];
+        _timeLineFooterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 31)];
+        _timeLineFooterLabel.backgroundColor = [UIColor clearColor];
+        _timeLineFooterLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0];
+        _timeLineFooterLabel.textAlignment = UITextAlignmentCenter;
+        _timeLineFooterLabel.textColor = [UIColor colorWithRed:0.298039 green:0.337255 blue:0.423529 alpha:1];
+        _timeLineFooterLabel.shadowColor = [UIColor whiteColor];
+        _timeLineFooterLabel.shadowOffset = CGSizeMake(0, 1);
+        _timeLineFooterLabel.text = @"";
+        _timeLineFooterLabel.adjustsFontSizeToFitWidth = YES;
+        [footerView addSubview:_timeLineFooterLabel];
         
-        // replace titleView with a title and subtitle
-        // dont show if coming from weapon controller
-        if (![self.navigationController.navigationBar.topItem.title isEqualToString:selectedWeapon.model]) {
-            self.line1Label.text = @"NFA Information";
-            self.line2Label.text = selectedWeapon.model;
-        } else {
-            self.line1Label.text = @"NFA";
-            self.line2Label.text = @"Information";
-        }
+        [self setTitle];
         
-        StampInfo *stamp = self.selectedWeapon.stamp;
+        StampInfo *stamp = _selectedWeapon.stamp;
         
         QRootElement *_root = [[QRootElement alloc] init];
         
@@ -92,6 +83,13 @@
         [infoSection addElement:nfaType];
         [infoSection addElement:transferType];
         
+        
+        TableViewHeaderViewGrouped *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped" 
+                                                                                owner:self 
+                                                                              options:nil] 
+                                                  objectAtIndex:0];
+        headerView.headerTitleLabel.text = timeLineSection.title;
+        timeLineSection.headerView = headerView;
         [timeLineSection addElement:formSentDate];
         [timeLineSection addElement:checkCashedDate];
         [timeLineSection addElement:wentPendingDate];
@@ -122,6 +120,22 @@
     [self loadView];
 }
 
+- (void)setTitle {
+    // replace titleView with a title and subtitle
+    // dont show if coming from weapon controller
+    if (![self.navigationController.navigationBar.topItem.title isEqualToString:_selectedWeapon.model]) {
+        _line1Label.text = @"NFA Information";
+        _line2Label.text = _selectedWeapon.model;
+    } else {
+        _line1Label.text = @"NFA";
+        _line2Label.text = @"Information";
+    }
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [TestFlight passCheckpoint:@"NFAInformation disappeared"];
+}
+
 - (void)viewDidUnload {
     [self setSelectedWeapon:nil];
     [self setLine1Label:nil];
@@ -137,24 +151,24 @@
 - (void)setTimeLineFooter {
     NSDate *formSent = ((QDateTimeInlineElement*)[self.root elementWithKey:@"form_sent"]).dateValue;
     NSDate *stampReceived = ((QDateTimeInlineElement*)[self.root elementWithKey:@"stamp_received"]).dateValue;
-    self.timeLineFooterLabel.text = (formSent && stampReceived) ? [NSString stringWithFormat:@"%.0f day wait", [stampReceived timeIntervalSinceDate:formSent] / (60*60*24.0)] : @"";
+    _timeLineFooterLabel.text = (formSent && stampReceived) ? [NSString stringWithFormat:@"%.0f day wait", [stampReceived timeIntervalSinceDate:formSent] / (60*60*24.0)] : @"";
 }
 
 - (void)actionSheet:(UIActionSheet *)sender clickedButtonAtIndex:(int)index {
     if (index == sender.destructiveButtonIndex) {
-        [self.selectedWeapon.stamp deleteEntity];
+        [_selectedWeapon.stamp deleteEntity];
         [[NSManagedObjectContext defaultContext] save];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
--(void) cell:(UITableViewCell *)cell willAppearForElement:(QElement *)element atIndexPath:(NSIndexPath *)indexPath{
+-(void)cell:(UITableViewCell *)cell willAppearForElement:(QElement *)element atIndexPath:(NSIndexPath *)indexPath{
     if ([element isKindOfClass:[QButtonElement class]]){
         UIImage *background = [[UIImage imageNamed:@"delete_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
         cell.backgroundColor = [UIColor colorWithPatternImage:background];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
-        cell.textLabel.shadowColor = [UIColor lightGrayColor];
+        cell.textLabel.shadowColor = [UIColor blackColor];
         cell.textLabel.shadowOffset = CGSizeMake(0, -1);
     } else if ([element isKindOfClass:[QRadioElement class]] || [element isKindOfClass:[QDateTimeInlineElement class]]) {
         cell.backgroundColor = [UIColor whiteColor];
@@ -178,13 +192,15 @@
 }
 
 - (IBAction)saveButtonTapped:(id)sender {
-    StampInfo *stamp =  (self.selectedWeapon.stamp) ? self.selectedWeapon.stamp: [StampInfo createEntity];
+    StampInfo *stamp =  (_selectedWeapon.stamp) ? _selectedWeapon.stamp: [StampInfo createEntity];
     [self.root fetchValueIntoObject:stamp];
     
-    self.selectedWeapon.stamp = stamp;
+    _selectedWeapon.stamp = stamp;
     
     [[NSManagedObjectContext defaultContext] save];
     
+    [TestFlight passCheckpoint:@"NFAInformation saved"];
+
     [self.navigationController popViewControllerAnimated:YES];
 }
 

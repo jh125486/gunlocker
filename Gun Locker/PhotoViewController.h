@@ -22,8 +22,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *photoView;
 @property (strong, nonatomic) Weapon *selectedWeapon;
 
-- (IBAction)handlePan:(UIPanGestureRecognizer *)recognizer;
+//- (IBAction)handlePan:(UIPanGestureRecognizer *)recognizer;
 - (IBAction)handlePinch:(UIPinchGestureRecognizer *)recognizer;
+- (IBAction)handleTap:(UIGestureRecognizer *)recognizer;
+
 - (IBAction)doneTapped:(id)sender;
 
 @end

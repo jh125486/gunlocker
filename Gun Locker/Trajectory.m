@@ -33,23 +33,19 @@
     yInitial = -INCHES_to_FEET([_ballisticProfile.sight_height_inches doubleValue]);
     vInitial = [_ballisticProfile.muzzle_velocity doubleValue];
     speedOfSound = [self calculateSpeedOfSoundInFeet];
-    
-    [self setupWindAndLeading];
-    
-    if (!_ballisticProfile.zero_theta) {[_ballisticProfile calculateTheta]; NSLog(@"Trajectory: had to calculate theta angle");}
+        
+    if (!_ballisticProfile.zero_theta) {[_ballisticProfile calculateTheta]; DebugLog(@"Trajectory: had to calculate theta angle");}
     
     _setupCompleted = YES;
 }
 
 - (void)setupWindAndLeading {
     windXSpeed = -MPH_to_FPS(cos(DEGREES_to_RAD(_windAngle)) * _windSpeed);
-    NSLog(@"windspeed downrange: %g", windXSpeed);
     // wind from rear doesn't affect bullet as much
     // probably should be developed from sectional area
     if (windXSpeed > 0) windXSpeed *= 0.25;
     
     windZSpeed = -MPH_to_FPS(sin(DEGREES_to_RAD(_windAngle)) * _windSpeed);
-    NSLog(@"windspeed to the right: %g", windZSpeed);
     
     leadXSpeed = MPH_to_FPS(cos(DEGREES_to_RAD(_leadAngle)) * _leadSpeed);
     leadZSpeed = MPH_to_FPS(sin(DEGREES_to_RAD(_leadAngle)) * _leadSpeed);
@@ -152,7 +148,7 @@
 		if (fabs(vy) > fabs(3.0 * vx)) break; 
 	}
     
-//    NSLog(@"Total Z travelled: %g\"\tTotal X travelled: %g\"", testLeadZ, testLeadX);
+//    DebugLog(@"Total Z travelled: %g\"\tTotal X travelled: %g\"", testLeadZ, testLeadX);
 }
 
 # pragma mark helpers

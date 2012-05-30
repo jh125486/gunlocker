@@ -56,6 +56,10 @@
     _countTextField.text    = [_selectedMagazine.count stringValue];
 }
 
+-(void)viewDidDisappear:(BOOL)animated {
+    [TestFlight passCheckpoint:@"Magazines disappeared"];
+}
+
 - (void)viewDidUnload {
     [self setBrandTextField:nil];
     [self setTypeTextField:nil];
@@ -192,6 +196,8 @@
 //        localMagazine.count   = [NSNumber numberWithInt:count];
 //    }];
     
+    [TestFlight passCheckpoint:@"New Magazine Saved"];
+
     [self dismissModalViewControllerAnimated:YES];
 }
 

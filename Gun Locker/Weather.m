@@ -79,7 +79,7 @@
 //        float longitude = location.coordinate.longitude;
 //        float latitude  = location.coordinate.latitude;
 //        self.altitudeMeters = location.altitude;
-//        NSLog(@"Getting weather for Lat %f Long %f", latitude, longitude);
+//        DebugLog(@"Getting weather for Lat %f Long %f", latitude, longitude);
 //        
 //        NSString *unescapedURL = [NSString stringWithFormat:@"http://weather.aero/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=csv&radialDistance=30;%f,%f&hoursBeforeNow=2&fields=observation_time,station_id,latitude,longitude,tempC,dewpointC,windDirectionDegrees,windSpeedKnots,altimInHg", longitude, latitude];
 //        
@@ -89,11 +89,11 @@
 //        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
 //        [operation setCompletionBlock:^{
 //            
-//            NSLog(@"CSV: %@", [[NSString alloc] initWithBytes:[operation.responseObject bytes] length:[operation.responseObject length] encoding:NSUTF8StringEncoding]);
+//            DebugLog(@"CSV: %@", [[NSString alloc] initWithBytes:[operation.responseObject bytes] length:[operation.responseObject length] encoding:NSUTF8StringEncoding]);
 //        }];
 //        operation.finishedBlock = ^{
 //            if (operation.error) {
-//                NSLog(@"error");
+//                DebugLog(@"error");
 //            } else {
 //                
 //            }
@@ -101,7 +101,7 @@
 //        
 //        operation.finishedBlock = ^{
 //            if (operation.error) {
-//                NSLog(@"Error retrieving weather");
+//                DebugLog(@"Error retrieving weather");
 //            } else {
 //                NSString *weatherString = [[NSString alloc] initWithBytes:[operation.responseObject bytes] length:[operation.responseObject length] encoding:NSUTF8StringEncoding];
 //                NSMutableArray *weatherArray = [NSMutableArray arrayWithArray:[weatherString componentsSeparatedByString:@"\n"]];
@@ -151,7 +151,7 @@
 //                    self.goodData = YES;
 //                    
 //                } else {
-//                    NSLog(@"Failed to get weather. %d results.", numberOfResults);
+//                    DebugLog(@"Failed to get weather. %d results.", numberOfResults);
 //                }
 //                
 //            }

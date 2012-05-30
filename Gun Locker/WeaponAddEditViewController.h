@@ -50,8 +50,9 @@
 - (IBAction)cancelTapped:(id)sender;
 - (IBAction)saveTapped:(id)sender;
 - (IBAction)checkData:(id)sender;
-- (IBAction)photoButtonTapped;
 
 - (void)loadTextfieldsFromWeapon:(Weapon*)weapon;
+- (void)addPhotoTapped:(UITapGestureRecognizer *)recognizer;
+- (void)addPhotoDoubleTapped:(UITapGestureRecognizer *)recognizer;
 
 @end

@@ -24,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *nightModeControl;
 @property (weak, nonatomic) IBOutlet UILabel *windLeadingLabel;
 
-- (IBAction)showNFAInformationTapped:(id)sender;
+- (IBAction)showNFAInformationTapped:(UISwitch *)nfaSwitch;
 - (IBAction)setStepperRanges:(id)sender;
 
 @end

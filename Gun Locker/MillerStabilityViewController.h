@@ -23,6 +23,7 @@
 @property (weak, nonatomic) NSString *passedCaliber;
 @property (weak, nonatomic) NSString *passedWeight;
 @property (weak, nonatomic) NSString *passedMV;
+@property (strong, nonatomic) IBOutlet UIView *resultView;
 
 @property (weak, nonatomic) UITextField *currentTextField;
 

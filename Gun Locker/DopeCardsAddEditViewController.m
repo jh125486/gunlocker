@@ -127,6 +127,11 @@
     dopeCardCellData = [_selectedDopeCard.dope_data mutableCopy];
 }
 
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [TestFlight passCheckpoint:@"DopeCardsAddEdit unloaded"];
+}
+
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setCardNameTextField:nil];

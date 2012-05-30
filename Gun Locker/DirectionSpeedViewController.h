@@ -17,16 +17,16 @@
 
 @interface DirectionSpeedViewController : UIViewController <JHRotaryProtocol> {
     int directionIndex;
-    NSArray *labels;
+    NSArray *directionLabels;
 }
 
 @property (nonatomic, weak) id <DirectionSpeedProtocol> delegate;
 
 @property (nonatomic, strong) JHRotaryWheel *wheel;
-@property (nonatomic, strong) JHSlider *speedSlider;
-@property (nonatomic) UIImageView *speedImage;
-@property (nonatomic, strong) UISegmentedControl *speedUnitControl;
-@property (nonatomic, strong) UISegmentedControl *directionTypeControl;
+@property (nonatomic, weak) IBOutlet JHSlider *speedSlider;
+@property (nonatomic, weak) IBOutlet UIImageView *speedImage;
+@property (nonatomic, weak) IBOutlet UISegmentedControl *speedUnitControl;
+@property (nonatomic, weak) IBOutlet UISegmentedControl *directionTypeControl;
 @property (nonatomic, strong) NSString *resultType;
 
 @property (nonatomic) int directionType;
@@ -39,5 +39,7 @@
 
 - (IBAction)cancelTapped:(id)sender;
 - (IBAction)setTapped:(id)sender;
-
+- (IBAction)directionTypeChanged:(UISegmentedControl *)control;
+- (IBAction)sliderMoved:(UISlider *)slider;
+- (IBAction)speedUnitChanged:(UISegmentedControl *)control;
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ProfileViewTableViewController.h"
+#import "TableViewHeaderViewGrouped2Line.h"
 
 @implementation ProfileViewTableViewController
 @synthesize mvLabel = _mvLabel, sightHeightLabel = _sightHeightLabel, zeroLabel = _zeroLabel, bulletDiameterLabel = _bulletDiameterLabel;
@@ -96,44 +97,25 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
     if (section == 0) { // weapon
-        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 44)];
-        UILabel *manufacturer = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 22)];
-        manufacturer.adjustsFontSizeToFitWidth = YES;
-        manufacturer.text = _profile.weapon.manufacturer.name;
-        manufacturer.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
-        manufacturer.minimumFontSize = 14.0f;
-        manufacturer.shadowColor = [UIColor clearColor];
-        manufacturer.backgroundColor = [UIColor clearColor];
-        manufacturer.textColor = [UIColor blackColor];
+        TableViewHeaderViewGrouped2Line *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped2Line" 
+                                                                                     owner:self 
+                                                                                   options:nil] 
+                                                  objectAtIndex:0];
+        headerView.headerTitleLabel.text = _profile.weapon.manufacturer.name;
+        headerView.headerTitleLabel2.text = [_profile.weapon.description substringFromIndex:_profile.weapon.manufacturer.displayName.length + 1];
         
-        UILabel *model = [[UILabel alloc] initWithFrame:CGRectMake(5, 30, headerView.frame.size.width - 20, 22)];
-        model.adjustsFontSizeToFitWidth = YES;
-        model.text = [_profile.weapon.description substringFromIndex:_profile.weapon.manufacturer.displayName.length + 1];
-        model.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
-        model.minimumFontSize = 14.0f;
-        model.shadowColor = [UIColor clearColor];
-        model.backgroundColor = [UIColor clearColor];
-        model.textColor = [UIColor blackColor];
-
-        [headerView addSubview:manufacturer];
-        [headerView addSubview:model];
-        return headerView;
-        
-    } else if (section == 1) { // bullet
-        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 30)];
-        UILabel *bullet = [[UILabel alloc] initWithFrame:CGRectMake(5, 6, headerView.frame.size.width - 20, 24)];
-        bullet.adjustsFontSizeToFitWidth = YES;
-        bullet.text =  (_profile.bullet) ? _profile.bullet.description : @"Bullet";
-        bullet.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0];
-        bullet.minimumFontSize = 14.0f;
-        bullet.shadowColor = [UIColor clearColor];
-        bullet.backgroundColor = [UIColor clearColor];
-        bullet.textColor = [UIColor blackColor];
-        
-        [headerView addSubview:bullet];
         return headerView;
     } else {
-        return nil;
+        TableViewHeaderViewGrouped *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped" 
+                                                                                owner:self 
+                                                                              options:nil] 
+                                                  objectAtIndex:0];
+        if (section == 1) {
+            headerView.headerTitleLabel.text = (_profile.bullet) ? _profile.bullet.description : @"Bullet";            
+        } else {
+            headerView.headerTitleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+        }
+        return headerView;
     }
 }
 
@@ -146,5 +128,6 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
+
 
 @end

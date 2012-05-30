@@ -20,6 +20,8 @@
     NSArray *profiles;
     BallisticProfile *selectedProfile;
     NSMutableArray *profilePickerData;
+    DataManager *dataManager;
+    CLLocationManager *locationManager;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *rangeLabel;
@@ -44,8 +46,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *addNewProfileButton;
 
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CLLocation *currentLocation;
 @property (strong, nonatomic) NSTimer *locationTimer;
 
 @property (strong, nonatomic) Weather *currentWeather;

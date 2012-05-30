@@ -18,6 +18,8 @@
 
 @interface JHRotaryWheel : UIControl {
     float oldAlphaValue;
+    BOOL skipLabels;
+    int skipCount;
 }
 
 @property (weak) id <JHRotaryProtocol> delegate;

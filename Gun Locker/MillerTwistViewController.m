@@ -9,9 +9,14 @@
 #import "MillerTwistViewController.h"
 
 @implementation MillerTwistViewController
-@synthesize bulletCaliberTextField, bulletLengthTextField, bulletWeightTextField, mvTextField, stabilityFactorTextField;
-@synthesize resultLabel;
-@synthesize currentTextField;
+@synthesize bulletCaliberTextField = _bulletCaliberTextField;
+@synthesize bulletLengthTextField = _bulletLengthTextField;
+@synthesize bulletWeightTextField = _bulletWeightTextField;
+@synthesize mvTextField = _mvTextField;
+@synthesize stabilityFactorTextField = _stabilityFactorTextField;
+@synthesize resultLabel = _resultLabel;
+@synthesize currentTextField = _currentTextField;
+@synthesize resultView = _resultView;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -25,14 +30,25 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
     
-    behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:0 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers 
+                                                                      scale:0 
+                                                           raiseOnExactness:NO 
+                                                            raiseOnOverflow:NO 
+                                                           raiseOnUnderflow:NO 
+                                                        raiseOnDivideByZero:NO];
     
-    formFields = [NSArray arrayWithObjects:self.bulletCaliberTextField, self.bulletLengthTextField, self.bulletWeightTextField, self.mvTextField, self.stabilityFactorTextField, nil];
+    formFields = [NSArray arrayWithObjects:_bulletCaliberTextField, 
+		                                   _bulletLengthTextField, 
+										   _bulletWeightTextField, 
+										   _mvTextField, 
+										   _stabilityFactorTextField, 
+										   nil];
+	
     for (UITextField *field in formFields) {
         field.delegate = self;
         field.keyboardType = UIKeyboardTypeDecimalPad;
     }
-    self.bulletWeightTextField.keyboardType = self.mvTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _bulletWeightTextField.keyboardType = _mvTextField.keyboardType = UIKeyboardTypeNumberPad;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -48,6 +64,7 @@
     [self setStabilityFactorTextField:nil];
     [self setResultLabel:nil];
     [self setCurrentTextField:nil];
+    [self setResultView:nil];
     [super viewDidUnload];
 }
 
@@ -57,34 +74,28 @@
 
 #pragma mark result
 - (IBAction)showResult:(id)sender {
-    float caliber = [self.bulletCaliberTextField.text floatValue];
-    float length  = [self.bulletLengthTextField.text floatValue];
-    float weight  = [self.bulletWeightTextField.text floatValue];
-    float s       = [self.stabilityFactorTextField.text floatValue];
+    float caliber = [_bulletCaliberTextField.text floatValue];
+    float length  = [_bulletLengthTextField.text floatValue];
+    float weight  = [_bulletWeightTextField.text floatValue];
+    float s       = [_stabilityFactorTextField.text floatValue];
     float tempFahrenheit = 59.0;
     float pressureInHg = 29.92;
-    int   mv      = [self.mvTextField.text intValue];
+    int   mv      = [_mvTextField.text intValue];
     
     if((caliber>0) && (length>0) && (weight>0) && (s>0) && (mv>0)) {
         float lengthInCalibers = length / caliber;
         float correctiveFactor = pow(mv/2800.0, 1/3.0) * ((tempFahrenheit+460.0) / (59+460.0) * pressureInHg/29.92);
         float twist = sqrt((30*weight)/(s * caliber * lengthInCalibers * (1+pow(lengthInCalibers,2)))) * correctiveFactor;
         
-        self.resultLabel.text = [NSString stringWithFormat:@"%.0f\"", twist];
+        _resultLabel.text = [NSString stringWithFormat:@"%.0f\"", twist];
     } else {
-        self.resultLabel.text = @"n/a";
+        _resultLabel.text = @"n/a";
     }
 
 }
 
 #pragma mark TextField delegates
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    UIToolbar* textFieldToolBarView = [[UIToolbar alloc] init];
-    textFieldToolBarView.barStyle = UIBarStyleBlack;
-    textFieldToolBarView.translucent = YES;
-    textFieldToolBarView.tintColor = nil;
-    [textFieldToolBarView sizeToFit];
-    
     UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
                                                                              NSLocalizedString(@"Previous",@"Previous form field"),
                                                                              NSLocalizedString(@"Next",@"Next form field"),                                         
@@ -94,34 +105,44 @@
     control.momentary = YES;
     [control addTarget:self action:@selector(nextPreviousTapped:) forControlEvents:UIControlEventValueChanged];     
     
-    UIBarButtonItem *controlItem = [[UIBarButtonItem alloc] initWithCustomView:control];
-    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
+    UIBarButtonItem *controlItem = [[UIBarButtonItem alloc] initWithCustomView:control];    
+    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace 
+                                                                           target:nil 
+                                                                           action:nil];
     UIBarButtonItem *done  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-                                                                           target:self action:@selector(doneTyping:)];
+                                                                           target:self 
+                                                                           action:@selector(doneTyping:)];
     
     if ([formFields indexOfObject:textField] == 0) {
         [control setEnabled:NO forSegmentAtIndex:0];
-    } else if ([formFields lastObject]== textField) {
+    } else if ([formFields lastObject] == textField) {
         [control setEnabled:NO forSegmentAtIndex:1];
     }
     
-    [textFieldToolBarView setItems:[NSArray arrayWithObjects:controlItem, space, done, nil]];
-    textField.inputAccessoryView = textFieldToolBarView;
+    UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 300.f, 88.f)];
+    UIToolbar* textFieldToolBarView1 = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 44.f)];
+    UIToolbar* textFieldToolBarView2 = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 44.f, 320.f, 44.f)];
+    textFieldToolBarView1.barStyle = UIBarStyleBlackOpaque;
+    textFieldToolBarView2.barStyle = UIBarStyleBlackTranslucent;
+    [textFieldToolBarView1 addSubview:_resultView];
+    [textFieldToolBarView2 setItems:[NSArray arrayWithObjects:controlItem, space, done, nil]];
+    [tempView addSubview:textFieldToolBarView1];    
+    [tempView addSubview:textFieldToolBarView2];
+    textField.inputAccessoryView = tempView;
     
     return YES;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.currentTextField = textField;    
+    _currentTextField = textField;    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.currentTextField = nil;
+    _currentTextField = nil;
 }
 
 - (void) nextPreviousTapped:(id)sender {
-    int index = [formFields indexOfObject:self.currentTextField];
+    int index = [formFields indexOfObject:_currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
             if (index > 0) index--;
@@ -131,12 +152,12 @@
             break;
     }
     
-    self.currentTextField = [formFields objectAtIndex:index];
-    [self.currentTextField becomeFirstResponder];
+    _currentTextField = [formFields objectAtIndex:index];
+    [_currentTextField becomeFirstResponder];
 }
 
 - (void) doneTyping:(id)sender {
-    [self.currentTextField resignFirstResponder];
+    [_currentTextField resignFirstResponder];
 }
 
 @end

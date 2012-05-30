@@ -9,16 +9,23 @@
 #import "BulletBCEntryViewController.h"
 
 @implementation BulletBCEntryViewController
-@synthesize g1BC4TextField;
-@synthesize g1FPS4TextField;
-@synthesize scrollView;
-@synthesize dragModelLabel;
-@synthesize passedBulletBC, selectedDragModel;
-@synthesize g1EntryView, g7EntryView;
-@synthesize g7BCTextField;
-@synthesize g1BCTextField, g1BC1TextField, g1BC2TextField, g1BC3TextField;
-@synthesize g1FPS1TextField, g1FPS2TextField, g1FPS3TextField;
-@synthesize currentTextField;
+@synthesize g1BC4TextField = _g1BC4TextField;
+@synthesize g1FPS4TextField = _g1FPS4TextField;
+@synthesize scrollView = _scrollView;
+@synthesize dragModelLabel = _dragModelLabel;
+@synthesize passedBulletBC = _passedBulletBC;
+@synthesize selectedDragModel = _selectedDragModel;
+@synthesize g7EntryView = _g7EntryView;
+@synthesize g1EntryView = _g1EntryView;
+@synthesize g7BCTextField = _g7BCTextField;
+@synthesize g1BCTextField = _g1BCTextField;
+@synthesize g1BC1TextField = _g1BC1TextField;
+@synthesize g1BC2TextField = _g1BC2TextField;
+@synthesize g1BC3TextField = _g1BC3TextField;
+@synthesize g1FPS1TextField = _g1FPS1TextField;
+@synthesize g1FPS2TextField = _g1FPS2TextField;
+@synthesize g1FPS3TextField = _g1FPS3TextField;
+@synthesize currentTextField = _currentTextField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,16 +38,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
-    self.scrollView.alwaysBounceVertical = YES;
+    _scrollView.alwaysBounceVertical = YES;
     
-    if ([self.selectedDragModel isEqualToString:@"G7"]) {
-        formFields = [[NSArray alloc] initWithObjects:self.g7BCTextField, nil];
+    if ([_selectedDragModel isEqualToString:@"G7"]) {
+        formFields = [[NSArray alloc] initWithObjects:_g7BCTextField, nil];
     } else {
-        formFields = [[NSArray alloc] initWithObjects:self.g1BCTextField, 
-                                                      self.g1BC1TextField, self.g1FPS1TextField, 
-                                                      self.g1BC2TextField, self.g1FPS2TextField,
-                                                      self.g1BC3TextField, self.g1FPS3TextField, 
-                                                      self.g1BC4TextField, self.g1FPS4TextField, nil]; 
+        formFields = [[NSArray alloc] initWithObjects:_g1BCTextField, 
+                                                      _g1BC1TextField, _g1FPS1TextField, 
+                                                      _g1BC2TextField, _g1FPS2TextField,
+                                                      _g1BC3TextField, _g1FPS3TextField, 
+                                                      _g1BC4TextField, _g1FPS4TextField, 
+													  nil]; 
     }
     
     for(UITextField *field in formFields) {
@@ -58,24 +66,24 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    if (self.passedBulletBC) [self loadBulletInfo];
+    if (_passedBulletBC) [self loadBulletInfo];
     
-    if ([self.selectedDragModel isEqualToString:@"G7"]) {
-        self.dragModelLabel.text = @"Drag Model G7";
-        self.g1EntryView.hidden = YES;
-        self.g7EntryView.hidden = NO;
-    } else if ([self.selectedDragModel isEqualToString:@"G1"]) {
-        self.dragModelLabel.text = @"Drag Model G1";
-        self.g7EntryView.hidden = YES;
-        self.g1EntryView.hidden = NO;
+    if ([_selectedDragModel isEqualToString:@"G7"]) {
+        _dragModelLabel.text = @"Drag Model G7";
+        _g1EntryView.hidden = YES;
+        _g7EntryView.hidden = NO;
+    } else if ([_selectedDragModel isEqualToString:@"G1"]) {
+        _dragModelLabel.text = @"Drag Model G1";
+        _g7EntryView.hidden = YES;
+        _g1EntryView.hidden = NO;
     }
 }
 
 - (void)loadBulletInfo {
-    ((UITextField*)[formFields objectAtIndex:0]).text = [NSString stringWithFormat:@"%@", [self.passedBulletBC objectAtIndex:0]];
-    for (int i = 1; i < self.passedBulletBC.count; i += 2) {
-        [(UITextField*)[formFields objectAtIndex:i]   setText:[NSString stringWithFormat:@"%@", [self.passedBulletBC objectAtIndex:i]]];
-        [(UITextField*)[formFields objectAtIndex:i+1] setText:[NSString stringWithFormat:@"%@", [self.passedBulletBC objectAtIndex:i+1]]];
+    ((UITextField*)[formFields objectAtIndex:0]).text = [NSString stringWithFormat:@"%@", [_passedBulletBC objectAtIndex:0]];
+    for (int i = 1; i < _passedBulletBC.count; i += 2) {
+        [(UITextField*)[formFields objectAtIndex:i]     setText:[NSString stringWithFormat:@"%@", [_passedBulletBC objectAtIndex:i]]];
+        [(UITextField*)[formFields objectAtIndex:i + 1] setText:[NSString stringWithFormat:@"%@", [_passedBulletBC objectAtIndex:i + 1]]];
     }
 }
 
@@ -152,15 +160,15 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.currentTextField = textField;    
+    _currentTextField = textField;    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.currentTextField = nil;
+    _currentTextField = nil;
 }
 
 - (void) nextPreviousTapped:(id)sender {
-    int index = [formFields indexOfObject:currentTextField];
+    int index = [formFields indexOfObject:_currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
             if (index > 0) index--;
@@ -170,12 +178,12 @@
             break;
     }
     
-    self.currentTextField = [formFields objectAtIndex:index];
-    [self.currentTextField becomeFirstResponder];
+    _currentTextField = [formFields objectAtIndex:index];
+    [_currentTextField becomeFirstResponder];
 }
 
 - (void) doneTyping:(id)sender {    
-    [self.currentTextField resignFirstResponder];
+    [_currentTextField resignFirstResponder];
 }
 
 
@@ -183,24 +191,24 @@
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-    scrollView.contentInset = contentInsets;
-    scrollView.scrollIndicatorInsets = contentInsets;
+    _scrollView.contentInset = contentInsets;
+    _scrollView.scrollIndicatorInsets = contentInsets;
     
-    double originY = self.currentTextField.frame.origin.y + 48.0f;    
+    double originY = _currentTextField.frame.origin.y + 48.0f;    
 
-    CGRect aRect = CGRectMake(0, self.scrollView.frame.size.height - kbSize.height, kbSize.width, kbSize.height);
+    CGRect aRect = CGRectMake(0, _scrollView.frame.size.height - kbSize.height, kbSize.width, kbSize.height);
         
-    if (CGRectContainsPoint(aRect, CGPointMake(currentTextField.frame.origin.x, originY))) {
-        [self.scrollView setContentOffset:CGPointMake(0.0, originY - currentTextField.frame.size.height - 85) animated:YES];
+    if (CGRectContainsPoint(aRect, CGPointMake(_currentTextField.frame.origin.x, originY))) {
+        [_scrollView setContentOffset:CGPointMake(0.0, originY - _currentTextField.frame.size.height - 85) animated:YES];
     } else {
-        [self.scrollView setContentOffset:CGPointMake(0.0, 0.0) animated:YES];
+        [_scrollView setContentOffset:CGPointMake(0.0, 0.0) animated:YES];
     }
     
 }
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification {
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-    [self.scrollView setContentOffset:CGPointZero animated:YES];
-    self.scrollView.scrollIndicatorInsets = contentInsets;
+    [_scrollView setContentOffset:CGPointZero animated:YES];
+    _scrollView.scrollIndicatorInsets = contentInsets;
 }
 
 @end

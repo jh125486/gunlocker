@@ -29,7 +29,7 @@
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
 		// Update to handle the error appropriately.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		DebugLog(@"Unresolved error %@, %@", error, [error userInfo]);
 		exit(-1);  // Fail
 	}    
 }
@@ -102,6 +102,15 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return [[[_fetchedResultsController sections] objectAtIndex:section] name];
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    TableViewHeaderViewPlain *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewPlain" 
+                                                                          owner:self 
+                                                                        options:nil] 
+                                            objectAtIndex:0];
+    headerView.headerTitleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    return headerView;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {

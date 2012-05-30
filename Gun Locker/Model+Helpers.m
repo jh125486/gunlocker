@@ -104,7 +104,7 @@
         theta += dtheta;
     }
     self.zero_theta = [NSNumber numberWithDouble:theta]; // angle in radians
-    NSLog(@"zero theta angle: %f Rads\t%fº\t%f MOA", theta, RAD_to_DEGREES(theta), RAD_to_MOA(theta));
+    DebugLog(@"zero theta angle: %f Rads\t%fº\t%f MOA", theta, RAD_to_DEGREES(theta), RAD_to_MOA(theta));
 }
 
 -(double)ballisticCoefficientWithVelocity:(double)velocity {
@@ -242,7 +242,7 @@
 @implementation Maintenance (helper)
 -(NSString *)dateAgoInWords {
     [self willAccessValueForKey:@"date"];
-    NSString *distance = [[self date] distanceOfTimeInWords];
+    NSString *distance = [[self date] distanceOfTimeInWordsOnlyDate];
     [self didAccessValueForKey:@"date"];
     return distance;
 }
@@ -255,7 +255,7 @@
 @implementation Malfunction (helper)
 -(NSString *)dateAgoInWords {
     [self willAccessValueForKey:@"date"];
-    NSString *distance = [[self date] distanceOfTimeInWords];
+    NSString *distance = [[self date] distanceOfTimeInWordsOnlyDate];
     [self didAccessValueForKey:@"date"];
     return distance;
 }
@@ -270,4 +270,15 @@
         return [[components objectAtIndex:1] length];
     }
 }
+
++(NSString *)randomStringWithLength:(int)length {
+    NSString *letters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    
+    NSMutableString *randomString = [NSMutableString stringWithCapacity:length];
+    
+    for (int i=0; i<length; i++) [randomString appendFormat: @"%C", [letters characterAtIndex: rand()%[letters length]]];
+    
+    return [NSString stringWithString:randomString];
+}
+
 @end

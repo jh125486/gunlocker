@@ -110,6 +110,15 @@
     }
 }
 
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    TableViewHeaderViewPlain *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewPlain" 
+                                                                          owner:self 
+                                                                        options:nil] 
+                                            objectAtIndex:0];
+    headerView.headerTitleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    return headerView;
+}
+
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return nil;

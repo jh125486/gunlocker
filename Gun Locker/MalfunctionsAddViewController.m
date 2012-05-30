@@ -53,9 +53,21 @@
     fixText.title = @"Fix action";
     fixText.key = @"fix";
     
+    TableViewHeaderViewGrouped *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped" 
+                                                                            owner:self 
+                                                                          options:nil] 
+                                              objectAtIndex:0];
+    headerView.headerTitleLabel.text = infoSection.title;
+    infoSection.headerView = headerView;
     [infoSection addElement:malfunctionDate];
     [infoSection addElement:roundCount];
     
+    TableViewHeaderViewGrouped *headerView2 = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped" 
+                                                                            owner:self 
+                                                                          options:nil] 
+                                              objectAtIndex:0];
+    headerView2.headerTitleLabel.text = descriptionSection.title;
+    descriptionSection.headerView = headerView2;
     [descriptionSection addElement:failureText];
     [descriptionSection addElement:fixText];
     

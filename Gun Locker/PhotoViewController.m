@@ -28,7 +28,7 @@
     [super viewDidLoad];
     self.title = self.selectedWeapon.model;
     [self setTitleView];
-    self.containerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundFabricTexture"]];
+//    self.containerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundFabricTexture"]];
     photo = [UIImage imageWithData:self.selectedWeapon.photo];
     self.photoView.image = photo;
     
@@ -80,8 +80,8 @@
 -(void)orientationChanged:(id)sender {
     [self setPhotoFrame];
 
-//    NSLog(@"image frame (%.0f, %.0f, %.0f, %.0f)", self.photoView.frame.origin.x, self.photoView.frame.origin.y, CGRectGetWidth(self.photoView.frame), CGRectGetHeight(self.photoView.frame));
-//    NSLog(@"contain frame (%.0f, %.0f, %.0f, %.0f)", self.containerView.frame.origin.x, self.containerView.frame.origin.y, CGRectGetWidth(self.containerView.frame), CGRectGetHeight(self.containerView.frame));
+//    DebugLog(@"image frame (%.0f, %.0f, %.0f, %.0f)", self.photoView.frame.origin.x, self.photoView.frame.origin.y, CGRectGetWidth(self.photoView.frame), CGRectGetHeight(self.photoView.frame));
+//    DebugLog(@"contain frame (%.0f, %.0f, %.0f, %.0f)", self.containerView.frame.origin.x, self.containerView.frame.origin.y, CGRectGetWidth(self.containerView.frame), CGRectGetHeight(self.containerView.frame));
 
 }
 
@@ -96,7 +96,7 @@
     recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x, recognizer.view.center.y + translation.y);
     
     [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
-//    NSLog(@"x %.0f y %.0f", translation.x, translation.y);
+//    DebugLog(@"x %.0f y %.0f", translation.x, translation.y);
         
     if ((recognizer.state == UIGestureRecognizerStateEnded)) {
 //        CGPoint midpoint = CGPointMake(CGRectGetWidth(self.photoView.frame)/2, CGRectGetHeight(self.photoView.frame)/2);
@@ -118,27 +118,27 @@
         finalPoint.y = MIN(MAX(finalPoint.y, 0), self.view.bounds.size.height);
         
         if (!CGRectContainsPoint(bounds, finalPoint)){
-            NSLog(@"point (%.0f, %.0f) outside bounds (%.0f, %.0f, %.0f, %.0f)", 
+            DebugLog(@"point (%.0f, %.0f) outside bounds (%.0f, %.0f, %.0f, %.0f)", 
                   finalPoint.x, finalPoint.y, 
                   bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
 
             if (finalPoint.x < CGRectGetMinX(bounds)){
-                NSLog(@"left edge");
+                DebugLog(@"left edge");
                 finalPoint.x = CGRectGetMinX(bounds);
             } else if (finalPoint.x > CGRectGetMaxX(bounds)) {
-                NSLog(@"right edge");
+                DebugLog(@"right edge");
                 finalPoint.x = CGRectGetMaxX(bounds);
             }
             
             if (finalPoint.y < CGRectGetMinY(bounds)) {
-                NSLog(@"top edge");
+                DebugLog(@"top edge");
                 finalPoint.y = CGRectGetMinY(bounds);
             } else if (finalPoint.y > CGRectGetMaxY(bounds)) {
-                NSLog(@"bottom edge");
+                DebugLog(@"bottom edge");
                 finalPoint.y = CGRectGetMaxY(bounds);
             }
         }  else {
-            NSLog(@"point (%.0f, %.0f) INSIDE bounds (%.0f, %.0f, %.0f, %.0f) (%.0f, %.0f)", 
+            DebugLog(@"point (%.0f, %.0f) INSIDE bounds (%.0f, %.0f, %.0f, %.0f) (%.0f, %.0f)", 
                   finalPoint.x, finalPoint.y, 
                   bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height,
                   translation.x, translation.y);
@@ -173,13 +173,13 @@
 //  figure out scale to bounds edge;    
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         
-        NSLog(@"container frame: (%.0f, %.0f, %.0f, %.0f)", self.containerView.frame.origin.x, self.containerView.frame.origin.y, self.containerView.frame.size.width, self.containerView.frame.size.height);
-        NSLog(@"photoView frame: (%.0f, %.0f, %.0f, %.0f)", self.photoView.frame.origin.x, self.photoView.frame.origin.y, self.photoView.frame.size.width, self.photoView.frame.size.height);
+        DebugLog(@"container frame: (%.0f, %.0f, %.0f, %.0f)", self.containerView.frame.origin.x, self.containerView.frame.origin.y, self.containerView.frame.size.width, self.containerView.frame.size.height);
+        DebugLog(@"photoView frame: (%.0f, %.0f, %.0f, %.0f)", self.photoView.frame.origin.x, self.photoView.frame.origin.y, self.photoView.frame.size.width, self.photoView.frame.size.height);
     
         if(!CGRectContainsRect(self.containerView.frame, self.photoView.frame)) {
-            NSLog(@"outside frame");
+            DebugLog(@"outside frame");
         } else {
-            NSLog(@"inside frame");
+            DebugLog(@"inside frame");
             [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 [self setPhotoFrame];
             } completion:nil];
@@ -191,7 +191,7 @@
 //    
 //    if (recognizer.state == UIGestureRecognizerStateBegan) {
 //        CGPoint point = [recognizer locationInView:self.containerView];
-//        NSLog(@"scale %f point(%.0f, %.0f)", recognizer.scale, point.x, point.y);
+//        DebugLog(@"scale %f point(%.0f, %.0f)", recognizer.scale, point.x, point.y);
 //        self.photoView.layer.anchorPoint = point;
 //    }
 //
@@ -200,7 +200,7 @@
 }
 
 
--(IBAction)handleTap:(UIGestureRecognizer *)recoginizer {
+-(IBAction)handleTap:(UIGestureRecognizer *)recognizer {
     if (self.navigationBar.alpha == 0.0f) {
 //        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
         [UIView beginAnimations:@"fadeIn" context:nil];

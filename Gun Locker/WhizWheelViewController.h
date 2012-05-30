@@ -10,6 +10,8 @@
 #import "BallisticProfile.h"
 #import "Trajectory.h"
 #import "TrajectoryRange.h"
+#import "AstronomicalCalendar.h"
+#import "GeoLocation.h"
 
 @interface WhizWheelViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     NSMutableArray *arrayRanges;
@@ -19,9 +21,12 @@
     int rangeIndex;
     NSString *reticle;
     DataManager *dataManager;
+    NSString *directionType;
     double angleDegrees;
     double speedMPH;
+    NSTimer *modeTimer;
 }
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *tableBackgroundImage;
 @property (weak, nonatomic) IBOutlet UITableView *rangesTableView;
@@ -37,8 +42,10 @@
 
 @property BOOL nightMode;
 @property (weak, nonatomic) IBOutlet UILabel *rangeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *directionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *directionTypeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fromLabel;
 @property (weak, nonatomic) IBOutlet UILabel *speedLabel;
+
 @property (weak, nonatomic) NSString *speedType;
 @property (weak, nonatomic) NSString *speedUnit;
 @property (weak, nonatomic) IBOutlet UILabel *dropInchesLabel;

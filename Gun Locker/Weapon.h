@@ -2,7 +2,7 @@
 //  Weapon.h
 //  Gun Locker
 //
-//  Created by Jacob Hochstetler on 5/14/12.
+//  Created by Jacob Hochstetler on 5/29/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSNumber * barrel_length;
 @property (nonatomic, retain) NSString * caliber;
 @property (nonatomic, retain) NSString * finish;
+@property (nonatomic, retain) NSString * indexLetter;
 @property (nonatomic, retain) NSString * model;
 @property (nonatomic, retain) NSString * note;
 @property (nonatomic, retain) NSData * photo;
@@ -27,7 +28,8 @@
 @property (nonatomic, retain) NSNumber * threaded_barrel;
 @property (nonatomic, retain) NSString * threaded_barrel_pitch;
 @property (nonatomic, retain) NSString * type;
-@property (nonatomic, retain) NSString * indexLetter;
+@property (nonatomic, retain) NSDate * last_cleaned_date;
+@property (nonatomic, retain) NSNumber * last_cleaned_round_count;
 @property (nonatomic, retain) NSSet *ballistic_profile;
 @property (nonatomic, retain) NSSet *dope_cards;
 @property (nonatomic, retain) NSSet *maintenances;

@@ -136,6 +136,9 @@
 		53A0E695153D3D0500846421 /* tableView_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A0E693153D3D0200846421 /* tableView_background.png */; };
 		53A0E696153D3D0500846421 /* tableView_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A0E694153D3D0300846421 /* tableView_background@2x.png */; };
 		53A0E698153D597000846421 /* Table in Resources */ = {isa = PBXBuildFile; fileRef = 53A0E697153D597000846421 /* Table */; };
+		53A44A0415756D74005A06C2 /* Weapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A44A0315756D74005A06C2 /* Weapon.m */; };
+		53A44A0715758DDB005A06C2 /* TableViewHeaderViewPlain.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53A44A0615758DDB005A06C2 /* TableViewHeaderViewPlain.xib */; };
+		53A44A0A15758DEB005A06C2 /* TableViewHeaderViewPlain.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A44A0915758DEB005A06C2 /* TableViewHeaderViewPlain.m */; };
 		53A6C86914F498C10045C186 /* ManufacturerChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A6C86814F498C10045C186 /* ManufacturerChooserViewController.m */; };
 		53A6C88414F5B8ED0045C186 /* CaliberChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A6C88314F5B8ED0045C186 /* CaliberChooserViewController.m */; };
 		53A92F5B152CF70D00639A8B /* icon_BDC@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A92F5A152CF70D00639A8B /* icon_BDC@2x.png */; };
@@ -186,6 +189,8 @@
 		53BC9F49152C06CB00B7D7AD /* DopeCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC9F48152C06CB00B7D7AD /* DopeCardsViewController.m */; };
 		53BC9F4F152C11A700B7D7AD /* DopeCardRowEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC9F4E152C11A700B7D7AD /* DopeCardRowEditCell.m */; };
 		53CA98E1150A84E50060A1E8 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CA98E0150A84E50060A1E8 /* Weather.m */; };
+		53CBF5521575A451001C32EE /* TableViewHeaderViewGrouped2Line.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CBF5511575A451001C32EE /* TableViewHeaderViewGrouped2Line.m */; };
+		53CBF5541575A461001C32EE /* TableViewHeaderViewGrouped2Line.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53CBF5531575A461001C32EE /* TableViewHeaderViewGrouped2Line.xib */; };
 		53D2633F1531EB4600ECA9EE /* DopeCardRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2633E1531EB4600ECA9EE /* DopeCardRowCell.m */; };
 		53D263451531EBD000ECA9EE /* DopeCardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D263441531EBD000ECA9EE /* DopeCardTableViewController.m */; };
 		53E31486151E8082005B414F /* icon_link.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E31485151E8082005B414F /* icon_link.png */; };
@@ -218,6 +223,12 @@
 		53E32F0F156CAA0C00941A5B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E32F0E156CAA0C00941A5B /* libz.dylib */; };
 		53E32F12156D519C00941A5B /* BallisticProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F11156D519C00941A5B /* BallisticProfile.m */; };
 		53E32F15156D51DA00941A5B /* DopeCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F14156D51DA00941A5B /* DopeCard.m */; };
+		53E32F26156DE66D00941A5B /* MathAdditions.c in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F19156DE66D00941A5B /* MathAdditions.c */; };
+		53E32F27156DE66D00941A5B /* AstronomicalCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F1D156DE66D00941A5B /* AstronomicalCalculator.m */; };
+		53E32F28156DE66D00941A5B /* AstronomicalCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F1F156DE66D00941A5B /* AstronomicalCalendar.m */; };
+		53E32F29156DE66D00941A5B /* EarthViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F21156DE66D00941A5B /* EarthViewer.m */; };
+		53E32F2A156DE66D00941A5B /* GeoLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F23156DE66D00941A5B /* GeoLocation.m */; };
+		53E32F2B156DE66D00941A5B /* SunriseAndSunset.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F25156DE66D00941A5B /* SunriseAndSunset.m */; };
 		53E830A3155438C20062893B /* ProfileViewTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E830A2155438C20062893B /* ProfileViewTableViewController.m */; };
 		53E8313F1555B25A0062893B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E8313E1555B2590062893B /* CFNetwork.framework */; };
 		53E831411555B2670062893B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E831401555B2670062893B /* SystemConfiguration.framework */; };
@@ -227,7 +238,6 @@
 		53E8314D15585B9B0062893B /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E8314C15585B9B0062893B /* PhotoViewController.m */; };
 		53E8314F1558808B0062893B /* BackgroundFabricTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E8314E1558808B0062893B /* BackgroundFabricTexture.png */; };
 		53EBBD951516F36C00488E63 /* tableview_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EBBD941516F36C00488E63 /* tableview_header.png */; };
-		53F241A915619DC30038A666 /* Weapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241A815619DC30038A666 /* Weapon.m */; };
 		53F241AC15619DC40038A666 /* Manufacturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241AB15619DC40038A666 /* Manufacturer.m */; };
 		53F241AF1561A2A60038A666 /* Maintenance.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241AE1561A2A60038A666 /* Maintenance.m */; };
 		53F241BD156204A10038A666 /* AmmunitionListByCaliberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F241BC156204A10038A666 /* AmmunitionListByCaliberViewController.m */; };
@@ -243,6 +253,10 @@
 		53F9F42E1562F6080008430D /* MagazineListByCaliberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F4291562F6070008430D /* MagazineListByCaliberViewController.m */; };
 		53F9F42F1562F6080008430D /* MagazineShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F9F42B1562F6070008430D /* MagazineShowViewController.m */; };
 		53FBDA10151D9FA200DD5180 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FBDA0F151D9FA200DD5180 /* Note.m */; };
+		53FCAF561573C9A0006AB66F /* Notes_TextView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FCAF541573C9A0006AB66F /* Notes_TextView@2x.png */; };
+		53FCAF571573C9A0006AB66F /* Notes_TextView.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FCAF551573C9A0006AB66F /* Notes_TextView.png */; };
+		53FCAF6315743C36006AB66F /* TableViewHeaderViewGrouped.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FCAF6215743C36006AB66F /* TableViewHeaderViewGrouped.m */; };
+		53FCAF6515743C4F006AB66F /* TableViewHeaderViewGrouped.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53FCAF6415743C4E006AB66F /* TableViewHeaderViewGrouped.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -462,6 +476,11 @@
 		53A0E693153D3D0200846421 /* tableView_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableView_background.png; sourceTree = "<group>"; };
 		53A0E694153D3D0300846421 /* tableView_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableView_background@2x.png"; sourceTree = "<group>"; };
 		53A0E697153D597000846421 /* Table */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Table; sourceTree = "<group>"; };
+		53A44A0215756D74005A06C2 /* Weapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weapon.h; sourceTree = "<group>"; };
+		53A44A0315756D74005A06C2 /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
+		53A44A0615758DDB005A06C2 /* TableViewHeaderViewPlain.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewHeaderViewPlain.xib; sourceTree = "<group>"; };
+		53A44A0815758DEB005A06C2 /* TableViewHeaderViewPlain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewHeaderViewPlain.h; sourceTree = "<group>"; };
+		53A44A0915758DEB005A06C2 /* TableViewHeaderViewPlain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewHeaderViewPlain.m; sourceTree = "<group>"; };
 		53A6C86714F498C10045C186 /* ManufacturerChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManufacturerChooserViewController.h; sourceTree = "<group>"; };
 		53A6C86814F498C10045C186 /* ManufacturerChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManufacturerChooserViewController.m; sourceTree = "<group>"; };
 		53A6C88214F5B8ED0045C186 /* CaliberChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaliberChooserViewController.h; sourceTree = "<group>"; };
@@ -543,6 +562,9 @@
 		53BC9F4E152C11A700B7D7AD /* DopeCardRowEditCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCardRowEditCell.m; sourceTree = "<group>"; };
 		53CA98DF150A84E50060A1E8 /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weather.h; sourceTree = "<group>"; };
 		53CA98E0150A84E50060A1E8 /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weather.m; sourceTree = "<group>"; };
+		53CBF5501575A451001C32EE /* TableViewHeaderViewGrouped2Line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewHeaderViewGrouped2Line.h; sourceTree = "<group>"; };
+		53CBF5511575A451001C32EE /* TableViewHeaderViewGrouped2Line.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewHeaderViewGrouped2Line.m; sourceTree = "<group>"; };
+		53CBF5531575A461001C32EE /* TableViewHeaderViewGrouped2Line.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewHeaderViewGrouped2Line.xib; sourceTree = "<group>"; };
 		53D2633D1531EB4600ECA9EE /* DopeCardRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardRowCell.h; sourceTree = "<group>"; };
 		53D2633E1531EB4600ECA9EE /* DopeCardRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCardRowCell.m; sourceTree = "<group>"; };
 		53D263431531EBD000ECA9EE /* DopeCardTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardTableViewController.h; sourceTree = "<group>"; };
@@ -584,6 +606,19 @@
 		53E32F11156D519C00941A5B /* BallisticProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfile.m; sourceTree = "<group>"; };
 		53E32F13156D51D900941A5B /* DopeCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCard.h; sourceTree = "<group>"; };
 		53E32F14156D51DA00941A5B /* DopeCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCard.m; sourceTree = "<group>"; };
+		53E32F18156DE66D00941A5B /* KosherCocoaConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KosherCocoaConstants.h; sourceTree = "<group>"; };
+		53E32F19156DE66D00941A5B /* MathAdditions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MathAdditions.c; sourceTree = "<group>"; };
+		53E32F1A156DE66D00941A5B /* MathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathAdditions.h; sourceTree = "<group>"; };
+		53E32F1C156DE66D00941A5B /* AstronomicalCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AstronomicalCalculator.h; sourceTree = "<group>"; };
+		53E32F1D156DE66D00941A5B /* AstronomicalCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AstronomicalCalculator.m; sourceTree = "<group>"; };
+		53E32F1E156DE66D00941A5B /* AstronomicalCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AstronomicalCalendar.h; sourceTree = "<group>"; };
+		53E32F1F156DE66D00941A5B /* AstronomicalCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AstronomicalCalendar.m; sourceTree = "<group>"; };
+		53E32F20156DE66D00941A5B /* EarthViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EarthViewer.h; sourceTree = "<group>"; };
+		53E32F21156DE66D00941A5B /* EarthViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EarthViewer.m; sourceTree = "<group>"; };
+		53E32F22156DE66D00941A5B /* GeoLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoLocation.h; sourceTree = "<group>"; };
+		53E32F23156DE66D00941A5B /* GeoLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoLocation.m; sourceTree = "<group>"; };
+		53E32F24156DE66D00941A5B /* SunriseAndSunset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunriseAndSunset.h; sourceTree = "<group>"; };
+		53E32F25156DE66D00941A5B /* SunriseAndSunset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SunriseAndSunset.m; sourceTree = "<group>"; };
 		53E830A1155438C20062893B /* ProfileViewTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewTableViewController.h; sourceTree = "<group>"; };
 		53E830A2155438C20062893B /* ProfileViewTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewTableViewController.m; sourceTree = "<group>"; };
 		53E8313E1555B2590062893B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -598,8 +633,6 @@
 		53E8314C15585B9B0062893B /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 		53E8314E1558808B0062893B /* BackgroundFabricTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackgroundFabricTexture.png; sourceTree = "<group>"; };
 		53EBBD941516F36C00488E63 /* tableview_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableview_header.png; sourceTree = "<group>"; };
-		53F241A715619DC30038A666 /* Weapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weapon.h; sourceTree = "<group>"; };
-		53F241A815619DC30038A666 /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
 		53F241AA15619DC40038A666 /* Manufacturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manufacturer.h; sourceTree = "<group>"; };
 		53F241AB15619DC40038A666 /* Manufacturer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Manufacturer.m; sourceTree = "<group>"; };
 		53F241AD1561A2A60038A666 /* Maintenance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Maintenance.h; sourceTree = "<group>"; };
@@ -630,6 +663,11 @@
 		53F9F42B1562F6070008430D /* MagazineShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagazineShowViewController.m; sourceTree = "<group>"; };
 		53FBDA0E151D9FA200DD5180 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		53FBDA0F151D9FA200DD5180 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		53FCAF541573C9A0006AB66F /* Notes_TextView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Notes_TextView@2x.png"; sourceTree = "<group>"; };
+		53FCAF551573C9A0006AB66F /* Notes_TextView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Notes_TextView.png; sourceTree = "<group>"; };
+		53FCAF6115743C36006AB66F /* TableViewHeaderViewGrouped.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewHeaderViewGrouped.h; sourceTree = "<group>"; };
+		53FCAF6215743C36006AB66F /* TableViewHeaderViewGrouped.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewHeaderViewGrouped.m; sourceTree = "<group>"; };
+		53FCAF6415743C4E006AB66F /* TableViewHeaderViewGrouped.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewHeaderViewGrouped.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -720,8 +758,6 @@
 				530DDF0114EEB6D800F1BC7F /* InfoPlist.strings */,
 				530DDF0414EEB6D800F1BC7F /* main.m */,
 				532EE03C14F74FFB008A9558 /* manufacturers.txt */,
-				53F2735915112D36005A329F /* NSDate+Formatting.h */,
-				53F2735A15112D37005A329F /* NSDate+Formatting.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -754,6 +790,8 @@
 				53BB602E152A157100625CC7 /* notecard_bottom@2x.png */,
 				5331480D15262B930063C3EC /* Notecard_short.png */,
 				5331480E15262B930063C3EC /* Notecard_short@2x.png */,
+				53FCAF551573C9A0006AB66F /* Notes_TextView.png */,
+				53FCAF541573C9A0006AB66F /* Notes_TextView@2x.png */,
 				530EA41014FD38B900E132FB /* photo_back.png */,
 				530EA40C14FD358100E132FB /* photo_tape_bottom.png */,
 				530EA40D14FD358100E132FB /* photo_tape_top.png */,
@@ -1082,6 +1120,22 @@
 			name = Malfunction;
 			sourceTree = "<group>";
 		};
+		53A44A0515758DAF005A06C2 /* TableView Header/Footer Views */ = {
+			isa = PBXGroup;
+			children = (
+				53FCAF6115743C36006AB66F /* TableViewHeaderViewGrouped.h */,
+				53FCAF6215743C36006AB66F /* TableViewHeaderViewGrouped.m */,
+				53FCAF6415743C4E006AB66F /* TableViewHeaderViewGrouped.xib */,
+				53CBF5501575A451001C32EE /* TableViewHeaderViewGrouped2Line.h */,
+				53CBF5511575A451001C32EE /* TableViewHeaderViewGrouped2Line.m */,
+				53CBF5531575A461001C32EE /* TableViewHeaderViewGrouped2Line.xib */,
+				53A44A0815758DEB005A06C2 /* TableViewHeaderViewPlain.h */,
+				53A44A0915758DEB005A06C2 /* TableViewHeaderViewPlain.m */,
+				53A44A0615758DDB005A06C2 /* TableViewHeaderViewPlain.xib */,
+			);
+			name = "TableView Header/Footer Views";
+			sourceTree = "<group>";
+		};
 		53AF04321560171200D702FD /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -1151,6 +1205,7 @@
 				53F272DE150E5BFE005A329F /* DefaultButton.m */,
 				5319C8BF15086F2700795B87 /* IntroSplashViewController.h */,
 				5319C8C015086F2700795B87 /* IntroSplashViewController.m */,
+				53A44A0515758DAF005A06C2 /* TableView Header/Footer Views */,
 				5348C6981506E69F00147AAF /* Cards */,
 				537797211533A82A0096BF7A /* Logbook */,
 				5348C6971506E66F00147AAF /* Ballistics */,
@@ -1169,8 +1224,6 @@
 				53E32F13156D51D900941A5B /* DopeCard.h */,
 				53E32F14156D51DA00941A5B /* DopeCard.m */,
 				53F9F4341562F88D0008430D /* Inventory */,
-				5377973C153798480096BF7A /* Model+Helpers.h */,
-				5377973D153798480096BF7A /* Model+Helpers.m */,
 				53E32EBC156C627400941A5B /* RotaryWheel */,
 				53F9F4351562F8A10008430D /* Weapons */,
 				53CA98DF150A84E50060A1E8 /* Weather.h */,
@@ -1197,11 +1250,16 @@
 		53CA990D150AA4BD0060A1E8 /* ExtraLibs */ = {
 			isa = PBXGroup;
 			children = (
-				53E32F06156CA7A500941A5B /* TestFlightSDK1.0 */,
-				5389973C1568B1A200AC3112 /* MagicalRecord */,
 				53AF04321560171200D702FD /* AFNetworking */,
-				53405CA2151936A200C7D84F /* UIControl */,
 				53AF06601512A605000B9943 /* KKPasscode */,
+				53E32F16156DE64300941A5B /* KosherCocoa */,
+				5389973C1568B1A200AC3112 /* MagicalRecord */,
+				5377973C153798480096BF7A /* Model+Helpers.h */,
+				5377973D153798480096BF7A /* Model+Helpers.m */,
+				53F2735915112D36005A329F /* NSDate+Formatting.h */,
+				53F2735A15112D37005A329F /* NSDate+Formatting.m */,
+				53E32F06156CA7A500941A5B /* TestFlightSDK1.0 */,
+				53405CA2151936A200C7D84F /* UIControl */,
 			);
 			name = ExtraLibs;
 			sourceTree = "<group>";
@@ -1299,6 +1357,44 @@
 			path = TestFlightSDK1.0;
 			sourceTree = SOURCE_ROOT;
 		};
+		53E32F16156DE64300941A5B /* KosherCocoa */ = {
+			isa = PBXGroup;
+			children = (
+				53E32F17156DE66D00941A5B /* Required */,
+				53E32F1B156DE66D00941A5B /* Times */,
+			);
+			name = KosherCocoa;
+			sourceTree = "<group>";
+		};
+		53E32F17156DE66D00941A5B /* Required */ = {
+			isa = PBXGroup;
+			children = (
+				53E32F18156DE66D00941A5B /* KosherCocoaConstants.h */,
+				53E32F19156DE66D00941A5B /* MathAdditions.c */,
+				53E32F1A156DE66D00941A5B /* MathAdditions.h */,
+			);
+			name = Required;
+			path = KosherCocoa/KosherCocoa/Required;
+			sourceTree = SOURCE_ROOT;
+		};
+		53E32F1B156DE66D00941A5B /* Times */ = {
+			isa = PBXGroup;
+			children = (
+				53E32F1C156DE66D00941A5B /* AstronomicalCalculator.h */,
+				53E32F1D156DE66D00941A5B /* AstronomicalCalculator.m */,
+				53E32F1E156DE66D00941A5B /* AstronomicalCalendar.h */,
+				53E32F1F156DE66D00941A5B /* AstronomicalCalendar.m */,
+				53E32F20156DE66D00941A5B /* EarthViewer.h */,
+				53E32F21156DE66D00941A5B /* EarthViewer.m */,
+				53E32F22156DE66D00941A5B /* GeoLocation.h */,
+				53E32F23156DE66D00941A5B /* GeoLocation.m */,
+				53E32F24156DE66D00941A5B /* SunriseAndSunset.h */,
+				53E32F25156DE66D00941A5B /* SunriseAndSunset.m */,
+			);
+			name = Times;
+			path = KosherCocoa/KosherCocoa/Times;
+			sourceTree = SOURCE_ROOT;
+		};
 		53F6AAC814FDE67E0079F613 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1373,8 +1469,8 @@
 				53FBDA0F151D9FA200DD5180 /* Note.m */,
 				53591A3E152181A000516C4C /* StampInfo.h */,
 				53591A3F152181A000516C4C /* StampInfo.m */,
-				53F241A715619DC30038A666 /* Weapon.h */,
-				53F241A815619DC30038A666 /* Weapon.m */,
+				53A44A0215756D74005A06C2 /* Weapon.h */,
+				53A44A0315756D74005A06C2 /* Weapon.m */,
 			);
 			name = Weapons;
 			sourceTree = "<group>";
@@ -1556,6 +1652,11 @@
 				53E32F05156C87FA00941A5B /* Wind_25@2x.png in Resources */,
 				53E32F0C156CA7A500941A5B /* README.txt in Resources */,
 				53E32F0D156CA7A500941A5B /* release_notes.txt in Resources */,
+				53FCAF561573C9A0006AB66F /* Notes_TextView@2x.png in Resources */,
+				53FCAF571573C9A0006AB66F /* Notes_TextView.png in Resources */,
+				53FCAF6515743C4F006AB66F /* TableViewHeaderViewGrouped.xib in Resources */,
+				53A44A0715758DDB005A06C2 /* TableViewHeaderViewPlain.xib in Resources */,
+				53CBF5541575A461001C32EE /* TableViewHeaderViewGrouped2Line.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1640,7 +1741,6 @@
 				53AF04541560171200D702FD /* UIImageView+AFNetworking.m in Sources */,
 				53AF045A15616B4C00D702FD /* Ammunition.m in Sources */,
 				53AF046015616F5300D702FD /* Malfunction.m in Sources */,
-				53F241A915619DC30038A666 /* Weapon.m in Sources */,
 				53F241AC15619DC40038A666 /* Manufacturer.m in Sources */,
 				53F241AF1561A2A60038A666 /* Maintenance.m in Sources */,
 				53F241BD156204A10038A666 /* AmmunitionListByCaliberViewController.m in Sources */,
@@ -1685,6 +1785,16 @@
 				53E32EED156C643F00941A5B /* DirectionSpeedViewController.m in Sources */,
 				53E32F12156D519C00941A5B /* BallisticProfile.m in Sources */,
 				53E32F15156D51DA00941A5B /* DopeCard.m in Sources */,
+				53E32F26156DE66D00941A5B /* MathAdditions.c in Sources */,
+				53E32F27156DE66D00941A5B /* AstronomicalCalculator.m in Sources */,
+				53E32F28156DE66D00941A5B /* AstronomicalCalendar.m in Sources */,
+				53E32F29156DE66D00941A5B /* EarthViewer.m in Sources */,
+				53E32F2A156DE66D00941A5B /* GeoLocation.m in Sources */,
+				53E32F2B156DE66D00941A5B /* SunriseAndSunset.m in Sources */,
+				53FCAF6315743C36006AB66F /* TableViewHeaderViewGrouped.m in Sources */,
+				53A44A0415756D74005A06C2 /* Weapon.m in Sources */,
+				53A44A0A15758DEB005A06C2 /* TableViewHeaderViewPlain.m in Sources */,
+				53CBF5521575A451001C32EE /* TableViewHeaderViewGrouped2Line.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1730,10 +1840,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
@@ -1779,6 +1886,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gun Locker/Gun Locker-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Gun Locker/Gun Locker-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1798,6 +1906,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gun Locker/Gun Locker-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Gun Locker/Gun Locker-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (

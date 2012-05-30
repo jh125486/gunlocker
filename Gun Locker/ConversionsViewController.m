@@ -101,21 +101,15 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark TableView
-
+#pragma mark Table delegates
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
-	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), 30.0f)];
-	tableView.sectionHeaderHeight = headerView.frame.size.height;
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5.0f, 6.0f, CGRectGetWidth(headerView.frame) - 20.0f, 24.0f)];
-	label.text = [self tableView:tableView titleForHeaderInSection:section];
-	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0f];
-	label.shadowColor = [UIColor clearColor];
-	label.backgroundColor = [UIColor clearColor];
-	label.textColor = [UIColor blackColor];
+    TableViewHeaderViewGrouped *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped" owner:self options:nil] 
+                                              objectAtIndex:0];
     
-	[headerView addSubview:label];
-	return headerView;
+    headerView.headerTitleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    return headerView;
 }
+
 
 #pragma mark TextField delegates
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {

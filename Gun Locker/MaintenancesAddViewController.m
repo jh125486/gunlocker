@@ -51,10 +51,23 @@
     actionPerformedText.title = @"Action performed";
     actionPerformedText.key = @"action_performed";
     
+    TableViewHeaderViewGrouped *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped" 
+                                                                            owner:self 
+                                                                          options:nil] 
+                                              objectAtIndex:0];
+    headerView.headerTitleLabel.text = infoSection.title;
+    
+    infoSection.headerView = headerView;
     [infoSection addElement:maintenanceDate];
     [infoSection addElement:roundCount];
     [_root addSection:infoSection];
 
+    TableViewHeaderViewGrouped *headerView2 = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped" 
+                                                                            owner:self 
+                                                                          options:nil] 
+                                              objectAtIndex:0];
+    headerView2.headerTitleLabel.text = descriptionSection.title;
+    descriptionSection.headerView = headerView2;
     [descriptionSection addElement:actionPerformedText];
     [_root addSection:descriptionSection];
     

@@ -11,9 +11,10 @@
 #import "WhizWheelViewController.h"
 
 @implementation WhizWheelViewController
+@synthesize titleLabel = _titleLabel;
 @synthesize tableBackgroundImage = _tableBackgroundImage;
 @synthesize rangesTableView = _rangesTableView, directionsTableView = _directionsTableView, speedTableView = _speedTableView;
-@synthesize rangeLabel = _rangeLabel, directionLabel = _directionLabel, speedLabel = _speedLabel;
+@synthesize rangeLabel = _rangeLabel, directionTypeLabel = _directionTypeLabel, speedLabel = _speedLabel, fromLabel = _fromLabel;
 @synthesize dropInchesLabel = _dropInchesLabel, dropMOAMils = _dropMOAMils;
 @synthesize driftInchesLabel = _driftInchesLabel, driftMOAMils = _driftMOAMils;
 @synthesize dropUnitLabel = _dropUnitLabel, driftUnitLabel = _driftUnitLabel;
@@ -37,14 +38,64 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = self.selectedProfile.name;
+    _titleLabel.text = self.selectedProfile.name;
     trajectory = [[Trajectory alloc] init];
+    trajectory.tempC = 15;
+    trajectory.relativeHumidity = 0;
+    trajectory.pressureInhg = 29.92;
+    trajectory.altitudeM = 0;
+    trajectory.ballisticProfile = _selectedProfile;
+    [trajectory setup];
+    
     dataManager = [DataManager sharedManager];
+    
+    
+    modeTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f * 60.f // every 5 minutes
+                                                 target:self
+                                               selector:@selector(checkDayOrNightMode:)
+                                               userInfo:nil
+                                                repeats:YES];    
+}
+
+-(void)checkDayOrNightMode:(NSTimer*)timer {
+    int mode = [[[NSUserDefaults standardUserDefaults] objectForKey:@"nightModeControl"] intValue];
+    
+    if (mode == 0) {// day mode all the time
+        DebugLog(@"Mode: day mode");
+        [self setDayMode];
+    } else if (mode == 1) { // night mode all the time
+        DebugLog(@"Mode: night mode");
+        [self setNightMode];
+    } else { // Auto
+        DebugLog(@"Mode: auto mode");
+        
+        // TODO get a better fix from the GPS here
+        GeoLocation *location = [[GeoLocation alloc] initWithName:@"Location" 
+                                                      andLatitude:dataManager.locationManager.location.coordinate.latitude 
+                                                     andLongitude:dataManager.locationManager.location.coordinate.longitude 
+                                                      andTimeZone:[NSTimeZone systemTimeZone]];
+        
+        AstronomicalCalendar *astronomicalCalendar = [[AstronomicalCalendar alloc] initWithLocation:location];
+        NSDate *sunrise = [astronomicalCalendar sunrise];
+        NSDate *sunset  = [astronomicalCalendar sunset];    
+        NSDate *currentTime = [NSDate date];
+        
+        BOOL isNightTime = (([currentTime compare:sunrise] == NSOrderedAscending) || ([currentTime compare:sunset] == NSOrderedDescending));
+
+        
+        if (isNightTime) {
+            if (!_nightMode) DebugLog(@"! Switching to night mode");
+            [self setNightMode];
+        } else { // Day mode
+            if (_nightMode) DebugLog(@"! Switching to day mode");
+            [self setDayMode];
+        }
+    }    
 }
 
 -(void)viewWillAppear:(BOOL)animated {    
     [super viewWillAppear:animated];
-
+    
     // set to initial picker positions
     rangeIndex = 0;
 
@@ -56,11 +107,7 @@
     trajectory.rangeStart = [defaults integerForKey:@"rangeStart"];
     trajectory.rangeEnd   =  [defaults integerForKey:@"rangeEnd"];
     trajectory.rangeStep  = [defaults integerForKey:@"rangeStep"];
-    trajectory.tempC = 15;
-    trajectory.relativeHumidity = 0;
-    trajectory.pressureInhg = 29.92;
-    trajectory.altitudeM = 0;
-    trajectory.ballisticProfile = _selectedProfile;
+    
     _rangeLabel.text = (trajectory.rangeUnit == 0) ? @"Yards" : @"Meters";
     
     // array of Ranges:  pad front and back to get proper fake pickerview row alignment from real tableview
@@ -71,53 +118,86 @@
     [arrayRanges addObject:@""];
     
     
-    _directionLabel.text = [dataManager.directionTypes objectAtIndex:[defaults integerForKey:@"directionControl"]];
-    arrayDirections = [dataManager.whizWheelPicker2 objectForKey:_directionLabel.text];
+    directionType = [dataManager.directionTypes objectAtIndex:[defaults integerForKey:@"directionControl"]];
+    arrayDirections = [dataManager.whizWheelPicker2 objectForKey:directionType];
     
     _speedUnit = [defaults objectForKey:@"speedUnit"]; // should have another label to differentiate between leading and windage
     _speedType = [defaults objectForKey:@"speedType"];
-    _speedLabel.text = _speedType;
+    _directionTypeLabel.text = _speedType;
     arraySpeeds = [dataManager.whizWheelPicker3 objectForKey:_speedUnit];
         
     [_rangesTableView reloadData];
     [_directionsTableView reloadData];
     [_speedTableView reloadData];
     
-    _nightMode = [[defaults objectForKey:@"nightModeControl"] intValue];
-    
-    if (_nightMode) {
-        _rangesTableView.backgroundColor = _directionsTableView.backgroundColor = _speedTableView.backgroundColor = _resultBackgroundView.backgroundColor = [UIColor blackColor];
-        _reticleImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Reticles/%@_night", reticle]];
-        for (UILabel *label in self.view.subviews){
-            if ([label isKindOfClass:[UILabel class]])
-                label.textColor = _tableBackgroundImage.backgroundColor = [UIColor colorWithRed:0.603 green:0.000 blue:0.000 alpha:1.000];
-        }
-        _rangeLabel.textColor = _directionLabel.textColor = _speedLabel.textColor = [UIColor lightGrayColor];
-    } else { // NON night mode
-        _rangesTableView.backgroundColor = _directionsTableView.backgroundColor = _speedTableView.backgroundColor = _resultBackgroundView.backgroundColor = [UIColor whiteColor];
-        _reticleImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Reticles/%@_day", reticle]];
-        for (UILabel *label in self.view.subviews) {
-            if ([label isKindOfClass:[UILabel class]])
-                label.textColor = [UIColor blackColor];
-        }
-        _rangeLabel.textColor = _directionLabel.textColor = _speedLabel.textColor = [UIColor whiteColor];
-        _tableBackgroundImage.backgroundColor = [UIColor lightGrayColor];
-    }
-    
     [self setInitialSelectedCells];
-    [self highlightSelectedCells];
     [self showTrajectoryWithRecalc:YES];
+    
+    [self checkDayOrNightMode:nil];
+}
+
+- (void)setNightMode {
+    _nightMode = YES;
+    _rangesTableView.backgroundColor = _directionsTableView.backgroundColor = [UIColor blackColor];
+    _speedTableView.backgroundColor = _resultBackgroundView.backgroundColor = [UIColor blackColor];
+    
+    _reticleImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Reticles/%@_night", reticle]];
+    for (UILabel *label in self.view.subviews)
+        if ([label isKindOfClass:[UILabel class]])
+            label.textColor =  [UIColor colorWithRed:0.603 green:0.000 blue:0.000 alpha:1.000];
+
+    _tableBackgroundImage.backgroundColor = [UIColor colorWithRed:0.603 green:0.000 blue:0.000 alpha:1.000];
+    
+    _titleLabel.textColor = _rangeLabel.textColor = _directionTypeLabel.textColor = [UIColor colorWithWhite:0.75f alpha:1.f];;
+    _dropInchesLabel.textColor = _dropMOAMils.textColor = [UIColor colorWithWhite:0.75f alpha:1.f];;
+    _fromLabel.textColor = _speedLabel.textColor = [UIColor colorWithWhite:0.5f alpha:1.f];;
+
+    _driftInchesLabel.textColor = _driftMOAMils.textColor = [UIColor lightGrayColor];
+    
+    NSArray *visibleCells = [[[_rangesTableView visibleCells] arrayByAddingObjectsFromArray:[_directionsTableView visibleCells]] arrayByAddingObjectsFromArray:[_speedTableView visibleCells]];
+    for (UITableViewCell *cell in visibleCells)
+        cell.textLabel.textColor = [UIColor redColor];    
+    
+    [self highlightSelectedCells];
+}
+
+- (void)setDayMode {
+    _nightMode = NO;
+    _rangesTableView.backgroundColor = _directionsTableView.backgroundColor = [UIColor whiteColor];
+    _speedTableView.backgroundColor = _resultBackgroundView.backgroundColor = _titleLabel.textColor = [UIColor whiteColor];
+    
+    _rangeLabel.textColor = _directionTypeLabel.textColor = [UIColor whiteColor];
+    _fromLabel.textColor = _speedLabel.textColor = [UIColor colorWithWhite:0.75f alpha:1.f];
+    
+    _reticleImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Reticles/%@_day", reticle]];
+    
+    for (UILabel *label in self.view.subviews)
+        if ([label isKindOfClass:[UILabel class]])
+            label.textColor = [UIColor blackColor];
+    
+    _tableBackgroundImage.backgroundColor = [UIColor lightGrayColor];
+    
+    NSArray *visibleCells = [[[_rangesTableView visibleCells] arrayByAddingObjectsFromArray:[_directionsTableView visibleCells]] arrayByAddingObjectsFromArray:[_speedTableView visibleCells]];
+    for (UITableViewCell *cell in visibleCells)
+        cell.textLabel.textColor = [UIColor blackColor];
+
+    [self highlightSelectedCells];
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [TestFlight passCheckpoint:@"Whiz Wheel disappeared"];
 }
 
 - (void)viewDidUnload {
+    [TestFlight passCheckpoint:@"Whiz Wheel Unloaded"];
+    [modeTimer invalidate];
     [self setRangesTableView:nil];
     [self setRangeLabel:nil];
     [self setSelectedProfile:nil];
     [self setLastSelectedRangeCell:nil];
     [self setDirectionsTableView:nil];
     [self setSpeedTableView:nil];
-    [self setSpeedLabel:nil];
-    [self setDirectionLabel:nil];
     [self setResultBackgroundView:nil];
     [self setReticleImage:nil];
     [self setTableBackgroundImage:nil];
@@ -130,8 +210,11 @@
     [self setDriftMOAMils:nil];
     [self setDropUnitLabel:nil];
     [self setDriftUnitLabel:nil];
+    [self setTitleLabel:nil];
+    [self setDirectionTypeLabel:nil];
+    [self setFromLabel:nil];
+    [self setSpeedLabel:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -167,8 +250,8 @@
     }
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
-    cell.backgroundColor = self.nightMode ? [UIColor blackColor] : [UIColor whiteColor];
-    cell.textLabel.textColor = self.nightMode ? [UIColor redColor] : [UIColor blackColor];
+    cell.backgroundColor = _nightMode ? [UIColor blackColor] : [UIColor whiteColor];
+    cell.textLabel.textColor = _nightMode ? [UIColor redColor] : [UIColor blackColor];
     cell.textLabel.textAlignment = UITextAlignmentRight;
 
     NSString *cellText;
@@ -233,9 +316,13 @@
 #pragma mark Actions
 -(void)highlightSelectedCells { //  highlight cells under the selector if night mode
     if(_nightMode) {
-        _lastSelectedRangeCell.textLabel.textColor = [UIColor whiteColor];
-        _lastSelectedDirectionCell.textLabel.textColor = [UIColor whiteColor];
-        _lastSelectedSpeedCell.textLabel.textColor = [UIColor whiteColor];
+        _lastSelectedRangeCell.textLabel.textColor =  
+            _lastSelectedDirectionCell.textLabel.textColor = 
+            _lastSelectedSpeedCell.textLabel.textColor = [UIColor whiteColor];
+    } else {
+        _lastSelectedRangeCell.textLabel.textColor =  
+        _lastSelectedDirectionCell.textLabel.textColor = 
+        _lastSelectedSpeedCell.textLabel.textColor = [UIColor blackColor];
     }
 }
 
@@ -256,9 +343,9 @@
 - (void)showTrajectoryWithRecalc:(BOOL)recalc {
     if(recalc) {
         // convert direction 
-        if ([_directionLabel.text isEqualToString:@"Clocking"]) {
+        if ([directionType isEqualToString:@"Clocking"]) {
             angleDegrees =  CLOCK_to_DEGREES([_lastSelectedDirectionCell.textLabel.text intValue]);
-        } else { // degrees
+        } else { // in Degrees
             angleDegrees = [_lastSelectedDirectionCell.textLabel.text intValue];
         }
 
@@ -288,13 +375,11 @@
         
         [trajectory setupWindAndLeading];
         [trajectory calculateTrajectory];
-        NSLog(@"Whiz Wheel: Recalculated Wind/Leading %.1f mph at %.1f degrees", speedMPH, angleDegrees);
+        DebugLog(@"Whiz Wheel: Recalculated Wind/Leading %.1f mph at %.1f degrees", speedMPH, angleDegrees);
     }
         
     TrajectoryRange *range = [trajectory.ranges objectAtIndex:rangeIndex];
-    
-    NSLog(@"row %d\trange: %g\tdrop: %g\"\tdrift: %g\"", rangeIndex, range.range, range.drop_inches, range.drift_inches);
-    
+        
     _dropInchesLabel.text  = [NSString stringWithFormat:@"%.1f", range.drop_inches];
     _driftInchesLabel.text = [NSString stringWithFormat:@"%.1f", range.drift_inches];
 

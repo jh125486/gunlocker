@@ -31,7 +31,7 @@
     NSError *error = nil;
     if (![[self fetchedResultsController] performFetch:&error]) {
 		// Update to handle the error appropriately.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		DebugLog(@"Unresolved error %@, %@", error, [error userInfo]);
 		abort();
 	}
 }

@@ -102,6 +102,19 @@
         [self checkData:nil];
     }
     [self setTitle];
+    
+    // set up gestures
+    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addPhotoTapped:)];
+    UITapGestureRecognizer* doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addPhotoDoubleTapped:)];
+    [singleTap requireGestureRecognizerToFail:doubleTap];
+    [doubleTap setDelaysTouchesBegan:YES];
+    [singleTap setDelaysTouchesBegan:YES];
+
+    [doubleTap setNumberOfTapsRequired:2];
+    [singleTap setNumberOfTapsRequired:1];
+
+    [_addPhotoButton addGestureRecognizer:doubleTap];
+    [_addPhotoButton addGestureRecognizer:singleTap];
 }
 
 -(void)setTitle {
@@ -175,6 +188,20 @@
     [self checkData:nil];
 }
 
+- (void)addPhotoTapped:(UITapGestureRecognizer *)recognizer {
+    [[[UIActionSheet alloc] initWithTitle:nil
+                                delegate:self
+                       cancelButtonTitle:@"Cancel"
+                  destructiveButtonTitle:nil
+                       otherButtonTitles:@"Take Photo", @"Choose Existing", nil]
+     showInView:[UIApplication sharedApplication].keyWindow];
+}
+
+- (void)addPhotoDoubleTapped:(UITapGestureRecognizer *)recognizer {
+    // should perform seque to with ViewPhoto if photo is present
+    DebugLog(@"taps: %d", [recognizer numberOfTouches]);
+}
+
 - (IBAction)cancelTapped:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:@"tempWeaponDirty"];
@@ -208,9 +235,11 @@
         weapon.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
         UIGraphicsEndImageContext();   
         
+        #ifdef DEBUG
         UIImage *thumbnail = [UIImage imageWithData:weapon.photo_thumbnail];
-        NSLog(@"New photo: %f x %f", photo.size.width, photo.size.height);
-        NSLog(@"New thumbnail: %f x %f", thumbnail.size.width, thumbnail.size.height);
+        DebugLog(@"New photo: %f x %f", photo.size.width, photo.size.height);
+        DebugLog(@"New thumbnail: %f x %f", thumbnail.size.width, thumbnail.size.height);
+        #endif
     }
         
     weapon.serial_number = _serialNumberTextField.text;
@@ -229,6 +258,8 @@
     
     [[NSManagedObjectContext defaultContext] save];
 
+    [TestFlight passCheckpoint:@"Weapon Saved/Edited"];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:@"tempWeaponDirty"];
     [defaults removeObjectForKey:@"tempWeapon"];
@@ -281,22 +312,12 @@
 
 #pragma mark - Image methods
 
--(IBAction)photoButtonTapped {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                         destructiveButtonTitle:nil
-                                              otherButtonTitles:@"Take Photo", @"Choose Existing", nil];
-    sheet.actionSheetStyle = UIActionSheetStyleAutomatic;
-    [sheet showInView:[UIApplication sharedApplication].keyWindow];
-}
-
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSLog(@"set photoButton image");
+    DebugLog(@"set photoButton image");
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [self dismissModalViewControllerAnimated:YES];
     [_addPhotoButton setImage:image forState:UIControlStateNormal];
@@ -457,17 +478,12 @@
 #pragma mark Tableview delegates
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
-	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), 30.0f)];
-	tableView.sectionHeaderHeight = headerView.frame.size.height;
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5.0f, 6.0f, CGRectGetWidth(headerView.frame) - 20.0f, 24.0f)];
-	label.text = [self tableView:tableView titleForHeaderInSection:section];
-	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:22.0f];
-	label.shadowColor = [UIColor clearColor];
-	label.backgroundColor = [UIColor clearColor];
-	label.textColor = [UIColor blackColor];
-    
-	[headerView addSubview:label];
-	return headerView;
+    TableViewHeaderViewGrouped *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped" 
+                                                                            owner:self 
+                                                                          options:nil] 
+                                              objectAtIndex:0];
+    headerView.headerTitleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    return headerView;
 }
 
 @end

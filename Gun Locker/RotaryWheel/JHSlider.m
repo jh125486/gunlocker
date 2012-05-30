@@ -12,14 +12,13 @@
 @synthesize labelStep = _labelStep;
 @synthesize increment = _increment;
 
-- (id)initWithFrame:(CGRect)frame andIncrement:(int)increment andLabelStep:(int)labelStep {
-    if ((self = [super initWithFrame:CGRectMake(CGRectGetMinX(frame), 
-                                                CGRectGetMinY(frame) + 20.f, 
-                                                CGRectGetWidth(frame), CGRectGetHeight(frame))])) {
-        _increment = increment;
-        _labelStep = labelStep;
-    }
-    return self;
+-(void)awakeFromNib {
+    self.frame = CGRectMake(CGRectGetMinX(self.frame), 
+                            CGRectGetMinY(self.frame), 
+                            CGRectGetWidth(self.frame), 
+                            60.f);
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sliderTapped:)];
+    [self addGestureRecognizer:gesture];
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -42,11 +41,21 @@
     }
 }
 
-- (void) endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
     if (self.tracking) {
-        [self setValue:roundf((self.value) / _increment) * _increment animated:YES];
+        [self setValue:roundf(self.value / _increment) * _increment animated:YES];
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
+}
+
+- (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer {
+    if (self.highlighted) return; // tap on thumb, let slider deal with it
+    CGPoint point = [gestureRecognizer locationInView:self];
+    CGFloat percentage = point.x / self.bounds.size.width;
+    CGFloat delta = percentage * (self.maximumValue - self.minimumValue);
+    CGFloat value = self.minimumValue + delta;
+    [self setValue:roundf(value / _increment) * _increment animated:YES];
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 @end

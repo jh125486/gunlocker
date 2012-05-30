@@ -9,6 +9,7 @@
 #import "DopeTableGeneratedTableViewController.h"
 
 @implementation DopeTableGeneratedTableViewController
+@synthesize infoView = _infoView;
 @synthesize passedTrajectory = _passedTrajectory;
 @synthesize dopeCardSectionHeaderView = _dopeCardSectionHeaderView;
 @synthesize rangeUnitLabel = _rangeUnitLabel, dropUnitLabel = _dropUnitLabel, driftUnitLabel = _driftUnitLabel;
@@ -47,6 +48,7 @@
     _targetInfoLabel.text  = _targetInfoString;
     
     [trajectory setup];
+    [trajectory setupWindAndLeading];    
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -79,11 +81,27 @@
     [self setRangeUnitLabel:nil];
     [self setDropUnitLabel:nil];
     [self setDriftUnitLabel:nil];
+    [self setInfoView:nil];
     [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
+}
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+        _weaponLabel.font = [UIFont boldSystemFontOfSize:20.f];    
+        _profileNameLabel.font = [UIFont boldSystemFontOfSize:18.f];
+    } else {
+        _weaponLabel.font = [UIFont boldSystemFontOfSize:16.f];
+        _profileNameLabel.font = [UIFont boldSystemFontOfSize:14.f];
+    }
+}
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {    
+    [self.tableView setContentOffset:CGPointMake(0.f, _infoView.isHidden ? CGRectGetHeight(_infoView.frame) : 0.f) animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -185,8 +203,31 @@
     [alert show];
 }
 
+- (IBAction)infoViewTapped:(id)sender {
+    _infoView.hidden = !_infoView.hidden;
+    [self.tableView setContentOffset:CGPointMake(0.f, _infoView.isHidden ? CGRectGetHeight(_infoView.frame) : 0.f) animated:YES];
+}
+
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+}
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView reloadData];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)theIndexPath {
+    for (NSIndexPath *indexPath in [tableView indexPathsForSelectedRows]) {
+        if ((indexPath.row == theIndexPath.row) && (indexPath.section == theIndexPath.section)) {
+            return tableView.rowHeight + 10.f;
+        }
+    }
+    return  tableView.rowHeight;
 }
 
 @end

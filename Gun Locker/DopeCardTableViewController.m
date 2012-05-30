@@ -9,6 +9,7 @@
 #import "DopeCardTableViewController.h"
 
 @implementation DopeCardTableViewController
+@synthesize infoView = _infoView;
 @synthesize dopeCardSectionHeaderView = _dopeCardSectionHeaderView;
 @synthesize weaponLabel = _weaponLabel;
 @synthesize zeroLabel = _zeroLabel;
@@ -74,11 +75,21 @@
     [self setDriftLabel:nil];
     [self setDopeCardSectionHeaderView:nil];
     [self setWeatherLabel:nil];
+    [self setInfoView:nil];
     [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
+}
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {    
+    [self.tableView setContentOffset:CGPointMake(0.f, _infoView.isHidden ? CGRectGetHeight(_infoView.frame) : 0.f) animated:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -97,6 +108,10 @@
     [[NSManagedObjectContext defaultContext] save];
 }
 
+- (IBAction)infoViewTapped:(id)sender {
+    _infoView.hidden = !_infoView.hidden;
+    [self.tableView setContentOffset:CGPointMake(0.f, _infoView.isHidden ? CGRectGetHeight(_infoView.frame) : 0.f) animated:YES];
+}
 
 #pragma mark - Table view data source
 

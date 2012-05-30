@@ -13,5 +13,4 @@
 @property (nonatomic, assign, readwrite) int increment;
 @property (nonatomic, assign, readwrite) int labelStep;
 
--(id)initWithFrame:(CGRect)frame andIncrement:(int)increment andLabelStep:(int)labelStep;
 @end

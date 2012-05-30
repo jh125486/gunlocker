@@ -97,6 +97,15 @@
     return tableView == self.tableView ? [sections objectAtIndex:section] : nil;
 }
 
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    TableViewHeaderViewPlain *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewPlain" 
+                                                                          owner:self 
+                                                                        options:nil] 
+                                            objectAtIndex:0];
+    headerView.headerTitleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    return headerView;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"CaliberCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -149,30 +158,6 @@
 
     searchResults = [Caliber findAllSortedBy:@"diameter_inches" ascending:YES withPredicate:filter];
     self.savedScopeButtonIndex = scope;
-}
-
-#pragma mark Tableview headerview
-
--(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
-    if (sectionTitle == nil) return nil;
-    
-	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, tableView.bounds.size.width, tableView.sectionHeaderHeight)];
-    headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background"]];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, 0.0f, headerView.frame.size.width - 20.0f, tableView.sectionHeaderHeight)];
-	label.text = sectionTitle;
-	label.font = [UIFont fontWithName:@"AmericanTypewriter" size:18.0f];
-	label.shadowColor = [UIColor lightTextColor];
-    label.shadowOffset = CGSizeMake(0.0f, 1.0f);
-	label.backgroundColor = [UIColor clearColor];    
-	label.textColor = [UIColor blackColor];
-    
-	[headerView addSubview:label];
-	return headerView;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return ([self tableView:tableView titleForHeaderInSection:section] != nil) ? 23.0f : 0.0f;
 }
 
 @end

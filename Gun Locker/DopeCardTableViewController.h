@@ -16,6 +16,8 @@
     DataManager *dataManager;
 }
 
+@property (weak, nonatomic) IBOutlet UIView *infoView;
+
 @property (strong, nonatomic) IBOutlet UIView *dopeCardSectionHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *weaponLabel;
 @property (weak, nonatomic) IBOutlet UILabel *zeroLabel;
@@ -28,4 +30,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *dropLabel;
 @property (weak, nonatomic) IBOutlet UILabel *driftLabel;
 @property (weak, nonatomic) DopeCard *selectedDopeCard;
+
+- (IBAction)infoViewTapped:(id)sender;
 @end

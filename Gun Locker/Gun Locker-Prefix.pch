@@ -4,6 +4,13 @@
 
 #import <Availability.h>
 
+#ifdef DEBUG
+    #define DebugLog(__FORMAT__, ...) TFLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#else
+    #define DebugLog(s, ...)
+#endif
+
+
 #ifndef __IPHONE_5_0
 #warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif
@@ -20,4 +27,6 @@
     #import "Model+Helpers.h"
     #import "DataManager.h"
     #import "TestFlight.h"
+    #import "TableViewHeaderViewPlain.h"
+    #import "TableViewHeaderViewGrouped.h"
 #endif

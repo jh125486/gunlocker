@@ -9,11 +9,16 @@
 #import "RangingViewController.h"
 
 @implementation RangingViewController
-@synthesize targetSizeTextField, targetSizeUnitControl;
-@synthesize targetSpansTextField, targetSpansUnitControl;
-@synthesize angleTextField, angleLiveUpdateControl;
-@synthesize resultLabel, resultUnitControl;
-@synthesize currentTextField;
+@synthesize targetSizeTextField = _targetSizeTextField;
+@synthesize targetSizeUnitControl = _targetSizeUnitControl;
+@synthesize targetSpansTextField = _targetSpansTextField;
+@synthesize targetSpansUnitControl = _targetSpansUnitControl;
+@synthesize angleTextField = _angleTextField;
+@synthesize angleLiveUpdateControl = _angleLiveUpdateControl;
+@synthesize resultLabel = _resultLabel;
+@synthesize resultUnitControl = _resultUnitControl;
+@synthesize resultView = _resultView;
+@synthesize currentTextField = _currentTextField;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -30,8 +35,8 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 12, 14)];
     label.text = @"°";
     label.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
-    self.angleTextField.rightViewMode = UITextFieldViewModeAlways;
-    self.angleTextField.rightView = label;
+    _angleTextField.rightViewMode = UITextFieldViewModeAlways;
+    _angleTextField.rightView = label;
 
     sizeUnits  = [NSArray arrayWithObjects:@"inches", @"feet", @"yards", @"meters", nil];
     spansUnits = [NSArray arrayWithObjects:@"MOA", @"Mils", nil];
@@ -40,7 +45,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectSize:) name:@"didSelectSize" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectSpans:) name:@"didSelectSpans" object:nil];
 
-    formFields = [NSArray arrayWithObjects:self.targetSizeTextField, self.targetSpansTextField, self.angleTextField, nil];
+    formFields = [NSArray arrayWithObjects:_targetSizeTextField, 
+		                                   _targetSpansTextField, 
+										   _angleTextField, 
+										   nil];
+	
     for(UITextField *field in formFields) {
         field.delegate = self;
         field.keyboardType = UIKeyboardTypeDecimalPad;
@@ -58,6 +67,7 @@
     [self setAngleLiveUpdateControl:nil];
     [self setResultLabel:nil];
     [self setResultUnitControl:nil];
+    [self setResultView:nil];
     [super viewDidUnload];
 }
 
@@ -65,8 +75,8 @@
     NSString *value = [[notification object] objectAtIndex:0];
     NSString *unit = [[notification object] objectAtIndex:1];
 
-    self.targetSizeTextField.text = value;
-    self.targetSizeUnitControl.selectedSegmentIndex = [sizeUnits indexOfObject:unit];
+    _targetSizeTextField.text = value;
+    _targetSizeUnitControl.selectedSegmentIndex = [sizeUnits indexOfObject:unit];
     [self showRangeEstimate:nil];
 }
 
@@ -74,8 +84,8 @@
     NSString *value = [[notification object] objectAtIndex:0];
     NSString *unit = [[notification object] objectAtIndex:1];
 
-    self.targetSpansTextField.text = value;
-    self.targetSpansUnitControl.selectedSegmentIndex = [spansUnits indexOfObject:unit];
+    _targetSpansTextField.text = value;
+    _targetSpansUnitControl.selectedSegmentIndex = [spansUnits indexOfObject:unit];
     [self showRangeEstimate:nil];
 }
 
@@ -85,13 +95,13 @@
 
 # pragma mark Actions
 - (IBAction)showRangeEstimate:(id)sender {
-    float angle = [self.angleTextField.text floatValue];
+    float angle = [_angleTextField.text floatValue];
 
-    if (([self.targetSizeTextField.text floatValue] > 0) && ([self.targetSpansTextField.text floatValue] > 0) && (angle > -90) && (angle < 90)) {
-        double range = 1000 *  [self.targetSizeTextField.text floatValue] / [self.targetSpansTextField.text floatValue];
+    if (([_targetSizeTextField.text floatValue] > 0) && ([_targetSpansTextField.text floatValue] > 0) && (angle > -90) && (angle < 90)) {
+        double range = 1000 *  [_targetSizeTextField.text floatValue] / [_targetSpansTextField.text floatValue];
         
         // adjust for target size units
-        switch (self.targetSizeUnitControl.selectedSegmentIndex) {
+        switch (_targetSizeUnitControl.selectedSegmentIndex) {
             case 0: // inches
                 range /= INCHES_PER_METER;
                 break;
@@ -106,25 +116,25 @@
         }
         
         // adjust for reading in MOA
-        if(self.targetSpansUnitControl.selectedSegmentIndex == 0) range *= MOA_PER_MIL;
+        if(_targetSpansUnitControl.selectedSegmentIndex == 0) range *= MOA_PER_MIL;
         
         // adjust for result in yards
-        if(self.resultUnitControl.selectedSegmentIndex == 0) range *= YARDS_PER_METER;
+        if(_resultUnitControl.selectedSegmentIndex == 0) range *= YARDS_PER_METER;
         
         // adjust for angle
         range *= cos(DEGREES_to_RAD(angle));
         
-        self.resultLabel.text = [NSString stringWithFormat:@"Range %.0f", range];
+        _resultLabel.text = [NSString stringWithFormat:@"Range %.0f", range];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setRange" 
                                                             object:[NSArray arrayWithObjects:[NSNumber numberWithDouble:range], 
-                                                                                             [resultUnitControl titleForSegmentAtIndex:resultUnitControl.selectedSegmentIndex], nil]];        
+                                                                                             [_resultUnitControl titleForSegmentAtIndex:_resultUnitControl.selectedSegmentIndex], nil]];        
     } else {
-        self.resultLabel.text = @"Range n/a";
+        _resultLabel.text = @"Range n/a";
     }
 }
 
 - (IBAction)liveAngleUpdating:(id)sender {
-    if(self.angleLiveUpdateControl.selectedSegmentIndex) {
+    if(_angleLiveUpdateControl.selectedSegmentIndex) {
         // if iphone 4 do 
         // CMAttitude* currentAttitude = currentMotion.attitude;
         // angleInRadians = currentAttitude.roll;
@@ -143,7 +153,7 @@
                                                              angleInRadians -= M_PI;
                                                              int angleInDegrees = RAD_to_DEGREES(angleInRadians);
                                                              if (((angleInDegrees % 5) == 0) && (angleInDegrees < 90)) {
-                                                                 self.angleTextField.text = [NSString stringWithFormat:@"%d", abs(angleInDegrees)];                                                                 
+                                                                 _angleTextField.text = [NSString stringWithFormat:@"%d", abs(angleInDegrees)];                                                                 
                                                                  [self showRangeEstimate:nil];
                                                              }
                                                              
@@ -193,12 +203,6 @@
 
 #pragma mark TextField delegates
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    UIToolbar* textFieldToolBarView = [[UIToolbar alloc] init];
-    textFieldToolBarView.barStyle = UIBarStyleBlack;
-    textFieldToolBarView.translucent = YES;
-    textFieldToolBarView.tintColor = nil;
-    [textFieldToolBarView sizeToFit];
-    
     UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
                                                                              NSLocalizedString(@"Previous",@"Previous form field"),
                                                                              NSLocalizedString(@"Next",@"Next form field"),                                         
@@ -208,35 +212,45 @@
     control.momentary = YES;
     [control addTarget:self action:@selector(nextPreviousTapped:) forControlEvents:UIControlEventValueChanged];     
     
-    UIBarButtonItem *controlItem = [[UIBarButtonItem alloc] initWithCustomView:control];
-    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
+    UIBarButtonItem *controlItem = [[UIBarButtonItem alloc] initWithCustomView:control];    
+    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace 
+                                                                           target:nil 
+                                                                           action:nil];
     UIBarButtonItem *done  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-                                                                           target:self action:@selector(doneTyping:)];
+                                                                           target:self 
+                                                                           action:@selector(doneTyping:)];
     
     if ([formFields indexOfObject:textField] == 0) {
         [control setEnabled:NO forSegmentAtIndex:0];
-    } else if ([formFields lastObject]== textField) {
+    } else if ([formFields lastObject] == textField) {
         [control setEnabled:NO forSegmentAtIndex:1];
     }
     
-    [textFieldToolBarView setItems:[NSArray arrayWithObjects:controlItem, space, done, nil]];
-    textField.inputAccessoryView = textFieldToolBarView;
+    UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 300.f, 88.f)];
+    UIToolbar* textFieldToolBarView2 = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 44.f)];
+    UIToolbar* textFieldToolBarView1 = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 44.f, 320.f, 44.f)];
+    textFieldToolBarView1.barStyle = UIBarStyleBlackOpaque;
+    textFieldToolBarView2.barStyle = UIBarStyleBlackTranslucent;
+    [textFieldToolBarView1 addSubview:_resultView];
+    [textFieldToolBarView2 setItems:[NSArray arrayWithObjects:controlItem, space, done, nil]];
+    [tempView addSubview:textFieldToolBarView1];    
+    [tempView addSubview:textFieldToolBarView2];
+    textField.inputAccessoryView = tempView;
     
     return YES;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.currentTextField = textField;    
+    _currentTextField = textField;    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    if([self.angleTextField.text isEqualToString:@""]) self.angleTextField.text = @"0";
-    self.currentTextField = nil;
+    if([_angleTextField.text isEqualToString:@""]) _angleTextField.text = @"0";
+    _currentTextField = nil;
 }
 
 - (void) nextPreviousTapped:(id)sender {
-    int index = [formFields indexOfObject:self.currentTextField];
+    int index = [formFields indexOfObject:_currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
             if (index > 0) index--;
@@ -246,12 +260,12 @@
             break;
     }
     
-    self.currentTextField = [formFields objectAtIndex:index];
-    [self.currentTextField becomeFirstResponder];
+    _currentTextField = [formFields objectAtIndex:index];
+    [_currentTextField becomeFirstResponder];
 }
 
 - (void) doneTyping:(id)sender {
-    [self.currentTextField resignFirstResponder];
+    [_currentTextField resignFirstResponder];
 }
 
 

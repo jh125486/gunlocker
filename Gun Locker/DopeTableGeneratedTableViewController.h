@@ -17,6 +17,8 @@
     Trajectory* trajectory;
 }
 
+
+@property (weak, nonatomic) IBOutlet UIView *infoView;
 @property (strong, nonatomic) Trajectory *passedTrajectory;
 @property (strong, nonatomic) IBOutlet UIView *dopeCardSectionHeaderView;
 @property (weak, nonatomic) NSString *rangeUnit;
@@ -43,5 +45,6 @@
 
 - (IBAction)cancelTapped:(id)sender;
 - (IBAction)saveTapped:(id)sender;
+- (IBAction)infoViewTapped:(id)sender;
 
 @end

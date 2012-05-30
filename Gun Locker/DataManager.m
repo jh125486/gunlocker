@@ -24,19 +24,20 @@ static DataManager *sharedMyManager = nil;
 @synthesize whizWheelPicker2 = _whizWheelPicker2;
 @synthesize whizWheelPicker3 = _whizWheelPicker3;
 @synthesize humanMPHSpeeds = _humanMPHSpeeds;
+@synthesize locationManager = _locationManager;
 
 #pragma mark Singleton Methods
-+ (id)sharedManager {
-    @synchronized(self) {
++ (DataManager *)sharedManager {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         if (sharedMyManager == nil)
             sharedMyManager = [[self alloc] init];
-    }
+    });
     return sharedMyManager;
 }
 
 - (id)init {
     if (self = [super init]) {
-        
         _directionTypes = [[NSArray alloc] initWithObjects:@"Degrees", @"Clocking", nil];
         _rangeUnits     = [[NSArray alloc] initWithObjects:@"Yards", @"Meters", @"Feet", nil];
         _dopeUnits      = [[NSArray alloc] initWithObjects:@"MOA", @"MILs", @"Inches", @"cm", nil];
@@ -75,7 +76,8 @@ static DataManager *sharedMyManager = nil;
                                                                        [NSNumber numberWithDouble:3.0], @"Walking", 
 																	   [NSNumber numberWithDouble:6.0], @"Jogging", 
 																	   [NSNumber numberWithDouble:10.0], @"Running", nil];
-        
+      
+        _locationManager = [[CLLocationManager alloc] init];
     }
     return self;
 }
