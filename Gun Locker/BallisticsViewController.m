@@ -415,6 +415,11 @@
 #pragma mark TESTING Profiles below
 
 -(void)loadTestProfiles {
+    // only load test weapons on first load
+    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+    if ([preferences boolForKey:@"TestProfileLoaded"]) return;
+
+    
     BallisticProfile *ballisticProfile1 = [BallisticProfile createEntity];
     ballisticProfile1.bullet_weight = [NSNumber numberWithInt:55.0];
     ballisticProfile1.drag_model = @"G7";
@@ -422,7 +427,7 @@
     ballisticProfile1.zero = [NSNumber numberWithInt:100];
     ballisticProfile1.zero_unit = [NSNumber numberWithInt:0];
     ballisticProfile1.sight_height_inches = [NSNumber numberWithDouble:1.5];
-    ballisticProfile1.name = @"55 grain M193 ";
+    ballisticProfile1.name = @"Test Profile 1 M193 ";
     ballisticProfile1.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.272"]];
     ballisticProfile1.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
     ballisticProfile1.weapon = [[Weapon findAll] objectAtIndex:1];
@@ -438,7 +443,7 @@
     ballisticProfile2.zero = [NSNumber numberWithInt:100];
     ballisticProfile2.zero_unit = [NSNumber numberWithInt:0];
     ballisticProfile2.sight_height_inches = [NSNumber numberWithDouble:2.6];
-    ballisticProfile2.name = @"62 grain SS109";
+    ballisticProfile2.name = @"Test Profile SS109";
     ballisticProfile2.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.151"]];
     ballisticProfile2.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
     ballisticProfile2.weapon = [[Weapon findAll] objectAtIndex:0];
@@ -447,5 +452,8 @@
     [ballisticProfile2 calculateTheta];
     
     [[NSManagedObjectContext defaultContext] save];
+    
+    [preferences setBool:YES forKey:@"TestProfileLoaded"];
+    [preferences synchronize];
 } 
 @end

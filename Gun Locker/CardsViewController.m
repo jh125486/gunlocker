@@ -280,7 +280,10 @@
 
 -(void)loadTestWeapons {
    dispatch_async(dispatch_get_main_queue(), ^{
-       [Weapon truncateAll];
+       // only load test weapons on first load
+       NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+       if ([preferences boolForKey:@"TestWeaponsLoaded"]) return;
+
        [BallisticProfile truncateAll];
        [[NSManagedObjectContext defaultContext] save];
        
@@ -289,7 +292,7 @@
        DebugLog(@"Creating Test Weapon 1");
        Weapon *newWeapon1 = [Weapon createEntity];
        newWeapon1.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
-       newWeapon1.model = @"M14 EBR";
+       newWeapon1.model = @"Test Rifle 1";
        newWeapon1.caliber = [[calibers objectAtIndex:arc4random() % [calibers count]] name];
        newWeapon1.type = @"Rifles";
        newWeapon1.barrel_length = [NSNumber numberWithDouble:18.0f];
@@ -311,10 +314,12 @@
        newWeapon1.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
        UIGraphicsEndImageContext();   
        
+       [[NSManagedObjectContext defaultContext] save];
+
        DebugLog(@"Creating Test Weapon 2");
        Weapon *newWeapon2 = [Weapon createEntity];
        newWeapon2.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
-       newWeapon2.model = @"Vector CRB/SO";
+       newWeapon2.model = @"Test Rifle 2";
        newWeapon2.caliber = [[calibers objectAtIndex:arc4random() % [calibers count]] name];
        newWeapon2.type = @"Rifles";
        newWeapon2.barrel_length = [NSNumber numberWithDouble:16.0f];
@@ -335,10 +340,12 @@
        newWeapon2.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
        UIGraphicsEndImageContext();
        
+       [[NSManagedObjectContext defaultContext] save];
+
        DebugLog(@"Creating Test Weapon 3");
        Weapon *newWeapon3 = [Weapon createEntity];
        newWeapon3.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
-       newWeapon3.model = @"1911 Series 80";
+       newWeapon3.model = @"Test Handgun 1";
        newWeapon3.caliber = [[calibers objectAtIndex:arc4random() % [calibers count]] name];
        newWeapon3.type = @"Handguns";
        newWeapon3.barrel_length = [NSNumber numberWithDouble:5.2f];
@@ -359,10 +366,12 @@
        newWeapon3.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
        UIGraphicsEndImageContext();
        
+       [[NSManagedObjectContext defaultContext] save];
+
        DebugLog(@"Creating Test Weapon 4");
        Weapon *newWeapon4 = [Weapon createEntity];
        newWeapon4.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
-       newWeapon4.model = @"Super Shorty";
+       newWeapon4.model = @"Test Shotgun";
        newWeapon4.caliber = [[calibers objectAtIndex:arc4random() % [calibers count]] name];
        newWeapon4.type = @"Shotguns";
        newWeapon4.barrel_length = [NSNumber numberWithDouble:9.5f];
@@ -383,6 +392,9 @@
        UIGraphicsEndImageContext();
        
        [[NSManagedObjectContext defaultContext] save];
+       
+       [preferences setBool:YES forKey:@"TestWeaponsLoaded"];
+       [preferences synchronize];
    });
 }                       
 

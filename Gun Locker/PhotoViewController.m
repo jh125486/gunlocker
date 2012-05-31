@@ -50,7 +50,7 @@
     
     [_photoView addGestureRecognizer:doubleTap];
     [_photoView addGestureRecognizer:singleTap];
-    [self.view addGestureRecognizer:singleTap];
+    [_containerView addGestureRecognizer:singleTap];
 }
 
 - (CGRect)centeredFrameForScrollView:(UIScrollView *)scroll andUIView:(UIView *)aView {
@@ -130,20 +130,28 @@
 
 -(IBAction)handleDoubleTap:(UIGestureRecognizer *)recognizer {
     if (_containerView.zoomScale < _containerView.maximumZoomScale) {
-//        CGPoint center = [recognizer locationInView:_photoView];
+        CGPoint center = [recognizer locationInView:_photoView];
+		
+        center.x *= _containerView.maximumZoomScale;
+        center.y *= _containerView.maximumZoomScale;
+        center.x -= CGRectGetMidX(_containerView.bounds);
+        center.y -= CGRectGetMidY(_containerView.bounds);
+        
+        CGFloat maxWidth = CGRectGetWidth(_photoView.bounds) * _containerView.maximumZoomScale - CGRectGetMaxX(_containerView.bounds);
+        CGFloat maxHeight = CGRectGetHeight(_photoView.bounds) * _containerView.maximumZoomScale - CGRectGetMaxY(_containerView.bounds);
+        
+        if (center.x < 0.f) center.x = 0.f;
+        if (center.y < 0.f) center.y = 0.f;
+        if (center.x > maxWidth)  center.x = maxWidth;
+        if (center.y > maxHeight) center.y = maxHeight;
+        
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.5];
         [_containerView setZoomScale:_containerView.maximumZoomScale];
-//        CGPoint newCenter = CGPointMake(center.x, center.y - CGRectGetHeight(self.view.frame)/2);
-//        NSLog(@"%g %g", newCenter.x, newCenter.y);
-//        if (newCenter.x < 0.f) newCenter.x = 0.f;
-//        if (newCenter.y < 0.f) newCenter.y = 0.f;
-//        if (newCenter.x > CGRectGetMaxX(_containerView.bounds)) newCenter.x = CGRectGetMaxX(_containerView.bounds);
-//        if (newCenter.y > CGRectGetMaxY(_containerView.bounds)) newCenter.y = CGRectGetMaxY(_containerView.bounds);
-//        NSLog(@"%g %g", newCenter.x, newCenter.y);
-//        NSLog(@"width %g height %g width %g height %g\nwidth %g height %g width %g height %g", CGRectGetMaxX(_containerView.frame), CGRectGetMaxY(_containerView.frame), CGRectGetMaxX(_containerView.bounds), CGRectGetMaxY(_containerView.bounds),
-//               CGRectGetWidth(_containerView.frame), CGRectGetHeight(_containerView.frame), CGRectGetWidth(_containerView.bounds), CGRectGetHeight(_containerView.bounds));
-//        [_containerView setContentOffset:newCenter animated:YES];
+        [_containerView setContentOffset:center];
+        [UIView commitAnimations];
     } else {
-        [_containerView setZoomScale:_containerView.minimumZoomScale];
+        [_containerView setZoomScale:_containerView.minimumZoomScale animated:YES];
     }
 }
 
