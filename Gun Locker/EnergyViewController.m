@@ -59,7 +59,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark result
+#pragma mark Calculate Result
 
 - (IBAction)showResult:(id)sender {
     if(([_bulletWeightTextField.text length] > 0) && ([_mvTextField.text length] >0)) {
@@ -105,16 +105,10 @@
         [control setEnabled:NO forSegmentAtIndex:1];
     }
     
-    UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 300.f, 95.f)];
-    UIToolbar* textFieldToolBarView1 = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 95.f)];
-    UIToolbar* textFieldToolBarView2 = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 51.f, 320.f, 44.f)];
-    textFieldToolBarView1.barStyle = UIBarStyleBlackOpaque;
-    textFieldToolBarView2.barStyle = UIBarStyleBlackTranslucent;
-    [textFieldToolBarView1 addSubview:_resultView];
-    [textFieldToolBarView2 setItems:[NSArray arrayWithObjects:controlItem, space, done, nil]];
-    [tempView addSubview:textFieldToolBarView1];    
-    [tempView addSubview:textFieldToolBarView2];
-    textField.inputAccessoryView = tempView;
+    UIToolbar* textFieldToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 44.f)];
+    textFieldToolBar.barStyle = UIBarStyleBlackTranslucent;
+    [textFieldToolBar setItems:[NSArray arrayWithObjects:controlItem, space, done, nil]];
+    textField.inputAccessoryView = textFieldToolBar;
     
     return YES;
 }
@@ -146,4 +140,9 @@
     [_currentTextField resignFirstResponder];
 }
 
+#pragma mark Tableview
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    _resultView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background"]];
+    return _resultView;
+}
 @end

@@ -30,11 +30,11 @@
         UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 31)];
         footerView.backgroundColor = [UIColor clearColor];
         footerView.autoresizesSubviews = YES;
-        _timeLineFooterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 31)];
+        _timeLineFooterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
         _timeLineFooterLabel.backgroundColor = [UIColor clearColor];
         _timeLineFooterLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0];
         _timeLineFooterLabel.textAlignment = UITextAlignmentCenter;
-        _timeLineFooterLabel.textColor = [UIColor colorWithRed:0.298039 green:0.337255 blue:0.423529 alpha:1];
+        _timeLineFooterLabel.textColor = [UIColor blackColor];
         _timeLineFooterLabel.shadowColor = [UIColor whiteColor];
         _timeLineFooterLabel.shadowOffset = CGSizeMake(0, 1);
         _timeLineFooterLabel.text = @"";
@@ -94,6 +94,7 @@
         [timeLineSection addElement:checkCashedDate];
         [timeLineSection addElement:wentPendingDate];
         [timeLineSection addElement:stampReceivedDate];
+
         timeLineSection.key = @"timeLineSection";
                 
         QSection *buttonSection = [[QSection alloc] init];

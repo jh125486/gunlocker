@@ -198,8 +198,7 @@
 }
 
 - (void)addPhotoDoubleTapped:(UITapGestureRecognizer *)recognizer {
-    // should perform seque to with ViewPhoto if photo is present
-    DebugLog(@"taps: %d", [recognizer numberOfTouches]);
+    [self performSegueWithIdentifier:@"ViewPhoto" sender:nil];
 }
 
 - (IBAction)cancelTapped:(id)sender {
@@ -288,6 +287,9 @@
 		ManufacturerChooserViewController *manufacturerChooserViewController = segue.destinationViewController;
 		manufacturerChooserViewController.delegate = self;
 		manufacturerChooserViewController.selectedManufacturer = selectedManufacturer;
+    } else  if ([segueID isEqualToString:@"ViewPhoto"]) {
+        PhotoViewController *dst = segue.destinationViewController;
+        dst.selectedWeapon = _selectedWeapon;
     }
 }
 
@@ -423,7 +425,7 @@
     _currentTextField = nil;
 }
 
-- (void) nextPreviousTapped:(id)sender {
+- (void)nextPreviousTapped:(id)sender {
     int index = [formFields indexOfObject:_currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
@@ -439,7 +441,7 @@
     [_currentTextField becomeFirstResponder];
 }
 
-- (void) doneTyping:(id)sender {
+- (void)doneTyping:(id)sender {
     if (_currentTextField == self.purchaseDateTextField)
         _purchaseDateTextField.text = [_purchaseDatePickerView.date onlyDate];
 

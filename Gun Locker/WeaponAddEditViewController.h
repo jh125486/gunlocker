@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ManufacturerChooserViewController.h"
 #import "CaliberChooserViewController.h"
+#import "PhotoViewController.h"
 #import "Weapon.h"
 #import "Manufacturer.h"
 

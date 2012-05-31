@@ -104,11 +104,13 @@
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString *header = [self tableView:tableView titleForHeaderInSection:section];
+    if (header == nil) return nil;
     TableViewHeaderViewPlain *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewPlain" 
                                                                           owner:self 
                                                                         options:nil] 
                                             objectAtIndex:0];
-    headerView.headerTitleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    headerView.headerTitleLabel.text = header;
     return headerView;
 }
 

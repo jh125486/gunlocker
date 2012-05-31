@@ -9,9 +9,12 @@
 #import "ThornileyViewController.h"
 
 @implementation ThornileyViewController
-@synthesize bulletCaliberTextField, bulletWeightTextField, mvTextField;
-@synthesize resultLabel;
-@synthesize currentTextField;
+@synthesize resultView = _resultView;
+@synthesize bulletCaliberTextField = _bulletCaliberTextField;
+@synthesize bulletWeightTextField = _bulletWeightTextField; 
+@synthesize mvTextField = _mvTextField;
+@synthesize resultLabel = _resultLabel;
+@synthesize currentTextField = _currentTextField;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -27,10 +30,13 @@
 
     behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:0 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
 
-    formFields = [NSArray arrayWithObjects:self.bulletCaliberTextField, self.bulletWeightTextField, self.mvTextField, nil];
+    formFields = [NSArray arrayWithObjects:_bulletCaliberTextField, 
+		                                   _bulletWeightTextField, 
+										   _mvTextField, 
+										   nil];
     for (UITextField *field in formFields)
         field.delegate = self;
-    self.bulletCaliberTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    _bulletCaliberTextField.keyboardType = UIKeyboardTypeDecimalPad;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -44,6 +50,7 @@
     [self setMvTextField:nil];
     [self setResultLabel:nil];
     [self setCurrentTextField:nil];
+    [self setResultView:nil];
     [super viewDidUnload];
 }
 
@@ -53,18 +60,18 @@
 
 #pragma mark result
 - (IBAction)showResult:(id)sender {
-    if(([self.bulletCaliberTextField.text length]>0) && ([self.bulletWeightTextField.text length]>0) && ([self.mvTextField.text length] >0)) {
+    if(([_bulletCaliberTextField.text length]>0) && ([_bulletWeightTextField.text length]>0) && ([_mvTextField.text length] >0)) {
         
-        NSDecimalNumber *caliber = [[NSDecimalNumber alloc] initWithDouble:sqrt([self.bulletCaliberTextField.text doubleValue])];
-        NSDecimalNumber *weight  = [NSDecimalNumber decimalNumberWithString:self.bulletWeightTextField.text];
-        NSDecimalNumber *mv      = [NSDecimalNumber decimalNumberWithString:self.mvTextField.text];
+        NSDecimalNumber *caliber = [[NSDecimalNumber alloc] initWithDouble:sqrt([_bulletCaliberTextField.text doubleValue])];
+        NSDecimalNumber *weight  = [NSDecimalNumber decimalNumberWithString:_bulletWeightTextField.text];
+        NSDecimalNumber *mv      = [NSDecimalNumber decimalNumberWithString:_mvTextField.text];
         NSDecimalNumber *multipier = [NSDecimalNumber decimalNumberWithString:@"2.866"];
         NSDecimalNumber *divisor = [NSDecimalNumber decimalNumberWithString:@"7000"];
         
         weight = [weight decimalNumberByDividingBy:divisor];
-        self.resultLabel.text = [[[[[multipier decimalNumberByMultiplyingBy:mv] decimalNumberByMultiplyingBy:weight] decimalNumberByMultiplyingBy:caliber] decimalNumberByRoundingAccordingToBehavior:behavior] stringValue];
+        _resultLabel.text = [[[[[multipier decimalNumberByMultiplyingBy:mv] decimalNumberByMultiplyingBy:weight] decimalNumberByMultiplyingBy:caliber] decimalNumberByRoundingAccordingToBehavior:behavior] stringValue];
     } else {
-        self.resultLabel.text = @"n/a";
+        _resultLabel.text = @"n/a";
     }
 }
 
@@ -104,15 +111,15 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.currentTextField = textField;    
+    _currentTextField = textField;    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.currentTextField = nil;
+    _currentTextField = nil;
 }
 
 - (void) nextPreviousTapped:(id)sender {
-    int index = [formFields indexOfObject:self.currentTextField];
+    int index = [formFields indexOfObject:_currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
             if (index > 0) index--;
@@ -122,12 +129,17 @@
             break;
     }
     
-    self.currentTextField = [formFields objectAtIndex:index];
-    [self.currentTextField becomeFirstResponder];
+    _currentTextField = [formFields objectAtIndex:index];
+    [_currentTextField becomeFirstResponder];
 }
 
 - (void) doneTyping:(id)sender {
-    [self.currentTextField resignFirstResponder];
+    [_currentTextField resignFirstResponder];
 }
 
+#pragma mark Tableview
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    _resultView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background"]];
+    return _resultView;
+}
 @end

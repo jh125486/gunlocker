@@ -97,16 +97,17 @@
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    //crash for some reason
-//    if (_currentWeather && _currentWeather.goodData) {
-//        _wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", [[_currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
+//-(void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    
+//    if (_currentWeather) {
+//        NSLog(@"%@", _currentWeather);
+//        _wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", 
+//                                  [[_currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
 //    } else {
 //        _wxTimestampLabel.text = @"";
 //    }
-}
+//}
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -249,11 +250,21 @@
 
 # pragma mark tableview header/footer
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
+    TableViewHeaderViewGrouped *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped" 
+                                                                            owner:self 
+                                                                          options:nil] 
+                                              objectAtIndex:0];
+    headerView.headerTitleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    return headerView;
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     if (section != 0) return nil;
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, self.tableView.sectionFooterHeight)];
-    [view addSubview:_wxTimestampLabel];
-    return view;
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 30.f)];
+    [footerView addSubview:_wxTimestampLabel];
+    
+    return footerView;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -324,17 +335,6 @@
     }
 }
 
-#pragma mark Table delegates
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section  {
-    TableViewHeaderViewGrouped *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TableViewHeaderViewGrouped" 
-                                                                            owner:self 
-                                                                          options:nil] 
-                                              objectAtIndex:0];
-    headerView.headerTitleLabel.text = [self tableView:tableView titleForHeaderInSection:section];
-    return headerView;
-}
-
 #pragma mark WX
 
 - (IBAction)getWX:(id)sender {
@@ -342,11 +342,10 @@
     [_wxIndicator startAnimating];
     _wxButton.enabled = NO;
     
-    DebugLog(@"Getting weather for Lat %f Long %f", 
+    DebugLog(@"Wx fetch for Lat %f Long %f", 
              dataManager.locationManager.location.coordinate.latitude, 
              dataManager.locationManager.location.coordinate.longitude);
 
-    
     NSString *unescapedURL = [NSString stringWithFormat:@"http://weather.aero/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=csv&radialDistance=30;%f,%f&hoursBeforeNow=2&fields=observation_time,station_id,latitude,longitude,temp_c,dewpoint_c,wind_dir_degrees,wind_speed_kt,altim_in_hg", 
                               dataManager.locationManager.location.coordinate.longitude, 
                               dataManager.locationManager.location.coordinate.latitude];
@@ -378,10 +377,11 @@
                 _wxTimestampLabel.hidden = _wxStationLabel.hidden = NO;
                 [_wxIndicator stopAnimating];
                 _wxButton.enabled = YES;
-                _wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", [[_currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
+                _wxTimestampLabel.text = [NSString stringWithFormat:@"Station reported weather %@", 
+                                          [[_currentWeather.timestamp distanceOfTimeInWords] lowercaseString]];
 
                 _wxButton.titleLabel.text = @"↻ WX";
-
+                _currentWeather.goodData = YES;
             } else { // errors with weather.aero
                DebugLog(@"! Problem with METAR data from weather.aero: %@\n", metarArray);
                 [self resetWX];

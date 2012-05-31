@@ -9,12 +9,12 @@
 #import "PhotoViewController.h"
 
 @implementation PhotoViewController
-@synthesize containerView;
-@synthesize navigationBar;
-@synthesize modelLabel;
-@synthesize manufacturerLabel;
-@synthesize photoView;
-@synthesize selectedWeapon;
+@synthesize containerView = _containerView;
+@synthesize navigationBar = _navigationBar;
+@synthesize modelLabel = _modelLabel;
+@synthesize manufacturerLabel = _manufacturerLabel;
+@synthesize photoView = _photoView;
+@synthesize selectedWeapon = _selectedWeapon;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -26,35 +26,54 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = self.selectedWeapon.model;
+    self.title = _selectedWeapon.model;
     [self setTitleView];
-//    self.containerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundFabricTexture"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundFabricTexture"]];
     photo = [UIImage imageWithData:self.selectedWeapon.photo];
-    self.photoView.image = photo;
+    _photoView.image = photo;
+    [_photoView sizeToFit];
+    _containerView.contentSize = _photoView.frame.size;
+    _containerView.alwaysBounceVertical = _containerView.alwaysBounceHorizontal = YES;
+	_containerView.minimumZoomScale = _containerView.frame.size.width / photo.size.width;
+	_containerView.maximumZoomScale = 1.f;
+	[_containerView setZoomScale:_containerView.minimumZoomScale];
     
-    [self setPhotoFrame];
-
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(orientationChanged:)
-                                                 name:UIDeviceOrientationDidChangeNotification
-                                               object:nil];
     
+    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    UITapGestureRecognizer* doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+    [singleTap requireGestureRecognizerToFail:doubleTap];
+    [doubleTap setDelaysTouchesBegan:YES];
+    [singleTap setDelaysTouchesBegan:YES];
+    
+    [doubleTap setNumberOfTapsRequired:2];
+    [singleTap setNumberOfTapsRequired:1];
+    
+    [_photoView addGestureRecognizer:doubleTap];
+    [_photoView addGestureRecognizer:singleTap];
+    [self.view addGestureRecognizer:singleTap];
 }
 
-- (void)setPhotoFrame {
-    CGRect imageFrame = CGRectMake(0, 0, 0, 0);
-    if (photo.size.width > photo.size.height) {
-        imageFrame.size.width  = CGRectGetWidth(self.containerView.frame);
-        imageFrame.size.height = photo.size.height * (CGRectGetWidth(imageFrame)/photo.size.width);
-        imageFrame.origin.y = (CGRectGetHeight(self.containerView.frame) - CGRectGetHeight(imageFrame))/2;
-    } else {
-        imageFrame.size.height  = CGRectGetHeight(self.containerView.frame);
-        imageFrame.size.width = photo.size.width * (CGRectGetHeight(imageFrame)/photo.size.height);
-        imageFrame.origin.x = (CGRectGetWidth(self.containerView.frame) - CGRectGetWidth(imageFrame))/2;
+- (CGRect)centeredFrameForScrollView:(UIScrollView *)scroll andUIView:(UIView *)aView {
+	CGSize boundsSize = _containerView.bounds.size;
+    CGRect frameToCenter = aView.frame;
+    
+    // center horizontally
+    if (frameToCenter.size.width < boundsSize.width) {
+        frameToCenter.origin.x = (boundsSize.width - frameToCenter.size.width) / 2;
+    }
+    else {
+        frameToCenter.origin.x = 0;
     }
     
-    self.photoView.frame = imageFrame;
+    // center vertically
+    if (frameToCenter.size.height < boundsSize.height) {
+        frameToCenter.origin.y = (boundsSize.height - frameToCenter.size.height) / 2;
+    }
+    else {
+        frameToCenter.origin.y = 0;
+    }
+	
+	return frameToCenter;
 }
 
 - (void)setTitleView {
@@ -62,9 +81,19 @@
     self.manufacturerLabel.text = self.selectedWeapon.manufacturer.displayName;    
 }
 
+-(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [_photoView sizeToFit];
+    _containerView.contentSize = _photoView.frame.size;
+
+    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+        _containerView.minimumZoomScale = _containerView.frame.size.width / photo.size.width;
+    } else {
+        _containerView.minimumZoomScale = _containerView.frame.size.height / photo.size.height;        
+    }
+    [_containerView setZoomScale:_containerView.minimumZoomScale];
+}
+
 - (void)viewDidUnload {
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setManufacturerLabel:nil];
     [self setModelLabel:nil];
     [self setPhotoView:nil];
@@ -77,139 +106,20 @@
     return YES;
 }
 
--(void)orientationChanged:(id)sender {
-    [self setPhotoFrame];
-
-//    DebugLog(@"image frame (%.0f, %.0f, %.0f, %.0f)", self.photoView.frame.origin.x, self.photoView.frame.origin.y, CGRectGetWidth(self.photoView.frame), CGRectGetHeight(self.photoView.frame));
-//    DebugLog(@"contain frame (%.0f, %.0f, %.0f, %.0f)", self.containerView.frame.origin.x, self.containerView.frame.origin.y, CGRectGetWidth(self.containerView.frame), CGRectGetHeight(self.containerView.frame));
-
-}
-
 - (IBAction)doneTapped:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark gestures
-- (IBAction)handlePan:(UIPanGestureRecognizer *)recognizer {    
-    CGPoint translation = [recognizer translationInView:self.view];
-    
-    recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x, recognizer.view.center.y + translation.y);
-    
-    [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
-//    DebugLog(@"x %.0f y %.0f", translation.x, translation.y);
-        
-    if ((recognizer.state == UIGestureRecognizerStateEnded)) {
-//        CGPoint midpoint = CGPointMake(CGRectGetWidth(self.photoView.frame)/2, CGRectGetHeight(self.photoView.frame)/2);
-        CGRect bounds = CGRectMake(CGRectGetMinX(self.containerView.frame) + CGRectGetWidth(self.photoView.frame)/2, 
-                                   CGRectGetMinY(self.containerView.frame) + CGRectGetHeight(self.photoView.frame)/2,
-                                   CGRectGetWidth(self.containerView.frame) - CGRectGetWidth(self.photoView.frame), 
-                                   CGRectGetHeight(self.containerView.frame) - CGRectGetHeight(self.photoView.frame));
-        
-        CGPoint velocity = [recognizer velocityInView:self.view];
-        CGFloat magnitude = sqrtf((velocity.x * velocity.x) + (velocity.y * velocity.y));
-        CGFloat slideMult = magnitude / 200;
-        
-        float slideFactor = 0.1 * slideMult; // Increase for more of a slide
-
-        CGPoint finalPoint = CGPointMake(recognizer.view.center.x + (velocity.x * slideFactor), 
-                                         recognizer.view.center.y + (velocity.y * slideFactor));
-
-        finalPoint.x = MIN(MAX(finalPoint.x, 0), self.view.bounds.size.width);
-        finalPoint.y = MIN(MAX(finalPoint.y, 0), self.view.bounds.size.height);
-        
-        if (!CGRectContainsPoint(bounds, finalPoint)){
-            DebugLog(@"point (%.0f, %.0f) outside bounds (%.0f, %.0f, %.0f, %.0f)", 
-                  finalPoint.x, finalPoint.y, 
-                  bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
-
-            if (finalPoint.x < CGRectGetMinX(bounds)){
-                DebugLog(@"left edge");
-                finalPoint.x = CGRectGetMinX(bounds);
-            } else if (finalPoint.x > CGRectGetMaxX(bounds)) {
-                DebugLog(@"right edge");
-                finalPoint.x = CGRectGetMaxX(bounds);
-            }
-            
-            if (finalPoint.y < CGRectGetMinY(bounds)) {
-                DebugLog(@"top edge");
-                finalPoint.y = CGRectGetMinY(bounds);
-            } else if (finalPoint.y > CGRectGetMaxY(bounds)) {
-                DebugLog(@"bottom edge");
-                finalPoint.y = CGRectGetMaxY(bounds);
-            }
-        }  else {
-            DebugLog(@"point (%.0f, %.0f) INSIDE bounds (%.0f, %.0f, %.0f, %.0f) (%.0f, %.0f)", 
-                  finalPoint.x, finalPoint.y, 
-                  bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height,
-                  translation.x, translation.y);
-
-        }      
-        
-        [UIView animateWithDuration:slideFactor*2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            recognizer.view.center = finalPoint;
-        } completion:nil];
-    }
-}
-
-- (IBAction)handlePinch:(UIPinchGestureRecognizer *)recognizer {
-    if ([recognizer numberOfTouches] < 2)
-        return;
-        
-    if (recognizer.state == UIGestureRecognizerStateBegan) {
-        lastScale = 1.0;
-        lastPoint = [recognizer locationInView:self.photoView];
-    }
-    
-    // Scale
-    CGFloat scale = 1.0 - (lastScale - recognizer.scale);
-    [self.photoView.layer setAffineTransform:CGAffineTransformScale([self.photoView.layer affineTransform], scale, scale)];
-    lastScale = recognizer.scale;
-    
-    // Translate
-    CGPoint point = [recognizer locationInView:self.photoView];
-    [self.photoView.layer setAffineTransform:CGAffineTransformTranslate([self.photoView.layer affineTransform], point.x - lastPoint.x, point.y - lastPoint.y)];
-    lastPoint = [recognizer locationInView:self.photoView];
-    
-//  figure out scale to bounds edge;    
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
-        
-        DebugLog(@"container frame: (%.0f, %.0f, %.0f, %.0f)", self.containerView.frame.origin.x, self.containerView.frame.origin.y, self.containerView.frame.size.width, self.containerView.frame.size.height);
-        DebugLog(@"photoView frame: (%.0f, %.0f, %.0f, %.0f)", self.photoView.frame.origin.x, self.photoView.frame.origin.y, self.photoView.frame.size.width, self.photoView.frame.size.height);
-    
-        if(!CGRectContainsRect(self.containerView.frame, self.photoView.frame)) {
-            DebugLog(@"outside frame");
-        } else {
-            DebugLog(@"inside frame");
-            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                [self setPhotoFrame];
-            } completion:nil];
-        }
-        
-        
-    }
-    
-//    
-//    if (recognizer.state == UIGestureRecognizerStateBegan) {
-//        CGPoint point = [recognizer locationInView:self.containerView];
-//        DebugLog(@"scale %f point(%.0f, %.0f)", recognizer.scale, point.x, point.y);
-//        self.photoView.layer.anchorPoint = point;
-//    }
-//
-//    recognizer.view.transform = CGAffineTransformScale(recognizer.view.transform, recognizer.scale, recognizer.scale);
-//    recognizer.scale = 1;
-}
-
 
 -(IBAction)handleTap:(UIGestureRecognizer *)recognizer {
     if (self.navigationBar.alpha == 0.0f) {
-//        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
         [UIView beginAnimations:@"fadeIn" context:nil];
         [UIView setAnimationDuration:0.25f];
         [UIView setAnimationCurve:UIViewAnimationCurveLinear];
         self.navigationBar.alpha = 1.0f;
         [UIView commitAnimations];
     } else {
-//        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
         [UIView beginAnimations:@"fadeOut" context:nil];
         [UIView setAnimationDuration:0.25f];
         [UIView setAnimationCurve:UIViewAnimationCurveLinear];
@@ -217,4 +127,35 @@
         [UIView commitAnimations];
     }
 }
+
+-(IBAction)handleDoubleTap:(UIGestureRecognizer *)recognizer {
+    if (_containerView.zoomScale < _containerView.maximumZoomScale) {
+//        CGPoint center = [recognizer locationInView:_photoView];
+        [_containerView setZoomScale:_containerView.maximumZoomScale];
+//        CGPoint newCenter = CGPointMake(center.x, center.y - CGRectGetHeight(self.view.frame)/2);
+//        NSLog(@"%g %g", newCenter.x, newCenter.y);
+//        if (newCenter.x < 0.f) newCenter.x = 0.f;
+//        if (newCenter.y < 0.f) newCenter.y = 0.f;
+//        if (newCenter.x > CGRectGetMaxX(_containerView.bounds)) newCenter.x = CGRectGetMaxX(_containerView.bounds);
+//        if (newCenter.y > CGRectGetMaxY(_containerView.bounds)) newCenter.y = CGRectGetMaxY(_containerView.bounds);
+//        NSLog(@"%g %g", newCenter.x, newCenter.y);
+//        NSLog(@"width %g height %g width %g height %g\nwidth %g height %g width %g height %g", CGRectGetMaxX(_containerView.frame), CGRectGetMaxY(_containerView.frame), CGRectGetMaxX(_containerView.bounds), CGRectGetMaxY(_containerView.bounds),
+//               CGRectGetWidth(_containerView.frame), CGRectGetHeight(_containerView.frame), CGRectGetWidth(_containerView.bounds), CGRectGetHeight(_containerView.bounds));
+//        [_containerView setContentOffset:newCenter animated:YES];
+    } else {
+        [_containerView setZoomScale:_containerView.minimumZoomScale];
+    }
+}
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    _photoView.frame = [self centeredFrameForScrollView:scrollView andUIView:_photoView];;
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+	return _photoView;
+}
+
 @end

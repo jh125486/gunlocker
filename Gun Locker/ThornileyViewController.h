@@ -13,6 +13,7 @@
     NSDecimalNumberHandler *behavior;
 }
 
+@property (strong, nonatomic) IBOutlet UIView *resultView;
 @property (weak, nonatomic) IBOutlet UITextField *bulletCaliberTextField;
 @property (weak, nonatomic) IBOutlet UITextField *bulletWeightTextField;
 @property (weak, nonatomic) IBOutlet UITextField *mvTextField;

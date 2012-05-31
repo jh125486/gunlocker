@@ -9,11 +9,16 @@
 #import "MillerStabilityViewController.h"
 
 @implementation MillerStabilityViewController
-@synthesize bulletCaliberTextField = _bulletCaliberTextField, bulletLengthTextField = _bulletLengthTextField;
-@synthesize bulletWeightTextField = _bulletWeightTextField, mvTextField = _mvTextField, twistRateTextField = _twistRateTextField;
+@synthesize bulletCaliberTextField = _bulletCaliberTextField;
+@synthesize bulletLengthTextField = _bulletLengthTextField;
+@synthesize bulletWeightTextField = _bulletWeightTextField;
+@synthesize mvTextField = _mvTextField;
+@synthesize twistRateTextField = _twistRateTextField;
 @synthesize resultLabel = _resultLabel;
 @synthesize currentTextField = _currentTextField;
-@synthesize passedCaliber = _passedCaliber, passedWeight = _passedWeight, passedMV = _passedMV;
+@synthesize passedCaliber = _passedCaliber;
+@synthesize passedWeight = _passedWeight;
+@synthesize passedMV = _passedMV;
 @synthesize resultView = _resultView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -129,16 +134,10 @@
         [control setEnabled:NO forSegmentAtIndex:1];
     }
     
-    UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 300.f, 88.f)];
-    UIToolbar* textFieldToolBarView1 = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 44.f)];
-    UIToolbar* textFieldToolBarView2 = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 44.f, 320.f, 44.f)];
-    textFieldToolBarView1.barStyle = UIBarStyleBlackOpaque;
-    textFieldToolBarView2.barStyle = UIBarStyleBlackTranslucent;
-    [textFieldToolBarView1 addSubview:_resultView];
-    [textFieldToolBarView2 setItems:[NSArray arrayWithObjects:controlItem, space, done, nil]];
-    [tempView addSubview:textFieldToolBarView1];    
-    [tempView addSubview:textFieldToolBarView2];
-    textField.inputAccessoryView = tempView;
+    UIToolbar* textFieldToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 44.f)];
+    textFieldToolBar.barStyle = UIBarStyleBlackTranslucent;
+    [textFieldToolBar setItems:[NSArray arrayWithObjects:controlItem, space, done, nil]];
+    textField.inputAccessoryView = textFieldToolBar;
     
     return YES;
 }
@@ -168,6 +167,12 @@
 
 - (void) doneTyping:(id)sender {
     [_currentTextField resignFirstResponder];
+}
+
+#pragma mark Tableview
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    _resultView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background"]];
+    return _resultView;
 }
 
 @end
