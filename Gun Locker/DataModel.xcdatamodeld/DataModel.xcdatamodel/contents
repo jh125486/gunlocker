@@ -136,7 +136,7 @@
         <attribute name="threaded_barrel" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="threaded_barrel_pitch" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="ballistic_profile" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BallisticProfile" inverseName="weapon" inverseEntity="BallisticProfile" syncable="YES"/>
+        <relationship name="ballistic_profile" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BallisticProfile" inverseName="weapon" inverseEntity="BallisticProfile" syncable="YES"/>
         <relationship name="dope_cards" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DopeCard" inverseName="weapon" inverseEntity="DopeCard" syncable="YES"/>
         <relationship name="maintenances" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Maintenance" inverseName="weapon" inverseEntity="Maintenance" syncable="YES"/>
         <relationship name="malfunctions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Malfunction" inverseName="weapon" inverseEntity="Malfunction" syncable="YES"/>
@@ -147,7 +147,7 @@
     </entity>
     <elements>
         <element name="Ammunition" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="BallisticProfile" positionX="-144" positionY="-108" width="128" height="210"/>
+        <element name="BallisticProfile" positionX="-144" positionY="-108" width="128" height="255"/>
         <element name="Bullet" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Caliber" positionX="160" positionY="192" width="128" height="60"/>
         <element name="CommercialLoad" positionX="63" positionY="240" width="128" height="75"/>
