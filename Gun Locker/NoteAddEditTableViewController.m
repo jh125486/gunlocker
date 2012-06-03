@@ -59,7 +59,7 @@
         _passedNote.title = _titleTextField.text;
         _passedNote.body  = _bodyTextView.text;
         [[NSManagedObjectContext defaultContext] save];
-        [TestFlight passCheckpoint:@"Note edited"];
+//        [TestFlight passCheckpoint:@"Note edited"];
     } else if (![_titleTextField.text isEqualToString:@""] && ![_bodyTextView.text isEqualToString:@""]) {
         Note *newNote = [Note createEntity];
         newNote.date  = [NSDate date];
@@ -76,16 +76,5 @@
 - (void)textViewDidChange:(UITextView *)textView {
     _fakePlaceholderLabel.hidden = ([textView.text isEqualToString:@""]) ? NO : YES;
 }
-
-//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-//    NSString* newText = [textView.text stringByReplacingCharactersInRange:range withString:text];
-//    
-//    int newLineCount = [newText length] - [[newText stringByReplacingOccurrencesOfString:@"\n" withString:@""] length];
-//    if (newLineCount >= 4) return NO;
-//    
-//    CGSize tallerSize = CGSizeMake(textView.frame.size.width -19, textView.frame.size.height * 2);
-//    CGSize newSize = [newText sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:UILineBreakModeCharacterWrap];
-//    return (newSize.height > (CGRectGetHeight(textView.frame))) ? NO : YES;
-//}
 
 @end

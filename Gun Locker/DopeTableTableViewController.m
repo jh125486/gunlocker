@@ -158,7 +158,7 @@
                               [[NSArray arrayWithObjects:@"º", @" o'clock", nil] objectAtIndex:_targetDirectionTypeControl.selectedSegmentIndex]];
         
         dst.passedTrajectory = trajectory;
-        [TestFlight passCheckpoint:@"Dope Table Calculated"];
+//        [TestFlight passCheckpoint:@"Dope Table Calculated"];
     } else if ([segueID isEqualToString:@"WindModal"]) {
         [TestFlight passCheckpoint:@"Direction/Speed Modal Viewed"];
         DirectionSpeedViewController *dst = segue.destinationViewController;

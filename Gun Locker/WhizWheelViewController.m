@@ -84,11 +84,15 @@
 
         
         if (isNightTime) {
-            if (!_nightMode) DebugLog(@"! Switching to night mode");
-            [self setNightMode];
+            if (!_nightMode) {
+                DebugLog(@"! Switching to night mode");
+                [self setNightMode];   
+            }
         } else { // Day mode
-            if (_nightMode) DebugLog(@"! Switching to day mode");
-            [self setDayMode];
+            if (_nightMode) { 
+                DebugLog(@"! Switching to day mode");
+                [self setDayMode];
+            }
         }
     }    
 }

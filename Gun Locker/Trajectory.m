@@ -55,7 +55,7 @@
 -(void)calculateTrajectory {
     if(!_setupCompleted) [self setup];
 
-//    double testLeadZ =0.0, testLeadX =0.0;
+    double testLeadZ =0.0, testLeadX =0.0;
     
     double t = 0.0;
     double dt = 0.0;
@@ -131,7 +131,7 @@
         z += INCHES_to_FEET(spinDrift * pow(t, 1.83) * spinDriftDirection);
         
         // leading target
-        z += leadZSpeed * dt;
+        z -= leadZSpeed * t;
         x -= leadXSpeed * dt; // leadXSpeed factored into distance travelled
         
 		// Compute position based on average velocity.
@@ -139,16 +139,16 @@
 		y += dt * (vy + vy1)/2.0;
 
         
-//        //TESTING
-//        testLeadZ += leadZSpeed * dt;
-//        testLeadX += leadXSpeed * dt;
+        //TESTING
+        testLeadZ += leadZSpeed * dt;
+        testLeadX += leadXSpeed * dt;
         
         
 		// break if vertical velocity 3 times greater than horizontal velocity 
 		if (fabs(vy) > fabs(3.0 * vx)) break; 
 	}
     
-//    DebugLog(@"Total Z travelled: %g\"\tTotal X travelled: %g\"", testLeadZ, testLeadX);
+    DebugLog(@"Total Z travelled: %g\"\tTotal X travelled: %g\"  speedZ: %g", testLeadZ*12, testLeadX*12, leadZSpeed);
 }
 
 # pragma mark helpers
