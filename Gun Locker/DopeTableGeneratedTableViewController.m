@@ -194,16 +194,18 @@
     newDopeCard.range_unit = _rangeUnit;
     newDopeCard.drop_unit = newDopeCard.drift_unit = _dropDriftUnit;
 
-    NSMutableArray *dopeData = [[NSMutableArray alloc] initWithCapacity:trajectory.ranges.count];
-    for (TrajectoryRange *rangeDatum in trajectory.ranges) {
-        [dopeData addObject:[NSString stringWithFormat:@"%.0f", rangeDatum.range]];
-        [dopeData addObject:[NSString stringWithFormat:@"%.1f", rangeDatum.drop_inches]];
-        [dopeData addObject:[NSString stringWithFormat:@"%.1f", rangeDatum.drift_inches]];
+    NSMutableArray *dopeData = [[NSMutableArray alloc] initWithCapacity:[self.tableView numberOfRowsInSection:0]];
+    for (int row = 0; row < [self.tableView numberOfRowsInSection:0]; row++) {
+        DopeTableGeneratedCell *c = (DopeTableGeneratedCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row 
+                                                                                                                      inSection:0]];
+        [dopeData addObject:c.rangeLabel.text];
+        [dopeData addObject:c.dropLabel.text];
+        [dopeData addObject:c.driftLabel.text];
     }
-    
+        
     [newDopeCard setDope_data:[NSArray arrayWithArray:dopeData]];
     
-    [[NSManagedObjectContext defaultContext] save]; 
+//    [[NSManagedObjectContext defaultContext] save]; 
     NSString *message = [NSString stringWithFormat:@"Dope card for weapon\n'%@'\nsaved with name\n'%@'", newDopeCard.weapon, newDopeCard.name];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Dope Card Saved" 
                                                     message:message

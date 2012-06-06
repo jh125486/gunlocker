@@ -89,9 +89,6 @@
     _muzzleVelocityTextField.text = _selectedDopeCard.muzzle_velocity;
     _weatherInfoField.text        = _selectedDopeCard.weather_info;
     _notesTextField.text          = _selectedDopeCard.notes;
-    _rangeUnitField.text          = _selectedDopeCard.range_unit;
-    _dropUnitField.text           = _selectedDopeCard.drop_unit;
-    _driftUnitField.text          = _selectedDopeCard.drift_unit;
     
     [_zeroUnitPickerView selectRow:_selectedDopeCard.zero_unit.intValue inComponent:0 animated:NO];
     [self setZeroUnit];
@@ -123,6 +120,11 @@
         [_leadInfoPickerView selectRow:(direction == 12) ? 0 : direction inComponent:2 animated:NO];
         [self setLeadInfo];
     }
+    
+    [_dopeUnitPickerView selectRow:[range_units indexOfObject:_selectedDopeCard.range_unit] inComponent:0 animated:NO];
+    [_dopeUnitPickerView selectRow:[dope_units indexOfObject:_selectedDopeCard.drop_unit] inComponent:1 animated:NO];
+    [_dopeUnitPickerView selectRow:[dope_units indexOfObject:_selectedDopeCard.drift_unit] inComponent:2 animated:NO];
+    [self setDopeUnits];
     
     dopeCardCellData = [_selectedDopeCard.dope_data mutableCopy];
 }
@@ -340,7 +342,15 @@
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *done  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
                                                                            target:self action:@selector(doneTyping:)];
-
+    
+    if ([formFields containsObject:textField]) {
+        if ((textField == _rangeUnitField) || (textField == _dropUnitField) || (textField == _driftUnitField)) {
+            [self.tableView setContentOffset:CGPointMake(0.f, 130.f) animated:YES];
+        } else if (textField.frame.origin.y > 125.f) {
+            [self.tableView setContentOffset:CGPointMake(0.f, textField.frame.origin.y - 120.f) animated:YES];            
+        }
+    }
+    
 
     if (![formFields containsObject:textField] && textField.tag != 1) {
         UIBarButtonItem *flipSign  = [[UIBarButtonItem alloc] initWithTitle:@" ± " 
@@ -370,6 +380,11 @@
             
         [dopeCardCellData replaceObjectAtIndex:[self indexForTextField:textField] - formFields.count withObject:textField.text];
     }
+    
+    if ([formFields containsObject:textField]) {
+        [self.tableView setContentOffset:CGPointMake(0.f, 0.f) animated:YES];
+    }
+
     _currentTextField = nil;
 }
 

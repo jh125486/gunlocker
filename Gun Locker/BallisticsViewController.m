@@ -453,9 +453,9 @@
     ballisticProfile2.weapon = [[Weapon findAll] objectAtIndex:0];
     ballisticProfile2.sg = [NSDecimalNumber decimalNumberWithString:@"1.2"];
     ballisticProfile2.sg_twist_direction =@"RH";
-    ballisticProfile1.scope_click_unit = @"MILs";
-    ballisticProfile1.elevation_click = @"1/10";
-    ballisticProfile1.windage_click = @"1/10";
+    ballisticProfile2.scope_click_unit = @"MILs";
+    ballisticProfile2.elevation_click = @"1/10";
+    ballisticProfile2.windage_click = @"1/10";
 
     [ballisticProfile2 calculateTheta];
     
