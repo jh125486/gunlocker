@@ -10,6 +10,8 @@
 #import "TableViewHeaderViewGrouped2Line.h"
 
 @implementation ProfileViewTableViewController
+@synthesize elevationAdjustmentLabel = _elevationAdjustmentLabel;
+@synthesize windageAdjustmentLabel = _windageAdjustmentLabel;
 @synthesize mvLabel = _mvLabel, sightHeightLabel = _sightHeightLabel, zeroLabel = _zeroLabel, bulletDiameterLabel = _bulletDiameterLabel;
 @synthesize bulletWeightLabel = _bulletWeightLabel, dragModelLabel = _dragModelLabel, bcLabel = _bcLabel, profile =_profile;
 @synthesize sgLabel = _sgLabel;
@@ -44,6 +46,12 @@
     _zeroLabel.text = [NSString  stringWithFormat:@"%d %@",
                        _profile.zero.intValue,
                        [dataManager.rangeUnits objectAtIndex:_profile.zero_unit.intValue]];
+    
+    _elevationAdjustmentLabel.text = [NSString stringWithFormat:@"%@ %@ per click", 
+                                      _profile.elevation_click, _profile.scope_click_unit];
+    _windageAdjustmentLabel.text = [NSString stringWithFormat:@"%@ %@ per click", 
+                                      _profile.windage_click, _profile.scope_click_unit];
+    
     _bulletDiameterLabel.text = [[_profile.bullet_diameter_inches stringValue] stringByAppendingString:@"\""];
     _bulletWeightLabel.text = [[_profile.bullet_weight stringValue] stringByAppendingString:@" grains"];
     _dragModelLabel.text = _profile.drag_model;
@@ -63,6 +71,8 @@
     [self setProfile:nil];
     [self setSgLabel:nil];
     [self setSgDirectionLabel:nil];
+    [self setElevationAdjustmentLabel:nil];
+    [self setWindageAdjustmentLabel:nil];
     [super viewDidUnload];
 }
 

@@ -17,7 +17,7 @@
 @synthesize zeroLabel = _zeroLabel, mvLabel = _mvLabel;
 @synthesize tempLabel = _tempLabel, rhLabel = _rhLabel, altitudeLabel = _altitudeLabel, pressureLabel = _pressureLabel;
 @synthesize windInfoLabel = _windInfoLabel, targetInfoLabel = _targetInfoLabel;
-@synthesize rangeUnit =_rangeUnit, dropDriftUnit = _dropDriftUnit;
+@synthesize rangeUnit =_rangeUnit, dopeUnit = _dropDriftUnit;
 @synthesize tempString = _tempString, altitudeString = _altitudeString, pressureString = _pressureString;
 @synthesize windInfoString = _windInfoString, targetInfoString = _targetInfoString;
 
@@ -47,6 +47,9 @@
     _windInfoLabel.text    = _windInfoString;
     _targetInfoLabel.text  = _targetInfoString;
     
+    elevation_click = [[_passedTrajectory.ballisticProfile.elevation_click decimalFromFraction] doubleValue];
+    windage_click   = [[_passedTrajectory.ballisticProfile.windage_click decimalFromFraction] doubleValue];
+    
     [trajectory setup];
     [trajectory setupWindAndLeading];    
 }
@@ -64,7 +67,7 @@
     [self setPressureString:nil];
     [self setWindInfoString:nil];
     [self setTargetInfoString:nil];
-    [self setDropDriftUnit:nil];
+    [self setDopeUnit:nil];
     [self setPassedTrajectory:nil];
     [self setZeroLabel:nil];
     [self setMvLabel:nil];
@@ -124,12 +127,20 @@
     if (_dropDriftUnit == @"Inches") {
         cell.dropLabel.text  = [NSString stringWithFormat:@"%.1f", rangeDatum.drop_inches];
         cell.driftLabel.text = [NSString stringWithFormat:@"%.1f", rangeDatum.drift_inches];
-    } else if (_dropDriftUnit == @"MOA") {
+    } else if ([_dropDriftUnit isEqualToString:@"MOA"]) {
         cell.dropLabel.text  = [NSString stringWithFormat:@"%.1f", rangeDatum.drop_moa];
         cell.driftLabel.text = [NSString stringWithFormat:@"%.1f", rangeDatum.drift_moa];
-    } else if (_dropDriftUnit == @"Mils") {
+    } else if ([_dropDriftUnit isEqualToString:@"Mils"]) {
         cell.dropLabel.text  = [NSString stringWithFormat:@"%.1f", rangeDatum.drop_mils];
         cell.driftLabel.text = [NSString stringWithFormat:@"%.1f", rangeDatum.drift_mils];
+    } else if ([_dropDriftUnit isEqualToString:@"Clicks"]) {
+        if ([_passedTrajectory.ballisticProfile.scope_click_unit isEqualToString:@"MILs"]) {
+            cell.dropLabel.text  = [NSString stringWithFormat:@"%g", round(rangeDatum.drop_mils / elevation_click)];
+            cell.driftLabel.text = [NSString stringWithFormat:@"%g", round(rangeDatum.drift_mils / windage_click)];
+        } else { //MOA
+            cell.dropLabel.text  = [NSString stringWithFormat:@"%g", round(rangeDatum.drop_moa / elevation_click)];
+            cell.driftLabel.text = [NSString stringWithFormat:@"%g", round(rangeDatum.drift_moa / windage_click)];            
+        }
     }
     
     cell.velocityLabel.text = [NSString stringWithFormat:@"%g", round(rangeDatum.velocity_fps)];
@@ -137,7 +148,7 @@
     cell.timeLabel.text     = [NSString stringWithFormat:@"%.3f", rangeDatum.time];
     
     if (rangeDatum.velocity_fps < 1116.45) {
-        cell.backgroundView.alpha = 0.2f;
+        cell.backgroundView.alpha = 0.1f;
     }
     
     return cell;

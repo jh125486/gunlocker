@@ -418,7 +418,6 @@
     // only load test weapons on first load
     NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
     if ([preferences boolForKey:@"TestProfileLoaded"]) return;
-
     
     BallisticProfile *ballisticProfile1 = [BallisticProfile createEntity];
     ballisticProfile1.bullet_weight = [NSNumber numberWithInt:55.0];
@@ -433,7 +432,12 @@
     ballisticProfile1.weapon = [[Weapon findAll] objectAtIndex:1];
     ballisticProfile1.sg = [NSDecimalNumber decimalNumberWithString:@"1.5"];
     ballisticProfile1.sg_twist_direction =@"RH";
+    ballisticProfile1.scope_click_unit = @"MOA";
+    ballisticProfile1.elevation_click = @"1/2";
+    ballisticProfile1.windage_click = @"1/4";
+    
     [ballisticProfile1 calculateTheta];
+    
     
     BallisticProfile *ballisticProfile2 = [BallisticProfile createEntity];
     
@@ -449,6 +453,10 @@
     ballisticProfile2.weapon = [[Weapon findAll] objectAtIndex:0];
     ballisticProfile2.sg = [NSDecimalNumber decimalNumberWithString:@"1.2"];
     ballisticProfile2.sg_twist_direction =@"RH";
+    ballisticProfile1.scope_click_unit = @"MILs";
+    ballisticProfile1.elevation_click = @"1/10";
+    ballisticProfile1.windage_click = @"1/10";
+
     [ballisticProfile2 calculateTheta];
     
     [[NSManagedObjectContext defaultContext] save];

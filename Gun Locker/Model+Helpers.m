@@ -281,4 +281,15 @@
     return [NSString stringWithString:randomString];
 }
 
+-(NSDecimalNumber*)decimalFromFraction {
+    NSArray *components = [self componentsSeparatedByString:@"/"];
+    
+    if (components.count == 1) {
+        return [NSDecimalNumber decimalNumberWithString:self];
+    } else if (components.count > 2) {
+        return nil;
+    }
+    
+    return [[NSDecimalNumber decimalNumberWithString:[components objectAtIndex:0]] decimalNumberByDividingBy:[NSDecimalNumber decimalNumberWithString:[components objectAtIndex:1]]];
+}
 @end

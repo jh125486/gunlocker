@@ -11,11 +11,14 @@
         <attribute name="bullet_diameter_inches" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="bullet_weight" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <attribute name="drag_model" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="elevation_click" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="muzzle_velocity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="scope_click_unit" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sg" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="sg_twist_direction" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sight_height_inches" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="windage_click" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zero" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="zero_theta" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="zero_unit" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -147,7 +150,7 @@
     </entity>
     <elements>
         <element name="Ammunition" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="BallisticProfile" positionX="-144" positionY="-108" width="128" height="255"/>
+        <element name="BallisticProfile" positionX="-144" positionY="-108" width="128" height="300"/>
         <element name="Bullet" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Caliber" positionX="160" positionY="192" width="128" height="60"/>
         <element name="CommercialLoad" positionX="63" positionY="240" width="128" height="75"/>

@@ -21,6 +21,7 @@
 @end
 
 @interface ProfileAddEditViewController : UITableViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
+    DataManager *dataManager;
     Weapon *selectedWeapon;
     NSArray *weapons;
     NSMutableArray *weaponViews;
@@ -39,6 +40,14 @@
 @property (weak, nonatomic) IBOutlet UITextField *weaponTextField;
 @property (retain, nonatomic) UIPickerView *weaponPicker;
 
+@property (weak, nonatomic) IBOutlet UIButton *scopeAdjustmentClicksButton;
+@property (retain, nonatomic) UIPickerView *scopeAdjustmentClicksPicker;
+@property (weak, nonatomic) IBOutlet UILabel *scopeElevationClicksLabel;
+@property (weak, nonatomic) IBOutlet UILabel *scopeWindageClicksLabel;
+@property (weak, nonatomic) IBOutlet UITextField *scopeAdjustmentTextField;
+@property (strong, nonatomic) IBOutlet UIView *scopePickerHeaderView;
+
+
 @property (weak, nonatomic) IBOutlet UITextField *muzzleVelocityTextField;
 @property (weak, nonatomic) IBOutlet UITextField *siteHeightTextField;
 @property (weak, nonatomic) IBOutlet UITextField *zeroDistanceTextField;
@@ -50,7 +59,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *weaponButton;
 @property (weak, nonatomic) IBOutlet UIButton *bulletButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *dragModelControl;
-@property (weak, nonatomic) IBOutlet UIView *bcButtonTopEdgeView;
 @property (weak, nonatomic) IBOutlet UIButton *bcButton;
 
 @property (weak, nonatomic) IBOutlet UITextField *sgTextField;
@@ -65,5 +73,7 @@
 
 - (IBAction)cancelTapped:(id)sender;
 - (IBAction)saveTapped:(id)sender;
+
+- (IBAction)tappedSetAdjustmentClicks:(id)sender;
 
 @end

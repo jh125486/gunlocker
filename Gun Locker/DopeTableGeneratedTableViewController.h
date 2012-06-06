@@ -15,8 +15,9 @@
 
 @interface DopeTableGeneratedTableViewController : UITableViewController <UIAlertViewDelegate> {
     Trajectory* trajectory;
+    double elevation_click;
+    double windage_click;
 }
-
 
 @property (weak, nonatomic) IBOutlet UIView *infoView;
 @property (strong, nonatomic) Trajectory *passedTrajectory;
@@ -25,7 +26,7 @@
 @property (weak, nonatomic) NSString *tempString;
 @property (weak, nonatomic) NSString *pressureString;
 @property (weak, nonatomic) NSString *altitudeString;
-@property (weak, nonatomic) NSString *dropDriftUnit;
+@property (weak, nonatomic) NSString *dopeUnit;
 @property (weak, nonatomic) NSString *windInfoString;
 @property (weak, nonatomic) NSString *targetInfoString;
 

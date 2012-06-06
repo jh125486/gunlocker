@@ -14,6 +14,12 @@
 @synthesize weaponButton = _weaponButton;
 @synthesize weaponTextField = _weaponTextField;
 @synthesize weaponPicker = _weaponPicker;
+@synthesize scopeAdjustmentClicksButton = _scopeAdjustmentClicksButton;
+@synthesize scopeAdjustmentClicksPicker = _scopeAdjustmentPicker;
+@synthesize scopeElevationClicksLabel = _scopeElevationClicksLabel;
+@synthesize scopeWindageClicksLabel = _scopeWindageClicksLabel;
+@synthesize scopeAdjustmentTextField = _scopeAdjustmentTextField;
+@synthesize scopePickerHeaderView = _scopePickerHeaderView;
 @synthesize muzzleVelocityTextField = _muzzleVelocityTextField;
 @synthesize siteHeightTextField= _siteHeightTextField;
 @synthesize zeroDistanceTextField = _zeroDistanceTextField;
@@ -25,7 +31,6 @@
 @synthesize bulletButton = _bulletButton;
 @synthesize dragModelControl = _dragModelControl;
 @synthesize bcButton = _bcButton;
-@synthesize bcButtonTopEdgeView = _bcButtonTopEdgeView;
 @synthesize sgTextField = _sgTextField;
 @synthesize sgDirectionControl = _sgDirectionControl;
 @synthesize currentTextField = _currentTextField;
@@ -40,6 +45,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    dataManager = [DataManager sharedManager];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
 
@@ -50,6 +56,7 @@
                                                          _muzzleVelocityTextField, 
                                                          _siteHeightTextField, 
                                                          _zeroDistanceTextField,
+                                                         _scopeAdjustmentTextField,
                                                          _diameterTextField,
                                                          _weightTextField,
                                                          _sgTextField,
@@ -61,9 +68,12 @@
     _siteHeightTextField.keyboardType = _diameterTextField.keyboardType = _sgTextField.keyboardType = UIKeyboardTypeDecimalPad;
 	
     _weaponPicker = [[UIPickerView alloc] init];
-    _weaponPicker.delegate = self;
-    _weaponPicker.showsSelectionIndicator = YES;
+    _scopeAdjustmentPicker = [[UIPickerView alloc] init];
+    
+    _weaponPicker.delegate = _scopeAdjustmentPicker.delegate = self;
+    _weaponPicker.showsSelectionIndicator = _scopeAdjustmentPicker.showsSelectionIndicator = YES;
     _weaponTextField.inputView = _weaponPicker;
+    _scopeAdjustmentTextField.inputView = _scopeAdjustmentPicker;
     
     weapons = [Weapon findAll];
     [self setUpPickerData];
@@ -86,7 +96,6 @@
     [self setZeroDistanceUnitControl:nil];
     [self setNameTextField:nil];
     [self setWeaponTextField:nil];
-    [self setBcButtonTopEdgeView:nil];
     [self setBcButton:nil];
     [self setDragModelControl:nil];
     [self setDiameterTextField:nil];
@@ -96,6 +105,11 @@
     [self setDelegate:nil];
     [self setSgTextField:nil];
     [self setSgDirectionControl:nil];
+    [self setScopeAdjustmentClicksButton:nil];
+    [self setScopeElevationClicksLabel:nil];
+    [self setScopeWindageClicksLabel:nil];
+    [self setScopeAdjustmentTextField:nil];
+    [self setScopePickerHeaderView:nil];
     [super viewDidUnload];
 }
 
@@ -128,7 +142,34 @@
     [self setBCButtonTitle:[Bullet bcToString:_selectedProfile.bullet_bc]];
     _sgTextField.text = [_selectedProfile.sg stringValue];
     _sgDirectionControl.selectedSegmentIndex = [sgDirections indexOfObject:_selectedProfile.sg_twist_direction];
+    
+
+    [_scopeAdjustmentPicker selectRow:[dataManager.scopeClicks indexOfObject:_selectedProfile.elevation_click] 
+                                inComponent:0 
+                                   animated:NO];
+    [_scopeAdjustmentPicker selectRow:[dataManager.scopeClicks indexOfObject:_selectedProfile.windage_click] 
+                                inComponent:1
+                                   animated:NO];
+    [_scopeAdjustmentPicker selectRow:[dataManager.scopeUnits indexOfObject:_selectedProfile.scope_click_unit] 
+                                inComponent:2 
+                                   animated:NO];
+
+    [self setScopeAdjustmentLabels];
+    
 }
+
+- (void)setScopeAdjustmentLabels {
+    NSString *elevation = [dataManager.scopeClicks objectAtIndex:[_scopeAdjustmentPicker selectedRowInComponent:0]];
+    NSString *windage   = [dataManager.scopeClicks objectAtIndex:[_scopeAdjustmentPicker selectedRowInComponent:1]];
+    NSString *unit      = [dataManager.scopeUnits objectAtIndex:[_scopeAdjustmentPicker selectedRowInComponent:2]];
+    
+    _scopeAdjustmentTextField.text = [NSString stringWithFormat:@"%@!%@!%@", elevation, windage, unit];
+    
+    [_scopeAdjustmentClicksButton setTitle:nil forState:UIControlStateNormal];
+    _scopeElevationClicksLabel.text = [NSString stringWithFormat:@"⇕ Elevation %@ %@ per click", elevation, unit];
+    _scopeWindageClicksLabel.text = [NSString stringWithFormat:@"⇔ Windage %@ %@ per click", windage, unit];
+}
+
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString *segueID = segue.identifier;
@@ -193,7 +234,6 @@
 -(void)setBCButtonTitle:(NSString *)title {
     [_bcButton setTitle:title forState:UIControlStateNormal];
     _bcButton.enabled = YES;
-    _bcButtonTopEdgeView.backgroundColor = [UIColor blackColor];
 }
 
 - (void)resetSelectedBullet {
@@ -224,6 +264,11 @@
     profile.zero = [NSNumber numberWithInteger:_zeroDistanceTextField.text.intValue];
     profile.zero_unit = [NSNumber numberWithInteger:_zeroDistanceUnitControl.selectedSegmentIndex];
     
+    NSArray *scopeAdjustments = [_scopeAdjustmentTextField.text componentsSeparatedByString:@"!"];
+    profile.elevation_click = [scopeAdjustments objectAtIndex:0];
+    profile.windage_click = [scopeAdjustments objectAtIndex:1];
+    profile.scope_click_unit = [scopeAdjustments objectAtIndex:2];
+    
     if (_selectedBullet != nil) { // either link selectedBullet to the profile or set the manually entered bullet data
         profile.bullet = _selectedBullet;
         profile.bullet_bc = [_selectedBullet.ballistic_coefficient objectForKey:drag_model];
@@ -244,6 +289,11 @@
     [_delegate profileAddEditViewController:self didAddEditProfile:profile];
     [self dismissModalViewControllerAnimated:YES];
 }
+
+- (IBAction)tappedSetAdjustmentClicks:(id)sender {
+    [_scopeAdjustmentTextField becomeFirstResponder];
+}
+
 
 #pragma mark TextField delegates
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -275,13 +325,19 @@
     }
     
     [textFieldToolBarView setItems:[NSArray arrayWithObjects:controlItem, space, done, nil]];
+
+    if (textField == _scopeAdjustmentTextField) {
+        _scopePickerHeaderView.frame = CGRectMake(0.f, 54.f, 320.f, 39.f);
+        [textFieldToolBarView addSubview:_scopePickerHeaderView];
+    }
+
     textField.inputAccessoryView = textFieldToolBarView;
     
     return YES;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    _currentTextField = textField;    
+    _currentTextField = textField;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -299,22 +355,24 @@
             break;
     }
 
-	[self setWeaponIfCurrentTextField];
+    [self setButtons];
 
     _currentTextField = [formFields objectAtIndex:index];
     [_currentTextField becomeFirstResponder];
 }
 
 - (void) doneTyping:(id)sender {
-	[self setWeaponIfCurrentTextField];
+    [self setButtons];
     
     [_currentTextField resignFirstResponder];
 }
 
--(void)setWeaponIfCurrentTextField {
+-(void)setButtons {
     if (_currentTextField == _weaponTextField) {
         selectedWeapon = [weapons objectAtIndex:[_weaponPicker selectedRowInComponent:0]];
         [_weaponButton setTitle:selectedWeapon.description forState:UIControlStateNormal];
+    } else if (_currentTextField == _scopeAdjustmentTextField) {
+        [self setScopeAdjustmentLabels];
     }
 }
 
@@ -324,12 +382,12 @@
     weaponViews = [[NSMutableArray alloc] initWithCapacity:[weapons count]];
     
     for (Weapon *weapon in weapons) {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 44.f)];
         view.backgroundColor = [UIColor clearColor];
-        UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(16, 1, 56, 42)];
+        UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(16.f, 1.f, 56.f, 42.f)];
         thumbNail.image = [UIImage imageWithData:weapon.photo_thumbnail];
-        UILabel *firstLine  = [[UILabel alloc] initWithFrame:CGRectMake(75, 0, 230, 22)];
-        UILabel *secondLine = [[UILabel alloc] initWithFrame:CGRectMake(75, 22, 230, 22)];
+        UILabel *firstLine  = [[UILabel alloc] initWithFrame:CGRectMake(75.f, 0.f, 230.f, 22.f)];
+        UILabel *secondLine = [[UILabel alloc] initWithFrame:CGRectMake(75.f, 22.f, 230.f, 22.f)];
         firstLine.backgroundColor = [UIColor clearColor];
         secondLine.backgroundColor = [UIColor clearColor];
         firstLine.font  = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:22];
@@ -347,15 +405,36 @@
 }
 
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-    return [weaponViews objectAtIndex:row];
+    if (pickerView == _weaponPicker) { 
+        return [weaponViews objectAtIndex:row];
+    } else {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 0.f, (component == 2) ? 74.f : 100.f, 22.f)];
+        label.text = (component == 2) ? [dataManager.scopeUnits objectAtIndex:row] : [dataManager.scopeClicks objectAtIndex:row];
+        label.backgroundColor = [UIColor clearColor];
+        label.font = [UIFont boldSystemFontOfSize:18];
+        label.textAlignment = UITextAlignmentCenter;
+        return label;
+    }
 }
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return [weaponViews count];
+    if (pickerView == _weaponPicker) {
+        return [weaponViews count];
+    } else {
+        return (component == 2) ? dataManager.scopeUnits.count : dataManager.scopeClicks.count;
+    }
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
+    return (pickerView == _weaponPicker) ? 1 : 3;
+}
+
+-(CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    if (pickerView == _weaponPicker) {
+        return 300.f;
+    } else {
+        return (component == 2) ? 74.f: 110.f;
+    }
 }
 
 #pragma mark Table delegates

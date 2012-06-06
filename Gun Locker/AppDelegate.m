@@ -26,7 +26,8 @@
     #endif
 
 
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"GunLocker.sqlite"];
+
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"GunLocker.sqlite"];
     DebugLog(@"MR setup completed");
     recordsDirty = NO;
     

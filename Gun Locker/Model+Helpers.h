@@ -86,4 +86,5 @@
 @interface NSString (helper)
 -(int)lengthAfterDecimal;
 +(NSString *)randomStringWithLength:(int)length;
+-(NSDecimalNumber*)decimalFromFraction;
 @end

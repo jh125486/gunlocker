@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *mvLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sightHeightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *zeroLabel;
+@property (weak, nonatomic) IBOutlet UILabel *elevationAdjustmentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *windageAdjustmentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bulletDiameterLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bulletWeightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dragModelLabel;

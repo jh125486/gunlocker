@@ -11,6 +11,8 @@
 #import "WhizWheelViewController.h"
 
 @implementation WhizWheelViewController
+@synthesize dropClicksLabel = _dropClicksLabel;
+@synthesize driftClicksLabel = _driftClicksLabel;
 @synthesize titleLabel = _titleLabel;
 @synthesize tableBackgroundImage = _tableBackgroundImage;
 @synthesize rangesTableView = _rangesTableView, directionsTableView = _directionsTableView, speedTableView = _speedTableView;
@@ -45,6 +47,10 @@
     trajectory.pressureInhg = 29.92;
     trajectory.altitudeM = 0;
     trajectory.ballisticProfile = _selectedProfile;
+    
+    elevation_click = [[_selectedProfile.elevation_click decimalFromFraction] doubleValue];
+    windage_click   = [[_selectedProfile.windage_click decimalFromFraction] doubleValue];
+
     [trajectory setup];
     
     dataManager = [DataManager sharedManager];
@@ -152,11 +158,10 @@
 
     _tableBackgroundImage.backgroundColor = [UIColor colorWithRed:0.603 green:0.000 blue:0.000 alpha:1.000];
     
-    _titleLabel.textColor = _rangeLabel.textColor = _directionTypeLabel.textColor = [UIColor colorWithWhite:0.75f alpha:1.f];;
-    _dropInchesLabel.textColor = _dropMOAMils.textColor = [UIColor colorWithWhite:0.75f alpha:1.f];;
-    _fromLabel.textColor = _speedLabel.textColor = [UIColor colorWithWhite:0.5f alpha:1.f];;
+    _titleLabel.textColor = _rangeLabel.textColor = _directionTypeLabel.textColor = [UIColor colorWithWhite:0.75f alpha:1.f];
+    _fromLabel.textColor = _speedLabel.textColor = [UIColor colorWithWhite:0.5f alpha:1.f];
 
-    _driftInchesLabel.textColor = _driftMOAMils.textColor = [UIColor lightGrayColor];
+    _dropInchesLabel.textColor = _dropMOAMils.textColor = _driftInchesLabel.textColor = _driftMOAMils.textColor = _dropClicksLabel.textColor = _driftClicksLabel.textColor = [UIColor lightGrayColor];
     
     NSArray *visibleCells = [[[_rangesTableView visibleCells] arrayByAddingObjectsFromArray:[_directionsTableView visibleCells]] arrayByAddingObjectsFromArray:[_speedTableView visibleCells]];
     for (UITableViewCell *cell in visibleCells)
@@ -218,6 +223,8 @@
     [self setDirectionTypeLabel:nil];
     [self setFromLabel:nil];
     [self setSpeedLabel:nil];
+    [self setDropClicksLabel:nil];
+    [self setDriftClicksLabel:nil];
     [super viewDidUnload];
 }
 
@@ -382,24 +389,33 @@
         DebugLog(@"Whiz Wheel: Recalculated Wind/Leading %.1f mph at %.1f degrees", speedMPH, angleDegrees);
     }
         
-    TrajectoryRange *range = [trajectory.ranges objectAtIndex:rangeIndex];
+    TrajectoryRange *rangeDatum = [trajectory.ranges objectAtIndex:rangeIndex];
         
-    _dropInchesLabel.text  = [NSString stringWithFormat:@"%.1f", range.drop_inches];
-    _driftInchesLabel.text = [NSString stringWithFormat:@"%.1f", range.drift_inches];
+    _dropInchesLabel.text  = [NSString stringWithFormat:@"%.1f", rangeDatum.drop_inches];
+    _driftInchesLabel.text = [NSString stringWithFormat:@"%.1f", rangeDatum.drift_inches];
 
     if ([reticle isEqualToString:@"MOA"]) {
-        _reticlePOIImage.center = CGPointMake(160.f + range.drift_moa * PIXELS_PER_MOA +0.25f, 
-                                              74.f - range.drop_moa * PIXELS_PER_MOA +0.25f);
-        _dropMOAMils.text  = [NSString stringWithFormat:@"%.1f", range.drop_moa];
-        _driftMOAMils.text = [NSString stringWithFormat:@"%.1f", range.drift_moa];
+        _reticlePOIImage.center = CGPointMake(160.f + rangeDatum.drift_moa * PIXELS_PER_MOA +0.25f, 
+                                              74.f - rangeDatum.drop_moa * PIXELS_PER_MOA +0.25f);
+        _dropMOAMils.text  = [NSString stringWithFormat:@"%.1f", rangeDatum.drop_moa];
+        _driftMOAMils.text = [NSString stringWithFormat:@"%.1f", rangeDatum.drift_moa];
         _dropUnitLabel.text = _driftUnitLabel.text = @"MOA";
     } else { // MILs
-        _reticlePOIImage.center = CGPointMake(160.f + range.drift_mils * PIXELS_PER_MIL +0.25f, 
-                                              74.f - range.drop_mils * PIXELS_PER_MIL +0.25f);        
-        _dropMOAMils.text  = [NSString stringWithFormat:@"%.1f", range.drop_mils];
-        _driftMOAMils.text = [NSString stringWithFormat:@"%.1f", range.drift_mils];
+        _reticlePOIImage.center = CGPointMake(160.f + rangeDatum.drift_mils * PIXELS_PER_MIL +0.25f, 
+                                              74.f - rangeDatum.drop_mils * PIXELS_PER_MIL +0.25f);        
+        _dropMOAMils.text  = [NSString stringWithFormat:@"%.1f", rangeDatum.drop_mils];
+        _driftMOAMils.text = [NSString stringWithFormat:@"%.1f", rangeDatum.drift_mils];
         _dropUnitLabel.text = _driftUnitLabel.text = @"MILs";
     }
+    
+    if ([_selectedProfile.scope_click_unit isEqualToString:@"MILs"]) {
+        _dropClicksLabel.text  = [NSString stringWithFormat:@"%g", round(rangeDatum.drop_mils / elevation_click)];
+        _driftClicksLabel.text = [NSString stringWithFormat:@"%g", round(rangeDatum.drift_mils / windage_click)];
+    } else { //MOA
+        _dropClicksLabel.text  = [NSString stringWithFormat:@"%g", round(rangeDatum.drop_moa / elevation_click)];
+        _driftClicksLabel.text = [NSString stringWithFormat:@"%g", round(rangeDatum.drift_moa / windage_click)];            
+    }
+
 }
 
 @end

@@ -127,6 +127,7 @@
 		53908949151BB30C0048D5AE /* add_photo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 53908948151BB30C0048D5AE /* add_photo_highlight.png */; };
 		5390EDE715152B9000746A93 /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390EDE615152B9000746A93 /* compass.png */; };
 		5391B8251526226F00582865 /* MalfunctionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5391B8241526226F00582865 /* MalfunctionCell.m */; };
+		53981CB8157F058B0067B5CE /* BallisticProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 53981CB7157F058B0067B5CE /* BallisticProfile.m */; };
 		539D94EF15643D5200669758 /* Reticles in Resources */ = {isa = PBXBuildFile; fileRef = 539D94EE15643D5200669758 /* Reticles */; };
 		539DBDF11515B2A300AB97FB /* tableview_skin.png in Resources */ = {isa = PBXBuildFile; fileRef = 539DBDF01515B2A300AB97FB /* tableview_skin.png */; };
 		53A0E66815390F8B00846421 /* BulletChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A0E66715390F8B00846421 /* BulletChooserViewController.m */; };
@@ -221,7 +222,6 @@
 		53E32F0C156CA7A500941A5B /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53E32F08156CA7A500941A5B /* README.txt */; };
 		53E32F0D156CA7A500941A5B /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53E32F09156CA7A500941A5B /* release_notes.txt */; };
 		53E32F0F156CAA0C00941A5B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E32F0E156CAA0C00941A5B /* libz.dylib */; };
-		53E32F12156D519C00941A5B /* BallisticProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F11156D519C00941A5B /* BallisticProfile.m */; };
 		53E32F15156D51DA00941A5B /* DopeCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F14156D51DA00941A5B /* DopeCard.m */; };
 		53E32F26156DE66D00941A5B /* MathAdditions.c in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F19156DE66D00941A5B /* MathAdditions.c */; };
 		53E32F27156DE66D00941A5B /* AstronomicalCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F1D156DE66D00941A5B /* AstronomicalCalculator.m */; };
@@ -464,6 +464,8 @@
 		5390EDE615152B9000746A93 /* compass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compass.png; sourceTree = "<group>"; };
 		5391B8231526226F00582865 /* MalfunctionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MalfunctionCell.h; sourceTree = "<group>"; };
 		5391B8241526226F00582865 /* MalfunctionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MalfunctionCell.m; sourceTree = "<group>"; };
+		53981CB6157F058B0067B5CE /* BallisticProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfile.h; sourceTree = "<group>"; };
+		53981CB7157F058B0067B5CE /* BallisticProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfile.m; sourceTree = "<group>"; };
 		539D94EE15643D5200669758 /* Reticles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Reticles; sourceTree = "<group>"; };
 		539DBDF01515B2A300AB97FB /* tableview_skin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableview_skin.png; sourceTree = "<group>"; };
 		53A0E66615390F8B00846421 /* BulletChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BulletChooserViewController.h; sourceTree = "<group>"; };
@@ -602,8 +604,6 @@
 		53E32F09156CA7A500941A5B /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.txt; sourceTree = "<group>"; };
 		53E32F0A156CA7A500941A5B /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		53E32F0E156CAA0C00941A5B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		53E32F10156D519C00941A5B /* BallisticProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticProfile.h; sourceTree = "<group>"; };
-		53E32F11156D519C00941A5B /* BallisticProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticProfile.m; sourceTree = "<group>"; };
 		53E32F13156D51D900941A5B /* DopeCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCard.h; sourceTree = "<group>"; };
 		53E32F14156D51DA00941A5B /* DopeCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCard.m; sourceTree = "<group>"; };
 		53E32F18156DE66D00941A5B /* KosherCocoaConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KosherCocoaConstants.h; sourceTree = "<group>"; };
@@ -1235,8 +1235,8 @@
 		53B5E16815460EAC000D3A8C /* Ballistics */ = {
 			isa = PBXGroup;
 			children = (
-				53E32F10156D519C00941A5B /* BallisticProfile.h */,
-				53E32F11156D519C00941A5B /* BallisticProfile.m */,
+				53981CB6157F058B0067B5CE /* BallisticProfile.h */,
+				53981CB7157F058B0067B5CE /* BallisticProfile.m */,
 				53A0E688153A80DA00846421 /* Bullet.h */,
 				53A0E689153A80DA00846421 /* Bullet.m */,
 				53B5E18A1548A214000D3A8C /* Trajectory.h */,
@@ -1783,7 +1783,6 @@
 				53E32EDA156C627400941A5B /* JHSector.m in Sources */,
 				53E32EDB156C627400941A5B /* JHSlider.m in Sources */,
 				53E32EED156C643F00941A5B /* DirectionSpeedViewController.m in Sources */,
-				53E32F12156D519C00941A5B /* BallisticProfile.m in Sources */,
 				53E32F15156D51DA00941A5B /* DopeCard.m in Sources */,
 				53E32F26156DE66D00941A5B /* MathAdditions.c in Sources */,
 				53E32F27156DE66D00941A5B /* AstronomicalCalculator.m in Sources */,
@@ -1795,6 +1794,7 @@
 				53A44A0415756D74005A06C2 /* Weapon.m in Sources */,
 				53A44A0A15758DEB005A06C2 /* TableViewHeaderViewPlain.m in Sources */,
 				53CBF5521575A451001C32EE /* TableViewHeaderViewGrouped2Line.m in Sources */,
+				53981CB8157F058B0067B5CE /* BallisticProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSArray *transferTypes;
 @property (nonatomic, strong) NSDictionary *windageLeading;
 @property (nonatomic, strong) NSArray *speedTypes;
+@property (nonatomic, strong) NSArray *scopeClicks;
+@property (nonatomic, strong) NSArray *scopeUnits;
 @property (nonatomic, strong) NSDictionary *whizWheelPicker2;
 @property (nonatomic, strong) NSDictionary *whizWheelPicker3;
 @property (nonatomic, strong) NSDictionary *humanMPHSpeeds;

@@ -136,7 +136,7 @@
         trajectory.ballisticProfile = _selectedProfile;
         
         dst.rangeUnit = [[NSArray arrayWithObjects:@"Yards", @"Meters", nil] objectAtIndex:_rangeUnitControl.selectedSegmentIndex];;
-        dst.dropDriftUnit = [[NSArray arrayWithObjects:@"Inches", @"MOA", @"Mils", nil] objectAtIndex:_dropDriftUnitcontrol.selectedSegmentIndex];
+        dst.dopeUnit = [[NSArray arrayWithObjects:@"Inches", @"MOA", @"Mils", @"Clicks", nil] objectAtIndex:_dropDriftUnitcontrol.selectedSegmentIndex];
 
         dst.tempString = [NSString stringWithFormat:@"%@º %@", _tempTextField.text, 
                           [[NSArray arrayWithObjects:@"F", @"C", nil] objectAtIndex:_tempUnitControl.selectedSegmentIndex]];

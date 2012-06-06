@@ -24,6 +24,8 @@
     NSString *directionType;
     double angleDegrees;
     double speedMPH;
+    double elevation_click;
+    double windage_click;
     NSTimer *modeTimer;
 }
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -50,6 +52,9 @@
 @property (weak, nonatomic) NSString *speedUnit;
 @property (weak, nonatomic) IBOutlet UILabel *dropInchesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *driftInchesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dropClicksLabel;
+@property (weak, nonatomic) IBOutlet UILabel *driftClicksLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *dropMOAMils;
 @property (weak, nonatomic) IBOutlet UILabel *driftMOAMils;
 @property (weak, nonatomic) IBOutlet UILabel *dropUnitLabel;
