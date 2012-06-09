@@ -14,7 +14,7 @@
 @synthesize capacityLabel = _capacityLabel;
 @synthesize colorLabel = _colorLabel;
 @synthesize caliberLabel = _caliberLabel;
-@synthesize countLabel = _countLabel;
+@synthesize quantityLabel = _quantityLabel;
 @synthesize sellMagazinesButton = _sellMagazinesButton;
 @synthesize selectedMagazine = _selectedMagazine;
 
@@ -58,13 +58,13 @@
     _brandLabel.text    = _selectedMagazine.brand;
     _typeLabel.text     = _selectedMagazine.type;
     _caliberLabel.text  = _selectedMagazine.caliber;
-    _capacityLabel.text = [_selectedMagazine.capacity stringValue];
+    _capacityLabel.text = [NSString stringWithFormat:@"%@ round", _selectedMagazine.capacity];
     _colorLabel.text    = _selectedMagazine.color;
     [self setCount];
 }
 
 -(void)setCount {
-    _countLabel.text   = [_selectedMagazine.count stringValue];
+    _quantityLabel.text   = [_selectedMagazine.count stringValue];
     _sellMagazinesButton.enabled = ([_selectedMagazine.count intValue] != 0);
 }
 
@@ -73,7 +73,7 @@
     [self setTypeLabel:nil];
 	[self setColorLabel:nil];
     [self setCaliberLabel:nil];
-    [self setCountLabel:nil];
+    [self setQuantityLabel:nil];
     [self setSellMagazinesButton:nil];
     [self setSelectedMagazine:nil];
     [self setCapacityLabel:nil];

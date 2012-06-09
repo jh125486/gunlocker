@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *capacityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *colorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *caliberLabel;
-@property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (weak, nonatomic) IBOutlet UILabel *quantityLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *sellMagazinesButton;
 @property (weak, nonatomic) Magazine *selectedMagazine;

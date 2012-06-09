@@ -13,8 +13,9 @@
 @synthesize typeTextField = _typeTextField;
 @synthesize caliberTextField = _caliberTextField;
 @synthesize capacityTextField = _capacityTextField;
+@synthesize capacityRoundsLabel = _capacityRoundsLabel;
 @synthesize colorTextField = _colorTextField;
-@synthesize countTextField = _countTextField;
+@synthesize quantitiyTextField = _quantityTextField;
 @synthesize selectedMagazine = _selectedMagazine;
 @synthesize selectedCaliber = _selectedCaliber;
 @synthesize currentTextField = _currentTextField;
@@ -36,7 +37,7 @@
                                                   _caliberTextField, 
                                                   _capacityTextField,
                                                   _colorTextField, 
-                                                  _countTextField, 
+                                                  _quantityTextField, 
                                                   nil];
     
     for(UITextField *field in formFields)
@@ -53,7 +54,7 @@
     _caliberTextField.text  = _selectedMagazine.caliber;
 	_colorTextField.text    = _selectedMagazine.color;
     _capacityTextField.text = [_selectedMagazine.capacity stringValue];
-    _countTextField.text    = [_selectedMagazine.count stringValue];
+    _quantityTextField.text    = [_selectedMagazine.count stringValue];
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
@@ -65,11 +66,12 @@
     [self setTypeTextField:nil];
     [self setCaliberTextField:nil];
 	[self setColorTextField:nil];
-    [self setCountTextField:nil];
+    [self setQuantitiyTextField:nil];
     [self setCurrentTextField:nil];
     [self setSelectedMagazine:nil];
     [self setSelectedCaliber:nil];
     [self setCapacityTextField:nil];
+    [self setCapacityRoundsLabel:nil];
     [super viewDidUnload];
 }
 
@@ -176,7 +178,7 @@
     magazine.capacity = [NSNumber numberWithInt:[_capacityTextField.text intValue]];
     magazine.color    = _colorTextField.text;
     
-    int count = [_countTextField.text integerValue];
+    int count = [_quantityTextField.text integerValue];
     if (count < 0) count = 0;
     magazine.count   = [NSNumber numberWithInt:count];
     
@@ -185,6 +187,21 @@
     [TestFlight passCheckpoint:@"New Magazine Saved"];
 
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)capacityTextFieldChanged:(id)sender {
+    if([_capacityTextField.text length]) {
+        CGSize textSize = [_capacityTextField.text sizeWithFont:_capacityTextField.font];
+        NSLog(@"width %g", textSize.width);
+        // move rounds label to the right of capacity textfield
+        _capacityRoundsLabel.frame = CGRectMake(textSize.width + CGRectGetMinX(_capacityTextField.frame), 
+                                                CGRectGetMinY(_capacityRoundsLabel.frame), 
+                                                CGRectGetWidth(_capacityRoundsLabel.frame), 
+                                                CGRectGetHeight(_capacityRoundsLabel.frame));        
+        _capacityRoundsLabel.hidden = NO;
+    } else { // hide rounds labbl
+        _capacityRoundsLabel.hidden = YES;
+    }
 }
 
 @end

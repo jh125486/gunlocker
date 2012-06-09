@@ -21,12 +21,14 @@
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *caliberTextField;
 @property (weak, nonatomic) IBOutlet UITextField *capacityTextField;
+@property (weak, nonatomic) IBOutlet UILabel *capacityRoundsLabel;
 @property (weak, nonatomic) IBOutlet UITextField *colorTextField;
-@property (weak, nonatomic) IBOutlet UITextField *countTextField;
+@property (weak, nonatomic) IBOutlet UITextField *quantitiyTextField;
 
 @property (weak, nonatomic) UITextField *currentTextField;
 
 - (IBAction)cancelTapped:(id)sender;
 - (IBAction)savedTapped:(id)sender;
+- (IBAction)capacityTextFieldChanged:(id)sender;
 
 @end

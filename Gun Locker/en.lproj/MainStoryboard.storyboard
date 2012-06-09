@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="AfA-Vr-bpm">
     <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
@@ -8785,7 +8786,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Brand" minimumFontSize="17" id="Is8-HX-dTv">
-                                                    <rect key="frame" x="10" y="5" width="280" height="34"/>
+                                                    <rect key="frame" x="20" y="5" width="280" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes"/>
@@ -8802,7 +8803,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type" minimumFontSize="17" id="0d2-m6-VWj">
-                                                    <rect key="frame" x="10" y="6" width="280" height="34"/>
+                                                    <rect key="frame" x="20" y="6" width="280" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
@@ -8819,7 +8820,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Caliber" minimumFontSize="17" id="6N8-eX-Dnr">
-                                                    <rect key="frame" x="10" y="5" width="235" height="34"/>
+                                                    <rect key="frame" x="20" y="5" width="235" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
@@ -8839,7 +8840,7 @@
                                                         <segue destination="eEj-Oc-AVS" kind="push" identifier="ChooseCaliberMagazine" id="bvF-WP-U27"/>
                                                     </connections>
                                                 </button>
-                                                <view contentMode="scaleToFill" id="wDC-Gl-AhQ">
+                                                <view contentMode="scaleToFill" id="wDC-Gl-AhQ" userLabel="capacity/color divider">
                                                     <rect key="frame" x="149" y="44" width="1" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -8855,31 +8856,48 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Color" minimumFontSize="17" id="RsO-XL-nJq">
-                                                    <rect key="frame" x="159" y="5" width="121" height="34"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Color" minimumFontSize="10" id="RsO-XL-nJq">
+                                                    <rect key="frame" x="161" y="5" width="119" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Capacity" minimumFontSize="17" id="Dau-vl-lUr">
-                                                    <rect key="frame" x="10" y="5" width="121" height="34"/>
+                                                    <rect key="frame" x="20" y="5" width="133" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad"/>
+                                                    <connections>
+                                                        <action selector="capacityTextFieldChanged:" destination="mVU-o6-ZEN" eventType="editingChanged" id="Tue-Cd-y5o"/>
+                                                    </connections>
                                                 </textField>
+                                                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text=" round" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="as7-Rf-S43">
+                                                    <rect key="frame" x="20" y="5" width="49" height="34"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="fGB-V1-3yf">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="jCu-Vb-Fdq">
                                         <rect key="frame" x="0.0" y="187" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Count" minimumFontSize="17" id="jWu-6a-FvM">
-                                                    <rect key="frame" x="10" y="5" width="280" height="34"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Quantity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Dr4-nc-zLT">
+                                                    <rect key="frame" x="20" y="11" width="119" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="count" minimumFontSize="17" id="jWu-6a-FvM">
+                                                    <rect key="frame" x="145" y="5" width="135" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -8911,9 +8929,10 @@
                     <connections>
                         <outlet property="brandTextField" destination="Is8-HX-dTv" id="yar-jf-ktn"/>
                         <outlet property="caliberTextField" destination="6N8-eX-Dnr" id="wqh-hX-Ivo"/>
+                        <outlet property="capacityRoundsLabel" destination="as7-Rf-S43" id="eTO-hQ-KUM"/>
                         <outlet property="capacityTextField" destination="Dau-vl-lUr" id="M9V-Yb-wSy"/>
                         <outlet property="colorTextField" destination="RsO-XL-nJq" id="WiN-Av-7ku"/>
-                        <outlet property="countTextField" destination="jWu-6a-FvM" id="D3s-D6-RU8"/>
+                        <outlet property="quantitiyTextField" destination="jWu-6a-FvM" id="zjd-J2-RM7"/>
                         <outlet property="typeTextField" destination="0d2-m6-VWj" id="Za1-xO-HoL"/>
                     </connections>
                 </tableViewController>
@@ -9014,8 +9033,8 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Count" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5gt-pE-G70">
-                                                    <rect key="frame" x="10" y="11" width="50" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Quantity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5gt-pE-G70">
+                                                    <rect key="frame" x="10" y="11" width="69" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -9166,7 +9185,7 @@
                         <outlet property="caliberLabel" destination="kXW-A8-pmn" id="FTm-aW-10L"/>
                         <outlet property="capacityLabel" destination="N3u-oq-MkW" id="ENr-vc-oJN"/>
                         <outlet property="colorLabel" destination="88n-cb-A2w" id="JPm-Kw-AFU"/>
-                        <outlet property="countLabel" destination="dhv-bg-Prb" id="gpH-vG-Ica"/>
+                        <outlet property="quantityLabel" destination="dhv-bg-Prb" id="oFi-Ym-awX"/>
                         <outlet property="sellMagazinesButton" destination="Tdg-gB-R9z" id="OSA-SI-IE7"/>
                         <outlet property="typeLabel" destination="hw3-Wu-DP2" id="uUd-pS-qU9"/>
                     </connections>
@@ -9531,12 +9550,14 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MagazineAddEditViewController.h"/>
             <relationships>
                 <relationship kind="action" name="cancelTapped:"/>
+                <relationship kind="action" name="capacityTextFieldChanged:"/>
                 <relationship kind="action" name="savedTapped:"/>
                 <relationship kind="outlet" name="brandTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="caliberTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="capacityRoundsLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="capacityTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="colorTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="countTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="quantitiyTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="typeTextField" candidateClass="UITextField"/>
             </relationships>
         </class>
@@ -9564,7 +9585,7 @@
                 <relationship kind="outlet" name="caliberLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="capacityLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="colorLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="countLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="quantityLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="sellMagazinesButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="typeLabel" candidateClass="UILabel"/>
             </relationships>

@@ -449,14 +449,14 @@
     if([_purchasePriceTextField.text length]) {
         // move field to the right
         _purchasePriceTextField.frame = CGRectMake(22.0f, 
-                                                   0.0f, 
+                                                   CGRectGetMinY(_purchaseDateTextField.frame), 
                                                    CGRectGetWidth(_purchasePriceTextField.frame), 
                                                    CGRectGetHeight( _purchasePriceTextField.frame));
         _currencySymbolLabel.hidden = NO;
     } else {
         // reset field to the left
         _purchasePriceTextField.frame = CGRectMake(10.0f, 
-                                                   0.0f, 
+                                                   CGRectGetMinY(_purchaseDateTextField.frame), 
                                                    CGRectGetWidth(_purchasePriceTextField.frame), 
                                                    CGRectGetHeight(_purchasePriceTextField.frame));
         _currencySymbolLabel.hidden = YES;
