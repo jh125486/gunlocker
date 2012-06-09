@@ -90,7 +90,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return tableView == self.tableView ? [[calibers objectAtIndex:section] count] : [searchResults count];
+    return tableView == self.tableView ? [(NSArray *)[calibers objectAtIndex:section] count] : [searchResults count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

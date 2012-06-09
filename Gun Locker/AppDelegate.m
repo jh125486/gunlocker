@@ -17,7 +17,7 @@
 
 
     #ifdef DEBUG
-    [TestFlight takeOff:@"c9a944113920e415692190a4b0e2e8cc_OTIzOTUyMDEyLTA1LTIyIDAyOjA4OjEyLjk0NzA1OA"];
+//    [TestFlight takeOff:@"c9a944113920e415692190a4b0e2e8cc_OTIzOTUyMDEyLTA1LTIyIDAyOjA4OjEyLjk0NzA1OA"];
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
@@ -26,22 +26,22 @@
     #endif
 
 
-
-    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"GunLocker.sqlite"];
+    [MagicalRecordHelpers setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"GunLocker.sqlite"];
     DebugLog(@"MR setup completed");
     recordsDirty = NO;
     
-    [self loadDefaultPreferencesOnFirstLoad];
+    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+
+    if (![preferences boolForKey:@"defaultPreferencesSet"]) [self loadDefaultPreferencesOnFirstLoad:preferences];
     if([Manufacturer countOfEntities] == 0) [self loadManufacturers];
     if([Bullet countOfEntities] == 0) [self loadBullets];
     if([Caliber countOfEntities] == 0) [self loadCalibers];
     
     // wait for main queue to empty
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (recordsDirty) [[NSManagedObjectContext defaultContext] save];
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        if (recordsDirty) [[NSManagedObjectContext defaultContext] save];
+//    });
     
-        
     return YES;
 }
 
@@ -86,11 +86,8 @@
 //    }
 }
 
-
-
-
 - (void)applicationWillTerminate:(UIApplication *)application {
-    [MagicalRecord cleanUp];
+    [MagicalRecordHelpers cleanUp];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:@"tempWeaponDirty"];
     [defaults removeObjectForKey:@"tempWeapon"];
@@ -103,29 +100,26 @@
     return motionManager;
 }
 
-- (void)loadDefaultPreferencesOnFirstLoad {
-    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-    if (![preferences boolForKey:@"defaultPreferencesSet"]) {
-        DebugLog(@"\tLoaded default preferences on first load");
-        DataManager *dataManager = [DataManager sharedManager];
-        NSArray *windageLeading = [dataManager.windageLeading objectForKey:[dataManager.speedTypes objectAtIndex:0]];
-        
-        [preferences setBool:NO forKey:@"showNFADetails"];
-        [preferences setInteger:0 forKey:@"nightModeControl"];
-        [preferences setInteger:0 forKey:@"rangeUnitsControl"];
-        [preferences setInteger:0 forKey:@"reticleUnitsControl"];
-        [preferences setInteger:0 forKey:@"directionControl"];
-        [preferences setInteger:100 forKey:@"rangeStart"];
-        [preferences setInteger:600 forKey:@"rangeEnd"];
-        [preferences setInteger:50 forKey:@"rangeStep"];
-        [preferences setObject:[dataManager.speedTypes objectAtIndex:0] forKey:@"speedType"];
-        [preferences setObject:[windageLeading objectAtIndex:0] forKey:@"speedUnit"];
-        [preferences setInteger:0 forKey:@"speedIndexPathRow"];
-        [preferences setInteger:0 forKey:@"speedIndexPathSection"];
-        
-        [preferences setBool:YES forKey:@"defaultPreferencesSet"];
-        [preferences synchronize];
-    }
+- (void)loadDefaultPreferencesOnFirstLoad:(NSUserDefaults*)preferences {
+    DebugLog(@"\tLoaded default preferences on first load");
+    DataManager *dataManager = [DataManager sharedManager];
+    NSArray *windageLeading = [dataManager.windageLeading objectForKey:[dataManager.speedTypes objectAtIndex:0]];
+    
+    [preferences setBool:NO forKey:@"showNFADetails"];
+    [preferences setInteger:0 forKey:@"nightModeControl"];
+    [preferences setInteger:0 forKey:@"rangeUnitsControl"];
+    [preferences setInteger:0 forKey:@"reticleUnitsControl"];
+    [preferences setInteger:0 forKey:@"directionControl"];
+    [preferences setInteger:100 forKey:@"rangeStart"];
+    [preferences setInteger:600 forKey:@"rangeEnd"];
+    [preferences setInteger:50 forKey:@"rangeStep"];
+    [preferences setObject:[dataManager.speedTypes objectAtIndex:0] forKey:@"speedType"];
+    [preferences setObject:[windageLeading objectAtIndex:0] forKey:@"speedUnit"];
+    [preferences setInteger:0 forKey:@"speedIndexPathRow"];
+    [preferences setInteger:0 forKey:@"speedIndexPathSection"];
+    
+    [preferences setBool:YES forKey:@"defaultPreferencesSet"];
+    [preferences synchronize];
 }
 
 - (void)loadManufacturers {
@@ -140,8 +134,17 @@
             newManufacturer.name       = [splitParts objectAtIndex:0];
             newManufacturer.country    = [splitParts objectAtIndex:1];
             if (splitParts.count > 2) newManufacturer.short_name = [splitParts objectAtIndex:2];
+
+//            [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext){
+//                Manufacturer *localManufacturer = [newManufacturer inContext:localContext];
+//                
+//                localManufacturer.name       = [splitParts objectAtIndex:0];
+//                localManufacturer.country    = [splitParts objectAtIndex:1];
+//                if (splitParts.count > 2) localManufacturer.short_name = [splitParts objectAtIndex:2];
+//            }];
         }   
-        recordsDirty = YES;
+        [[NSManagedObjectContext defaultContext] save];
+//        recordsDirty = YES;
         DebugLog(@"\tLoaded Manufacturers");
     });
 }
@@ -164,6 +167,7 @@
                 NSArray *splitParts = [bulletRow componentsSeparatedByString:@","];
                 
                 Bullet *newBullet  = [Bullet createEntity];
+                
                 newBullet.category = [bulletCSVFile stringByDeletingPathExtension];
                 newBullet.diameter_inches = [NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:0]];
                 newBullet.brand = [splitParts objectAtIndex:1];
@@ -191,8 +195,43 @@
                 newBullet.ballistic_coefficient = bc;
             }   
         }
-        recordsDirty = YES;
-        DebugLog(@"\tLoaded Bullets");
+        [[NSManagedObjectContext defaultContext] save];
+
+                
+
+//                [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext){
+//                    Bullet *localBullet = [newBullet inContext:localContext];
+//
+//                    localBullet.category = [bulletCSVFile stringByDeletingPathExtension];
+//                    localBullet.diameter_inches = [NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:0]];
+//                    localBullet.brand = [splitParts objectAtIndex:1];
+//                    localBullet.name = [splitParts objectAtIndex:2];
+//                    localBullet.weight_grains = [NSNumber numberWithInt:[[splitParts objectAtIndex:3] intValue]];
+//                    // index 4 is Overall Length (OAL)
+//                    localBullet.sectional_density_inches = [NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:5]];
+//                    NSMutableDictionary *bc = [[NSMutableDictionary alloc] init];
+//                    
+//                    // G1 is array of fps and bc's
+//                    NSMutableArray *g1 = [[NSMutableArray alloc] init];
+//                    if ([[splitParts objectAtIndex:6] floatValue] > 0 ) {
+//                        [g1 addObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:6]]];
+//                        for(int index = 7; index <= 10; index++)
+//                            if ([[splitParts objectAtIndex:index] floatValue] > 0) {
+//                                [g1 addObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:index]]];
+//                                [g1 addObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:index + 4]]];
+//                            }
+//                        [bc setObject:g1 forKey:@"G1"];
+//                    }
+//                    
+//                    if ([[splitParts objectAtIndex:15] floatValue] > 0 )
+//                        [bc setObject:[NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:15]]] forKey:@"G7"];
+//                    
+//                    localBullet.ballistic_coefficient = bc;
+//                }];
+//            }   
+//        }
+//        recordsDirty = YES;
+//        DebugLog(@"\tLoaded Bullets");
     });
 }
 
@@ -208,9 +247,18 @@
             newCaliber.type = [splitParts objectAtIndex:0];
             newCaliber.name = [splitParts objectAtIndex:1];
             newCaliber.diameter_inches = [NSNumber numberWithFloat:[[splitParts objectAtIndex:2] floatValue]];
+            
+            
+//            [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext){
+//                Caliber *localCaliber = [newCaliber inContext:localContext];
+//                localCaliber.type = [splitParts objectAtIndex:0];
+//                localCaliber.name = [splitParts objectAtIndex:1];
+//                localCaliber.diameter_inches = [NSNumber numberWithFloat:[[splitParts objectAtIndex:2] floatValue]];
+//            }];
         }   
-        recordsDirty = YES;
-        DebugLog(@"\tLoaded Calibers");
+        [[NSManagedObjectContext defaultContext] save];
+//        recordsDirty = YES;
+//        DebugLog(@"\tLoaded Calibers");
     });
 }
 

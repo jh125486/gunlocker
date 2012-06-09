@@ -14,7 +14,7 @@
 @synthesize modelLabel = _modelLabel;
 @synthesize manufacturerLabel = _manufacturerLabel;
 @synthesize photoView = _photoView;
-@synthesize selectedWeapon = _selectedWeapon;
+@synthesize passedPhoto = _passedPhoto;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -26,10 +26,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = _selectedWeapon.model;
+    self.title = _passedPhoto.weapon.model;
     [self setTitleView];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundFabricTexture"]];
-    photo = [UIImage imageWithData:self.selectedWeapon.photo];
+    photo = [UIImage imageWithData:_passedPhoto.normal_size];
     _photoView.image = photo;
     [_photoView sizeToFit];
     _containerView.contentSize = _photoView.frame.size;
@@ -78,7 +78,7 @@
 
 - (void)setTitleView {
     self.modelLabel.text = self.title;
-    self.manufacturerLabel.text = self.selectedWeapon.manufacturer.displayName;    
+    self.manufacturerLabel.text = _passedPhoto.weapon.manufacturer.displayName;    
 }
 
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

@@ -13,6 +13,7 @@
 #import "MaintenanceCell.h"
 #import "MaintenancesAddViewController.h"
 #import "MalfunctionsViewController.h"
+#import "Photo.h"
 
 @interface MaintenancesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 

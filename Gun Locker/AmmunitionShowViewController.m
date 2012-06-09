@@ -13,6 +13,9 @@
 @synthesize typeLabel = _typeLabel;
 @synthesize caliberLabel = _caliberLabel;
 @synthesize countLabel = _countLabel;
+@synthesize cprLabel = _cprLabel;
+@synthesize purchasedFromLabel = _purchasedFromLabel;
+@synthesize purchaseDateLabel = _purchaseDateLabel;
 @synthesize roundsFiredButton = _roundsFiredButton;
 @synthesize selectedAmmunition = _selectedAmmunition;
 
@@ -45,6 +48,11 @@
     [roundsFiredAlertView textFieldAtIndex:0].placeholder   = [roundsBoughtAlertView textFieldAtIndex:0].placeholder = @"Number of Rounds";
     [roundsFiredAlertView textFieldAtIndex:0].keyboardType  = [roundsBoughtAlertView textFieldAtIndex:0].keyboardType = UIKeyboardTypeNumberPad;
     [roundsFiredAlertView textFieldAtIndex:0].textAlignment = [roundsBoughtAlertView textFieldAtIndex:0].textAlignment = UITextAlignmentCenter;
+    
+    currencyFormatter = [[NSNumberFormatter alloc] init];
+    [currencyFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+    [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    [currencyFormatter setLocale:[NSLocale currentLocale]];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -56,11 +64,14 @@
     _brandLabel.text   = _selectedAmmunition.brand;
     _typeLabel.text    = _selectedAmmunition.type;
     _caliberLabel.text = _selectedAmmunition.caliber;
-    [self setCount];    
+    _cprLabel.text     = [currencyFormatter stringFromNumber:_selectedAmmunition.cpr];
+    _purchasedFromLabel.text = _selectedAmmunition.retailer;
+    _purchaseDateLabel.text = [_selectedAmmunition.purchase_date onlyDate];
+    [self setCount];
 }
 
 -(void)setCount {
-    _countLabel.text = [_selectedAmmunition.count stringValue];
+    _countLabel.text = [NSString stringWithFormat:@"%@/%@", _selectedAmmunition.count, _selectedAmmunition.count_original];
     _roundsFiredButton.enabled = ([_selectedAmmunition.count intValue] != 0);
 }
 
@@ -71,6 +82,9 @@
     [self setCaliberLabel:nil];
     [self setCountLabel:nil];
     [self setSelectedAmmunition:nil];
+    [self setCprLabel:nil];
+    [self setPurchasedFromLabel:nil];
+    [self setPurchaseDateLabel:nil];
     [super viewDidUnload];
 }
 

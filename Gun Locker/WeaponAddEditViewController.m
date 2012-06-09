@@ -24,7 +24,7 @@
 @synthesize serialNumberTextField = _serialNumberTextField;
 @synthesize purchaseDateTextField = _purchaseDateTextField;
 @synthesize purchaseDatePickerView = _purchaseDatePickerView;
-@synthesize purchasePriceTextfield = _purchasePriceTextfield;
+@synthesize purchasePriceTextField = _purchasePriceTextField;
 @synthesize currencySymbolLabel = _currencySymbolLabel;
 @synthesize currentTextField = _currentTextField;
 
@@ -42,10 +42,10 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
             
-    self.addPhotoButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    _addPhotoButton.titleLabel.textAlignment = UITextAlignmentCenter;
     
     // set up barrelLength keyboard
-    self.barrelLengthTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    _barrelLengthTextField.keyboardType = UIKeyboardTypeDecimalPad;
     
     // set up purchase price field with local currency symbol and keyboard
     _currencySymbolLabel.text = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
@@ -69,7 +69,7 @@
                                                   _barrelLengthTextField,
                                                   _barrelThreadingTextField,
                                                   _purchaseDateTextField, 
-                                                  _purchasePriceTextfield, 
+                                                  _purchasePriceTextField, 
                                                   nil];
     
     for(UITextField *field in formFields)
@@ -80,7 +80,7 @@
     
     // shenanighans to get around memory problem on iphone Camera Photo capture
     if(_selectedWeapon) {
-        [self loadTextfieldsFromWeapon:_selectedWeapon];
+        [self loadWeapon];
     } else if (([defaults boolForKey:@"tempWeaponDirty"]) && ([defaults objectForKey:@"tempWeapon"])) {
         NSDictionary *tempWeapon = [defaults objectForKey:@"tempWeapon"];
         
@@ -96,7 +96,7 @@
             _purchaseDatePickerView.date    = dateFromString([tempWeapon objectForKey:@"purchaseDate"], @"MMMM d, YYYY");
             _purchaseDateTextField.text     = [tempWeapon objectForKey:@"purchaseDate"];
         }
-        _purchasePriceTextfield.text    = [tempWeapon objectForKey:@"purchasePrice"];
+        _purchasePriceTextField.text    = [tempWeapon objectForKey:@"purchasePrice"];
         [self barrelLengthValueChanged:nil];
         [self purchasePriceValueChanged:nil];
         [self checkData:nil];
@@ -121,7 +121,7 @@
     if([_weaponType isEqualToString:@"Misc."])
         self.title = @"Add Miscellaneous";
     else
-        self.title = [NSString stringWithFormat:@"Add %@", [_weaponType substringToIndex:[self.weaponType length] -1]];    
+        self.title = [NSString stringWithFormat:@"Add %@", [_weaponType substringToIndex:[_weaponType length] -1]];    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -140,7 +140,7 @@
                                                                      _barrelThreadingTextField.text, @"barrelThreading",
                                                                      _serialNumberTextField.text, @"serialNumber",
                                                                      _purchaseDateTextField.text, @"purchaseDate",
-                                                                     _purchasePriceTextfield.text, @"purchasePrice",
+                                                                     _purchasePriceTextField.text, @"purchasePrice",
                                                                      _weaponType, @"weaponType",
                                                                      nil] 
                 forKey:@"tempWeapon"];
@@ -155,7 +155,7 @@
     [self setAddPhotoButton:nil];
     [self setSerialNumberTextField:nil];
     [self setPurchaseDateTextField:nil];
-    [self setPurchasePriceTextfield:nil];
+    [self setPurchasePriceTextField:nil];
     [self setCurrencySymbolLabel:nil];
     [self setSelectedWeapon:nil];
     [self setCurrentTextField:nil];
@@ -166,22 +166,22 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
--(void)loadTextfieldsFromWeapon:(Weapon*)weapon {
-    self.title = [NSString stringWithFormat:@"Edit %@", [self.weaponType substringToIndex:[self.weaponType length] - 1]];
+-(void)loadWeapon {
+    self.title = [NSString stringWithFormat:@"Edit %@", [_weaponType substringToIndex:[_weaponType length] - 1]];
 
-    _manufacturerTextField.text = weapon.manufacturer.name;
-    _modelTextField.text        = weapon.model;
-    _caliberTextField.text      = weapon.caliber;
-    _finishTextField.text       = weapon.finish;
-    _barrelLengthTextField.text = [weapon.barrel_length stringValue];
-    _barrelThreadingTextField.text = weapon.threaded_barrel_pitch;
-    [self.addPhotoButton setImage:[UIImage imageWithData:weapon.photo_thumbnail] forState:UIControlStateNormal];
-    _serialNumberTextField.text = weapon.serial_number;
-    if (weapon.purchased_date) {
-        _purchaseDatePickerView.date = weapon.purchased_date;
+    _manufacturerTextField.text = _selectedWeapon.manufacturer.name;
+    _modelTextField.text        = _selectedWeapon.model;
+    _caliberTextField.text      = _selectedWeapon.caliber;
+    _finishTextField.text       = _selectedWeapon.finish;
+    _barrelLengthTextField.text = [_selectedWeapon.barrel_length stringValue];
+    _barrelThreadingTextField.text = _selectedWeapon.threaded_barrel_pitch;
+    [_addPhotoButton setImage:[UIImage imageWithData:_selectedWeapon.primary_photo.normal_size] forState:UIControlStateNormal];
+    _serialNumberTextField.text = _selectedWeapon.serial_number;
+    if (_selectedWeapon.purchased_date) {
+        _purchaseDatePickerView.date = _selectedWeapon.purchased_date;
         _purchaseDateTextField.text = [_purchaseDatePickerView.date onlyDate];
     }
-    _purchasePriceTextfield.text = [weapon.purchased_price compare:[NSDecimalNumber zero]] ? [currencyFormatter stringFromNumber:weapon.purchased_price] : @"";
+    _purchasePriceTextField.text = [_selectedWeapon.purchased_price compare:[NSDecimalNumber zero]] ? [currencyFormatter stringFromNumber:_selectedWeapon.purchased_price] : @"";
     
     [self barrelLengthValueChanged:nil];
     [self purchasePriceValueChanged:nil];
@@ -211,7 +211,7 @@
 }
 
 - (IBAction)saveTapped:(id)sender {
-    Weapon *weapon = _selectedWeapon ? _selectedWeapon : [Weapon createEntity];
+    Weapon *weapon = _selectedWeapon ?: [Weapon createEntity];
     weapon.type = _weaponType;
     weapon.model = _modelTextField.text;
     weapon.caliber = _caliberTextField.text;
@@ -220,34 +220,21 @@
     weapon.threaded_barrel_pitch = _barrelThreadingTextField.text;
     
     UIImage *photo = [_addPhotoButton imageForState:UIControlStateNormal];
-    if(photo) {
-        weapon.photo = UIImagePNGRepresentation(photo);
-        // Create a thumbnail version of the image for the object.
-        CGSize size = photo.size;
-        CGFloat ratio = 0;
-        ratio = (size.width > size.height) ? 320.0 / size.width : 240.0 / size.height;
-        
-        CGRect rect = CGRectMake(0.0, 0.0, ratio * size.width, ratio * size.height);
-        
-        UIGraphicsBeginImageContext(rect.size);
-        [photo drawInRect:rect];
-        weapon.photo_thumbnail = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
-        UIGraphicsEndImageContext();   
-        
-        #ifdef DEBUG
-        UIImage *thumbnail = [UIImage imageWithData:weapon.photo_thumbnail];
-        DebugLog(@"New photo: %f x %f", photo.size.width, photo.size.height);
-        DebugLog(@"New thumbnail: %f x %f", thumbnail.size.width, thumbnail.size.height);
-        #endif
+    
+    if (photo) {
+        Photo *primaryPhoto = weapon.primary_photo ?: [Photo createEntity];
+        [primaryPhoto setPhotoAndCreateThumbnailFromImage:photo];
+        weapon.primary_photo = primaryPhoto;
+        primaryPhoto.weapon = weapon;
     }
         
     weapon.serial_number = _serialNumberTextField.text;
     weapon.purchased_date = (_purchaseDateTextField.text.length > 0) ? _purchaseDatePickerView.date : nil;
-    weapon.purchased_price = [NSDecimalNumber decimalNumberWithDecimal:[[currencyFormatter numberFromString:_purchasePriceTextfield.text] decimalValue]];
+    weapon.purchased_price = [NSDecimalNumber decimalNumberWithDecimal:[[currencyFormatter numberFromString:_purchasePriceTextField.text] decimalValue]];
     
     // if no selectedManufacturer, find one, else create one with the textfield text
     if(!selectedManufacturer) {
-        if ((selectedManufacturer = [Manufacturer findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(name like[cd] %@) OR (short_name like[cd] %@)", self.manufacturerTextField.text, self.manufacturerTextField.text]])) {
+        if ((selectedManufacturer = [Manufacturer findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(name like[cd] %@) OR (short_name like[cd] %@)", _manufacturerTextField.text, _manufacturerTextField.text]])) {
         } else {
             selectedManufacturer = [Manufacturer createEntity];
             selectedManufacturer.name = _manufacturerTextField.text;
@@ -272,7 +259,7 @@
 
 // validation of Model and Manufacturer
 - (IBAction)checkData:(id)sender {
-    BOOL validated = ((self.manufacturerTextField.text.length > 0) && (self.modelTextField.text.length > 0));
+    BOOL validated = ((_manufacturerTextField.text.length > 0) && (_modelTextField.text.length > 0));
     [self.navigationItem.rightBarButtonItem setEnabled:validated];
 }
 
@@ -289,7 +276,7 @@
 		manufacturerChooserViewController.selectedManufacturer = selectedManufacturer;
     } else  if ([segueID isEqualToString:@"ViewPhoto"]) {
         PhotoViewController *dst = segue.destinationViewController;
-        dst.selectedWeapon = _selectedWeapon;
+        dst.passedPhoto = _selectedWeapon.primary_photo;
     }
 }
 
@@ -307,7 +294,7 @@
 - (void)manufacturerChooserViewController:(ManufacturerChooserViewController *)controller didSelectManufacturer:(Manufacturer *)passedManufacturer {
     selectedManufacturer = passedManufacturer;
 	_manufacturerTextField.text = selectedManufacturer.name;
-    _currentTextField = self.manufacturerTextField;
+    _currentTextField = _manufacturerTextField;
     [_currentTextField becomeFirstResponder];
 	[self.navigationController popViewControllerAnimated:YES];
 }
@@ -319,14 +306,13 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    DebugLog(@"set photoButton image");
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [self dismissModalViewControllerAnimated:YES];
     [_addPhotoButton setImage:image forState:UIControlStateNormal];
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 2) return; // sheet cancelled
+    if (buttonIndex == actionSheet.cancelButtonIndex) return;
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = (buttonIndex == 0) ? UIImagePickerControllerSourceTypeCamera : UIImagePickerControllerSourceTypePhotoLibrary;
     
@@ -354,7 +340,7 @@
 #pragma mark Textfield Delegates
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if(textField == self.purchasePriceTextfield) {
+    if(textField == _purchasePriceTextField) {
         NSString *newValue = [textField.text stringByReplacingCharactersInRange:range withString:string];
         
         NSMutableString *result = [[NSMutableString alloc] init];
@@ -442,7 +428,7 @@
 }
 
 - (void)doneTyping:(id)sender {
-    if (_currentTextField == self.purchaseDateTextField)
+    if (_currentTextField == _purchaseDateTextField)
         _purchaseDateTextField.text = [_purchaseDatePickerView.date onlyDate];
 
     [_currentTextField resignFirstResponder];
@@ -452,7 +438,7 @@
     if([_barrelLengthTextField.text length]) {
         CGPoint origin = _barrelLengthTextField.frame.origin;
         CGFloat width = [@"\"" sizeWithFont:_barrelLengthTextField.font].width;
-        _barrelLengthUnitLabel.frame = CGRectMake(origin.x + width, origin.y, [_barrelLengthTextField.text sizeWithFont:_barrelLengthTextField.font].width, CGRectGetHeight(self.barrelLengthTextField.frame)); 
+        _barrelLengthUnitLabel.frame = CGRectMake(origin.x + width, origin.y, [_barrelLengthTextField.text sizeWithFont:_barrelLengthTextField.font].width, CGRectGetHeight(_barrelLengthTextField.frame)); 
         _barrelLengthUnitLabel.hidden = NO;
     } else {
         _barrelLengthUnitLabel.hidden = YES;
@@ -460,19 +446,19 @@
 }
 
 - (IBAction)purchasePriceValueChanged:(id)sender {
-    if([self.purchasePriceTextfield.text length]) {
+    if([_purchasePriceTextField.text length]) {
         // move field to the right
-        _purchasePriceTextfield.frame = CGRectMake(22.0f, 
+        _purchasePriceTextField.frame = CGRectMake(22.0f, 
                                                    0.0f, 
-                                                   CGRectGetWidth(_purchasePriceTextfield.frame), 
-                                                   CGRectGetHeight( _purchasePriceTextfield.frame));
+                                                   CGRectGetWidth(_purchasePriceTextField.frame), 
+                                                   CGRectGetHeight( _purchasePriceTextField.frame));
         _currencySymbolLabel.hidden = NO;
     } else {
         // reset field to the left
-        _purchasePriceTextfield.frame = CGRectMake(10.0f, 
+        _purchasePriceTextField.frame = CGRectMake(10.0f, 
                                                    0.0f, 
-                                                   CGRectGetWidth(_purchasePriceTextfield.frame), 
-                                                   CGRectGetHeight(_purchasePriceTextfield.frame));
+                                                   CGRectGetWidth(_purchasePriceTextField.frame), 
+                                                   CGRectGetHeight(_purchasePriceTextField.frame));
         _currencySymbolLabel.hidden = YES;
     }
 }

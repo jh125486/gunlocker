@@ -118,7 +118,7 @@
     } else { // Logbook
         headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background2"]];
         Weapon *weapon = [[_fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]] weapon];
-        UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(4.0f, 3.0f, 56.0f, 42.0f)];
+        UIImageView *thumbnailImageView = [[UIImageView alloc] initWithFrame:CGRectMake(4.0f, 3.0f, 56.0f, 42.0f)];
         firstLine     = [[UILabel alloc] initWithFrame:CGRectMake(64.0f, 2.0f, 256.0f, 23.0f)];
         secondLine    = [[UILabel alloc] initWithFrame:CGRectMake(68.0f, 24.0f, 252.0f, 23.0f)];
         
@@ -128,11 +128,11 @@
         secondLine.shadowColor = [UIColor lightTextColor];
         secondLine.shadowOffset = CGSizeMake(0.0f, 1.0f);
         
-        thumbNail.image = [UIImage imageWithData:weapon.photo_thumbnail];
+        thumbnailImageView.image = [UIImage imageWithData:weapon.primary_photo.thumbnail_size];
         firstLine.text  = weapon.manufacturer.name;
         secondLine.text = weapon.model;
 
-        [headerView addSubview:thumbNail];
+        [headerView addSubview:thumbnailImageView];
         [headerView addSubview:secondLine];        
     }
     

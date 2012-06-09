@@ -91,12 +91,11 @@
 }
 
 - (IBAction)deleteTapped:(id)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                             delegate:self
-                                                    cancelButtonTitle:@"Cancel"
-                                               destructiveButtonTitle:@"Delete Profile"
-                                                    otherButtonTitles:nil];
-    [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
+    [[[UIActionSheet alloc] initWithTitle:nil
+                                 delegate:self
+                        cancelButtonTitle:@"Cancel"
+                   destructiveButtonTitle:@"Delete Profile"
+                        otherButtonTitles:nil] showInView:[UIApplication sharedApplication].keyWindow];
 }
 
 #pragma mark - Table view data source

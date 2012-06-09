@@ -208,7 +208,7 @@
 }
 
 - (void)didManuallyEnterBC:(NSNotification*) notification {
-    if ([[notification object] count] == 0 ) return;
+    if ([(NSArray *)[notification object] count] == 0 ) return;
     manually_entered_bc = [notification object];
 
     _selectedBullet = nil;    
@@ -384,8 +384,8 @@
     for (Weapon *weapon in weapons) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 44.f)];
         view.backgroundColor = [UIColor clearColor];
-        UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(16.f, 1.f, 56.f, 42.f)];
-        thumbNail.image = [UIImage imageWithData:weapon.photo_thumbnail];
+        UIImageView *thumbnailImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16.f, 1.f, 56.f, 42.f)];
+        thumbnailImageView.image = [UIImage imageWithData:weapon.primary_photo.thumbnail_size];
         UILabel *firstLine  = [[UILabel alloc] initWithFrame:CGRectMake(75.f, 0.f, 230.f, 22.f)];
         UILabel *secondLine = [[UILabel alloc] initWithFrame:CGRectMake(75.f, 22.f, 230.f, 22.f)];
         firstLine.backgroundColor = [UIColor clearColor];
@@ -397,7 +397,7 @@
         firstLine.adjustsFontSizeToFitWidth = YES;
         firstLine.text  = [NSString stringWithFormat:@"%@", weapon];
         secondLine.text = [NSString stringWithFormat:@"%@ - %@", weapon.caliber, weapon.finish];
-        [view addSubview:thumbNail];
+        [view addSubview:thumbnailImageView];
         [view addSubview:firstLine];
         [view addSubview:secondLine];
         [weaponViews addObject:view];

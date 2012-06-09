@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Weapon.h"
+#import "Photo.h"
 #import "WeaponCell.h"
 #import "KKPasscodeLock.h"
 #import "WeaponAddEditViewController.h"
@@ -20,12 +21,14 @@
                                                    KKPasscodeViewControllerDelegate, 
                                                    UITableViewDataSource, UITableViewDelegate,
                                                    UIScrollViewDelegate> {
-	NSFetchedResultsController *fetchedResultsController;
-    BOOL _firstInsert;
+//	NSFetchedResultsController *fetchedResultsController;
+    NSString *previousType;
+    NSArray *types;
+    NSDictionary *frcArray;
 }
 
 @property (nonatomic, retain) NSFetchedResultsController  *fetchedResultsController;
-@property (nonatomic, retain) IBOutlet UISegmentedControl *segmentedTypeControl;
+@property (nonatomic, retain) IBOutlet UISegmentedControl *selectedTypeControl;
 @property (weak, nonatomic) IBOutlet UIImageView *noFilesImageView;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSString *selectedType;

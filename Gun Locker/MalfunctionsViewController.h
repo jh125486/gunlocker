@@ -19,7 +19,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
-
 @property (nonatomic, weak) Weapon *selectedWeapon;
 @property (nonatomic, weak) Maintenance *selectedMaintenance;
 

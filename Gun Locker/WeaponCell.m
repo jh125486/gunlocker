@@ -71,9 +71,9 @@
     
     self.roundCountLabel.text = [weapon.round_count stringValue];
     
-    if (weapon.photo_thumbnail) {
+    if (weapon.primary_photo) {
         [self.photoImageContainer setHidden:NO];
-        [self.photoButton setImage:[UIImage imageWithData:weapon.photo_thumbnail] forState:UIControlStateNormal];
+        [self.photoButton setImage:[UIImage imageWithData:weapon.primary_photo.thumbnail_size] forState:UIControlStateNormal];
     } else {
         [self.photoImageContainer setHidden:YES];
     }

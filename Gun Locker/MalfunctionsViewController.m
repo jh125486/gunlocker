@@ -9,7 +9,7 @@
 #import "MalfunctionsViewController.h"
 
 @implementation MalfunctionsViewController
-@synthesize noMalfunctionsImageView;
+@synthesize noMalfunctionsImageView = _noMalfunctionsImageView;
 @synthesize tableView;
 @synthesize selectedWeapon = _selectedWeapon;
 @synthesize selectedMaintenance = _selectedMaintenance;
@@ -45,8 +45,8 @@
     int count = [_fetchedResultsController.fetchedObjects count];
     self.title = [NSString stringWithFormat:@"Malfunctions (%d)", count];
     
-    self.noMalfunctionsImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Malfunctions"]];
-    self.noMalfunctionsImageView.hidden = (count != 0);
+    _noMalfunctionsImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Malfunctions"]];
+    _noMalfunctionsImageView.hidden = (count != 0);
     self.tableView.hidden = (count == 0);
 }
 
@@ -109,7 +109,7 @@
     } else { // Logbook
         headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background2"]];
         Weapon *weapon = [[_fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]] weapon];
-        UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(4.0f, 3.0f, 56.0f, 42.0f)];
+        UIImageView *thumbnailImageView = [[UIImageView alloc] initWithFrame:CGRectMake(4.0f, 3.0f, 56.0f, 42.0f)];
         firstLine     = [[UILabel alloc] initWithFrame:CGRectMake(64.0f, 2.0f, 256.0f, 23.0f)];
         secondLine    = [[UILabel alloc] initWithFrame:CGRectMake(68.0f, 24.0f, 252.0f, 23.0f)];
         
@@ -118,13 +118,13 @@
         secondLine.textColor = [UIColor darkGrayColor];
         secondLine.shadowColor = [UIColor lightTextColor];
         secondLine.shadowOffset = CGSizeMake(0.0f, 1.0f);
-
-        thumbNail.image = [UIImage imageWithData:weapon.photo_thumbnail];
+        
+        thumbnailImageView.image = [UIImage imageWithData:weapon.primary_photo.thumbnail_size];
         firstLine.text  = weapon.manufacturer.name;
         secondLine.text = weapon.model;
         
-        [headerView addSubview:thumbNail];
-        [headerView addSubview:secondLine];        
+        [headerView addSubview:thumbnailImageView];
+        [headerView addSubview:secondLine];       
     }
     
     firstLine.font  = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:20.0f];
@@ -160,7 +160,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [[_fetchedResultsController objectAtIndexPath:indexPath] deleteEntity];
-    }    
+    }
     [[NSManagedObjectContext defaultContext] save];      
 }
 
@@ -224,7 +224,6 @@
     // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
     [self.tableView beginUpdates];
 }
-
 
 -(void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     switch(type) {

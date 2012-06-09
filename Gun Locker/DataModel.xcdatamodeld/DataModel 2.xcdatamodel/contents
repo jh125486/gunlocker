@@ -4,6 +4,10 @@
         <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caliber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="count" optional="YES" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="count_original" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="purchase_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="purchase_price" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="retailer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="BallisticProfile" representedClassName="BallisticProfile" syncable="YES">
@@ -11,11 +15,14 @@
         <attribute name="bullet_diameter_inches" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="bullet_weight" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <attribute name="drag_model" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="elevation_click" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="muzzle_velocity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="scope_click_unit" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sg" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="sg_twist_direction" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sight_height_inches" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="windage_click" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zero" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="zero_theta" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="zero_unit" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -108,11 +115,19 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="weapon" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="notes" inverseEntity="Weapon" syncable="YES"/>
     </entity>
+    <entity name="Photo" representedClassName="Photo" syncable="YES">
+        <attribute name="date_taken" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="normal_size" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="thumbnail_size" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <relationship name="fromPrimaryToWeapon" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="primary_photo" inverseEntity="Weapon" syncable="YES"/>
+        <relationship name="weapon" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Weapon" inverseName="photos" inverseEntity="Weapon" syncable="YES"/>
+    </entity>
     <entity name="StampInfo" representedClassName="StampInfo" syncable="YES">
         <attribute name="check_cashed" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="form_photo" optional="YES" attributeType="Binary" storedInTruthFile="YES" syncable="YES"/>
         <attribute name="form_sent" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="nfa_type" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="stamp_received" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="transfer_type" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <attribute name="went_pending" optional="YES" attributeType="Date" syncable="YES"/>
@@ -127,8 +142,6 @@
         <attribute name="last_cleaned_round_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="model" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="photo" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
-        <attribute name="photo_thumbnail" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="purchased_date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="purchased_price" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="round_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -142,11 +155,13 @@
         <relationship name="malfunctions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Malfunction" inverseName="weapon" inverseEntity="Malfunction" syncable="YES"/>
         <relationship name="manufacturer" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Manufacturer" inverseName="weapons" inverseEntity="Manufacturer" syncable="YES"/>
         <relationship name="notes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Note" inverseName="weapon" inverseEntity="Note" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Photo" inverseName="weapon" inverseEntity="Photo" syncable="YES"/>
         <relationship name="preferred_load" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Load" inverseName="weapons" inverseEntity="Load" syncable="YES"/>
+        <relationship name="primary_photo" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" inverseName="fromPrimaryToWeapon" inverseEntity="Photo" syncable="YES"/>
         <relationship name="stamp" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="StampInfo" inverseName="weapon" inverseEntity="StampInfo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Ammunition" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="Ammunition" positionX="160" positionY="192" width="128" height="165"/>
         <element name="BallisticProfile" positionX="-144" positionY="-108" width="128" height="300"/>
         <element name="Bullet" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Caliber" positionX="160" positionY="192" width="128" height="60"/>
@@ -159,7 +174,8 @@
         <element name="Malfunction" positionX="178" positionY="-174" width="128" height="120"/>
         <element name="Manufacturer" positionX="160" positionY="192" width="128" height="60"/>
         <element name="Note" positionX="-549" positionY="333" width="128" height="105"/>
-        <element name="StampInfo" positionX="-603" positionY="63" width="128" height="165"/>
+        <element name="Photo" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="StampInfo" positionX="-603" positionY="63" width="128" height="180"/>
         <element name="Weapon" positionX="-324" positionY="-111" width="128" height="420"/>
     </elements>
 </model>

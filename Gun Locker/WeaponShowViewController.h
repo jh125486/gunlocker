@@ -16,16 +16,20 @@
 #import "TextStepperField.h"
 #import "DopeCardsViewController.h"
 #import "CardsViewController.h"
+#import "PhotosTableViewController.h"
 
 @class CardsViewController;
 
-@interface WeaponShowViewController : UITableViewController <WeaponAddViewControllerDelegate, UIActionSheetDelegate>
+@interface WeaponShowViewController : UITableViewController <WeaponAddViewControllerDelegate, UIActionSheetDelegate> {
+    UIActionSheet *changeCategorySheet;
+}
 
 @property (weak, nonatomic) IBOutlet UILabel *modelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *manufacturerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *photoCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noteCountLabel;
 @property (weak, nonatomic) IBOutlet UITableViewCell *nfaCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *notesCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *dopeCardsCell;
+@property (weak, nonatomic) IBOutlet UILabel *dopeCardCount;
 @property (weak, nonatomic) IBOutlet UILabel *maintenanceCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *malfunctionCountLabel;
 @property (weak, nonatomic) IBOutlet TextStepperField *adjustRoundCountStepper;
@@ -41,5 +45,6 @@
 - (IBAction)roundCountAdjust:(id)sender;
 - (IBAction)changeWeaponTypeTapped:(id)sender;
 - (IBAction)cleanNowTapped:(id)sender;
+- (IBAction)deleteTapped:(id)sender;
 
 @end

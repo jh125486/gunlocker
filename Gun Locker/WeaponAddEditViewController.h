@@ -12,6 +12,7 @@
 #import "PhotoViewController.h"
 #import "Weapon.h"
 #import "Manufacturer.h"
+#import "Photo.h"
 
 @class WeaponAddEditViewController;
 
@@ -41,18 +42,18 @@
 @property (weak, nonatomic) IBOutlet UITextField *serialNumberTextField;
 @property (weak, nonatomic) IBOutlet UITextField *purchaseDateTextField;
 @property (retain, nonatomic) UIDatePicker *purchaseDatePickerView;
-@property (weak, nonatomic) IBOutlet UITextField *purchasePriceTextfield;
+@property (weak, nonatomic) IBOutlet UITextField *purchasePriceTextField;
 @property (weak, nonatomic) IBOutlet UILabel *currencySymbolLabel;
 
 @property (weak, nonatomic) UITextField *currentTextField;
 
 - (IBAction)barrelLengthValueChanged:(id)sender;
+- (IBAction)purchasePriceValueChanged:(id)sender;
 
 - (IBAction)cancelTapped:(id)sender;
 - (IBAction)saveTapped:(id)sender;
 - (IBAction)checkData:(id)sender;
 
-- (void)loadTextfieldsFromWeapon:(Weapon*)weapon;
 - (void)addPhotoTapped:(UITapGestureRecognizer *)recognizer;
 - (void)addPhotoDoubleTapped:(UITapGestureRecognizer *)recognizer;
 

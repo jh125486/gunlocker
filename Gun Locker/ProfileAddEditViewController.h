@@ -10,6 +10,7 @@
 #import "BallisticProfile.h"
 #import "Bullet.h"
 #import "Weapon.h"
+#import "Photo.h"
 #import "BulletChooserViewController.h"
 #import "BulletBCEntryViewController.h"
 #import "MillerStabilityViewController.h"

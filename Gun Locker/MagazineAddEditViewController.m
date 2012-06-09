@@ -181,20 +181,6 @@
     magazine.count   = [NSNumber numberWithInt:count];
     
     [[NSManagedObjectContext defaultContext] save];
-//    
-// Fails to update FRC
-//    [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext) {
-//        
-//        Magazine *localMagazine = [magazine MR_inContext:localContext];
-//        localMagazine.brand   = _brandTextField.text;
-//        localMagazine.type    = _typeTextField.text;
-//        localMagazine.color   = _colorTextField.text;
-//        localMagazine.caliber = _caliberTextField.text;
-//        
-//        int count = [_countTextField.text integerValue];
-//        if (count < 0) count = 0;
-//        localMagazine.count   = [NSNumber numberWithInt:count];
-//    }];
     
     [TestFlight passCheckpoint:@"New Magazine Saved"];
 

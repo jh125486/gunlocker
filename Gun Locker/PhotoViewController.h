@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "Weapon.h"
+#import "Photo.h"
 
 @interface PhotoViewController : UIViewController <UIScrollViewDelegate> {
     UIImage *photo;
@@ -19,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *modelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *manufacturerLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *photoView;
-@property (strong, nonatomic) Weapon *selectedWeapon;
+@property (strong, nonatomic) Photo *passedPhoto;
 
 - (IBAction)handleTap:(UIGestureRecognizer *)recognizer;
 

@@ -13,6 +13,11 @@
 @synthesize typeTextField = _typeTextField;
 @synthesize caliberTextField = _caliberTextField;
 @synthesize countTextField = _countTextField;
+@synthesize purchasePriceTextField = _purchasePriceTextField;
+@synthesize currencySymbolLabel = _currencySymbolLabel;
+@synthesize purchasedFromTextField = _purchasedFromTextField;
+@synthesize purchaseDateTextField = _purchaseDateTextField;
+@synthesize purchaseDatePickerView = _purchaseDatePickerView;
 @synthesize selectedAmmunition = _selectedAmmunition;
 @synthesize selectedCaliber = _selectedCaliber;
 @synthesize currentTextField = _currentTextField;
@@ -29,7 +34,28 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
 
-    formFields = [[NSArray alloc] initWithObjects:_brandTextField, _typeTextField, _caliberTextField, _countTextField, nil];
+    // set up purchase price field with local currency symbol and keyboard
+    _currencySymbolLabel.text = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
+    currencyFormatter = [[NSNumberFormatter alloc] init];
+    [currencyFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+    [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    [currencyFormatter setLocale:[NSLocale currentLocale]];
+    [currencyFormatter setCurrencySymbol:@""];
+
+    // set up purchase date picker
+    _purchaseDatePickerView = [[UIDatePicker alloc] init];
+    _purchaseDatePickerView.datePickerMode = UIDatePickerModeDate;
+    _purchaseDatePickerView.maximumDate = [NSDate date];
+    _purchaseDateTextField.inputView = _purchaseDatePickerView;
+    
+    formFields = [[NSArray alloc] initWithObjects:_brandTextField, 
+                                                  _typeTextField, 
+                                                  _caliberTextField, 
+                                                  _countTextField, 
+                                                  _purchasePriceTextField,
+                                                  _purchasedFromTextField,
+                                                  _purchaseDateTextField,
+                                                  nil];
     
     for(UITextField *field in formFields)
         field.delegate = self;
@@ -44,6 +70,15 @@
     _typeTextField.text    = _selectedAmmunition.type;
     _caliberTextField.text = _selectedAmmunition.caliber;
     _countTextField.text   = [_selectedAmmunition.count stringValue];
+    
+    _purchasePriceTextField.text = [_selectedAmmunition.purchase_price compare:[NSDecimalNumber zero]] ? [currencyFormatter stringFromNumber:_selectedAmmunition.purchase_price] : @"";
+    _purchasedFromTextField.text = _selectedAmmunition.retailer;
+    if (_selectedAmmunition.purchase_date) {
+        _purchaseDatePickerView.date = _selectedAmmunition.purchase_date;
+        _purchaseDateTextField.text = [_purchaseDatePickerView.date onlyDate];
+    }
+    
+    [self purchasePriceValueChanged:nil];
 }
 
 - (void)viewDidUnload {
@@ -54,6 +89,9 @@
     [self setCurrentTextField:nil];
     [self setSelectedAmmunition:nil];
     [self setSelectedCaliber:nil];
+    [self setPurchasePriceTextField:nil];
+    [self setPurchasedFromTextField:nil];
+    [self setPurchaseDateTextField:nil];
     [super viewDidUnload];
 }
 
@@ -81,6 +119,36 @@
 }
 
 #pragma mark UITextfield Delegates
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if(textField == _purchasePriceTextField) {
+        NSString *newValue = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        
+        NSMutableString *result = [[NSMutableString alloc] init];
+        for (NSUInteger i = 0; i< [newValue length]; i++){
+            unichar c = [newValue characterAtIndex:i];
+            NSString *charStr = [NSString stringWithCharacters:&c length:1];
+            if ([[NSCharacterSet decimalDigitCharacterSet] characterIsMember:c]) {
+                [result appendString:charStr];
+            }
+        }
+        result = [NSMutableString stringWithFormat:@"%i", [result integerValue]]; // strip leading zeros
+        if (result.length < currencyFormatter.minimumFractionDigits) { // move decimal place to correct location
+            [result insertString:currencyFormatter.decimalSeparator atIndex:0];
+            while(result.length <= currencyFormatter.minimumFractionDigits)
+                [result insertString:@"0" atIndex:1];
+        } else {
+            [result insertString:currencyFormatter.decimalSeparator atIndex:(result.length - currencyFormatter.minimumFractionDigits)];
+        }
+        
+        textField.text = ([result doubleValue] > 0) ? [currencyFormatter stringFromNumber:[NSNumber numberWithDouble:[result doubleValue]]] : nil;
+        
+        //always return no since we are manually changing the text field
+        return NO;
+    }
+    
+    return YES;
+}
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     UIToolbar* textFieldToolBarView = [[UIToolbar alloc] init];
@@ -141,6 +209,9 @@
 }
 
 - (void) doneTyping:(id)sender {
+    if (_currentTextField == _purchaseDateTextField)
+        _purchaseDateTextField.text = [_purchaseDatePickerView.date onlyDate];
+
     [self.currentTextField resignFirstResponder];
 }
 
@@ -160,12 +231,34 @@
     
     int count = [_countTextField.text integerValue];
     if (count < 0) count = 0;
-    ammunition.count   = [NSNumber numberWithInt:count];
+    ammunition.count = [NSNumber numberWithInt:count];
+
+    if (!_selectedAmmunition) ammunition.count_original = [NSNumber numberWithInt:count];
+    
+    ammunition.purchase_price  = [NSDecimalNumber decimalNumberWithDecimal:[[currencyFormatter numberFromString:_purchasePriceTextField.text] decimalValue]];
+    ammunition.retailer = _purchasedFromTextField.text;
+    ammunition.purchase_date = (_purchaseDateTextField.text.length > 0) ? _purchaseDatePickerView.date : nil;
     
     [[NSManagedObjectContext defaultContext] save];
     
     [self dismissModalViewControllerAnimated:YES];
     [TestFlight passCheckpoint:@"New Ammunition Saved"];
+}
+
+- (IBAction)purchasePriceValueChanged:(id)sender {
+    if([_purchasePriceTextField.text length]) { // move field to the right
+        _currencySymbolLabel.hidden = NO;
+        _purchasePriceTextField.frame = CGRectMake(160.f, 
+                                                   CGRectGetMinY(_purchasePriceTextField.frame), 
+                                                   CGRectGetWidth(_purchasePriceTextField.frame), 
+                                                   CGRectGetHeight( _purchasePriceTextField.frame));
+    } else { // reset field to the left
+        _purchasePriceTextField.frame = CGRectMake(145.f, 
+                                                   CGRectGetMinY(_purchasePriceTextField.frame), 
+                                                   CGRectGetWidth(_purchasePriceTextField.frame), 
+                                                   CGRectGetHeight(_purchasePriceTextField.frame));
+        _currencySymbolLabel.hidden = YES;
+    }
 }
 
 @end

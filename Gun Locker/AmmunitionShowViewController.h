@@ -13,6 +13,7 @@
 @interface AmmunitionShowViewController : UITableViewController <UIAlertViewDelegate, UIActionSheetDelegate> {
     UIAlertView *roundsFiredAlertView;
     UIAlertView *roundsBoughtAlertView;
+    NSNumberFormatter* currencyFormatter;
 }
 @property (weak, nonatomic) Ammunition *selectedAmmunition;
 
@@ -20,6 +21,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *caliberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cprLabel;
+@property (weak, nonatomic) IBOutlet UILabel *purchasedFromLabel;
+@property (weak, nonatomic) IBOutlet UILabel *purchaseDateLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *roundsFiredButton;
 - (IBAction)roundsFiredTapped:(id)sender;

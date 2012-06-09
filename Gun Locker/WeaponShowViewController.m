@@ -9,11 +9,12 @@
 #import "WeaponShowViewController.h"
 
 @implementation WeaponShowViewController
-@synthesize notesCell = _notesCell;
 @synthesize modelLabel = _modelLabel;
 @synthesize manufacturerLabel = _manufacturerLabel;
+@synthesize photoCountLabel = _photoCountLabel;
+@synthesize noteCountLabel = _noteCountLabel;
 @synthesize nfaCell = _nfaCell;
-@synthesize dopeCardsCell = _dopeCardsCell;
+@synthesize dopeCardCount = _dopeCardCount;
 @synthesize maintenanceCountLabel = _maintenanceCountLabel;
 @synthesize malfunctionCountLabel = _malfunctionCountLabel;
 @synthesize adjustRoundCountStepper = _adjustRoundCountStepper;
@@ -45,18 +46,19 @@
     self.title = _selectedWeapon.model;
     [self setTitleView];
     
-    // doesnt do anything
     _nfaCell.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"];
     
     _adjustRoundCountStepper.Current = [_selectedWeapon.round_count floatValue];
     _adjustRoundCountStepper.Minimum = 0;
     _adjustRoundCountStepper.Step = 1;
     _adjustRoundCountStepper.NumDecimals = 0;
-    _notesCell.detailTextLabel.text     = [NSString stringWithFormat:@"%d",[_selectedWeapon.notes count]];
+    _photoCountLabel.text    = [NSString stringWithFormat:@"%d",[_selectedWeapon.photos count]];
+    _noteCountLabel.text     = [NSString stringWithFormat:@"%d",[_selectedWeapon.notes count]];
     _nfaCell.detailTextLabel.text       = _selectedWeapon.stamp.nfa_type ? [[dataManager nfaTypes] objectAtIndex:_selectedWeapon.stamp.nfa_type.intValue] : @"n/a";
-    _dopeCardsCell.detailTextLabel.text = [NSString stringWithFormat:@"%d",[_selectedWeapon.dope_cards count]];
-    _maintenanceCountLabel.text         = [NSString stringWithFormat:@"%d",[_selectedWeapon.maintenances count]];
-    _malfunctionCountLabel.text         = [NSString stringWithFormat:@"%d",[_selectedWeapon.malfunctions count]];
+    
+    _dopeCardCount.text              = [NSString stringWithFormat:@"%d",[_selectedWeapon.dope_cards count]];
+    _maintenanceCountLabel.text      = [NSString stringWithFormat:@"%d",[_selectedWeapon.maintenances count]];
+    _malfunctionCountLabel.text      = [NSString stringWithFormat:@"%d",[_selectedWeapon.malfunctions count]];
     [self.tableView reloadData];
     [super viewWillAppear:animated];
 }
@@ -67,11 +69,9 @@
 }
 
 - (void)viewDidUnload {
-    [self setNotesCell:nil];
     [self setModelLabel:nil];
     [self setManufacturerLabel:nil];
     [self setNfaCell:nil];
-    [self setDopeCardsCell:nil];
     [self setMaintenanceCountLabel:nil];
     [self setMalfunctionCountLabel:nil];
     [self setAdjustRoundCountStepper:nil];
@@ -81,6 +81,9 @@
 	[self setCardsViewController:nil];
     [self setLastCleanedDateLabel:nil];
     [self setLastCleanedCountLabel:nil];
+    [self setPhotoCountLabel:nil];
+    [self setNoteCountLabel:nil];
+    [self setDopeCardCount:nil];
     [super viewDidUnload];
 }
 
@@ -116,8 +119,11 @@
         DopeCardsViewController *dst = segue.destinationViewController;
         dst.selectedWeapon = _selectedWeapon;
         [TestFlight passCheckpoint:@"DopeCards viewed"];
-    }
-    
+    } else if ([segueID isEqualToString:@"Photos"]) {
+        PhotosTableViewController *dst = segue.destinationViewController;
+        dst.selectedWeapon = _selectedWeapon;
+        [TestFlight passCheckpoint:@"Photos viewed"];
+    }    
 }
 
 #pragma mark - WeaponAddViewControllerDelegate
@@ -143,7 +149,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     // manually set cellPath since tableView indexPathForCell: is returning wrong row ??
-    NSIndexPath *nfaCellPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    NSIndexPath *nfaCellPath = [NSIndexPath indexPathForRow:2 inSection:0];
     // compare row and section since NSIndexPath isEqual:  is broken on ios5
     if((![[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"]) && 
         nfaCellPath.row == indexPath.row && 
@@ -163,12 +169,12 @@
 }
 
 - (IBAction)changeWeaponTypeTapped:(id)sender {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Change weapon type to"
-                                        delegate:self
-                               cancelButtonTitle:@"Cancel"
-                          destructiveButtonTitle:nil
-                               otherButtonTitles:@"Handgun", @"Rifle", @"Shotgun", @"Miscellaneous", nil];
-    [sheet showInView:[UIApplication sharedApplication].keyWindow];
+    changeCategorySheet = [[UIActionSheet alloc] initWithTitle:@"Change weapon type to"
+                                                      delegate:self
+                                             cancelButtonTitle:@"Cancel"
+                                        destructiveButtonTitle:nil
+                                             otherButtonTitles:@"Handgun", @"Rifle", @"Shotgun", @"Miscellaneous", nil];
+    [changeCategorySheet showInView:[UIApplication sharedApplication].keyWindow];
 }
 
 - (IBAction)cleanNowTapped:(id)sender {
@@ -179,22 +185,38 @@
     [self updateLastCleanedLabels];
 }
 
+- (IBAction)deleteTapped:(id)sender {
+    [[[UIActionSheet alloc] initWithTitle:nil
+                                 delegate:self
+                        cancelButtonTitle:@"Cancel"
+                   destructiveButtonTitle:@"Delete Weapon"
+                        otherButtonTitles:nil] showInView:[UIApplication sharedApplication].keyWindow];
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSArray *categories =  [NSArray arrayWithObjects:@"Handguns", @"Rifles", @"Shotguns", @"Misc.", nil];
-    if (buttonIndex < [categories count]) {
-        _selectedWeapon.type = _weaponTypeLabel.text = [categories objectAtIndex:buttonIndex];
+    if (actionSheet == changeCategorySheet) {
+        NSArray *categories =  [NSArray arrayWithObjects:@"Handguns", @"Rifles", @"Shotguns", @"Misc.", nil];
+        if (buttonIndex < [categories count]) {
+            _selectedWeapon.type = _weaponTypeLabel.text = [categories objectAtIndex:buttonIndex];
 
-        [[NSManagedObjectContext defaultContext] save];        
-        _weaponTypeLabel.text = _selectedWeapon.type;
-        [_cardsViewController.segmentedTypeControl setSelectedSegmentIndex:[categories indexOfObject:_selectedWeapon.type]];
-        _cardsViewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:_selectedWeapon.type 
-                                                                                                 style:UIBarButtonItemStyleBordered
-                                                                                                target:nil 
-                                                                                                action:nil];
-        [self setTitleView];
+            [[NSManagedObjectContext defaultContext] save];        
+            _weaponTypeLabel.text = _selectedWeapon.type;
+            [_cardsViewController.selectedTypeControl setSelectedSegmentIndex:[categories indexOfObject:_selectedWeapon.type]];
+            _cardsViewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:_selectedWeapon.type 
+                                                                                                     style:UIBarButtonItemStyleBordered
+                                                                                                    target:nil 
+                                                                                                    action:nil];
+            [self setTitleView];
 
-        [TestFlight passCheckpoint:@"User changed weapon type"];
+            [TestFlight passCheckpoint:@"User changed weapon type"];
         }
+    } else { // delete confirmation
+        if (buttonIndex == actionSheet.destructiveButtonIndex) {
+            [_selectedWeapon deleteEntity];
+            [[NSManagedObjectContext defaultContext] save];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
 }
 
 - (void)willPresentActionSheet:(UIActionSheet *)actionSheet {

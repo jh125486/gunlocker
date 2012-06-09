@@ -16,6 +16,7 @@
 #import "BallisticProfile.h"
 #import "Weather.h"
 #import "Bullet.h"
+#import "Photo.h"
 
 #define INCHES_PER_METER    39.3700787401575
 #define FEET_PER_METER      3.28083989501312
@@ -81,6 +82,11 @@
 
 @interface Malfunction (helper)
 -(NSString*)dateAgoInWords;
+@end
+
+@interface Photo (helper)
+-(void)setPhotoAndCreateThumbnailFromImage:(UIImage*)photo;
+-(float)sizeOnDisk;
 @end
 
 @interface NSString (helper)

@@ -10,6 +10,7 @@
 #import "Weapon.h"
 #import "Manufacturer.h"
 #import "StampInfo.h"
+#import "Photo.h"
 
 @interface WeaponCell : UITableViewCell
 

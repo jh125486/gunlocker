@@ -75,7 +75,7 @@ Sphinx Systems Ltd.:Switzerland:Sphinx
 Stag Arms:USA
 Sterling Armaments Company:UK:Sterling
 Steyr Mannlicher:Austria:Steyr
-STI International:USA
+STI International:USA:STI
 Stoeger Industries:Italy
 Strayer Voigt Inc:USA:SVI
 Sturm, Ruger, & Co.:USA:Ruger

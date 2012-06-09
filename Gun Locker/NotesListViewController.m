@@ -101,7 +101,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return (_selectedWeapon) ? [sections count] : [[notes objectForKey:[sections objectAtIndex:section]] count];
+    return (_selectedWeapon) ? [sections count] : [(NSArray *)[notes objectForKey:[sections objectAtIndex:section]] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

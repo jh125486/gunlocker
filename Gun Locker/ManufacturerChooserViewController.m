@@ -62,13 +62,13 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return [self.searchResults count];
     } else {
-        return [[sectionsArray objectAtIndex:section] count];
+        return [(NSArray *)[sectionsArray objectAtIndex:section] count];
     }
 }
 
 #pragma TableView methods
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if(([[self.sectionsArray objectAtIndex:section] count] == 0) || 
+    if(([(NSArray *)[self.sectionsArray objectAtIndex:section] count] == 0) || 
        (tableView == self.searchDisplayController.searchResultsTableView)) {
         return nil;
     } else {

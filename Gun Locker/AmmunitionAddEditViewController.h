@@ -10,8 +10,9 @@
 #import "Ammunition.h"
 #import "CaliberChooserViewController.h"
 
-@interface AmmunitionAddEditViewController : UITableViewController <UITextFieldDelegate, CaliberChooserViewControllerDelegate> {
-        NSArray *formFields;
+@interface AmmunitionAddEditViewController : UITableViewController <UITextFieldDelegate, CaliberChooserViewControllerDelegate, UIActionSheetDelegate> {
+    NSArray *formFields;
+    NSNumberFormatter* currencyFormatter;
 }
 
 @property (weak, nonatomic) Ammunition *selectedAmmunition;
@@ -21,10 +22,17 @@
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *caliberTextField;
 @property (weak, nonatomic) IBOutlet UITextField *countTextField;
+@property (weak, nonatomic) IBOutlet UITextField *purchasePriceTextField;
+@property (weak, nonatomic) IBOutlet UILabel *currencySymbolLabel;
+@property (weak, nonatomic) IBOutlet UITextField *purchasedFromTextField;
+@property (weak, nonatomic) IBOutlet UITextField *purchaseDateTextField;
+@property (retain, nonatomic) UIDatePicker *purchaseDatePickerView;
 
 @property (weak, nonatomic) UITextField *currentTextField;
 
 - (IBAction)cancelTapped:(id)sender;
 - (IBAction)savedTapped:(id)sender;
+
+- (IBAction)purchasePriceValueChanged:(id)sender;
 
 @end

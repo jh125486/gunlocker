@@ -26,6 +26,5 @@
 @property (nonatomic, strong) NSDictionary *humanMPHSpeeds;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
-
-+ (DataManager *)sharedManager;
++(DataManager *)sharedManager;
 @end

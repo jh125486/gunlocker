@@ -73,14 +73,12 @@
                                                      repeats:NO];
         
     //Register setRange to recieve "setRange" notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setRange:) name:@"setRange" object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     profiles = [BallisticProfile findAll];
-    
     [self setUpPickerData];
     [_selectedProfilePickerView reloadAllComponents];
     if ([profiles containsObject:selectedProfile]) {
@@ -291,7 +289,7 @@
     for(BallisticProfile *profile in profiles) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
         view.backgroundColor = [UIColor clearColor];
-        UIImageView *thumbNail = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 1.0f, 56.0f, 42.0f)];
+        UIImageView *thumbnailImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 1.0f, 56.0f, 42.0f)];
         UILabel *firstLine  = [[UILabel alloc] initWithFrame:CGRectMake(75.0f, 0.0f, 230.0f, 22.0f)];
         UILabel *secondLine = [[UILabel alloc] initWithFrame:CGRectMake(75.0f, 22.0f, 230.0f, 22.0f)];
         
@@ -302,11 +300,11 @@
         secondLine.textColor = [UIColor darkGrayColor];
         firstLine.adjustsFontSizeToFitWidth = YES;
         
-        thumbNail.image = [UIImage imageWithData:profile.weapon.photo_thumbnail];
+        thumbnailImageView.image = [UIImage imageWithData:profile.weapon.primary_photo.thumbnail_size];
         firstLine.text  = profile.weapon.description;
         secondLine.text = profile.name;
         
-        [view addSubview:thumbNail];
+        [view addSubview:thumbnailImageView];
         [view addSubview:firstLine];
         [view addSubview:secondLine];
         [profilePickerData addObject:view];
@@ -411,13 +409,14 @@
     _wxButton.titleLabel.text  = @"⇣ WX";
 }
 
-
 #pragma mark TESTING Profiles below
 
 -(void)loadTestProfiles {
     // only load test weapons on first load
+    NSLog(@"weapon count: %d", [Weapon countOfEntities]);
+    
     NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-    if ([preferences boolForKey:@"TestProfileLoaded"]) return;
+    if ([preferences boolForKey:@"TestProfilesLoaded"]) return;
     
     BallisticProfile *ballisticProfile1 = [BallisticProfile createEntity];
     ballisticProfile1.bullet_weight = [NSNumber numberWithInt:55.0];
@@ -429,7 +428,7 @@
     ballisticProfile1.name = @"Test Profile 1 M193 ";
     ballisticProfile1.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.272"]];
     ballisticProfile1.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
-    ballisticProfile1.weapon = [[Weapon findAll] objectAtIndex:1];
+    [ballisticProfile1 setWeapon:[Weapon findFirst]];
     ballisticProfile1.sg = [NSDecimalNumber decimalNumberWithString:@"1.5"];
     ballisticProfile1.sg_twist_direction =@"RH";
     ballisticProfile1.scope_click_unit = @"MOA";
@@ -437,7 +436,6 @@
     ballisticProfile1.windage_click = @"1/4";
     
     [ballisticProfile1 calculateTheta];
-    
     
     BallisticProfile *ballisticProfile2 = [BallisticProfile createEntity];
     
@@ -450,7 +448,7 @@
     ballisticProfile2.name = @"Test Profile SS109";
     ballisticProfile2.bullet_bc = [NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:@"0.151"]];
     ballisticProfile2.bullet_diameter_inches = [NSDecimalNumber decimalNumberWithString:@"0.224"];                 
-    ballisticProfile2.weapon = [[Weapon findAll] objectAtIndex:0];
+    [ballisticProfile2 setWeapon:[Weapon findFirst]];
     ballisticProfile2.sg = [NSDecimalNumber decimalNumberWithString:@"1.2"];
     ballisticProfile2.sg_twist_direction =@"RH";
     ballisticProfile2.scope_click_unit = @"MILs";
@@ -461,7 +459,7 @@
     
     [[NSManagedObjectContext defaultContext] save];
     
-    [preferences setBool:YES forKey:@"TestProfileLoaded"];
+    [preferences setBool:YES forKey:@"TestProfilesLoaded"];
     [preferences synchronize];
 } 
 @end
