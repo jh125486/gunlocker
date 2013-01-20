@@ -54,13 +54,6 @@
     _brandCountLabel.text = [NSString stringWithFormat:@"%d brands / %@ magazines", [_fetchedResultsController.sections count], magazines];
 }
 
-- (void)viewDidUnload {
-    [self setFetchedResultsController:nil];
-    [self setCaliberLabel:nil];
-    [self setBrandCountLabel:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

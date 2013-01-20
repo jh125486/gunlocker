@@ -56,19 +56,9 @@
     }
 }
 
-- (void)viewDidUnload {
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [self.motionManager stopAccelerometerUpdates];
-
-    [self setTargetSizeTextField:nil];
-    [self setTargetSizeUnitControl:nil];
-    [self setTargetSpansTextField:nil];
-    [self setTargetSpansUnitControl:nil];
-    [self setAngleTextField:nil];
-    [self setAngleLiveUpdateControl:nil];
-    [self setResultLabel:nil];
-    [self setResultUnitControl:nil];
-    [self setResultView:nil];
-    [super viewDidUnload];
 }
 
 - (void)didSelectSize:(NSNotification*) notification  {

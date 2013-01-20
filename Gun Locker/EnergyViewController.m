@@ -44,17 +44,6 @@
     [[formFields objectAtIndex:0] becomeFirstResponder];
 }
 
-- (void)viewDidUnload {
-    [self setBulletWeightTextField:nil];
-    [self setMvTextField:nil];
-    [self setResultFtLbsLabel:nil];
-    [self setResultJoulesLabel:nil];
-    [self setCurrentTextField:nil];
-    [self setResultJoulesLabel:nil];
-    [self setResultView:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

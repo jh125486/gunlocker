@@ -46,7 +46,7 @@
     self.title = _selectedWeapon.model;
     [self setTitleView];
     
-    _nfaCell.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"];
+    _nfaCell.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:kGLShowNFADetailsKey];
     
     _adjustRoundCountStepper.Current = [_selectedWeapon.round_count floatValue];
     _adjustRoundCountStepper.Minimum = 0;
@@ -68,24 +68,6 @@
     _manufacturerLabel.text = _selectedWeapon.manufacturer.displayName;    
 }
 
-- (void)viewDidUnload {
-    [self setModelLabel:nil];
-    [self setManufacturerLabel:nil];
-    [self setNfaCell:nil];
-    [self setMaintenanceCountLabel:nil];
-    [self setMalfunctionCountLabel:nil];
-    [self setAdjustRoundCountStepper:nil];
-    [self setQuickCleanButton:nil];
-    [self setWeaponTypeLabel:nil];
-    [self setSelectedWeapon:nil];
-	[self setCardsViewController:nil];
-    [self setLastCleanedDateLabel:nil];
-    [self setLastCleanedCountLabel:nil];
-    [self setPhotoCountLabel:nil];
-    [self setNoteCountLabel:nil];
-    [self setDopeCardCount:nil];
-    [super viewDidUnload];
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -151,7 +133,7 @@
     // manually set cellPath since tableView indexPathForCell: is returning wrong row ??
     NSIndexPath *nfaCellPath = [NSIndexPath indexPathForRow:2 inSection:0];
     // compare row and section since NSIndexPath isEqual:  is broken on ios5
-    if((![[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"]) && 
+    if((![[NSUserDefaults standardUserDefaults] boolForKey:kGLShowNFADetailsKey]) && 
         nfaCellPath.row == indexPath.row && 
         nfaCellPath.section == indexPath.section) {
         return 0;
@@ -171,7 +153,7 @@
 - (IBAction)changeWeaponTypeTapped:(id)sender {
     changeCategorySheet = [[UIActionSheet alloc] initWithTitle:@"Change weapon type to"
                                                       delegate:self
-                                             cancelButtonTitle:@"Cancel"
+                                             cancelButtonTitle:kGLCancelText
                                         destructiveButtonTitle:nil
                                              otherButtonTitles:@"Handgun", @"Rifle", @"Shotgun", @"Miscellaneous", nil];
     [changeCategorySheet showInView:[UIApplication sharedApplication].keyWindow];
@@ -188,7 +170,7 @@
 - (IBAction)deleteTapped:(id)sender {
     [[[UIActionSheet alloc] initWithTitle:nil
                                  delegate:self
-                        cancelButtonTitle:@"Cancel"
+                        cancelButtonTitle:kGLCancelText
                    destructiveButtonTitle:@"Delete Weapon"
                         otherButtonTitles:nil] showInView:[UIApplication sharedApplication].keyWindow];
 }

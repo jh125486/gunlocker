@@ -93,15 +93,6 @@
     [_containerView setZoomScale:_containerView.minimumZoomScale];
 }
 
-- (void)viewDidUnload {
-    [self setManufacturerLabel:nil];
-    [self setModelLabel:nil];
-    [self setPhotoView:nil];
-    [self setNavigationBar:nil];
-    [self setContainerView:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }

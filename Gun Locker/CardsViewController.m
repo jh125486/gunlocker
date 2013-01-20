@@ -102,6 +102,7 @@
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [TestFlight passCheckpoint:@"CardsView disappeared"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)updateTitle {
@@ -118,15 +119,6 @@
     } else {
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
     }
-}
-
-- (void)viewDidUnload {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setSelectedTypeControl:nil];
-    [self setTableView:nil];
-    [self setSelectedType:nil];
-    [self setNoFilesImageView:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

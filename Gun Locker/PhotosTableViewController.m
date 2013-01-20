@@ -28,7 +28,7 @@
 
     _addPhotoSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                  delegate:self
-                                        cancelButtonTitle:@"Cancel"
+                                        cancelButtonTitle:kGLCancelText
                                    destructiveButtonTitle:nil
                                         otherButtonTitles:@"Take Photo", @"Choose Existing", nil];
     
@@ -58,14 +58,6 @@
     _noPhotosImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Photos"]];
     _noPhotosImageView.hidden = (count != 0);
     self.tableView.hidden = (count == 0);
-}
-
-- (void)viewDidUnload {
-    [self setSelectedWeapon:nil];
-    [self setNoPhotosImageView:nil];
-    [self setTableView:nil];
-    [self setFetchedResultsController:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -158,7 +150,7 @@
 
     [[[UIActionSheet alloc] initWithTitle:nil
                                  delegate:self
-                        cancelButtonTitle:@"Cancel"
+                        cancelButtonTitle:kGLCancelText
                    destructiveButtonTitle:@"Delete Photo"
                         otherButtonTitles:nil] showInView:[UIApplication sharedApplication].keyWindow];
 }

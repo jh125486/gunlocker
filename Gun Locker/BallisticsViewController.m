@@ -109,28 +109,10 @@
 //    }
 //}
 
-- (void)viewDidUnload {
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self stopUpdatingLocations];
-    [self setWxButton:nil];
-    [self setTempLabel:nil];
-    [self setWindLabel:nil];
-    [self setAltitudeLabel:nil];
-    [self setDensityAltitudeLabel:nil];
-    [self setWxStationLabel:nil];
-    [self setRhLabel:nil];
-    [self setChooseProfileButton:nil];
-    [self setDopeCardsButton:nil];
-    [self setWhizWheelButton:nil];
-    [self setRangeLabel:nil];
-    [self setSelectedProfileTextField:nil];
-    [self setSelectedProfilePickerView:nil];
-    [self setSelectedProfileWeaponLabel:nil];
-    [self setAddNewProfileButton:nil];
-    [self setSelectedProfileNameLabel:nil];
-    [self setWxButton:nil];
-    [self setCurrentWeather:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -148,7 +130,7 @@
     if(selectedProfile) {
         UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
                                                            delegate:self
-                                                  cancelButtonTitle:@"Cancel"
+                                                  cancelButtonTitle:kGLCancelText
                                              destructiveButtonTitle:nil
                                                   otherButtonTitles:@"View Selected Profile", @"Choose a Different Profile", nil];
         sheet.actionSheetStyle = UIActionSheetStyleAutomatic;

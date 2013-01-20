@@ -87,30 +87,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didCalculateSG:) name:@"didCalculateSG" object:nil];
 }
 
-- (void)viewDidUnload {
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setSelectedBullet:nil];
-    [self setMuzzleVelocityTextField:nil];
-    [self setSiteHeightTextField:nil];
-    [self setZeroDistanceTextField:nil];
-    [self setZeroDistanceUnitControl:nil];
-    [self setNameTextField:nil];
-    [self setWeaponTextField:nil];
-    [self setBcButton:nil];
-    [self setDragModelControl:nil];
-    [self setDiameterTextField:nil];
-    [self setWeightTextField:nil];
-    [self setBulletButton:nil];
-    [self setWeaponButton:nil];
-    [self setDelegate:nil];
-    [self setSgTextField:nil];
-    [self setSgDirectionControl:nil];
-    [self setScopeAdjustmentClicksButton:nil];
-    [self setScopeElevationClicksLabel:nil];
-    [self setScopeWindageClicksLabel:nil];
-    [self setScopeAdjustmentTextField:nil];
-    [self setScopePickerHeaderView:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

@@ -49,14 +49,6 @@
     self.tableView.hidden = (count == 0);
 }
 
-- (void)viewDidUnload {
-    [self setSelectedWeapon:nil];
-    [self setNoMaintenancesImageView:nil];
-    [self setTableView:nil];
-    [self setFetchedResultsController:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

@@ -79,30 +79,6 @@
     }
 }
 
-- (void)viewDidUnload {
-    [self setTempTextField:nil];
-    [self setTempUnitControl:nil];
-    [self setPressureTextField:nil];
-    [self setPressureUnitControl:nil];
-    [self setRhTextField:nil];
-    [self setAltitudeTextField:nil];
-    [self setAltitudeUnitControl:nil];
-    [self setRangeUnitControl:nil];
-    [self setRangeStartStepper:nil];
-    [self setRangeEndStepper:nil];
-    [self setRangeStepStepper:nil];
-    [self setWindSpeedTextField:nil];
-    [self setWindSpeedUnitControl:nil];
-    [self setWindDirectionTextField:nil];
-    [self setWindDirectionTypeControl:nil];
-    [self setTargetSpeedTextField:nil];
-    [self setTargetSpeedUnitControl:nil];
-    [self setTargetDirectionTextField:nil];
-    [self setTargetDirectionTypeControl:nil];
-    [self setDropDriftUnitcontrol:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

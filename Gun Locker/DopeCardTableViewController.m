@@ -62,23 +62,6 @@
     [self.tableView reloadData];
 }
 
-- (void)viewDidUnload {
-    [self setWeaponLabel:nil];
-    [self setZeroLabel:nil];
-    [self setMvLabel:nil];
-    [self setWeatherLabel:nil];
-    [self setWindInfoLabel:nil];
-    [self setLeadInfoLabel:nil];
-    [self setNotesLabel:nil];
-    [self setRangeLabel:nil];
-    [self setDropLabel:nil];
-    [self setDriftLabel:nil];
-    [self setDopeCardSectionHeaderView:nil];
-    [self setWeatherLabel:nil];
-    [self setInfoView:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 //    return (interfaceOrientation == UIInterfaceOrientationPortrait);
     return YES;

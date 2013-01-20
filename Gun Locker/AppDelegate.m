@@ -107,14 +107,15 @@
     DataManager *dataManager = [DataManager sharedManager];
     NSArray *windageLeading = [dataManager.windageLeading objectForKey:[dataManager.speedTypes objectAtIndex:0]];
     
-    [preferences setBool:NO forKey:@"showNFADetails"];
-    [preferences setInteger:0 forKey:@"nightModeControl"];
-    [preferences setInteger:0 forKey:@"rangeUnitsControl"];
-    [preferences setInteger:0 forKey:@"reticleUnitsControl"];
-    [preferences setInteger:0 forKey:@"directionControl"];
-    [preferences setInteger:100 forKey:@"rangeStart"];
-    [preferences setInteger:600 forKey:@"rangeEnd"];
-    [preferences setInteger:50 forKey:@"rangeStep"];
+    [preferences setBool:NO forKey:kGLShowNFADetailsKey];
+    [preferences setObject:@"make" forKey:kGLCardSortByTypeKey];
+    [preferences setInteger:0 forKey:kGLNightModeControlKey];
+    [preferences setInteger:0 forKey:kGLRangeUnitsControlKey];
+    [preferences setInteger:0 forKey:kGLReticleUnitsControlKey];
+    [preferences setInteger:0 forKey:kGLDirectionControlKey];
+    [preferences setInteger:100 forKey:kGLRangeStartKey];
+    [preferences setInteger:600 forKey:kGLRangeEndKey];
+    [preferences setInteger:50 forKey:kGLRangeStepKey];
     [preferences setObject:[dataManager.speedTypes objectAtIndex:0] forKey:@"speedType"];
     [preferences setObject:[windageLeading objectAtIndex:0] forKey:@"speedUnit"];
     [preferences setInteger:0 forKey:@"speedIndexPathRow"];

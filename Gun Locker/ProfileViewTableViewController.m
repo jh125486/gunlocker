@@ -60,22 +60,6 @@
     _sgDirectionLabel.text = _profile.sg_twist_direction;
 }
 
-- (void)viewDidUnload {
-    [self setMvLabel:nil];
-    [self setSightHeightLabel:nil];
-    [self setZeroLabel:nil];
-    [self setBulletDiameterLabel:nil];
-    [self setBulletWeightLabel:nil];
-    [self setDragModelLabel:nil];
-    [self setBcLabel:nil];
-    [self setProfile:nil];
-    [self setSgLabel:nil];
-    [self setSgDirectionLabel:nil];
-    [self setElevationAdjustmentLabel:nil];
-    [self setWindageAdjustmentLabel:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
@@ -93,7 +77,7 @@
 - (IBAction)deleteTapped:(id)sender {
     [[[UIActionSheet alloc] initWithTitle:nil
                                  delegate:self
-                        cancelButtonTitle:@"Cancel"
+                        cancelButtonTitle:kGLCancelText
                    destructiveButtonTitle:@"Delete Profile"
                         otherButtonTitles:nil] showInView:[UIApplication sharedApplication].keyWindow];
 }

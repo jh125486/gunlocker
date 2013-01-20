@@ -60,34 +60,6 @@
     [self.tableView reloadData];
 }
 
-- (void)viewDidUnload {
-    [self setRangeUnit:nil];
-    [self setTempString:nil];
-    [self setAltitudeString:nil];
-    [self setPressureString:nil];
-    [self setWindInfoString:nil];
-    [self setTargetInfoString:nil];
-    [self setDopeUnit:nil];
-    [self setPassedTrajectory:nil];
-    [self setZeroLabel:nil];
-    [self setMvLabel:nil];
-    [self setTempLabel:nil];
-    [self setRhLabel:nil];
-    [self setAltitudeLabel:nil];
-    [self setPressureLabel:nil];
-    [self setWindInfoLabel:nil];
-    [self setTargetInfoLabel:nil];
-    [self setWeaponLabel:nil];
-    [self setWeaponLabel:nil];
-    [self setProfileNameLabel:nil];
-    [self setDopeCardSectionHeaderView:nil];
-    [self setRangeUnitLabel:nil];
-    [self setDropUnitLabel:nil];
-    [self setDriftUnitLabel:nil];
-    [self setInfoView:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }

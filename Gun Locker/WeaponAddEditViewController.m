@@ -172,7 +172,7 @@
 - (void)addPhotoTapped:(UITapGestureRecognizer *)recognizer {
     [[[UIActionSheet alloc] initWithTitle:nil
                                 delegate:self
-                       cancelButtonTitle:@"Cancel"
+                       cancelButtonTitle:kGLCancelText
                   destructiveButtonTitle:nil
                        otherButtonTitles:@"Take Photo", @"Choose Existing", nil]
      showInView:[UIApplication sharedApplication].keyWindow];

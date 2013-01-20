@@ -38,15 +38,6 @@
     _dopeCardsCountLabel.text   = [[DopeCard numberOfEntities] stringValue];
     _magazineCountLabel.text    = [NSString stringWithFormat:@"%@ total", magazineCount];
     _ammunitionCountLabel.text  = [NSString stringWithFormat:@"%@ total", ammunitionCount];
- }
-
-- (void)viewDidUnload {
-    [self setMalfunctionCountLabel:nil];
-    [self setMaintenanceCountLabel:nil];
-    [self setDopeCardsCountLabel:nil];
-    [self setAmmunitionCountLabel:nil];
-    [self setMagazineCountLabel:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

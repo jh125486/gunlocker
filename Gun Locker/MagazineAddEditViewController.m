@@ -61,20 +61,6 @@
     [TestFlight passCheckpoint:@"Magazines disappeared"];
 }
 
-- (void)viewDidUnload {
-    [self setBrandTextField:nil];
-    [self setTypeTextField:nil];
-    [self setCaliberTextField:nil];
-	[self setColorTextField:nil];
-    [self setQuantitiyTextField:nil];
-    [self setCurrentTextField:nil];
-    [self setSelectedMagazine:nil];
-    [self setSelectedCaliber:nil];
-    [self setCapacityTextField:nil];
-    [self setCapacityRoundsLabel:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

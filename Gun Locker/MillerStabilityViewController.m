@@ -64,22 +64,6 @@
     }
 }
 
-- (void)viewDidUnload {
-    [self setBulletCaliberTextField:nil];
-    [self setBulletLengthTextField:nil];
-    [self setBulletWeightTextField:nil];
-    [self setMvTextField:nil];
-    [self setTwistRateTextField:nil];
-    [self setResultLabel:nil];
-    [self setCurrentTextField:nil];
-    [self setPassedCaliber:nil];
-    [self setPassedWeight:nil];
-    [self setPassedMV:nil];
-    
-    [self setResultView:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

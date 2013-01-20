@@ -56,18 +56,6 @@
     [[formFields objectAtIndex:0] becomeFirstResponder];
 }
 
-- (void)viewDidUnload {
-    [self setBulletCaliberTextField:nil];
-    [self setBulletLengthTextField:nil];
-    [self setBulletWeightTextField:nil];
-    [self setMvTextField:nil];
-    [self setStabilityFactorTextField:nil];
-    [self setResultLabel:nil];
-    [self setCurrentTextField:nil];
-    [self setResultView:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

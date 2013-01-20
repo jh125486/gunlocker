@@ -64,15 +64,6 @@
     _savedScopeButtonIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];
 }
 
-- (void)viewDidUnload {
-    [self setSavedSearchTerm:nil];
-    [self setDelegate:nil];
-    [self setSelectedCaliber:nil];
-    [self setSearchDisplayController:nil];
-    
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

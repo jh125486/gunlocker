@@ -544,6 +544,7 @@
 		53D263431531EBD000ECA9EE /* DopeCardTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardTableViewController.h; sourceTree = "<group>"; };
 		53D263441531EBD000ECA9EE /* DopeCardTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DopeCardTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53DEF68616AB7EEE00F91048 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		53DEF68816ABC1B100F91048 /* Constants.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = Constants.h; sourceTree = "<group>"; };
 		53E31485151E8082005B414F /* icon_link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_link.png; sourceTree = "<group>"; };
 		53E31487151E8405005B414F /* icon_delink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_delink.png; sourceTree = "<group>"; };
 		53E32EBD156C627400941A5B /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
@@ -912,6 +913,7 @@
 				530DDF0814EEB6D800F1BC7F /* AppDelegate.m */,
 				530C390B153E237B005C0AB6 /* DataManager.h */,
 				530C390C153E237B005C0AB6 /* DataManager.m */,
+				53DEF68816ABC1B100F91048 /* Constants.h */,
 			);
 			name = Application;
 			sourceTree = "<group>";

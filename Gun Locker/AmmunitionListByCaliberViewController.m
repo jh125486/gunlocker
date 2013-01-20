@@ -55,11 +55,6 @@
     self.tableView.hidden = (count == 0);    
 }
 
-- (void)viewDidUnload {
-    [self setTableView:nil];
-    [self setNoAmmunitionImageView:nil];
-    [super viewDidUnload];
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

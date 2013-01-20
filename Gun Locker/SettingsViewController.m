@@ -36,14 +36,14 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
-    _showNFAInformationSwitch.on = [defaults boolForKey:@"showNFADetails"];
+    _showNFAInformationSwitch.on = [defaults boolForKey: kGLShowNFADetailsKey];
     _passcodeCell.detailTextLabel.text   = ([[KKPasscodeLock sharedLock] isPasscodeRequired]) ? @"On" : @"Off";
-    _rangeUnitsControl.selectedSegmentIndex   = [defaults integerForKey:@"rangeUnitsControl"];
-    _reticleUnitsControl.selectedSegmentIndex = [defaults integerForKey:@"reticleUnitsControl"];
+    _rangeUnitsControl.selectedSegmentIndex   = [defaults integerForKey:kGLRangeUnitsControlKey];
+    _reticleUnitsControl.selectedSegmentIndex = [defaults integerForKey:kGLReticleUnitsControlKey];
 
-    _rangeStartStepper.Current = [defaults integerForKey:@"rangeStart"];
-    _rangeEndStepper.Current   = [defaults integerForKey:@"rangeEnd"];
-    _rangeStepStepper.Current  = [defaults integerForKey:@"rangeStep"];
+    _rangeStartStepper.Current = [defaults integerForKey:kGLRangeStartKey];
+    _rangeEndStepper.Current   = [defaults integerForKey:kGLRangeEndKey];
+    _rangeStepStepper.Current  = [defaults integerForKey:kGLRangeStepKey];
     _rangeStartStepper.Minimum = 5;
     _rangeStartStepper.Maximum = 500;
     _rangeEndStepper.Minimum   = 100;
@@ -56,8 +56,8 @@
     _rangeStartStepper.IsEditableTextField = _rangeEndStepper.IsEditableTextField = _rangeStepStepper.IsEditableTextField = NO;
     
     _windLeadingLabel.text = [NSString stringWithFormat:@"%@ %@", [defaults stringForKey:@"speedType"], [defaults stringForKey:@"speedUnit"]];
-    _directionControl.selectedSegmentIndex = [defaults integerForKey:@"directionControl"];
-    _nightModeControl.selectedSegmentIndex = [defaults integerForKey:@"nightModeControl"];
+    _directionControl.selectedSegmentIndex = [defaults integerForKey:kGLDirectionControlKey];
+    _nightModeControl.selectedSegmentIndex = [defaults integerForKey:kGLNightModeControlKey];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -87,23 +87,6 @@
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [TestFlight passCheckpoint:@"Settings disappeared"];
-}
-
--(void)viewDidUnload {
-    [self setNightModeControl:nil];
-    [self setRangeUnitsControl:nil];
-    [self setReticleUnitsControl:nil];
-    [self setPasscodeCell:nil];
-    [self setRangeStartStepper:nil];
-    [self setRangeEndStepper:nil];
-    [self setRangeStepStepper:nil];
-    [self setWindLeadingLabel:nil];
-    [self setDirectionControl:nil];
-    [self setShowNFAInformationSwitch:nil];
-    [self setExportWeaponsButton:nil];
-    [self setExportMagazinesButton:nil];
-    [self setExportAmmunitionButton:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -145,17 +128,22 @@
 - (IBAction)saveSettings:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    [defaults setBool:_showNFAInformationSwitch.on forKey:@"showNFADetails"];
-    [defaults setInteger:[_nightModeControl selectedSegmentIndex] forKey:@"nightModeControl"];
-    [defaults setInteger:[_rangeUnitsControl selectedSegmentIndex] forKey:@"rangeUnitsControl"];
-    [defaults setInteger:[_reticleUnitsControl selectedSegmentIndex] forKey:@"reticleUnitsControl"];
-    [defaults setInteger:[_directionControl selectedSegmentIndex] forKey:@"directionControl"];
-    [defaults setInteger:(int)_rangeStartStepper.Current forKey:@"rangeStart"];
-    [defaults setInteger:(int)_rangeEndStepper.Current forKey:@"rangeEnd"];
-    [defaults setInteger:(int)_rangeStepStepper.Current forKey:@"rangeStep"];
+    [defaults setBool:_showNFAInformationSwitch.on forKey: kGLShowNFADetailsKey];
+    [defaults setInteger:[_nightModeControl selectedSegmentIndex] forKey: kGLNightModeControlKey];
+    [defaults setInteger:[_rangeUnitsControl selectedSegmentIndex] forKey:kGLRangeUnitsControlKey];
+    [defaults setInteger:[_reticleUnitsControl selectedSegmentIndex] forKey:kGLReticleUnitsControlKey];
+    [defaults setInteger:[_directionControl selectedSegmentIndex] forKey:kGLDirectionControlKey];
+    [defaults setInteger:(int)_rangeStartStepper.Current forKey:kGLRangeStartKey];
+    [defaults setInteger:(int)_rangeEndStepper.Current forKey:kGLRangeEndKey];
+    [defaults setInteger:(int)_rangeStepStepper.Current forKey:kGLRangeStepKey];
 }
 
-- (IBAction)setStepperRanges:(id)sender {
+- (IBAction)cardSortingChanged:(UISegmentedControl *)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:sender.selectedSegmentIndex ? @"make" : @"model" forKey:kGLCardSortByTypeKey];
+}
+
+- (IBAction)updateStepperRanges:(id)sender {
     _rangeStartStepper.Maximum = _rangeEndStepper.Current - _rangeStepStepper.Current;
     _rangeEndStepper.Minimum   = _rangeStartStepper.Current + _rangeStepStepper.Current;
     _rangeStepStepper.Maximum  = _rangeEndStepper.Current - _rangeStartStepper.Current;    
@@ -165,7 +153,7 @@
     exportButton = button;
     [[[UIActionSheet alloc] initWithTitle:nil
                                  delegate:self
-                        cancelButtonTitle:@"Cancel"
+                        cancelButtonTitle:kGLCancelText
                    destructiveButtonTitle:nil
                         otherButtonTitles:@"Email", @"iTunes File Sharing", nil] 
      showInView:[UIApplication sharedApplication].keyWindow];
@@ -194,7 +182,7 @@
 #pragma mark CSV export
 
 -(NSString *)csvDumpWeapons {
-    BOOL showNFA = [[NSUserDefaults standardUserDefaults] boolForKey:@"showNFADetails"];
+    BOOL showNFA = [[NSUserDefaults standardUserDefaults] boolForKey: kGLShowNFADetailsKey];
     
     NSMutableString *tempString = [[NSMutableString alloc] initWithString:@"Type,Manufacturer,Model,Caliber,Finish,Serial #,Barrel Length,Barrel Thread Pitch,Purchased Date,Purchased Price,Round Count"];
     if (showNFA) 

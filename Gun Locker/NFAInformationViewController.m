@@ -108,7 +108,7 @@
         button.onSelected = ^{
             [[[UIActionSheet alloc] initWithTitle:nil
                                          delegate:self
-                                cancelButtonTitle:@"Cancel"
+                                cancelButtonTitle:kGLCancelText
                            destructiveButtonTitle:@"Clear"
                                 otherButtonTitles:nil] showInView:[UIApplication sharedApplication].keyWindow];
         };
@@ -140,14 +140,6 @@
 
 -(void)viewDidDisappear:(BOOL)animated {
     [TestFlight passCheckpoint:@"NFAInformation disappeared"];
-}
-
-- (void)viewDidUnload {
-    [self setSelectedWeapon:nil];
-    [self setLine1Label:nil];
-    [self setLine2Label:nil];
-    [self setTimeLineFooterLabel:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

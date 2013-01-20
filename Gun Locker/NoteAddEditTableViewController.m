@@ -41,14 +41,6 @@
     self.title = @"Note";
 }
 
-- (void)viewDidUnload {
-    [self setFakePlaceholderLabel:nil];
-    [self setTitleTextField:nil];
-    [self setBodyTextView:nil];
-	[self setPassedNote:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

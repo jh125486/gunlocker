@@ -79,24 +79,6 @@
     [_weightUnitPicker selectRow:0 inComponent:1 animated:NO];
 }
 
-- (void)viewDidUnload {
-    [self setLengthUnitPicker:nil];
-    [self setWeightUnitPicker:nil];
-    [self setLength1UnitTextField:nil];
-    [self setLength2UnitTextField:nil];
-    [self setWeight1UnitTextField:nil];
-    [self setWeight2UnitTextField:nil];
-    [self setLength1UnitButton:nil];
-    [self setLength2UnitButton:nil];
-    [self setWeight1UnitButton:nil];
-    [self setWeight2UnitButton:nil];
-    [self setLength1TextField:nil];
-    [self setLength2TextField:nil];
-    [self setWeight1TextField:nil];
-    [self setWeight2TextField:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

@@ -60,20 +60,6 @@
     [self setTitleLabel];
 }
 
-- (void)viewDidUnload {
-    [TestFlight passCheckpoint:@"Direction/Speed modal unloaded"];
-    [self setDelegate:nil];
-    [self setTitle1Label:nil];
-    [self setTitle2Label:nil];
-    [self setWheel:nil];
-    [self setDirectionTypeControl:nil];
-    [self setSpeedSlider:nil];
-    [self setSpeedUnitControl:nil];
-    [self setSpeedImage:nil];
-    [self setResultType:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

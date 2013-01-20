@@ -132,28 +132,8 @@
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [TestFlight passCheckpoint:@"DopeCardsAddEdit unloaded"];
-}
-
-- (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setCardNameTextField:nil];
-    [self setZeroTextField:nil];
-    [self setZeroUnitField:nil];
-    [self setZeroUnitPickerView:nil];
-    [self setMuzzleVelocityTextField:nil];
-    [self setWeatherInfoField:nil];
-    [self setWindInfoField:nil];
-    [self setLeadInfoField:nil];
-    [self setNotesTextField:nil];
-    [self setRangeUnitField:nil];
-    [self setDropUnitField:nil];
-    [self setDriftUnitField:nil];
-    [self setSectionHeader:nil];
-    [self setDopeUnitPickerView:nil];
-    [self setWindInfoPickerView:nil];
-    [self setLeadInfoPickerView:nil];
     [self setTableView:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

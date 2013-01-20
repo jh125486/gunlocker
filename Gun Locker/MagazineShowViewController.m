@@ -33,13 +33,13 @@
     sellMagazinesAlertView = [[UIAlertView alloc] initWithTitle:@"Sell Magazines" 
                                                       message:nil 
                                                      delegate:self 
-                                            cancelButtonTitle:@"Cancel" 
+                                            cancelButtonTitle:kGLCancelText 
                                             otherButtonTitles:@"Sell!", nil];
     
     buyMagazinesAlertView = [[UIAlertView alloc] initWithTitle:@"Buy More Magazines" 
                                                        message:nil 
                                                       delegate:self 
-                                             cancelButtonTitle:@"Cancel" 
+                                             cancelButtonTitle:kGLCancelText 
                                              otherButtonTitles:@"Buy!", nil];
     
     sellMagazinesAlertView.alertViewStyle = buyMagazinesAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
@@ -66,18 +66,6 @@
 -(void)setCount {
     _quantityLabel.text   = [_selectedMagazine.count stringValue];
     _sellMagazinesButton.enabled = ([_selectedMagazine.count intValue] != 0);
-}
-
-- (void)viewDidUnload {
-    [self setBrandLabel:nil];
-    [self setTypeLabel:nil];
-	[self setColorLabel:nil];
-    [self setCaliberLabel:nil];
-    [self setQuantityLabel:nil];
-    [self setSellMagazinesButton:nil];
-    [self setSelectedMagazine:nil];
-    [self setCapacityLabel:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -135,7 +123,7 @@
 - (IBAction)deleteTapped:(id)sender {
     [[[UIActionSheet alloc] initWithTitle:nil
                                  delegate:self
-                        cancelButtonTitle:@"Cancel"
+                        cancelButtonTitle:kGLCancelText
                    destructiveButtonTitle:@"Delete"
                         otherButtonTitles:nil] showInView:[UIApplication sharedApplication].keyWindow];
 }

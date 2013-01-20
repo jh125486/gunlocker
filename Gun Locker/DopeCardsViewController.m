@@ -54,13 +54,9 @@
     self.tableView.hidden = (count == 0);
 }
 
-- (void)viewDidUnload {
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setSelectedWeapon:nil];
-    [self setNoDopeCardsImageView:nil];
-    [self setTableView:nil];
-    [self setFetchedResultsController:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

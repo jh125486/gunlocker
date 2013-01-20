@@ -81,11 +81,6 @@
     [super viewDidLoad];
 }
 
-- (void)viewDidUnload {
-    [self setSelectedWeapon:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

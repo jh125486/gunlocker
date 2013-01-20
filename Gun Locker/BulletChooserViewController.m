@@ -40,15 +40,9 @@
     [self configureSections];
 }
 
-- (void)viewDidUnload {
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setSearchBar:nil];
-    [self setSearchResults:nil];
-    [self setCollation:nil];
-    [self setSearchDisplayController:nil];
-    [self setSelectedBullet:nil];
-    [self setSelectedCategory:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

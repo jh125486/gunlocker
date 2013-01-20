@@ -34,13 +34,13 @@
     roundsFiredAlertView = [[UIAlertView alloc] initWithTitle:@"Rounds Fired" 
                                                       message:nil 
                                                      delegate:self 
-                                            cancelButtonTitle:@"Cancel" 
+                                            cancelButtonTitle:kGLCancelText 
                                             otherButtonTitles:@"Fire!", nil];
     
     roundsBoughtAlertView = [[UIAlertView alloc] initWithTitle:@"Rounds Bought" 
                                                        message:nil 
                                                       delegate:self 
-                                             cancelButtonTitle:@"Cancel" 
+                                             cancelButtonTitle:kGLCancelText 
                                              otherButtonTitles:@"Buy!", nil];
     
     roundsFiredAlertView.alertViewStyle = roundsBoughtAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
@@ -73,19 +73,6 @@
 -(void)setCount {
     _countLabel.text = [NSString stringWithFormat:@"%@/%@", _selectedAmmunition.count, _selectedAmmunition.count_original];
     _roundsFiredButton.enabled = ([_selectedAmmunition.count intValue] != 0);
-}
-
-- (void)viewDidUnload {
-    [self setRoundsFiredButton:nil];
-    [self setBrandLabel:nil];
-    [self setTypeLabel:nil];
-    [self setCaliberLabel:nil];
-    [self setCountLabel:nil];
-    [self setSelectedAmmunition:nil];
-    [self setCprLabel:nil];
-    [self setPurchasedFromLabel:nil];
-    [self setPurchaseDateLabel:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -143,7 +130,7 @@
 - (IBAction)deleteTapped:(id)sender {
     [[[UIActionSheet alloc] initWithTitle:nil
                                  delegate:self
-                        cancelButtonTitle:@"Cancel"
+                        cancelButtonTitle:kGLCancelText
                    destructiveButtonTitle:@"Delete"
                         otherButtonTitles:nil] showInView:[UIApplication sharedApplication].keyWindow];
 }

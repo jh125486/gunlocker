@@ -71,12 +71,9 @@
     [self updateTitle];
 }
 
-- (void)viewDidUnload {
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setTableView:nil];
-    [self setNoNotesImageView:nil];
-    [self setSelectedWeapon:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

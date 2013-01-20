@@ -54,13 +54,6 @@
     self.brandCountLabel.text = [NSString stringWithFormat:@"%@ rounds / %d brands", rounds, [_fetchedResultsController.sections count]];
 }
 
-- (void)viewDidUnload {
-    [self setFetchedResultsController:nil];
-    [self setCaliberLabel:nil];
-    [self setBrandCountLabel:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

@@ -81,20 +81,6 @@
     [self purchasePriceValueChanged:nil];
 }
 
-- (void)viewDidUnload {
-    [self setBrandTextField:nil];
-    [self setTypeTextField:nil];
-    [self setCaliberTextField:nil];
-    [self setCountTextField:nil];
-    [self setCurrentTextField:nil];
-    [self setSelectedAmmunition:nil];
-    [self setSelectedCaliber:nil];
-    [self setPurchasePriceTextField:nil];
-    [self setPurchasedFromTextField:nil];
-    [self setPurchaseDateTextField:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

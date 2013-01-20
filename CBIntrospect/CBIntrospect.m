@@ -361,7 +361,7 @@ static NSString * const kDLIntrospectStatementHistoryKey = @"DLIntrospectStateme
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Execute Code:"
                                                         message:nil
                                                        delegate:self
-                                              cancelButtonTitle:@"Cancel"
+                                              cancelButtonTitle:kGLCancelText
                                               otherButtonTitles:@"Perform", nil];
 	alertView = CB_AutoRelease(alertView);
 	alertView.alertViewStyle = UIAlertViewStylePlainTextInput;

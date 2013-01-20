@@ -64,7 +64,7 @@
 }
 
 -(void)checkDayOrNightMode:(NSTimer*)timer {
-    int mode = [[[NSUserDefaults standardUserDefaults] objectForKey:@"nightModeControl"] intValue];
+    int mode = [[[NSUserDefaults standardUserDefaults] objectForKey:kGLNightModeControlKey] intValue];
     
     if (mode == 0) {// day mode all the time
         DebugLog(@"Mode: day mode");
@@ -110,13 +110,13 @@
     rangeIndex = 0;
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    reticle = [defaults boolForKey:@"reticleUnitsControl"] ? @"MOA" : @"MilDot";
+    reticle = [defaults boolForKey:kGLReticleUnitsControlKey] ? @"MOA" : @"MilDot";
     
     // do all conversions for UnitControls
-    trajectory.rangeUnit  = [defaults integerForKey:@"rangeUnitsControl"];
-    trajectory.rangeStart = [defaults integerForKey:@"rangeStart"];
-    trajectory.rangeEnd   =  [defaults integerForKey:@"rangeEnd"];
-    trajectory.rangeStep  = [defaults integerForKey:@"rangeStep"];
+    trajectory.rangeUnit  = [defaults integerForKey:kGLRangeUnitsControlKey];
+    trajectory.rangeStart = [defaults integerForKey:kGLRangeStartKey];
+    trajectory.rangeEnd   =  [defaults integerForKey:kGLRangeEndKey];
+    trajectory.rangeStep  = [defaults integerForKey:kGLRangeStepKey];
     
     _rangeLabel.text = (trajectory.rangeUnit == 0) ? @"Yards" : @"Meters";
     
@@ -128,7 +128,7 @@
     [arrayRanges addObject:@""];
     
     
-    directionType = [dataManager.directionTypes objectAtIndex:[defaults integerForKey:@"directionControl"]];
+    directionType = [dataManager.directionTypes objectAtIndex:[defaults integerForKey:kGLDirectionControlKey]];
     arrayDirections = [dataManager.whizWheelPicker2 objectForKey:directionType];
     
     _speedUnit = [defaults objectForKey:@"speedUnit"]; // should have another label to differentiate between leading and windage
@@ -196,36 +196,7 @@
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [TestFlight passCheckpoint:@"Whiz Wheel disappeared"];
-}
-
-- (void)viewDidUnload {
-    [TestFlight passCheckpoint:@"Whiz Wheel Unloaded"];
     [modeTimer invalidate];
-    [self setRangesTableView:nil];
-    [self setRangeLabel:nil];
-    [self setSelectedProfile:nil];
-    [self setLastSelectedRangeCell:nil];
-    [self setDirectionsTableView:nil];
-    [self setSpeedTableView:nil];
-    [self setResultBackgroundView:nil];
-    [self setReticleImage:nil];
-    [self setTableBackgroundImage:nil];
-    [self setReticlePOIImage:nil];
-    [self setSpeedType:nil];
-    [self setSpeedUnit:nil];
-    [self setDropInchesLabel:nil];
-    [self setDriftInchesLabel:nil];
-    [self setDropMOAMils:nil];
-    [self setDriftMOAMils:nil];
-    [self setDropUnitLabel:nil];
-    [self setDriftUnitLabel:nil];
-    [self setTitleLabel:nil];
-    [self setDirectionTypeLabel:nil];
-    [self setFromLabel:nil];
-    [self setSpeedLabel:nil];
-    [self setDropClicksLabel:nil];
-    [self setDriftClicksLabel:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

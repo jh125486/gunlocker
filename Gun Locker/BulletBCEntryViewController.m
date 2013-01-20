@@ -87,24 +87,6 @@
     }
 }
 
-- (void)viewDidUnload {
-    [self setG7EntryView:nil];
-    [self setG1EntryView:nil];
-    [self setG7BCTextField:nil];
-    [self setG1BCTextField:nil];
-    [self setG1BC1TextField:nil];
-    [self setG1BC2TextField:nil];
-    [self setG1BC3TextField:nil];
-    [self setG1FPS1TextField:nil];
-    [self setG1FPS2TextField:nil];
-    [self setG1FPS3TextField:nil];
-    [self setScrollView:nil];
-    [self setDragModelLabel:nil];
-    [self setG1BC4TextField:nil];
-    [self setG1FPS4TextField:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
