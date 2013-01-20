@@ -27,7 +27,7 @@
     [super viewDidLoad];
     types = [NSArray arrayWithObjects:@"Handguns", @"Rifles", @"Shotguns", @"Misc.", nil];
 
-    [self setupFRCArray];
+//    [self setupFRCArray];
 
     #ifdef DEBUG
     if([Weapon countOfEntities] == 0) [self loadTestWeapons];    
@@ -74,11 +74,6 @@
     // sets initial segment
     _selectedTypeControl.apportionsSegmentWidthsByContent = YES;
     
-//    int segmentedUnitHeight = 32;
-//    [_selectedTypeControl setFrame: CGRectMake(_selectedTypeControl.frame.origin.x,
-//                                               _selectedTypeControl.frame.origin.y,
-//                                               _selectedTypeControl.frame.size.width,
-//                                               segmentedUnitHeight)];
     [_selectedTypeControl setContentOffset:CGSizeMake(0.0f, 3.0f) forSegmentAtIndex:0];
     [_selectedTypeControl setContentOffset:CGSizeMake(0.0f, 3.0f) forSegmentAtIndex:1];
     [_selectedTypeControl setContentOffset:CGSizeMake(0.0f, 3.0f) forSegmentAtIndex:2];
@@ -96,6 +91,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self setupFRCArray];  // set up FRC to deal with changed sorting attributes on every willAppear
     [self segmentedTypeControlClicked];
 }
 
@@ -217,12 +213,12 @@
 #pragma mark FRC
 -(void)setupFRCArray {
     NSMutableDictionary *frcTemp = [[NSMutableDictionary alloc] initWithCapacity:types.count];
-    NSString *sortBy = [[NSUserDefaults standardUserDefaults] integerForKey:kGLCardSortByTypeKey]
-                        ? @"manufacturer.name,model"
-                        : @"model,manufacturer.name";
-    
+    NSString *sortByString = [[NSUserDefaults standardUserDefaults] integerForKey:kGLCardSortByTypeKey] == 0
+                                ? @"manufacturer.name,model"
+                                : @"model,manufacturer.name";
+        
     for (NSString *type in types) {
-        NSFetchRequest *weaponsRequest = [Weapon requestAllSortedBy:sortBy
+        NSFetchRequest *weaponsRequest = [Weapon requestAllSortedBy:sortByString
                                                           ascending:YES
                                                       withPredicate:[NSPredicate predicateWithFormat:@"type = %@", type]];
         
