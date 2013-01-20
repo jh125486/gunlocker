@@ -83,7 +83,7 @@
         QDateTimeInlineElement *stampReceivedDateElement = [[QDateTimeInlineElement alloc] initWithTitle:@"Stamp Received" date:stamp.stamp_received];
         stampReceivedDateElement.key = @"stamp_received";
 
-        stampReceivedDateElement.onValueChanged = formSentDateElement.onValueChanged = ^{[self setTimeLineFooter];};
+        stampReceivedDateElement.onValueChanged = formSentDateElement.onValueChanged = ^(QRootElement *element){[self setTimeLineFooter];};
         formSentDateElement.maximumDate = checkCashedDateElement.maximumDate = wentPendingDateElement.maximumDate = stampReceivedDateElement.maximumDate = [NSDate date];
         formSentDateElement.mode = checkCashedDateElement.mode = wentPendingDateElement.mode = stampReceivedDateElement.mode = UIDatePickerModeDate;
         

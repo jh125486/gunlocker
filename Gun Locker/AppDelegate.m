@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "CBIntrospect.h"
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -26,7 +26,7 @@
     #endif
 
 
-    [MagicalRecordHelpers setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"GunLocker.sqlite"];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"GunLocker.sqlite"];
     DebugLog(@"MR setup completed");
     recordsDirty = NO;
     
@@ -41,6 +41,8 @@
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        if (recordsDirty) [[NSManagedObjectContext defaultContext] save];
 //    });
+    
+    [[CBIntrospect sharedIntrospector] start];
     
     return YES;
 }
@@ -87,7 +89,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    [MagicalRecordHelpers cleanUp];
+    [MagicalRecord cleanUp];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:NO forKey:@"tempWeaponDirty"];
     [defaults removeObjectForKey:@"tempWeapon"];
