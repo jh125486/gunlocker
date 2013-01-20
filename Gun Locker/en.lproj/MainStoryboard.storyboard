@@ -10,7 +10,7 @@
             <objects>
                 <viewController id="ppn-js-nWK" customClass="CardsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="center" id="HWS-UE-vow">
-                        <rect key="frame" x="0.0" y="64" width="320" height="337"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="center" id="eTC-5P-ANC" userLabel="no files">
@@ -18,7 +18,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="center" alwaysBounceVertical="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="367" sectionHeaderHeight="22" sectionFooterHeight="22" id="evi-Uo-UIC">
-                                <rect key="frame" x="2" y="32" width="320" height="337"/>
+                                <rect key="frame" x="2" y="32" width="320" height="367"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -261,7 +261,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="noFilesImageView" destination="eTC-5P-ANC" id="ie6-vN-TIo"/>
                         <outlet property="selectedTypeControl" destination="GnN-LH-oOy" id="C2j-QC-F3i"/>
@@ -3734,16 +3733,16 @@
             <objects>
                 <viewController id="w3H-oJ-mCE" customClass="NotesListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="p6D-zM-QWO">
-                        <rect key="frame" x="0.0" y="64" width="320" height="229"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="iCD-i6-Fl6" userLabel="no Notes Image View">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="229"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.75686274509999996" green="0.70980392160000005" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="tGl-PN-Efh">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="229"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
@@ -4285,7 +4284,7 @@
             <objects>
                 <tableViewController id="bFW-cl-5nj" customClass="NoteAddEditTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="NDZ-jd-iKo">
-                        <rect key="frame" x="0.0" y="64" width="320" height="229"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.75686274509999996" green="0.70980392160000005" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="separatorColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -4372,7 +4371,7 @@
             <objects>
                 <viewController title="NFA Info" id="qyZ-rX-sSE" customClass="NFAInformationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GRP-gK-NoD">
-                        <rect key="frame" x="0.0" y="64" width="320" height="224"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.75686274509999996" green="0.70980392160000005" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -4465,7 +4464,7 @@
             <objects>
                 <viewController id="HPQ-3V-jsV" customClass="PhotosTableViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aJw-f5-F9X">
-                        <rect key="frame" x="0.0" y="64" width="320" height="229"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="vEp-Tg-GYk" userLabel="no photos">
@@ -4473,7 +4472,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="155" sectionHeaderHeight="22" sectionFooterHeight="22" id="ecF-1v-hMt">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="229"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -4661,7 +4660,7 @@
             <objects>
                 <tableViewController id="Pp9-nK-TbU" customClass="WeaponShowViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Rdt-mu-Pur">
-                        <rect key="frame" x="0.0" y="64" width="320" height="229"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.75686274509999996" green="0.70980392160000005" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="XoI-oB-zkP">
