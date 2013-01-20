@@ -36,7 +36,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self setTitle];
+    [self updateTitle];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -45,7 +45,7 @@
     if ([_fetchedResultsController.fetchedObjects count] == 0) [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)setTitle {
+- (void)updateTitle {
     _caliberLabel.text = _selectedCaliber;
     
     NSNumber *magazines = [Magazine aggregateOperation:@"sum:" 
@@ -200,7 +200,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
-    [self setTitle];
+    [self updateTitle];
     [self.tableView endUpdates];
     if ([_fetchedResultsController.fetchedObjects count] == 0) [self.navigationController popViewControllerAnimated:YES];
 }

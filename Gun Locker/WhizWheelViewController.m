@@ -68,10 +68,10 @@
     
     if (mode == 0) {// day mode all the time
         DebugLog(@"Mode: day mode");
-        [self setDayMode];
+        [self updateToDayMode];
     } else if (mode == 1) { // night mode all the time
         DebugLog(@"Mode: night mode");
-        [self setNightMode];
+        [self updateToNightMode];
     } else { // Auto
         DebugLog(@"Mode: auto mode");
         
@@ -92,12 +92,12 @@
         if (isNightTime) {
             if (!_nightMode) {
                 DebugLog(@"! Switching to night mode");
-                [self setNightMode];   
+                [self updateToNightMode];   
             }
         } else { // Day mode
             if (_nightMode) { 
                 DebugLog(@"! Switching to day mode");
-                [self setDayMode];
+                [self updateToDayMode];
             }
         }
     }    
@@ -140,13 +140,13 @@
     [_directionsTableView reloadData];
     [_speedTableView reloadData];
     
-    [self setInitialSelectedCells];
+    [self updateInitialSelectedCells];
     [self showTrajectoryWithRecalc:YES];
     
     [self checkDayOrNightMode:nil];
 }
 
-- (void)setNightMode {
+- (void)updateToNightMode {
     _nightMode = YES;
     _rangesTableView.backgroundColor = _directionsTableView.backgroundColor = [UIColor blackColor];
     _speedTableView.backgroundColor = _resultBackgroundView.backgroundColor = [UIColor blackColor];
@@ -170,7 +170,7 @@
     [self highlightSelectedCells];
 }
 
-- (void)setDayMode {
+- (void)updateToDayMode {
     _nightMode = NO;
     _rangesTableView.backgroundColor = _directionsTableView.backgroundColor = [UIColor whiteColor];
     _speedTableView.backgroundColor = _resultBackgroundView.backgroundColor = _titleLabel.textColor = [UIColor whiteColor];
@@ -308,7 +308,7 @@
     }
 }
 
-- (void)setInitialSelectedCells {
+- (void)updateInitialSelectedCells {
     // scroll direction and speed to middle to simulate a circular picker
     NSIndexPath *initialRange = [NSIndexPath indexPathForRow:2 inSection:0];
     NSIndexPath *initialDirection = [NSIndexPath indexPathForRow:([arrayDirections count]*CIRCULAR_TABLE_SIZE/2) inSection:0];

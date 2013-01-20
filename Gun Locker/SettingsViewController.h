@@ -22,6 +22,7 @@
     UIButton *exportButton;
 }
 
+@property (weak, nonatomic) IBOutlet UISegmentedControl *cardsSortByControl;
 @property (weak, nonatomic) IBOutlet UISwitch *showNFAInformationSwitch;
 @property (weak, nonatomic) IBOutlet UITableViewCell *passcodeCell;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *rangeUnitsControl;
@@ -37,9 +38,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *exportAmmunitionButton;
 
 - (IBAction)showNFAInformationTapped:(UISwitch *)nfaSwitch;
+- (IBAction)saveSettings:(id)sender;
 - (IBAction)updateStepperRanges:(id)sender;
 - (IBAction)exportTapped:(UIButton *)button;
-- (IBAction)cardSortingChanged:(id)sender;
 
 -(NSString *)csvDumpAll;
 -(NSString *)csvDumpWeapons;

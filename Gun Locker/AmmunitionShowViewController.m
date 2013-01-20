@@ -67,10 +67,10 @@
     _cprLabel.text     = [currencyFormatter stringFromNumber:_selectedAmmunition.cpr];
     _purchasedFromLabel.text = _selectedAmmunition.retailer;
     _purchaseDateLabel.text = [_selectedAmmunition.purchase_date onlyDate];
-    [self setCount];
+    [self updateCount];
 }
 
--(void)setCount {
+-(void)updateCount {
     _countLabel.text = [NSString stringWithFormat:@"%@/%@", _selectedAmmunition.count, _selectedAmmunition.count_original];
     _roundsFiredButton.enabled = ([_selectedAmmunition.count intValue] != 0);
 }
@@ -111,7 +111,7 @@
         }
         [[DataManager sharedManager] saveAppDatabase];
 
-        [self setCount];
+        [self updateCount];
     }
     [[alertView textFieldAtIndex:0] setText:nil];    
 }

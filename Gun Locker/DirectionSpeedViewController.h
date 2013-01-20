@@ -38,7 +38,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *title2Label;
 
 - (IBAction)cancelTapped:(id)sender;
-- (IBAction)setTapped:(id)sender;
+- (IBAction)doneTapped:(id)sender;
 - (IBAction)directionTypeChanged:(UISegmentedControl *)control;
 - (IBAction)sliderMoved:(UISlider *)slider;
 - (IBAction)speedUnitChanged:(UISegmentedControl *)control;

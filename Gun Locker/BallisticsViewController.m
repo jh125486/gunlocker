@@ -81,7 +81,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     profiles = [BallisticProfile findAll];
-    [self setUpPickerData];
+    [self setupPickerData];
     [_selectedProfilePickerView reloadAllComponents];
     if ([profiles containsObject:selectedProfile]) {
         [_selectedProfilePickerView selectRow:[profiles indexOfObject:selectedProfile] inComponent:0 animated:NO];
@@ -267,7 +267,7 @@
     return [profilePickerData objectAtIndex:row];
 }
 
-- (void)setUpPickerData {
+- (void)setupPickerData {
     profilePickerData = [[NSMutableArray alloc] initWithCapacity:[profiles count]];
     
     for(BallisticProfile *profile in profiles) {

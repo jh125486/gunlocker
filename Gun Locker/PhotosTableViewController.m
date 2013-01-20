@@ -48,10 +48,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-    [self setTitle];
+    [self updateTitle];
 }
 
-- (void)setTitle {
+- (void)updateTitle {
     int count = [_fetchedResultsController.fetchedObjects count];
     self.title = [NSString stringWithFormat:@"Photos (%d)", count];
     
@@ -214,7 +214,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
-    [self setTitle];
+    [self updateTitle];
     [self.tableView endUpdates];
 }
 

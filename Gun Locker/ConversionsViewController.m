@@ -165,7 +165,7 @@
 }
 
 - (void) nextPreviousTapped:(id)sender {
-    [self setUnits];
+    [self updateUnits];
 
     int index = [formFields indexOfObject:_currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
@@ -182,7 +182,7 @@
 }
 
 - (void) doneTyping:(id)sender {
-    [self setUnits];
+    [self updateUnits];
     [_currentTextField resignFirstResponder];
 }
 
@@ -270,22 +270,22 @@
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (pickerView == _lengthUnitPicker) {
         lastLengthSelected = component;
-        [self setLengthUnits];
+        [self updateLengthUnits];
     } else if (pickerView == _weightUnitPicker) {
         lastWeightSelected = component;
-        [self setWeightUnits];
+        [self updateWeightUnits];
     }
 }
 
--(void)setUnits {
+-(void)updateUnits {
     if ((_currentTextField == _length1UnitTextField) || (_currentTextField == _length2UnitTextField)) {
-        [self setLengthUnits];
+        [self updateLengthUnits];
     } else if ((_currentTextField == _weight1UnitTextField) || (_currentTextField == _weight2UnitTextField)) {
-        [self setWeightUnits];
+        [self updateWeightUnits];
     }
 }
 
--(void)setLengthUnits {
+-(void)updateLengthUnits {
     _length1TextField.enabled = _length2TextField.enabled = YES;
     length1Unit = [lengthUnits objectAtIndex:[_lengthUnitPicker selectedRowInComponent:0]];
     length2Unit = [lengthUnits objectAtIndex:[_lengthUnitPicker selectedRowInComponent:1]];
@@ -301,7 +301,7 @@
     [self convertLength:nil];
 }
 
--(void)setWeightUnits {
+-(void)updateWeightUnits {
     _weight1TextField.enabled = _weight2TextField.enabled = YES;
     weight1Unit = [weightUnits objectAtIndex:[_weightUnitPicker selectedRowInComponent:0]];
     weight2Unit = [weightUnits objectAtIndex:[_weightUnitPicker selectedRowInComponent:1]];

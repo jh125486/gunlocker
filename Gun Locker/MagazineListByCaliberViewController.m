@@ -36,7 +36,7 @@
     }
     calibers = [magazineByCaliberDict keysSortedByValueUsingSelector:@selector(compare:)];
 
-    [self setTitle];
+    [self updateTitle];
     [self.tableView reloadData];
 }
 
@@ -45,7 +45,7 @@
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
-- (void)setTitle {
+- (void)updateTitle {
     int count = [calibers count];
     self.title = [NSString stringWithFormat:@"Calibers (%d)", count];
     

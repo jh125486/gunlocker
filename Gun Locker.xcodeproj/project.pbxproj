@@ -168,6 +168,7 @@
 		53BB6034152A227100625CC7 /* sticky_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BB6032152A227100625CC7 /* sticky_button@2x.png */; };
 		53BC9F49152C06CB00B7D7AD /* DopeCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC9F48152C06CB00B7D7AD /* DopeCardsViewController.m */; };
 		53BC9F4F152C11A700B7D7AD /* DopeCardRowEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC9F4E152C11A700B7D7AD /* DopeCardRowEditCell.m */; };
+		53C2D0BC16AC64E10082955D /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53C2D0BA16AC64E10082955D /* libTestFlight.a */; };
 		53CA98E1150A84E50060A1E8 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CA98E0150A84E50060A1E8 /* Weather.m */; };
 		53CBF5521575A451001C32EE /* TableViewHeaderViewGrouped2Line.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CBF5511575A451001C32EE /* TableViewHeaderViewGrouped2Line.m */; };
 		53CBF5541575A461001C32EE /* TableViewHeaderViewGrouped2Line.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53CBF5531575A461001C32EE /* TableViewHeaderViewGrouped2Line.xib */; };
@@ -198,7 +199,6 @@
 		53E32F03156C87FA00941A5B /* Wind_20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E32EF7156C87FA00941A5B /* Wind_20@2x.png */; };
 		53E32F04156C87FA00941A5B /* Wind_25.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E32EF8156C87FA00941A5B /* Wind_25.png */; };
 		53E32F05156C87FA00941A5B /* Wind_25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E32EF9156C87FA00941A5B /* Wind_25@2x.png */; };
-		53E32F0B156CA7A500941A5B /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E32F07156CA7A500941A5B /* libTestFlight.a */; };
 		53E32F0F156CAA0C00941A5B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E32F0E156CAA0C00941A5B /* libz.dylib */; };
 		53E32F15156D51DA00941A5B /* DopeCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F14156D51DA00941A5B /* DopeCard.m */; };
 		53E32F26156DE66D00941A5B /* MathAdditions.c in Sources */ = {isa = PBXBuildFile; fileRef = 53E32F19156DE66D00941A5B /* MathAdditions.c */; };
@@ -534,6 +534,8 @@
 		53BC9F48152C06CB00B7D7AD /* DopeCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DopeCardsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53BC9F4D152C11A700B7D7AD /* DopeCardRowEditCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardRowEditCell.h; sourceTree = "<group>"; };
 		53BC9F4E152C11A700B7D7AD /* DopeCardRowEditCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCardRowEditCell.m; sourceTree = "<group>"; };
+		53C2D0BA16AC64E10082955D /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTestFlight.a; path = TestFlightSDK/libTestFlight.a; sourceTree = SOURCE_ROOT; };
+		53C2D0BB16AC64E10082955D /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestFlight.h; path = TestFlightSDK/TestFlight.h; sourceTree = SOURCE_ROOT; };
 		53CA98DF150A84E50060A1E8 /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weather.h; sourceTree = "<group>"; };
 		53CA98E0150A84E50060A1E8 /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weather.m; sourceTree = "<group>"; };
 		53CBF5501575A451001C32EE /* TableViewHeaderViewGrouped2Line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewHeaderViewGrouped2Line.h; sourceTree = "<group>"; };
@@ -573,8 +575,6 @@
 		53E32EF7156C87FA00941A5B /* Wind_20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Wind_20@2x.png"; sourceTree = "<group>"; };
 		53E32EF8156C87FA00941A5B /* Wind_25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wind_25.png; sourceTree = "<group>"; };
 		53E32EF9156C87FA00941A5B /* Wind_25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Wind_25@2x.png"; sourceTree = "<group>"; };
-		53E32F07156CA7A500941A5B /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		53E32F0A156CA7A500941A5B /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		53E32F0E156CAA0C00941A5B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		53E32F13156D51D900941A5B /* DopeCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCard.h; sourceTree = "<group>"; };
 		53E32F14156D51DA00941A5B /* DopeCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCard.m; sourceTree = "<group>"; };
@@ -742,7 +742,7 @@
 				530DDF1914EECF9400F1BC7F /* CoreData.framework in Frameworks */,
 				530DDEF914EEB6D800F1BC7F /* UIKit.framework in Frameworks */,
 				530DDEFD14EEB6D800F1BC7F /* CoreGraphics.framework in Frameworks */,
-				53E32F0B156CA7A500941A5B /* libTestFlight.a in Frameworks */,
+				53C2D0BC16AC64E10082955D /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1230,7 +1230,7 @@
 				5377973D153798480096BF7A /* Model+Helpers.m */,
 				53F2735915112D36005A329F /* NSDate+Formatting.h */,
 				53F2735A15112D37005A329F /* NSDate+Formatting.m */,
-				53E32F06156CA7A500941A5B /* TestFlightSDK1.0 */,
+				53E32F06156CA7A500941A5B /* TestFlightSDK */,
 				53405CA2151936A200C7D84F /* UIControl */,
 			);
 			name = ExtraLibs;
@@ -1316,12 +1316,13 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		53E32F06156CA7A500941A5B /* TestFlightSDK1.0 */ = {
+		53E32F06156CA7A500941A5B /* TestFlightSDK */ = {
 			isa = PBXGroup;
 			children = (
-				53E32F07156CA7A500941A5B /* libTestFlight.a */,
-				53E32F0A156CA7A500941A5B /* TestFlight.h */,
+				53C2D0BA16AC64E10082955D /* libTestFlight.a */,
+				53C2D0BB16AC64E10082955D /* TestFlight.h */,
 			);
+			name = TestFlightSDK;
 			path = TestFlightSDK1.0;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -2017,9 +2018,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/MagicalRecord/Project Files/iOS App Unit Tests/Frameworks/OCMockLibrary\"",
 					"\"$(SRCROOT)/MagicalRecord/Project Files/Mac App Unit Tests/Frameworks/OCMockLibrary\"",
+					"\"$(SRCROOT)/TestFlightSDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2044,9 +2045,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/MagicalRecord/Project Files/iOS App Unit Tests/Frameworks/OCMockLibrary\"",
 					"\"$(SRCROOT)/MagicalRecord/Project Files/Mac App Unit Tests/Frameworks/OCMockLibrary\"",
+					"\"$(SRCROOT)/TestFlightSDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;

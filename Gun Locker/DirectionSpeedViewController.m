@@ -57,14 +57,14 @@
     directionIndex = round(_directionValue * ([[directionLabels objectAtIndex:_directionTypeControl.selectedSegmentIndex] count]/360.f));
     
     [self directionTypeChanged:nil];
-    [self setTitleLabel];
+    [self updateTitleLabel];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
--(void)setTitleLabel {
+-(void)updateTitleLabel {
     _title1Label.text = [NSString stringWithFormat:@"%@ from %@", 
                                 _resultType, 
                                 [[directionLabels objectAtIndex:_directionTypeControl.selectedSegmentIndex] objectAtIndex:directionIndex]];
@@ -80,7 +80,7 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (IBAction)setTapped:(id)sender {
+- (IBAction)doneTapped:(id)sender {
     int speed = [[[directionLabels objectAtIndex:_directionTypeControl.selectedSegmentIndex] objectAtIndex:directionIndex] intValue];
     
     if ([_resultType isEqualToString:@"Wind"]) {
@@ -117,7 +117,7 @@
 
 - (void) wheelDidChangeValue:(int)index {
     directionIndex = index;
-    [self setTitleLabel];
+    [self updateTitleLabel];
 }
 
 -(void)sliderMoved:(UISlider *)slider {    
@@ -125,12 +125,12 @@
     _speedImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_%g",
                                            _resultType,
                                            round(_speedValue/_speedSlider.labelStep) * _speedSlider.labelStep]];
-    [self setTitleLabel];
+    [self updateTitleLabel];
 }
 
 -(void)speedUnitChanged:(UISegmentedControl *)control {
     _speedUnit = control.selectedSegmentIndex;
-    [self setTitleLabel];
+    [self updateTitleLabel];
 }
 
 @end

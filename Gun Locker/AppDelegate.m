@@ -108,7 +108,7 @@
     NSArray *windageLeading = [dataManager.windageLeading objectForKey:[dataManager.speedTypes objectAtIndex:0]];
     
     [preferences setBool:NO forKey:kGLShowNFADetailsKey];
-    [preferences setObject:@"make" forKey:kGLCardSortByTypeKey];
+    [preferences setInteger:0 forKey:kGLCardSortByTypeKey];
     [preferences setInteger:0 forKey:kGLNightModeControlKey];
     [preferences setInteger:0 forKey:kGLRangeUnitsControlKey];
     [preferences setInteger:0 forKey:kGLReticleUnitsControlKey];

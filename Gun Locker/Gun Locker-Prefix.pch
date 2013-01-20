@@ -20,6 +20,7 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
     #import <CoreLocation/CoreLocation.h>
+    #import "TestFlight.h"
     #define MR_SHORTHAND 1
     #import "CoreData+MagicalRecord.h"
     #import <QuickDialog/QuickDialog.h>
@@ -27,7 +28,6 @@
     #import "Model+Helpers.h"
     #import "DataManager.h"
     #import "Constants.h"
-    #import "TestFlight.h"
     #import "TableViewHeaderViewPlain.h"
     #import "TableViewHeaderViewGrouped.h"
 #endif

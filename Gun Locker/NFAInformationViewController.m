@@ -41,7 +41,7 @@
         _timeLineFooterLabel.adjustsFontSizeToFitWidth = YES;
         [footerView addSubview:_timeLineFooterLabel];
         
-        [self setTitle];
+        [self updateTitle];
         
         StampInfo *stamp = _selectedWeapon.stamp;
         
@@ -83,7 +83,7 @@
         QDateTimeInlineElement *stampReceivedDateElement = [[QDateTimeInlineElement alloc] initWithTitle:@"Stamp Received" date:stamp.stamp_received];
         stampReceivedDateElement.key = @"stamp_received";
 
-        stampReceivedDateElement.onValueChanged = formSentDateElement.onValueChanged = ^(QRootElement *element){[self setTimeLineFooter];};
+        stampReceivedDateElement.onValueChanged = formSentDateElement.onValueChanged = ^(QRootElement *element){[self updateTimeLineFooter];};
         formSentDateElement.maximumDate = checkCashedDateElement.maximumDate = wentPendingDateElement.maximumDate = stampReceivedDateElement.maximumDate = [NSDate date];
         formSentDateElement.mode = checkCashedDateElement.mode = wentPendingDateElement.mode = stampReceivedDateElement.mode = UIDatePickerModeDate;
         
@@ -121,12 +121,12 @@
 
         self.root = _root;
                 
-        [self setTimeLineFooter];
+        [self updateTimeLineFooter];
     }    
     [self loadView];
 }
 
-- (void)setTitle {
+- (void)updateTitle {
     // replace titleView with a title and subtitle
     // dont show if coming from weapon controller
     if (![self.navigationController.navigationBar.topItem.title isEqualToString:_selectedWeapon.model]) {
@@ -146,7 +146,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)setTimeLineFooter {
+- (void)updateTimeLineFooter {
     NSDate *formSent = ((QDateTimeInlineElement*)[self.root elementWithKey:@"form_sent"]).dateValue;
     NSDate *stampReceived = ((QDateTimeInlineElement*)[self.root elementWithKey:@"stamp_received"]).dateValue;
     _timeLineFooterLabel.text = (formSent && stampReceived) ? [NSString stringWithFormat:@"%.0f day wait", [stampReceived timeIntervalSinceDate:formSent] / (60*60*24.0)] : @"";

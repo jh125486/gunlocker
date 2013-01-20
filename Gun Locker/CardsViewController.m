@@ -217,13 +217,17 @@
 #pragma mark FRC
 -(void)setupFRCArray {
     NSMutableDictionary *frcTemp = [[NSMutableDictionary alloc] initWithCapacity:types.count];
+    NSString *sortBy = [[NSUserDefaults standardUserDefaults] integerForKey:kGLCardSortByTypeKey]
+                        ? @"manufacturer.name,model"
+                        : @"model,manufacturer.name";
     
     for (NSString *type in types) {
-        NSFetchRequest *weaponsRequest = [Weapon requestAllSortedBy:@"manufacturer.name,model" ascending:YES 
+        NSFetchRequest *weaponsRequest = [Weapon requestAllSortedBy:sortBy
+                                                          ascending:YES
                                                       withPredicate:[NSPredicate predicateWithFormat:@"type = %@", type]];
         
         NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:weaponsRequest 
-                                                                              managedObjectContext:[NSManagedObjectContext MR_defaultContext] 
+                                                                              managedObjectContext:[NSManagedObjectContext defaultContext]
                                                                                 sectionNameKeyPath:nil 
                                                                                          cacheName:type];
         frc.delegate = self;

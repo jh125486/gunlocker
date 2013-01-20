@@ -21,6 +21,7 @@
 @synthesize directionControl = _directionControl;
 @synthesize showNFAInformationSwitch = _showNFAInformationSwitch;
 @synthesize passcodeCell = _passcodeCell;
+@synthesize cardsSortByControl = _cardsSortByControl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -36,11 +37,11 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
-    _showNFAInformationSwitch.on = [defaults boolForKey: kGLShowNFADetailsKey];
-    _passcodeCell.detailTextLabel.text   = ([[KKPasscodeLock sharedLock] isPasscodeRequired]) ? @"On" : @"Off";
+    _cardsSortByControl.selectedSegmentIndex  = [defaults integerForKey:kGLCardSortByTypeKey];
+    _showNFAInformationSwitch.on              = [defaults boolForKey: kGLShowNFADetailsKey];
+    _passcodeCell.detailTextLabel.text        = ([[KKPasscodeLock sharedLock] isPasscodeRequired]) ? @"On" : @"Off";
     _rangeUnitsControl.selectedSegmentIndex   = [defaults integerForKey:kGLRangeUnitsControlKey];
     _reticleUnitsControl.selectedSegmentIndex = [defaults integerForKey:kGLReticleUnitsControlKey];
-
     _rangeStartStepper.Current = [defaults integerForKey:kGLRangeStartKey];
     _rangeEndStepper.Current   = [defaults integerForKey:kGLRangeEndKey];
     _rangeStepStepper.Current  = [defaults integerForKey:kGLRangeStepKey];
@@ -128,6 +129,7 @@
 - (IBAction)saveSettings:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    [defaults setInteger:[_cardsSortByControl selectedSegmentIndex] forKey:kGLCardSortByTypeKey];
     [defaults setBool:_showNFAInformationSwitch.on forKey: kGLShowNFADetailsKey];
     [defaults setInteger:[_nightModeControl selectedSegmentIndex] forKey: kGLNightModeControlKey];
     [defaults setInteger:[_rangeUnitsControl selectedSegmentIndex] forKey:kGLRangeUnitsControlKey];
@@ -136,11 +138,6 @@
     [defaults setInteger:(int)_rangeStartStepper.Current forKey:kGLRangeStartKey];
     [defaults setInteger:(int)_rangeEndStepper.Current forKey:kGLRangeEndKey];
     [defaults setInteger:(int)_rangeStepStepper.Current forKey:kGLRangeStepKey];
-}
-
-- (IBAction)cardSortingChanged:(UISegmentedControl *)sender {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:sender.selectedSegmentIndex ? @"make" : @"model" forKey:kGLCardSortByTypeKey];
 }
 
 - (IBAction)updateStepperRanges:(id)sender {
@@ -322,4 +319,8 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+- (void)viewDidUnload {
+    [self setCardsSortByControl:nil];
+    [super viewDidUnload];
+}
 @end

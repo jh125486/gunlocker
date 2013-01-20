@@ -133,11 +133,11 @@
                                 inComponent:2 
                                    animated:NO];
 
-    [self setScopeAdjustmentLabels];
+    [self updateScopeAdjustmentLabels];
     
 }
 
-- (void)setScopeAdjustmentLabels {
+- (void)updateScopeAdjustmentLabels {
     NSString *elevation = [dataManager.scopeClicks objectAtIndex:[_scopeAdjustmentPicker selectedRowInComponent:0]];
     NSString *windage   = [dataManager.scopeClicks objectAtIndex:[_scopeAdjustmentPicker selectedRowInComponent:1]];
     NSString *unit      = [dataManager.scopeUnits objectAtIndex:[_scopeAdjustmentPicker selectedRowInComponent:2]];
@@ -351,7 +351,7 @@
         selectedWeapon = [weapons objectAtIndex:[_weaponPicker selectedRowInComponent:0]];
         [_weaponButton setTitle:selectedWeapon.description forState:UIControlStateNormal];
     } else if (_currentTextField == _scopeAdjustmentTextField) {
-        [self setScopeAdjustmentLabels];
+        [self updateScopeAdjustmentLabels];
     }
 }
 

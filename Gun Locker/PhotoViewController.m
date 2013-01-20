@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = _passedPhoto.weapon.model;
-    [self setTitleView];
+    [self updateTitleView];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundFabricTexture"]];
     photo = [UIImage imageWithData:_passedPhoto.normal_size];
     _photoView.image = photo;
@@ -76,7 +76,7 @@
 	return frameToCenter;
 }
 
-- (void)setTitleView {
+- (void)updateTitleView {
     self.modelLabel.text = self.title;
     self.manufacturerLabel.text = _passedPhoto.weapon.manufacturer.displayName;    
 }

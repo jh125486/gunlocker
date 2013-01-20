@@ -91,7 +91,7 @@
     _notesTextField.text          = _selectedDopeCard.notes;
     
     [_zeroUnitPickerView selectRow:_selectedDopeCard.zero_unit.intValue inComponent:0 animated:NO];
-    [self setZeroUnit];
+    [self updateZeroUnit];
     
     if (_selectedDopeCard.wind_info) {
         NSArray *windInfoArray = [_selectedDopeCard.wind_info componentsSeparatedByString:@" "];
@@ -104,7 +104,7 @@
         [_windInfoPickerView selectRow:speed inComponent:0 animated:NO];
         [_windInfoPickerView selectRow:[wind_units indexOfObject:unit] inComponent:1 animated:NO];
         [_windInfoPickerView selectRow:(direction == 12) ? 0 : direction inComponent:2 animated:NO];
-        [self setWindInfo];
+        [self updateWindInfo];
     }
         
     if (_selectedDopeCard.lead_info) {
@@ -118,13 +118,13 @@
         [_leadInfoPickerView selectRow:speed inComponent:0 animated:NO];
         [_leadInfoPickerView selectRow:[wind_units indexOfObject:unit] inComponent:1 animated:NO];
         [_leadInfoPickerView selectRow:(direction == 12) ? 0 : direction inComponent:2 animated:NO];
-        [self setLeadInfo];
+        [self updateLeadInfo];
     }
     
     [_dopeUnitPickerView selectRow:[range_units indexOfObject:_selectedDopeCard.range_unit] inComponent:0 animated:NO];
     [_dopeUnitPickerView selectRow:[dope_units indexOfObject:_selectedDopeCard.drop_unit] inComponent:1 animated:NO];
     [_dopeUnitPickerView selectRow:[dope_units indexOfObject:_selectedDopeCard.drift_unit] inComponent:2 animated:NO];
-    [self setDopeUnits];
+    [self updateDopeUnits];
     
     dopeCardCellData = [_selectedDopeCard.dope_data mutableCopy];
 }
@@ -242,13 +242,13 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (pickerView == _zeroUnitPickerView) {
-        [self setZeroUnit];
+        [self updateZeroUnit];
     } else if (pickerView == _dopeUnitPickerView) {
-        [self setDopeUnits];
+        [self updateDopeUnits];
     } else if (pickerView == _windInfoPickerView) {
-        [self setWindInfo];
+        [self updateWindInfo];
     } else if (pickerView == _leadInfoPickerView) {
-        [self setLeadInfo];
+        [self updateLeadInfo];
     } 
 }
 
@@ -275,24 +275,24 @@
     }
 }
 
--(void)setZeroUnit {
+-(void)updateZeroUnit {
     _zeroUnitField.text = [range_units objectAtIndex:[_zeroUnitPickerView selectedRowInComponent:0]];
 }
 
--(void)setDopeUnits {
+-(void)updateDopeUnits {
     _rangeUnitField.text = [range_units objectAtIndex:[_dopeUnitPickerView selectedRowInComponent:0]];
     _dropUnitField.text  = [dope_units objectAtIndex:[_dopeUnitPickerView selectedRowInComponent:1]];
     _driftUnitField.text = [dope_units objectAtIndex:[_dopeUnitPickerView selectedRowInComponent:2]];
 }
 
--(void)setWindInfo {
+-(void)updateWindInfo {
     _windInfoField.text = [NSString stringWithFormat:@"%d %@ at %@", 
                                [_windInfoPickerView selectedRowInComponent:0],
                                [wind_units objectAtIndex:[_windInfoPickerView selectedRowInComponent:1]],
                                [wind_directions objectAtIndex:[_windInfoPickerView selectedRowInComponent:2]]];
 }
 
--(void)setLeadInfo {
+-(void)updateLeadInfo {
     _leadInfoField.text = [NSString stringWithFormat:@"%d %@ at %@", 
                                [_leadInfoPickerView selectedRowInComponent:0],
                                [wind_units objectAtIndex:[_leadInfoPickerView selectedRowInComponent:1]],
@@ -370,13 +370,13 @@
 
 - (void)nextPreviousTapped:(id)sender {
     if (_currentTextField == _zeroTextField) {
-        [self setZeroUnit];  
+        [self updateZeroUnit];  
     } else if (_currentTextField == _rangeUnitField) {
-        [self setDopeUnits];
+        [self updateDopeUnits];
     } else if (_currentTextField == _windInfoField) {
-        [self setWindInfo];
+        [self updateWindInfo];
     } else if (_currentTextField == _leadInfoField) {
-        [self setLeadInfo];
+        [self updateLeadInfo];
     } 
         
     int index = [self indexForTextField:_currentTextField];
@@ -422,11 +422,11 @@
 
 - (void)doneTyping:(id)sender {
     if (_currentTextField == _rangeUnitField) {
-        [self setDopeUnits];
+        [self updateDopeUnits];
     } else if (_currentTextField == _windInfoField) {
-        [self setWindInfo];
+        [self updateWindInfo];
     } else if (_currentTextField == _leadInfoField) {
-        [self setLeadInfo];
+        [self updateLeadInfo];
     }
     
     [_currentTextField resignFirstResponder];

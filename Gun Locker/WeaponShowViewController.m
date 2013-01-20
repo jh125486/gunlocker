@@ -44,7 +44,7 @@
     DataManager *dataManager = [DataManager sharedManager];
     // set title for navigation back button
     self.title = _selectedWeapon.model;
-    [self setTitleView];
+    [self updateTitleView];
     
     _nfaCell.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:kGLShowNFADetailsKey];
     
@@ -63,7 +63,7 @@
     [super viewWillAppear:animated];
 }
 
-- (void)setTitleView {
+- (void)updateTitleView {
     _modelLabel.text = self.title;
     _manufacturerLabel.text = _selectedWeapon.manufacturer.displayName;    
 }
@@ -188,7 +188,7 @@
                                                                                                      style:UIBarButtonItemStyleBordered
                                                                                                     target:nil 
                                                                                                     action:nil];
-            [self setTitleView];
+            [self updateTitleView];
 
             [TestFlight passCheckpoint:@"User changed weapon type"];
         }
