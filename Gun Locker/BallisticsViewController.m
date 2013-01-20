@@ -369,8 +369,8 @@
                 _rhLabel.text   = [NSString stringWithFormat:@"%.0f%%", _currentWeather.relativeHumidity];
                 _windLabel.text = [NSString stringWithFormat:@"%.0f knots from %@", _currentWeather.windSpeedKnots, 
                                                      [_currentWeather cardinalDirectionFromDegrees:_currentWeather.windDirectionDegrees]];
-                _altitudeLabel.text = [NSString stringWithFormat:@"%.0f'%", METERS_to_FEET(_currentWeather.altitudeMeters)];
-                _densityAltitudeLabel.text = [NSString stringWithFormat:@"%.0f'%", _currentWeather.densityAltitude];
+                _altitudeLabel.text = [NSString stringWithFormat:@"%.0f'", METERS_to_FEET(_currentWeather.altitudeMeters)];
+                _densityAltitudeLabel.text = [NSString stringWithFormat:@"%.0f'", _currentWeather.densityAltitude];
                 _wxStationLabel.text = [NSString stringWithFormat:@"%@ (%.0f km)", _currentWeather.stationID, _currentWeather.kmFromStation];
                 _wxTimestampLabel.hidden = _wxStationLabel.hidden = NO;
                 [_wxIndicator stopAnimating];

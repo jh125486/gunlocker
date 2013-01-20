@@ -145,7 +145,8 @@ UIEdgeInsets insetButtonImage={13,13,13,13};
 
 -(void) setCurrent:(float)pflValue
 {
-    self.textField.text = [NSString stringWithFormat:[[NSString stringWithString:@"%.Xf"] stringByReplacingOccurrencesOfString:@"X" withString:[NSString stringWithFormat:@"%d", self.NumDecimals]], pflValue];
+    self.textField.text = [NSString stringWithFormat:[@"%.Xf" stringByReplacingOccurrencesOfString:@"X"
+                                                                                        withString:[NSString stringWithFormat:@"%d", self.NumDecimals]], pflValue];
 }
 
 - (NSString*)getPlaceholderText

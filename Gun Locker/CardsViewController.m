@@ -34,18 +34,24 @@
     #endif
     
     self.tableView.decelerationRate = UIScrollViewDecelerationRateFast;
-    
-    UIImage *segmentSelected = [[UIImage imageNamed:@"selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f)];
-    UIImage *segmentUnselected = [[UIImage imageNamed:@"unselected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f)];
-    UIImage *segmentSelectedUnselected = [UIImage imageNamed:@"selected_unselected"];
-    UIImage *segUnselectedSelected = [UIImage imageNamed:@"unselected_selected"];
+
+    UIImage *segmentSelected   = [[UIImage imageNamed:@"selected"]   resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)];
+    UIImage *segmentUnselected = [[UIImage imageNamed:@"unselected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)];
+    UIImage *segmentSelectedUnselected   = [UIImage imageNamed:@"selected_unselected"];
+    UIImage *segUnselectedSelected       = [UIImage imageNamed:@"unselected_selected"];
     UIImage *segmentUnselectedUnselected = [UIImage imageNamed:@"unselected_unselected"];
     
     [_selectedTypeControl setBackgroundImage:segmentUnselected forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [_selectedTypeControl setBackgroundImage:segmentSelected forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    [_selectedTypeControl setDividerImage:segmentUnselectedUnselected forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [_selectedTypeControl setDividerImage:segmentSelectedUnselected forLeftSegmentState:UIControlStateSelected rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [_selectedTypeControl setDividerImage:segUnselectedSelected forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [_selectedTypeControl setDividerImage:segmentUnselectedUnselected
+                          forLeftSegmentState:UIControlStateNormal
+                          rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [_selectedTypeControl setDividerImage:segmentSelectedUnselected
+                          forLeftSegmentState:UIControlStateSelected
+                          rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [_selectedTypeControl setDividerImage:segUnselectedSelected
+                          forLeftSegmentState:UIControlStateNormal
+                          rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     
     NSDictionary *normalAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                       [UIFont fontWithName:@"AmericanTypewriter-Condensed" size:22.0f], UITextAttributeFont,
@@ -68,11 +74,11 @@
     // sets initial segment
     _selectedTypeControl.apportionsSegmentWidthsByContent = YES;
     
-    int segmentedUnitHeight = 32;
-	[_selectedTypeControl setFrame: CGRectMake(_selectedTypeControl.frame.origin.x,
-                                                    _selectedTypeControl.frame.origin.y,
-                                                    _selectedTypeControl.frame.size.width, 
-                                                    segmentedUnitHeight)];
+//    int segmentedUnitHeight = 32;
+//    [_selectedTypeControl setFrame: CGRectMake(_selectedTypeControl.frame.origin.x,
+//                                               _selectedTypeControl.frame.origin.y,
+//                                               _selectedTypeControl.frame.size.width,
+//                                               segmentedUnitHeight)];
     [_selectedTypeControl setContentOffset:CGSizeMake(0.0f, 3.0f) forSegmentAtIndex:0];
     [_selectedTypeControl setContentOffset:CGSizeMake(0.0f, 3.0f) forSegmentAtIndex:1];
     [_selectedTypeControl setContentOffset:CGSizeMake(0.0f, 3.0f) forSegmentAtIndex:2];
