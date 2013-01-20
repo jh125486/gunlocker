@@ -114,7 +114,7 @@
         } else if (alertView == buyMagazinesAlertView) {
             _selectedMagazine.count = [NSNumber numberWithInt:[_selectedMagazine.count intValue] + count];
         }
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
         
         [self setCount];
     }
@@ -126,7 +126,7 @@
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == actionSheet.destructiveButtonIndex) {         // delete if pressed delete button
         [_selectedMagazine deleteEntity];
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
         
         [self.navigationController popViewControllerAnimated:YES];
     }

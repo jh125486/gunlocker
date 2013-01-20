@@ -58,7 +58,7 @@
         _passedNote.date  = [NSDate date];
         _passedNote.title = _titleTextField.text;
         _passedNote.body  = _bodyTextView.text;
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
 //        [TestFlight passCheckpoint:@"Note edited"];
     } else if (![_titleTextField.text isEqualToString:@""] && ![_bodyTextView.text isEqualToString:@""]) {
         Note *newNote = [Note createEntity];

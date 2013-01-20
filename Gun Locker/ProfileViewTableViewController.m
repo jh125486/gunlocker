@@ -133,7 +133,7 @@
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == actionSheet.destructiveButtonIndex) {
         [_profile deleteEntity];
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

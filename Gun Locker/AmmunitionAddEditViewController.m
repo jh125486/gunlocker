@@ -239,7 +239,7 @@
     ammunition.retailer = _purchasedFromTextField.text;
     ammunition.purchase_date = (_purchaseDateTextField.text.length > 0) ? _purchaseDatePickerView.date : nil;
     
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
     
     [self dismissModalViewControllerAnimated:YES];
     [TestFlight passCheckpoint:@"New Ammunition Saved"];

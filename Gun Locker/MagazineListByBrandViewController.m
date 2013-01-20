@@ -139,7 +139,7 @@
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [[_fetchedResultsController objectAtIndexPath:indexPath] deleteEntity];
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
     }
 }
 

@@ -105,7 +105,7 @@
 - (void) updateDopeCard:(NSNotification*) notification {
     _dopeCard = [notification object];
     
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
 }
 
 - (IBAction)infoViewTapped:(id)sender {

@@ -27,4 +27,6 @@
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
 +(DataManager *)sharedManager;
+
+-(void)saveAppDatabase;
 @end

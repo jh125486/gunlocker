@@ -182,7 +182,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [[_fetchedResultsController objectAtIndexPath:indexPath] deleteEntity];
     }    
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
 }
 
 // shorten cell for maintenances without related malfunctions

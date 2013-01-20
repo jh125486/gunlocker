@@ -127,39 +127,20 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // set tempWeaponFlag to true in nsdefaults
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"tempWeaponDirty"];
-}
-
-- (void)viewDidUnload {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];    
-    [defaults setObject:[[NSDictionary alloc] initWithObjectsAndKeys:_manufacturerTextField.text, @"manufacturer", 
-                                                                     _modelTextField.text, @"model",
-                                                                     _caliberTextField.text, @"caliber",
-                                                                     _finishTextField.text, @"finish",
-                                                                     _barrelLengthTextField.text, @"barrelLength",
-                                                                     _barrelThreadingTextField.text, @"barrelThreading",
-                                                                     _serialNumberTextField.text, @"serialNumber",
-                                                                     _purchaseDateTextField.text, @"purchaseDate",
-                                                                     _purchasePriceTextField.text, @"purchasePrice",
-                                                                     _weaponType, @"weaponType",
-                                                                     nil] 
-                forKey:@"tempWeapon"];
-    
-    [self setManufacturerTextField:nil];
-    [self setModelTextField:nil];
-    [self setCaliberTextField:nil];
-    [self setFinishTextField:nil];
-    [self setBarrelLengthTextField:nil];
-    [self setBarrelLengthUnitLabel:nil];
-    [self setBarrelThreadingTextField:nil];
-    [self setAddPhotoButton:nil];
-    [self setSerialNumberTextField:nil];
-    [self setPurchaseDateTextField:nil];
-    [self setPurchasePriceTextField:nil];
-    [self setCurrencySymbolLabel:nil];
-    [self setSelectedWeapon:nil];
-    [self setCurrentTextField:nil];
-    [super viewDidUnload];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:YES forKey:@"tempWeaponDirty"];
+    [defaults setObject:[[NSDictionary alloc] initWithObjectsAndKeys:_manufacturerTextField.text, @"manufacturer",
+                         _modelTextField.text, @"model",
+                         _caliberTextField.text, @"caliber",
+                         _finishTextField.text, @"finish",
+                         _barrelLengthTextField.text, @"barrelLength",
+                         _barrelThreadingTextField.text, @"barrelThreading",
+                         _serialNumberTextField.text, @"serialNumber",
+                         _purchaseDateTextField.text, @"purchaseDate",
+                         _purchasePriceTextField.text, @"purchasePrice",
+                         _weaponType, @"weaponType",
+                         nil]
+                 forKey:@"tempWeapon"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -242,8 +223,9 @@
     }
     weapon.manufacturer = selectedManufacturer;
     
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
 
+    
     [TestFlight passCheckpoint:@"Weapon Saved/Edited"];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

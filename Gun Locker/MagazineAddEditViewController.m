@@ -182,7 +182,7 @@
     if (count < 0) count = 0;
     magazine.count   = [NSNumber numberWithInt:count];
     
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
     
     [TestFlight passCheckpoint:@"New Magazine Saved"];
 

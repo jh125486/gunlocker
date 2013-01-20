@@ -36,7 +36,7 @@
 
 - (void)configureWithWeapon:(Weapon *)weapon {
     self.manufacturerLabel.text = weapon.manufacturer.displayName;
-	self.modelLabel.text = [NSString stringWithFormat:@"%@", weapon.model];
+	self.modelLabel.text = weapon.model;
     self.caliberLabel.text =  weapon.caliber ? weapon.caliber : @"n/a";
     
     if ((weapon.barrel_length > 0) && (weapon.threaded_barrel_pitch.length > 0)) {
@@ -51,7 +51,7 @@
     
     self.finishLabel.text = weapon.finish;
     
-    self.serialNumberLabel.text = [weapon.serial_number isEqualToString:@""] ? @"n/a" : weapon.serial_number;
+    self.serialNumberLabel.text = !weapon.serial_number.length ? @"n/a" : weapon.serial_number;
     
     NSNumberFormatter *currencyFormatter = [[NSNumberFormatter alloc] init];
     [currencyFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];

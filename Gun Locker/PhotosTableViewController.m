@@ -147,7 +147,7 @@
     NSIndexPath *oldPrimary = [_fetchedResultsController indexPathForObject:_selectedWeapon.primary_photo];
     
     [_selectedWeapon setPrimary_photo:[_fetchedResultsController objectAtIndexPath:newPrimary]];
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
     
     [self configureCell:(PhotoTableCell *)[self.tableView cellForRowAtIndexPath:oldPrimary] atIndexPath:oldPrimary];
     [self configureCell:(PhotoTableCell *)[self.tableView cellForRowAtIndexPath:newPrimary] atIndexPath:newPrimary];
@@ -240,7 +240,7 @@
         [self presentModalViewController:imagePicker animated:YES];
     } else if (buttonIndex == actionSheet.destructiveButtonIndex) {
         [[_fetchedResultsController objectAtIndexPath:lastIndexPath] deleteEntity];
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
     }
 }
 
@@ -256,7 +256,7 @@
     Photo *newPhoto = [Photo createEntity];
     [newPhoto setPhotoAndCreateThumbnailFromImage:image];
     newPhoto.weapon = _selectedWeapon;
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
     
 //    [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext){
 //        Photo *localPhoto = [newPhoto inContext:localContext];

@@ -59,6 +59,8 @@
     [textFieldToolBarView setItems:[NSArray arrayWithObjects:cancel, space, done, nil]];
     _selectedProfileTextField.inputAccessoryView = textFieldToolBarView;
     
+    // TODO: dialog popup for first time run -> "Gun Locker needs your locaiton to download METAR weather information"
+    
     locationManager = dataManager.locationManager;
     locationManager.delegate = self;
     //    locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
@@ -457,7 +459,7 @@
 
     [ballisticProfile2 calculateTheta];
     
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
     
     [preferences setBool:YES forKey:@"TestProfilesLoaded"];
     [preferences synchronize];

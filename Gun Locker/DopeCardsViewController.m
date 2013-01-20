@@ -86,7 +86,7 @@
     DopeCard *newDopeCard = [notification object];
     newDopeCard.weapon = _selectedWeapon;
     
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
 }
 
 #pragma mark - UITableViewDataSource
@@ -138,7 +138,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [[_fetchedResultsController objectAtIndexPath:indexPath] deleteEntity];
     }
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath { 

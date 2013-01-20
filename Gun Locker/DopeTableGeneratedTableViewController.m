@@ -205,7 +205,7 @@
         
     [newDopeCard setDope_data:[NSArray arrayWithArray:dopeData]];
     
-//    [[NSManagedObjectContext defaultContext] save]; 
+//    [[DataManager sharedManager] saveAppDatabase]; 
     NSString *message = [NSString stringWithFormat:@"Dope card for weapon\n'%@'\nsaved with name\n'%@'", newDopeCard.weapon, newDopeCard.name];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Dope Card Saved" 
                                                     message:message

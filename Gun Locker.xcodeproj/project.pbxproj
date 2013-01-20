@@ -173,6 +173,7 @@
 		53CBF5541575A461001C32EE /* TableViewHeaderViewGrouped2Line.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53CBF5531575A461001C32EE /* TableViewHeaderViewGrouped2Line.xib */; };
 		53D2633F1531EB4600ECA9EE /* DopeCardRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2633E1531EB4600ECA9EE /* DopeCardRowCell.m */; };
 		53D263451531EBD000ECA9EE /* DopeCardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D263441531EBD000ECA9EE /* DopeCardTableViewController.m */; };
+		53DEF68716AB7EEE00F91048 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DEF68616AB7EEE00F91048 /* Default-568h@2x.png */; };
 		53E31486151E8082005B414F /* icon_link.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E31485151E8082005B414F /* icon_link.png */; };
 		53E31488151E8405005B414F /* icon_delink.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E31487151E8405005B414F /* icon_delink.png */; };
 		53E32ED5156C627400941A5B /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E32EBD156C627400941A5B /* Background.png */; };
@@ -303,8 +304,8 @@
 		5307F13915812E3B00E344D5 /* PhotoTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoTableCell.m; sourceTree = "<group>"; };
 		530A0088154BB5130023FBE7 /* TrajectoryRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrajectoryRange.h; sourceTree = "<group>"; };
 		530A0089154BB5130023FBE7 /* TrajectoryRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrajectoryRange.m; sourceTree = "<group>"; };
-		530C390B153E237B005C0AB6 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
-		530C390C153E237B005C0AB6 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		530C390B153E237B005C0AB6 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DataManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		530C390C153E237B005C0AB6 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DataManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		530C390E153E7AE9005C0AB6 /* CalculatorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorsViewController.h; sourceTree = "<group>"; };
 		530C390F153E7AE9005C0AB6 /* CalculatorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorsViewController.m; sourceTree = "<group>"; };
 		530D7B6B154B26E300536281 /* DopeTableGeneratedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeTableGeneratedTableViewController.h; sourceTree = "<group>"; };
@@ -320,7 +321,7 @@
 		530DDF0414EEB6D800F1BC7F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		530DDF0614EEB6D800F1BC7F /* Gun Locker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Gun Locker-Prefix.pch"; sourceTree = "<group>"; };
 		530DDF0714EEB6D800F1BC7F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		530DDF0814EEB6D800F1BC7F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		530DDF0814EEB6D800F1BC7F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		530DDF0B14EEB6D800F1BC7F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		530DDF1814EECF9400F1BC7F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		530DDF3A14EFF74400F1BC7F /* WeaponAddEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WeaponAddEditViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -357,7 +358,7 @@
 		531D85C915239F06004BB3AA /* unselected_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unselected_selected@2x.png"; sourceTree = "<group>"; };
 		531D85CA15239F06004BB3AA /* unselected_unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unselected_unselected@2x.png"; sourceTree = "<group>"; };
 		531D85DA1523D697004BB3AA /* CardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardsViewController.h; sourceTree = "<group>"; };
-		531D85DB1523D697004BB3AA /* CardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardsViewController.m; sourceTree = "<group>"; };
+		531D85DB1523D697004BB3AA /* CardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CardsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		532845EF152B863800F75828 /* NotesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesListViewController.h; sourceTree = "<group>"; };
 		532845F0152B863800F75828 /* NotesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesListViewController.m; sourceTree = "<group>"; };
 		532845F2152B9C2B00F75828 /* NoteAddEditTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteAddEditTableViewController.h; sourceTree = "<group>"; };
@@ -519,8 +520,8 @@
 		53B5E166154369DE000D3A8C /* RangingSamplesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RangingSamplesViewController.m; path = Bullets/RangingSamplesViewController.m; sourceTree = "<group>"; };
 		53B5E18A1548A214000D3A8C /* Trajectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trajectory.h; sourceTree = "<group>"; };
 		53B5E18B1548A214000D3A8C /* Trajectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trajectory.m; sourceTree = "<group>"; };
-		53B5E19315490C02000D3A8C /* BallisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallisticsViewController.h; sourceTree = "<group>"; };
-		53B5E19415490C03000D3A8C /* BallisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallisticsViewController.m; sourceTree = "<group>"; };
+		53B5E19315490C02000D3A8C /* BallisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BallisticsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		53B5E19415490C03000D3A8C /* BallisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BallisticsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53B7FF6914FEB299007B268A /* icon_BDC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_BDC.png; sourceTree = "<group>"; };
 		53B7FF6A14FEB299007B268A /* icon_calculators.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_calculators.png; sourceTree = "<group>"; };
 		53B7FF6B14FEB299007B268A /* icon_card_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_card_file.png; sourceTree = "<group>"; };
@@ -542,6 +543,7 @@
 		53D2633E1531EB4600ECA9EE /* DopeCardRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DopeCardRowCell.m; sourceTree = "<group>"; };
 		53D263431531EBD000ECA9EE /* DopeCardTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DopeCardTableViewController.h; sourceTree = "<group>"; };
 		53D263441531EBD000ECA9EE /* DopeCardTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DopeCardTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		53DEF68616AB7EEE00F91048 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		53E31485151E8082005B414F /* icon_link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_link.png; sourceTree = "<group>"; };
 		53E31487151E8405005B414F /* icon_delink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_delink.png; sourceTree = "<group>"; };
 		53E32EBD156C627400941A5B /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
@@ -698,11 +700,11 @@
 		53F4C0E316AB7659002EEEEF /* MagicalRecordShorthand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordShorthand.h; sourceTree = "<group>"; };
 		53F4C0E416AB7659002EEEEF /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		53F9F41A1562AAE10008430D /* AmmunitionAddEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmmunitionAddEditViewController.h; sourceTree = "<group>"; };
-		53F9F41B1562AAE10008430D /* AmmunitionAddEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmmunitionAddEditViewController.m; sourceTree = "<group>"; };
+		53F9F41B1562AAE10008430D /* AmmunitionAddEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AmmunitionAddEditViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53F9F41D1562AC870008430D /* AmmunitionShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmmunitionShowViewController.h; sourceTree = "<group>"; };
-		53F9F41E1562AC870008430D /* AmmunitionShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmmunitionShowViewController.m; sourceTree = "<group>"; };
+		53F9F41E1562AC870008430D /* AmmunitionShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AmmunitionShowViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53F9F4201562B8020008430D /* AmmunitionListByBrandViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmmunitionListByBrandViewController.h; sourceTree = "<group>"; };
-		53F9F4211562B8020008430D /* AmmunitionListByBrandViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmmunitionListByBrandViewController.m; sourceTree = "<group>"; };
+		53F9F4211562B8020008430D /* AmmunitionListByBrandViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AmmunitionListByBrandViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53F9F4241562F6060008430D /* MagazineAddEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagazineAddEditViewController.h; sourceTree = "<group>"; };
 		53F9F4251562F6060008430D /* MagazineAddEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagazineAddEditViewController.m; sourceTree = "<group>"; };
 		53F9F4261562F6060008430D /* MagazineListByBrandViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagazineListByBrandViewController.h; sourceTree = "<group>"; };
@@ -762,6 +764,7 @@
 		530DDEE914EEB6D800F1BC7F = {
 			isa = PBXGroup;
 			children = (
+				53DEF68616AB7EEE00F91048 /* Default-568h@2x.png */,
 				538DA6F4154F444D0066F74A /* Test */,
 				530DDEFE14EEB6D800F1BC7F /* Gun Locker */,
 				530DDEF714EEB6D800F1BC7F /* Frameworks */,
@@ -1756,6 +1759,7 @@
 				53FCAF6515743C4F006AB66F /* TableViewHeaderViewGrouped.xib in Resources */,
 				53A44A0715758DDB005A06C2 /* TableViewHeaderViewPlain.xib in Resources */,
 				53CBF5541575A461001C32EE /* TableViewHeaderViewGrouped2Line.xib in Resources */,
+				53DEF68716AB7EEE00F91048 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2008,7 +2012,7 @@
 				GCC_PREFIX_HEADER = "Gun Locker/Gun Locker-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Gun Locker/Gun Locker-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/TestFlightSDK1.0\"",
@@ -2035,7 +2039,7 @@
 				GCC_PREFIX_HEADER = "Gun Locker/Gun Locker-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Gun Locker/Gun Locker-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/TestFlightSDK1.0\"",

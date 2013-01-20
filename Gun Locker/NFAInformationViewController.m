@@ -163,7 +163,7 @@
 - (void)actionSheet:(UIActionSheet *)sender clickedButtonAtIndex:(int)index {
     if (index == sender.destructiveButtonIndex) {
         [_selectedWeapon.stamp deleteEntity];
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -207,7 +207,7 @@
     
     _selectedWeapon.stamp = stamp;
         
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
     
     [TestFlight passCheckpoint:@"NFAInformation saved"];
 

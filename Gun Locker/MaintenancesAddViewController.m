@@ -128,7 +128,7 @@
     newMaintenance.action_performed = [dict valueForKey:@"action_performed"];
     newMaintenance.malfunctions = linkedMalfunctions;
     
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
     
     [self dismissModalViewControllerAnimated:YES];
 }

@@ -164,7 +164,7 @@
 
 - (IBAction)roundCountAdjust:(id)sender {
     _selectedWeapon.round_count = [NSNumber numberWithInt:(int)_adjustRoundCountStepper.Current];
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
     [self updateLastCleanedLabels];
 }
 
@@ -180,7 +180,7 @@
 - (IBAction)cleanNowTapped:(id)sender {
     _selectedWeapon.last_cleaned_date = [NSDate date];
     _selectedWeapon.last_cleaned_round_count = _selectedWeapon.round_count;
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
 
     [self updateLastCleanedLabels];
 }
@@ -199,7 +199,7 @@
         if (buttonIndex < [categories count]) {
             _selectedWeapon.type = _weaponTypeLabel.text = [categories objectAtIndex:buttonIndex];
 
-            [[NSManagedObjectContext defaultContext] save];        
+            [[DataManager sharedManager] saveAppDatabase];        
             _weaponTypeLabel.text = _selectedWeapon.type;
             [_cardsViewController.selectedTypeControl setSelectedSegmentIndex:[categories indexOfObject:_selectedWeapon.type]];
             _cardsViewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:_selectedWeapon.type 
@@ -213,7 +213,7 @@
     } else { // delete confirmation
         if (buttonIndex == actionSheet.destructiveButtonIndex) {
             [_selectedWeapon deleteEntity];
-            [[NSManagedObjectContext defaultContext] save];
+            [[DataManager sharedManager] saveAppDatabase];
             [self.navigationController popViewControllerAnimated:YES];
         }
     }

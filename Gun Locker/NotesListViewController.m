@@ -38,7 +38,7 @@
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
-- (void)setTitle {
+- (void)updateTitle {
     int count = _selectedWeapon ? [_selectedWeapon.notes count] : [Note countOfEntities];
     self.title = [NSString stringWithFormat:@"Notes (%d)", count];
     
@@ -58,17 +58,17 @@
     } else {
         for(Note *note in [Note findAllSortedBy:@"date" ascending:YES]) {
             if ([notes objectForKey:note.weapon] != nil) {
-                [(NSMutableArray *)[notes objectForKey:note.weapon] addObject:note];
+                [(NSMutableArray *)[notes objectForKey:note.weapon.objectID] addObject:note];
             } else {
                 [sections addObject:note.weapon];
-                [notes setObject:[NSMutableArray arrayWithObject:note] forKey:note.weapon];
+                [notes setObject:[NSMutableArray arrayWithObject:note] forKey:note.weapon.objectID];
             }
         }
         [sections sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"model" ascending:YES]]];
         sections = [[[sections reverseObjectEnumerator] allObjects] mutableCopy];
     }
     
-    [self setTitle];
+    [self updateTitle];
 }
 
 - (void)viewDidUnload {
@@ -130,7 +130,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Note *currentNote = (_selectedWeapon) ? [sections objectAtIndex:indexPath.row] : [[notes objectForKey:[sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
         [currentNote deleteEntity];
-        [[NSManagedObjectContext defaultContext] save];  
+        [[DataManager sharedManager] saveAppDatabase];  
 
         // update table data
         if(self.selectedWeapon) {
@@ -140,14 +140,14 @@
         }
 
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self setTitle];
+        [self updateTitle];
     }
 }
 
 - (void) addNewNote:(NSNotification*) notification {
     Note *newNote = [notification object];
     newNote.weapon = _selectedWeapon;
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
 //    [TestFlight passCheckpoint:@"New Note saved"];
 }
 

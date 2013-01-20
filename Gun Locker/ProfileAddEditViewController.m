@@ -284,7 +284,7 @@
 
     [profile calculateTheta];
     
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
     
     [_delegate profileAddEditViewController:self didAddEditProfile:profile];
     [self dismissModalViewControllerAnimated:YES];

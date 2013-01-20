@@ -104,7 +104,7 @@
     [TestFlight passCheckpoint:@"CardsView disappeared"];
 }
 
--(void)setTitle {
+-(void)updateTitle {
     NSInteger count = [[[_fetchedResultsController sections] objectAtIndex:0] numberOfObjects];
     self.navigationItem.title = [NSString stringWithFormat:@"%d file%@ in folder", count, (count == 1) ? @"" : @"s"];
     
@@ -179,7 +179,7 @@
     previousType = _selectedType;
     _selectedType = [_selectedTypeControl titleForSegmentAtIndex:_selectedTypeControl.selectedSegmentIndex];
     _fetchedResultsController = [frcArray objectForKey:_selectedType];
-    [self setTitle];
+    [self updateTitle];
     
     [TestFlight passCheckpoint:[NSString stringWithFormat:@"Cards viewed: %@", _selectedType]];
 
@@ -238,7 +238,7 @@
         NSError *error = nil;
         if (![frc performFetch:&error]) { // handle error!
         }
-        [frcTemp setObject:frc forKey:type];
+        frcTemp[type] = frc;
     } 
     
     frcArray = [frcTemp copy];
@@ -267,7 +267,7 @@
             break;
             
         case NSFetchedResultsChangeDelete:
-            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
             
         case NSFetchedResultsChangeUpdate:
@@ -275,15 +275,15 @@
             break;
             
         case NSFetchedResultsChangeMove:
-            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
     }
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     // The _fetch controller has sent all current change notifications, so tell the table view to process all updates.
-    [self setTitle];
+    [self updateTitle];
     [self.tableView reloadData];
     [self.tableView endUpdates];
 }
@@ -294,7 +294,7 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [[_fetchedResultsController objectAtIndexPath:indexPath] deleteEntity];
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
     }
 }
 
@@ -314,7 +314,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[[_fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
+    return [[_fetchedResultsController sections][section] numberOfObjects];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return CGRectGetHeight(self.tableView.bounds);
 }
 
 # pragma mark TESTING load Test Weapons
@@ -329,7 +333,7 @@
         
         DebugLog(@"Creating Test Weapon 1");
 
-        _fetchedResultsController = [frcArray objectForKey:@"Rifles"];
+        _fetchedResultsController = frcArray[@"Rifles"];
 
         Weapon *newWeapon1 = [Weapon createEntity];
         Photo *photo1 = [Photo createEntity];
@@ -338,7 +342,7 @@
         newWeapon1.model = @"Test Rifle 1";
         newWeapon1.caliber = [[calibers objectAtIndex:arc4random() % [calibers count]] name];
         newWeapon1.type = @"Rifles";
-        newWeapon1.barrel_length = [NSNumber numberWithDouble:18.0f];
+        newWeapon1.barrel_length = @(18.0f);
         newWeapon1.finish = @"FDE";
         newWeapon1.threaded_barrel_pitch = @"5/8 x 24 LH";
         newWeapon1.serial_number = [NSString randomStringWithLength:12];
@@ -348,7 +352,7 @@
         newWeapon1.primary_photo = photo1;
         photo1.weapon = newWeapon1;
     
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
     
         DebugLog(@"Creating Test Weapon 2");
         _fetchedResultsController = [frcArray objectForKey:@"Rifles"];
@@ -368,7 +372,7 @@
         newWeapon2.primary_photo = photo2;
         photo2.weapon = newWeapon2;
 
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
         
         DebugLog(@"Creating Test Weapon 3");
         _fetchedResultsController = [frcArray objectForKey:@"Handguns"];
@@ -388,7 +392,7 @@
         newWeapon3.primary_photo = photo3;
         photo3.weapon = newWeapon3;
     
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
         
         DebugLog(@"Creating Test Weapon 4");
         _fetchedResultsController = [frcArray objectForKey:@"Shotguns"];
@@ -407,7 +411,7 @@
         newWeapon4.primary_photo = photo4;
         photo4.weapon = newWeapon4;
 
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
         
         [preferences setBool:YES forKey:@"TestWeaponsLoaded"];
         [preferences synchronize];

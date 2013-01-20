@@ -122,7 +122,7 @@
         } else if (alertView == roundsBoughtAlertView) {
             _selectedAmmunition.count = [NSNumber numberWithInt:[_selectedAmmunition.count intValue] + count];
         }
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
 
         [self setCount];
     }
@@ -134,7 +134,7 @@
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == actionSheet.destructiveButtonIndex) {         // delete if pressed delete button
         [_selectedAmmunition deleteEntity];
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
         
         [self.navigationController popViewControllerAnimated:YES];
     }

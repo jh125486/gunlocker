@@ -87,4 +87,8 @@ static DataManager *sharedMyManager = nil;
     return self;
 }
 
+-(void)saveAppDatabase {
+    [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+}
+
 @end

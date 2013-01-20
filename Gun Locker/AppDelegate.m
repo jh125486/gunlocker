@@ -39,7 +39,7 @@
     
     // wait for main queue to empty
 //    dispatch_async(dispatch_get_main_queue(), ^{
-//        if (recordsDirty) [[NSManagedObjectContext defaultContext] save];
+//        if (recordsDirty) [[DataManager sharedManager] saveAppDatabase];
 //    });
     
     [[CBIntrospect sharedIntrospector] start];
@@ -145,7 +145,7 @@
 //                if (splitParts.count > 2) localManufacturer.short_name = [splitParts objectAtIndex:2];
 //            }];
         }   
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
 //        recordsDirty = YES;
         DebugLog(@"\tLoaded Manufacturers");
     });
@@ -197,7 +197,7 @@
                 newBullet.ballistic_coefficient = bc;
             }   
         }
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
 
                 
 
@@ -258,7 +258,7 @@
 //                localCaliber.diameter_inches = [NSNumber numberWithFloat:[[splitParts objectAtIndex:2] floatValue]];
 //            }];
         }   
-        [[NSManagedObjectContext defaultContext] save];
+        [[DataManager sharedManager] saveAppDatabase];
 //        recordsDirty = YES;
 //        DebugLog(@"\tLoaded Calibers");
     });

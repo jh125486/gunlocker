@@ -161,7 +161,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [[_fetchedResultsController objectAtIndexPath:indexPath] deleteEntity];
     }
-    [[NSManagedObjectContext defaultContext] save];      
+    [[DataManager sharedManager] saveAppDatabase];      
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

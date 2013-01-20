@@ -99,7 +99,7 @@
 
     [self.root fetchValueIntoObject:newMalfunction];
     newMalfunction.weapon = _selectedWeapon;
-    [[NSManagedObjectContext defaultContext] save];
+    [[DataManager sharedManager] saveAppDatabase];
 
     [self dismissModalViewControllerAnimated:YES];
 }
