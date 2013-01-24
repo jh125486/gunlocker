@@ -367,7 +367,7 @@
             } else { // errors with weather.aero
                DebugLog(@"! Problem with METAR data from weather.aero: %@\n", metarArray);
                 [self resetWX];
-                _wxTimestampLabel.text = @"Error processing weather data: dataservice down";
+                _wxTimestampLabel.text = @"Error: weather dataservice down";
            }
         } else {      // network errors       
             DebugLog(@"! Error: %@", operation.error.localizedDescription);

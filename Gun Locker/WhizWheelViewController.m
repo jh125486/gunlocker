@@ -21,9 +21,6 @@
 @synthesize driftInchesLabel = _driftInchesLabel, driftMOAMils = _driftMOAMils;
 @synthesize dropUnitLabel = _dropUnitLabel, driftUnitLabel = _driftUnitLabel;
 @synthesize selectedProfile = _selectedProfile;
-@synthesize lastSelectedRangeCell = _lastSelectedRangeCell;
-@synthesize lastSelectedDirectionCell = _lastSelectedDirectionCell;
-@synthesize lastSelectedSpeedCell = _lastSelectedSpeedCell;
 @synthesize resultBackgroundView = _resultBackgroundView;
 @synthesize reticleImage = _reticleImage;
 @synthesize reticlePOIImage = _reticlePOIImage;
@@ -41,6 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _titleLabel.text = self.selectedProfile.name;
+    tableIndexes = [[NSMutableDictionary alloc] initWithCapacity:3];
     trajectory = [[Trajectory alloc] init];
     trajectory.tempC = 15;
     trajectory.relativeHumidity = 0;
@@ -106,11 +104,8 @@
 -(void)viewWillAppear:(BOOL)animated {    
     [super viewWillAppear:animated];
     
-    // set to initial picker positions
-    rangeIndex = 0;
-
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    reticle = [defaults boolForKey:kGLReticleUnitsControlKey] ? @"MOA" : @"MilDot";
+    reticle = [defaults integerForKey:kGLReticleUnitsControlKey] == 0 ? @"MOA" : @"MilDot";
     
     // do all conversions for UnitControls
     trajectory.rangeUnit  = [defaults integerForKey:kGLRangeUnitsControlKey];
@@ -140,7 +135,13 @@
     [_directionsTableView reloadData];
     [_speedTableView reloadData];
     
-    [self updateInitialSelectedCells];
+    [tableIndexes setObject:[NSIndexPath indexPathForRow:2 inSection:0] forKey:@"range"];
+    [tableIndexes setObject:[NSIndexPath indexPathForRow:([arrayDirections count]*CIRCULAR_TABLE_SIZE/2) inSection:0] forKey:@"direction"];
+    [tableIndexes setObject:[NSIndexPath indexPathForRow:([arraySpeeds count]*CIRCULAR_TABLE_SIZE/2) inSection:0] forKey:@"speed"];
+    [_rangesTableView scrollToRowAtIndexPath:[tableIndexes objectForKey:@"range"] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    [_directionsTableView scrollToRowAtIndexPath:[tableIndexes objectForKey:@"direction"] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    [_speedTableView scrollToRowAtIndexPath:[tableIndexes objectForKey:@"speed"] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    
     [self showTrajectoryWithRecalc:YES];
     
     [self checkDayOrNightMode:nil];
@@ -199,6 +200,15 @@
     [modeTimer invalidate];
 }
 
+// TODO: fix orientation across all Views
+-(NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+-(BOOL)shouldAutorotate {
+    return NO;
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
@@ -252,98 +262,82 @@
     return cell;
 }
 
+-(void)scrollViewWillEndDragging:(UITableView *)tableView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    
+    float rowHeight = tableView.rowHeight;
+    float rowMiddleOffset = rowHeight * 0.25 + 1;
+    int row = round((targetContentOffset->y - rowMiddleOffset) / rowHeight);
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSIndexPath *index;
-    if(scrollView == _rangesTableView) {
-        index = [_rangesTableView indexPathForRowAtPoint:CGPointMake([_rangesTableView contentOffset].x, 
-                                                                     100 + [_rangesTableView contentOffset].y)];
-        // 'quantitize' scrolling to rows
-        [_rangesTableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        self.lastSelectedRangeCell =  [_rangesTableView cellForRowAtIndexPath:index];
-        rangeIndex = index.row - 2;
+    // 'quantitize' scrolling to rows
+    targetContentOffset->y = (row * rowHeight) + rowMiddleOffset;
+    NSIndexPath *index = [NSIndexPath indexPathForRow:row + 2 inSection:0];
+    
+    if(tableView == _rangesTableView) {
+        [tableIndexes setObject:index forKey:@"range"];
         [self showTrajectoryWithRecalc:NO];
-    } else if (scrollView == _directionsTableView) {
-        index = [_directionsTableView indexPathForRowAtPoint:CGPointMake([_directionsTableView contentOffset].x, 
-                                                                         100 + [_directionsTableView contentOffset].y)];
-        // 'quantitize' scrolling to rows
-        [_directionsTableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        self.lastSelectedDirectionCell =  [_directionsTableView cellForRowAtIndexPath:index];
+    } else if (tableView == _directionsTableView) {
+        [tableIndexes setObject:index forKey:@"direction"];
         [self showTrajectoryWithRecalc:YES];
-    } else if (scrollView == _speedTableView) {
-        index = [_speedTableView indexPathForRowAtPoint:CGPointMake([_speedTableView contentOffset].x, 
-                                                                    100 + [_speedTableView contentOffset].y)];
-        // 'quantitize' scrolling to rows
-        [_speedTableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        self.lastSelectedSpeedCell =  [_speedTableView cellForRowAtIndexPath:index];
+    } else if (tableView == _speedTableView) {
+        [tableIndexes setObject:index forKey:@"speed"];
         [self showTrajectoryWithRecalc:YES];
     }
+}
 
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self highlightSelectedCells];
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     if (self.nightMode) {
+        UITableViewCell *cell;
         if(scrollView == _rangesTableView) {
-            _lastSelectedRangeCell.textLabel.textColor = [UIColor redColor];
+            cell = [_rangesTableView cellForRowAtIndexPath:[tableIndexes objectForKey:@"range"]];
         } else if (scrollView == _directionsTableView) {
-            _lastSelectedDirectionCell.textLabel.textColor = [UIColor redColor];
+            cell = [_directionsTableView cellForRowAtIndexPath:[tableIndexes objectForKey:@"direction"]];
         } else if (scrollView == _speedTableView) {
-            _lastSelectedSpeedCell.textLabel.textColor = [UIColor redColor];
+            cell = [_speedTableView cellForRowAtIndexPath:[tableIndexes objectForKey:@"speed"]];
         }
+        cell.textLabel.textColor = [UIColor redColor];
     }
 }
-
 
 #pragma mark Actions
 -(void)highlightSelectedCells { //  highlight cells under the selector if night mode
-    if(_nightMode) {
-        _lastSelectedRangeCell.textLabel.textColor =  
-            _lastSelectedDirectionCell.textLabel.textColor = 
-            _lastSelectedSpeedCell.textLabel.textColor = [UIColor whiteColor];
-    } else {
-        _lastSelectedRangeCell.textLabel.textColor =  
-        _lastSelectedDirectionCell.textLabel.textColor = 
-        _lastSelectedSpeedCell.textLabel.textColor = [UIColor blackColor];
-    }
-}
-
-- (void)updateInitialSelectedCells {
-    // scroll direction and speed to middle to simulate a circular picker
-    NSIndexPath *initialRange = [NSIndexPath indexPathForRow:2 inSection:0];
-    NSIndexPath *initialDirection = [NSIndexPath indexPathForRow:([arrayDirections count]*CIRCULAR_TABLE_SIZE/2) inSection:0];
-    NSIndexPath *initialSpeed = [NSIndexPath indexPathForRow:([arraySpeeds count]*CIRCULAR_TABLE_SIZE/2) inSection:0];
-    
-    [_rangesTableView scrollToRowAtIndexPath:initialRange atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-    _lastSelectedRangeCell = [_rangesTableView cellForRowAtIndexPath:initialRange];
-    [_directionsTableView scrollToRowAtIndexPath:initialDirection atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-    _lastSelectedDirectionCell = [_directionsTableView cellForRowAtIndexPath:initialDirection];
-    [_speedTableView scrollToRowAtIndexPath:initialSpeed atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-    _lastSelectedSpeedCell = [_speedTableView cellForRowAtIndexPath:initialSpeed];
+    [_rangesTableView cellForRowAtIndexPath:[tableIndexes objectForKey:@"range"]].textLabel.textColor =
+    [_directionsTableView cellForRowAtIndexPath:[tableIndexes objectForKey:@"direction"]].textLabel.textColor =
+    [_speedTableView cellForRowAtIndexPath:[tableIndexes objectForKey:@"speed"]].textLabel.textColor =
+        _nightMode ? [UIColor whiteColor] : [UIColor blackColor];
 }
 
 - (void)showTrajectoryWithRecalc:(BOOL)recalc {
+    // range index is minus two due to front @"" double padding
+    int rangeIndex = ((NSIndexPath *)[tableIndexes objectForKey:@"range"]).row - 2;
+
     if(recalc) {
-        // convert direction 
-        if ([directionType isEqualToString:@"Clocking"]) {
-            angleDegrees =  CLOCK_to_DEGREES([_lastSelectedDirectionCell.textLabel.text intValue]);
-        } else { // in Degrees
-            angleDegrees = [_lastSelectedDirectionCell.textLabel.text intValue];
-        }
+        int directionIndex = ((NSIndexPath *)[tableIndexes objectForKey:@"direction"]).row % [arrayDirections count];
+        int speedIndex     = ((NSIndexPath *)[tableIndexes objectForKey:@"speed"]).row % [arraySpeeds count];
+        NSString *directionString = [arrayDirections objectAtIndex:directionIndex];
+        NSString *speedString     = [arraySpeeds objectAtIndex:speedIndex];
+        
+        // convert direction to degrees
+        angleDegrees = [directionType isEqualToString:@"Clocking"] ?
+            CLOCK_to_DEGREES([directionString doubleValue]) :
+            [directionString intValue];
 
         // convert speed units
         if ([_speedUnit isEqualToString:@"Human"]) {
-            speedMPH = [[dataManager.humanMPHSpeeds objectForKey:_lastSelectedSpeedCell.textLabel.text] doubleValue]; 
+            speedMPH = [[dataManager.humanMPHSpeeds objectForKey:speedString] doubleValue];
         } else if ([_speedUnit isEqualToString:@"Knots"]) {
-            speedMPH = KNOTS_to_MPH([_lastSelectedSpeedCell.textLabel.text doubleValue]);
+            speedMPH = KNOTS_to_MPH([speedString doubleValue]);
         } else if ([_speedUnit isEqualToString:@"m/s"]) {
-            speedMPH = MPS_to_MPH([_lastSelectedSpeedCell.textLabel.text doubleValue]);
+            speedMPH = MPS_to_MPH([speedString doubleValue]);
         } else if ([_speedUnit isEqualToString:@"km/h"]) {
-            speedMPH = KPH_to_MPH([_lastSelectedSpeedCell.textLabel.text doubleValue]);
+            speedMPH = KPH_to_MPH([speedString doubleValue]);
         } else { // MPH
-            speedMPH = [_lastSelectedSpeedCell.textLabel.text doubleValue];
+            speedMPH = [speedString doubleValue];
         }
-    
+
         // set up wind/leading speed/direction
         if ([_speedType isEqualToString:@"Wind"]) {
             trajectory.windAngle = angleDegrees;
@@ -359,7 +353,7 @@
         [trajectory calculateTrajectory];
         DebugLog(@"Whiz Wheel: Recalculated Wind/Leading %.1f mph at %.1f degrees", speedMPH, angleDegrees);
     }
-        
+
     TrajectoryRange *rangeDatum = [trajectory.ranges objectAtIndex:rangeIndex];
         
     _dropInchesLabel.text  = [NSString stringWithFormat:@"%.1f", rangeDatum.drop_inches];
@@ -378,7 +372,7 @@
         _driftMOAMils.text = [NSString stringWithFormat:@"%.1f", rangeDatum.drift_mils];
         _dropUnitLabel.text = _driftUnitLabel.text = @"MILs";
     }
-    
+
     if ([_selectedProfile.scope_click_unit isEqualToString:@"MILs"]) {
         _dropClicksLabel.text  = [NSString stringWithFormat:@"%g", round(rangeDatum.drop_mils / elevation_click)];
         _driftClicksLabel.text = [NSString stringWithFormat:@"%g", round(rangeDatum.drift_mils / windage_click)];
@@ -386,7 +380,6 @@
         _dropClicksLabel.text  = [NSString stringWithFormat:@"%g", round(rangeDatum.drop_moa / elevation_click)];
         _driftClicksLabel.text = [NSString stringWithFormat:@"%g", round(rangeDatum.drift_moa / windage_click)];            
     }
-
 }
 
 @end

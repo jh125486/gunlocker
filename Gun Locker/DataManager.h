@@ -25,6 +25,7 @@
 @property (nonatomic, strong) NSDictionary *whizWheelPicker3;
 @property (nonatomic, strong) NSDictionary *humanMPHSpeeds;
 @property (nonatomic, strong) CLLocationManager *locationManager;
+@property BOOL cardSortingChanged;
 
 +(DataManager *)sharedManager;
 

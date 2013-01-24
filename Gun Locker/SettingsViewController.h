@@ -39,6 +39,7 @@
 
 - (IBAction)showNFAInformationTapped:(UISwitch *)nfaSwitch;
 - (IBAction)saveSettings:(id)sender;
+- (IBAction)cardsSortByChanged:(UISegmentedControl *)sender;
 - (IBAction)updateStepperRanges:(id)sender;
 - (IBAction)exportTapped:(UIButton *)button;
 

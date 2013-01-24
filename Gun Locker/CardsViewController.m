@@ -91,7 +91,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self setupFRCArray];  // set up FRC to deal with changed sorting attributes on every willAppear
+    if ([DataManager sharedManager].cardSortingChanged) {
+        [self setupFRCArray];
+        [DataManager sharedManager].cardSortingChanged = NO;
+    }
     [self segmentedTypeControlClicked];
 }
 

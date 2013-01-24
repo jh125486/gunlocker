@@ -27,6 +27,8 @@ static DataManager *sharedMyManager = nil;
 @synthesize whizWheelPicker3 = _whizWheelPicker3;
 @synthesize humanMPHSpeeds = _humanMPHSpeeds;
 @synthesize locationManager = _locationManager;
+@synthesize cardSortingChanged = _cardSortingChanged;
+
 
 #pragma mark Singleton Methods
 + (DataManager *)sharedManager {
@@ -54,7 +56,8 @@ static DataManager *sharedMyManager = nil;
         _windageLeading = [[NSDictionary alloc] initWithObjectsAndKeys:_windUnits, [_speedTypes objectAtIndex:0], 
                                                                        _leadUnits, [_speedTypes objectAtIndex:1],
                                                                        nil];
-                
+        _cardSortingChanged = YES;
+        
         NSMutableArray *degreesDirections = [[NSMutableArray alloc] init];        
         for(int degree = 0; degree < 360; degree += 15)
             [degreesDirections addObject:[NSString stringWithFormat:@"%d°", degree]];

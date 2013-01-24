@@ -140,11 +140,17 @@
     [defaults setInteger:(int)_rangeStepStepper.Current forKey:kGLRangeStepKey];
 }
 
+- (IBAction)cardsSortByChanged:(UISegmentedControl *)sender {
+    [DataManager sharedManager].cardSortingChanged = YES;
+}
+
 - (IBAction)updateStepperRanges:(id)sender {
     _rangeStartStepper.Maximum = _rangeEndStepper.Current - _rangeStepStepper.Current;
     _rangeEndStepper.Minimum   = _rangeStartStepper.Current + _rangeStepStepper.Current;
     _rangeStepStepper.Maximum  = _rangeEndStepper.Current - _rangeStartStepper.Current;    
 }
+
+
 
 - (IBAction)exportTapped:(UIButton *)button {
     exportButton = button;

@@ -18,7 +18,6 @@
     NSArray *arrayDirections;
     NSArray *arraySpeeds;
     Trajectory *trajectory;
-    int rangeIndex;
     NSString *reticle;
     DataManager *dataManager;
     NSString *directionType;
@@ -27,6 +26,7 @@
     double elevation_click;
     double windage_click;
     NSTimer *modeTimer;
+    NSMutableDictionary *tableIndexes;
 }
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
@@ -37,10 +37,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *resultBackgroundView;
 @property (weak, nonatomic) IBOutlet UIImageView *reticleImage;
 @property (weak, nonatomic) IBOutlet UIImageView *reticlePOIImage;
-
-@property (weak, nonatomic) UITableViewCell *lastSelectedRangeCell;
-@property (weak, nonatomic) UITableViewCell *lastSelectedDirectionCell;
-@property (weak, nonatomic) UITableViewCell *lastSelectedSpeedCell;
 
 @property BOOL nightMode;
 @property (weak, nonatomic) IBOutlet UILabel *rangeLabel;
