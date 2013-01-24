@@ -15,6 +15,8 @@
 @synthesize driftClicksLabel = _driftClicksLabel;
 @synthesize titleLabel = _titleLabel;
 @synthesize tableBackgroundImage = _tableBackgroundImage;
+@synthesize resultContainerView = _resultContainerView;
+@synthesize resultView = _resultView;
 @synthesize rangesTableView = _rangesTableView, directionsTableView = _directionsTableView, speedTableView = _speedTableView;
 @synthesize rangeLabel = _rangeLabel, directionTypeLabel = _directionTypeLabel, speedLabel = _speedLabel, fromLabel = _fromLabel;
 @synthesize dropInchesLabel = _dropInchesLabel, dropMOAMils = _dropMOAMils;
@@ -148,16 +150,18 @@
 }
 
 - (void)updateToNightMode {
+    UIColor *halfRedColor = [UIColor colorWithRed:0.603 green:0.000 blue:0.000 alpha:1.000];
+    UIColor *blackColor = [UIColor blackColor];
+
     _nightMode = YES;
-    _rangesTableView.backgroundColor = _directionsTableView.backgroundColor = [UIColor blackColor];
-    _speedTableView.backgroundColor = _resultBackgroundView.backgroundColor = [UIColor blackColor];
+    _rangesTableView.backgroundColor = _directionsTableView.backgroundColor = _resultContainerView.backgroundColor = _speedTableView.backgroundColor = _resultBackgroundView.backgroundColor = blackColor;
     
     _reticleImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Reticles/%@_night", reticle]];
-    for (UILabel *label in self.view.subviews)
+    for (UILabel *label in _resultView.subviews)
         if ([label isKindOfClass:[UILabel class]])
-            label.textColor =  [UIColor colorWithRed:0.603 green:0.000 blue:0.000 alpha:1.000];
+            label.textColor = halfRedColor;
 
-    _tableBackgroundImage.backgroundColor = [UIColor colorWithRed:0.603 green:0.000 blue:0.000 alpha:1.000];
+    _tableBackgroundImage.backgroundColor = halfRedColor;
     
     _titleLabel.textColor = _rangeLabel.textColor = _directionTypeLabel.textColor = [UIColor colorWithWhite:0.75f alpha:1.f];
     _fromLabel.textColor = _speedLabel.textColor = [UIColor colorWithWhite:0.5f alpha:1.f];
@@ -172,24 +176,23 @@
 }
 
 - (void)updateToDayMode {
+    UIColor *whiteColor = [UIColor whiteColor];
+    UIColor *blackColor = [UIColor blackColor];
     _nightMode = NO;
-    _rangesTableView.backgroundColor = _directionsTableView.backgroundColor = [UIColor whiteColor];
-    _speedTableView.backgroundColor = _resultBackgroundView.backgroundColor = _titleLabel.textColor = [UIColor whiteColor];
-    
-    _rangeLabel.textColor = _directionTypeLabel.textColor = [UIColor whiteColor];
+    _rangesTableView.backgroundColor = _directionsTableView.backgroundColor = _resultContainerView.backgroundColor = _speedTableView.backgroundColor = _resultBackgroundView.backgroundColor = _titleLabel.textColor = _rangeLabel.textColor = _directionTypeLabel.textColor = whiteColor;
     _fromLabel.textColor = _speedLabel.textColor = [UIColor colorWithWhite:0.75f alpha:1.f];
     
     _reticleImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Reticles/%@_day", reticle]];
     
-    for (UILabel *label in self.view.subviews)
+    for (UILabel *label in _resultView.subviews)
         if ([label isKindOfClass:[UILabel class]])
-            label.textColor = [UIColor blackColor];
+            label.textColor = blackColor;
     
     _tableBackgroundImage.backgroundColor = [UIColor lightGrayColor];
     
     NSArray *visibleCells = [[[_rangesTableView visibleCells] arrayByAddingObjectsFromArray:[_directionsTableView visibleCells]] arrayByAddingObjectsFromArray:[_speedTableView visibleCells]];
     for (UITableViewCell *cell in visibleCells)
-        cell.textLabel.textColor = [UIColor blackColor];
+        cell.textLabel.textColor = blackColor;
 
     [self highlightSelectedCells];
 }
@@ -382,4 +385,9 @@
     }
 }
 
+- (void)viewDidUnload {
+    [self setResultContainerView:nil];
+    [self setResultView:nil];
+    [super viewDidUnload];
+}
 @end

@@ -39,6 +39,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *reticlePOIImage;
 
 @property BOOL nightMode;
+@property (weak, nonatomic) IBOutlet UIView *resultContainerView;
+@property (weak, nonatomic) IBOutlet UIView *resultView;
 @property (weak, nonatomic) IBOutlet UILabel *rangeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *directionTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fromLabel;

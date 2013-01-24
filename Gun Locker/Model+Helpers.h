@@ -29,7 +29,7 @@
 
 #define MOA_to_RAD(x)       (x/60*M_PI/180.0)
 #define MOA_to_MIL(x)       (x / ((360*60)/(2000*M_PI)))
-#define CLOCK_to_DEGREES(x) (x * 30)
+#define CLOCK_to_DEGREES(x) (x == 12 ? 0 : x * 30)
 #define DEGREES_TO_CLOCK(x) ((roundf(x/30.0f) == 0) ? 12 : roundf(x/30.0f))
 
 #define METERS_to_FEET(x)   (x*3.28083989501312)
