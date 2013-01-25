@@ -209,7 +209,7 @@
     _currentTextField = nil;
 }
 
-- (void) nextPreviousTapped:(id)sender {
+- (void)nextPreviousTapped:(id)sender {
     int index = [formFields indexOfObject:_currentTextField];
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0: // previous
@@ -224,7 +224,7 @@
     [_currentTextField becomeFirstResponder];
 }
 
-- (void) doneTyping:(id)sender {
+- (void)doneTyping:(id)sender {
     [_currentTextField resignFirstResponder];
 }
 
