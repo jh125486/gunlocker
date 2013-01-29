@@ -27,6 +27,7 @@
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
 
     //Register addNewNoteToArray to recieve "newNote" notification
+    DebugLog(@"tried to register delegate");
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewNote:) name:@"newNote" object:nil];
 
     self.navigationItem.rightBarButtonItem.enabled = _selectedWeapon ? YES : NO;
@@ -73,7 +74,7 @@
 
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -142,6 +143,7 @@
 }
 
 - (void) addNewNote:(NSNotification*) notification {
+    DebugLog(@"tried to save");
     Note *newNote = [notification object];
     newNote.weapon = _selectedWeapon;
     [[DataManager sharedManager] saveAppDatabase];

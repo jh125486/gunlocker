@@ -101,7 +101,7 @@
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [TestFlight passCheckpoint:@"CardsView disappeared"];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)updateTitle {
@@ -197,6 +197,7 @@
 }
 
 - (void)showPasscodeModal {
+    DebugLog(@"tried to show modal");
     if (([[KKPasscodeLock sharedLock] isPasscodeRequired])) {
         KKPasscodeViewController *vc = [[KKPasscodeViewController alloc] initWithNibName:nil bundle:nil] ;
         vc.mode = KKPasscodeModeEnter;

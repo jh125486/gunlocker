@@ -57,7 +57,9 @@
         newNote.date  = [NSDate date];
         newNote.title = _titleTextField.text;
         newNote.body  = _bodyTextView.text;
+        DebugLog(@"sent delegate message to save");
         [[NSNotificationCenter defaultCenter] postNotificationName:@"newNote" object:newNote];
+
     }
          
     [self.navigationController popViewControllerAnimated:YES];

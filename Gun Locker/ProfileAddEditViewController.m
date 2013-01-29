@@ -62,8 +62,12 @@
                                                          _sgTextField,
                                                          nil];
 
-    for(UITextField *field in formFields)
+    // TODO: inactive Done button till all fields filled out
+    
+    for(UITextField *field in formFields) {
         field.delegate = self;
+        [field addTarget:self action:@selector(checkData:) forControlEvents: UIControlEventEditingChanged];
+    }
     
     _siteHeightTextField.keyboardType = _diameterTextField.keyboardType = _sgTextField.keyboardType = UIKeyboardTypeDecimalPad;
 	
@@ -89,7 +93,7 @@
 
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -99,12 +103,13 @@
 - (void)loadProfile {
     self.title = @"Edit Profile";
     
-    _selectedBullet = _selectedProfile.bullet;
-    drag_model = _selectedProfile.drag_model;
-    selectedWeapon = _selectedProfile.weapon;
     _nameTextField.text = _selectedProfile.name;
+    selectedWeapon = _selectedProfile.weapon;
+    _weaponTextField.text = selectedWeapon.description;
     [_weaponButton setTitle:selectedWeapon.description forState:UIControlStateNormal];
     [_weaponPicker selectRow:[weapons indexOfObject:selectedWeapon] inComponent:0 animated:NO];
+    _selectedBullet = _selectedProfile.bullet;
+    drag_model = _selectedProfile.drag_model;
     _muzzleVelocityTextField.text = [_selectedProfile.muzzle_velocity stringValue];
     _siteHeightTextField.text     = [_selectedProfile.sight_height_inches stringValue];
     _zeroDistanceTextField.text   = [_selectedProfile.zero stringValue];
@@ -134,7 +139,7 @@
                                    animated:NO];
 
     [self updateScopeAdjustmentLabels];
-    
+    [self checkData:nil];
 }
 
 - (void)updateScopeAdjustmentLabels {
@@ -147,8 +152,21 @@
     [_scopeAdjustmentClicksButton setTitle:nil forState:UIControlStateNormal];
     _scopeElevationClicksLabel.text = [NSString stringWithFormat:@"⇕ Elevation %@ %@ per click", elevation, unit];
     _scopeWindageClicksLabel.text = [NSString stringWithFormat:@"⇔ Windage %@ %@ per click", windage, unit];
+    [self checkData:nil];
 }
 
+// validation of fields
+- (IBAction)checkData:(id)sender {
+    BOOL valid = YES;
+    for(UITextField *field in formFields)
+        if(field.text.length == 0)
+            valid = NO;
+    
+    if ((_selectedBullet == nil) && (manually_entered_bc == nil))
+        valid = NO;
+    
+    [self.navigationItem.rightBarButtonItem setEnabled:valid];
+}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString *segueID = segue.identifier;
@@ -179,6 +197,7 @@
     _weightTextField.text   = [_selectedBullet.weight_grains stringValue];
     [self setBCButtonTitle:[Bullet bcToString:[_selectedBullet.ballistic_coefficient objectForKey:drag_model]]];
     manually_entered_bc = nil;
+    [self checkData:nil];
 }   
 
 - (void)didSelectDragModel:(NSNotification*) notification  {
@@ -192,6 +211,7 @@
 
     _selectedBullet = nil;    
     [self setBCButtonTitle:[Bullet bcToString:manually_entered_bc]];
+    [self checkData:nil];
 }
 
 - (void)didCalculateSG:(NSNotification*) notification  {
@@ -208,6 +228,7 @@
     manually_entered_bc = nil;
     drag_model = [_dragModelControl titleForSegmentAtIndex:_dragModelControl.selectedSegmentIndex];
     [self setBCButtonTitle:@"Enter Ballistic Coefficient"];
+    [self checkData:nil];
 }
 
 -(void)setBCButtonTitle:(NSString *)title {
@@ -342,13 +363,14 @@
 
 - (void) doneTyping:(id)sender {
     [self setButtons];
-    
+    [self checkData:nil];
     [_currentTextField resignFirstResponder];
 }
 
 -(void)setButtons {
     if (_currentTextField == _weaponTextField) {
         selectedWeapon = [weapons objectAtIndex:[_weaponPicker selectedRowInComponent:0]];
+        _weaponTextField.text = selectedWeapon.description;
         [_weaponButton setTitle:selectedWeapon.description forState:UIControlStateNormal];
     } else if (_currentTextField == _scopeAdjustmentTextField) {
         [self updateScopeAdjustmentLabels];

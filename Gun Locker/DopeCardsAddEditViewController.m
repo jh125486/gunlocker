@@ -132,7 +132,7 @@
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [TestFlight passCheckpoint:@"DopeCardsAddEdit unloaded"];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setTableView:nil];
 }
 
