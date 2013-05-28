@@ -7,7 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import "CBIntrospect.h"
+//#import "CBIntrospect.h"
+#import "Models/Manufacturer.h"
+#import "Models/Bullet.h"
+#import "Models/Caliber.h"
+
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -25,10 +29,7 @@
     #pragma clang diagnostic pop
     #endif
 
-
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"GunLocker.sqlite"];
-    DebugLog(@"MR setup completed");
-    recordsDirty = NO;
     
     NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
 
@@ -36,14 +37,7 @@
     if([Manufacturer countOfEntities] == 0) [self loadManufacturers];
     if([Bullet countOfEntities] == 0) [self loadBullets];
     if([Caliber countOfEntities] == 0) [self loadCalibers];
-    
-    // wait for main queue to empty
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        if (recordsDirty) [[DataManager sharedManager] saveAppDatabase];
-//    });
-    
-    [[CBIntrospect sharedIntrospector] start];
-    
+
     return YES;
 }
 
@@ -138,17 +132,8 @@
             newManufacturer.country    = [splitParts objectAtIndex:1];
             if (splitParts.count > 2) newManufacturer.short_name = [splitParts objectAtIndex:2];
 
-//            [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext){
-//                Manufacturer *localManufacturer = [newManufacturer inContext:localContext];
-//                
-//                localManufacturer.name       = [splitParts objectAtIndex:0];
-//                localManufacturer.country    = [splitParts objectAtIndex:1];
-//                if (splitParts.count > 2) localManufacturer.short_name = [splitParts objectAtIndex:2];
-//            }];
-        }   
+        }
         [[DataManager sharedManager] saveAppDatabase];
-//        recordsDirty = YES;
-        DebugLog(@"\tLoaded Manufacturers");
     });
 }
 
@@ -182,59 +167,24 @@
                 
                 // G1 is array of fps and bc's
                 NSMutableArray *g1 = [[NSMutableArray alloc] init];
-                if ([[splitParts objectAtIndex:6] floatValue] > 0 ) {
+                if ([(NSNumber *)[splitParts objectAtIndex:6] floatValue] > 0 ) {
                     [g1 addObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:6]]];
                     for(int index = 7; index <= 10; index++)
-                        if ([[splitParts objectAtIndex:index] floatValue] > 0) {
+                        if ([(NSNumber *)[splitParts objectAtIndex:index] floatValue] > 0) {
                             [g1 addObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:index]]];
                             [g1 addObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:index + 4]]];
                         }
                     [bc setObject:g1 forKey:@"G1"];
                 }
                 
-                if ([[splitParts objectAtIndex:15] floatValue] > 0 )
+                if ([(NSNumber *)[splitParts objectAtIndex:15] floatValue] > 0 )
                     [bc setObject:[NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:15]]] forKey:@"G7"];
                 
                 newBullet.ballistic_coefficient = bc;
             }   
         }
         [[DataManager sharedManager] saveAppDatabase];
-
                 
-
-//                [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext){
-//                    Bullet *localBullet = [newBullet inContext:localContext];
-//
-//                    localBullet.category = [bulletCSVFile stringByDeletingPathExtension];
-//                    localBullet.diameter_inches = [NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:0]];
-//                    localBullet.brand = [splitParts objectAtIndex:1];
-//                    localBullet.name = [splitParts objectAtIndex:2];
-//                    localBullet.weight_grains = [NSNumber numberWithInt:[[splitParts objectAtIndex:3] intValue]];
-//                    // index 4 is Overall Length (OAL)
-//                    localBullet.sectional_density_inches = [NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:5]];
-//                    NSMutableDictionary *bc = [[NSMutableDictionary alloc] init];
-//                    
-//                    // G1 is array of fps and bc's
-//                    NSMutableArray *g1 = [[NSMutableArray alloc] init];
-//                    if ([[splitParts objectAtIndex:6] floatValue] > 0 ) {
-//                        [g1 addObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:6]]];
-//                        for(int index = 7; index <= 10; index++)
-//                            if ([[splitParts objectAtIndex:index] floatValue] > 0) {
-//                                [g1 addObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:index]]];
-//                                [g1 addObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:index + 4]]];
-//                            }
-//                        [bc setObject:g1 forKey:@"G1"];
-//                    }
-//                    
-//                    if ([[splitParts objectAtIndex:15] floatValue] > 0 )
-//                        [bc setObject:[NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:15]]] forKey:@"G7"];
-//                    
-//                    localBullet.ballistic_coefficient = bc;
-//                }];
-//            }   
-//        }
-//        recordsDirty = YES;
-//        DebugLog(@"\tLoaded Bullets");
     });
 }
 
@@ -249,19 +199,10 @@
             Caliber *newCaliber = [Caliber createEntity];
             newCaliber.type = [splitParts objectAtIndex:0];
             newCaliber.name = [splitParts objectAtIndex:1];
-            newCaliber.diameter_inches = [NSNumber numberWithFloat:[[splitParts objectAtIndex:2] floatValue]];
+            newCaliber.diameter_inches = [NSNumber numberWithFloat:[(NSNumber *)[splitParts objectAtIndex:2] floatValue]];
             
-            
-//            [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext){
-//                Caliber *localCaliber = [newCaliber inContext:localContext];
-//                localCaliber.type = [splitParts objectAtIndex:0];
-//                localCaliber.name = [splitParts objectAtIndex:1];
-//                localCaliber.diameter_inches = [NSNumber numberWithFloat:[[splitParts objectAtIndex:2] floatValue]];
-//            }];
-        }   
+        }
         [[DataManager sharedManager] saveAppDatabase];
-//        recordsDirty = YES;
-//        DebugLog(@"\tLoaded Calibers");
     });
 }
 

@@ -10,3 +10,6 @@
 [submodule "AFNetworking"]
 	path = AFNetworking
 	url = git://github.com/seatme/AFNetworking.git
+[submodule "CBIntrospect"]
+	path = CBIntrospect
+	url = git://github.com/cbess/CBIntrospector.git
