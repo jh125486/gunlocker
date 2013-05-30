@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"about.html" ofType:nil];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Extras/about.html" ofType:nil];
     NSString *contentsOfAboutPage = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     [self.webView loadHTMLString:contentsOfAboutPage baseURL:nil];
 }

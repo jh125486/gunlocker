@@ -121,7 +121,7 @@
 
 - (void)loadManufacturers {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"manufacturers.txt" ofType:nil];
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"Extras/manufacturers.txt" ofType:nil];
         NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
         NSArray *splitParts;
         for (NSString *manufacturer in [content componentsSeparatedByString:@"\n"]) {
@@ -139,10 +139,11 @@
 
 - (void)loadBullets {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *bulletDirectory = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Bullets"];
+        NSString *bulletDirectory = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Extras/Bullets"];
         NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:bulletDirectory error:nil];
         NSPredicate *fltr = [NSPredicate predicateWithFormat:@"self ENDSWITH '.csv'"];
-        
+        NSLog(@"directory %@", bulletDirectory);
+        int i = 0;
         for (NSString *bulletCSVFile in [dirContents filteredArrayUsingPredicate:fltr]) {
             NSString *csvFullPath = [bulletDirectory stringByAppendingPathComponent:bulletCSVFile];
             NSString* content = [NSString stringWithContentsOfFile:csvFullPath encoding:NSUTF8StringEncoding error:NULL];
@@ -181,16 +182,17 @@
                     [bc setObject:[NSArray arrayWithObject:[NSDecimalNumber decimalNumberWithString:[splitParts objectAtIndex:15]]] forKey:@"G7"];
                 
                 newBullet.ballistic_coefficient = bc;
-            }   
+            }
+            i++;
         }
         [[DataManager sharedManager] saveAppDatabase];
-                
+        NSLog(@"count: %d", i);
     });
 }
 
 - (void)loadCalibers {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"calibers.txt" ofType:nil];
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"Extras/calibers.txt" ofType:nil];
         NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
         NSArray *splitParts;
         for (NSString *caliber in [content componentsSeparatedByString:@"\n"]) {

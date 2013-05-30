@@ -26,17 +26,17 @@
     #import <QuickDialog/QuickDialog.h>
     #import "DataManager.h"
     #import "Constants.h"
-    #import "Extras/Categories/NSDate+Formatting.h"
-    #import "Extras/Categories/NSString+Extended.h"
-    #import "Views/TableViewHeaderViewPlain.h"
-    #import "Views/TableViewHeaderViewGrouped.h"
+    #import "TableViewHeaderViewPlain.h"
+    #import "TableViewHeaderViewGrouped.h"
 
-    #import "Models/BallisticProfile+Extended.h"
-    #import "Models/Bullet+Extended.h"
-    #import "Models/Maintenance+Extended.h"
-    #import "Models/Malfunction+Extended.h"
-    #import "Models/Manufacturer+Extended.h"
-    #import "Models/Photo+Extended.h"
-    #import "Models/Weapon+Extended.h"
+    #import "NSDate+Formatting.h"
+    #import "NSString+Extended.h"
 
+    #import "BallisticProfile+Extended.h"
+    #import "Bullet+Extended.h"
+    #import "Maintenance+Extended.h"
+    #import "Malfunction+Extended.h"
+    #import "Manufacturer+Extended.h"
+    #import "Photo+Extended.h"
+    #import "Weapon+Extended.h"
 #endif
