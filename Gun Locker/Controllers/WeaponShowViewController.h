@@ -13,7 +13,7 @@
 #import "MalfunctionsViewController.h"
 #import "NFAInformationViewController.h"
 #import "NotesListViewController.h"
-#import "../Views/TextStepper/TextStepperField.h"
+#import "TextStepperField.h"
 #import "DopeCardsViewController.h"
 #import "CardsViewController.h"
 #import "PhotosTableViewController.h"

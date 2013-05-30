@@ -26,7 +26,7 @@
     [_titleTextField becomeFirstResponder];
     _bodyTextView.delegate = self;
     
-    _bodyTextView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Notes_TextView"]];
+    _bodyTextView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Cards/Notes_TextView"]];
     _bodyTextView.contentInset = UIEdgeInsetsMake(-10, 10, 30, 10);
     
     if (_passedNote) [self loadNote];

@@ -28,7 +28,7 @@
     [super viewDidLoad];
     self.title = _passedPhoto.weapon.model;
     [self updateTitleView];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundFabricTexture"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/BackgroundFabricTexture"]];
     photo = [UIImage imageWithData:_passedPhoto.normal_size];
     _photoView.image = photo;
     [_photoView sizeToFit];

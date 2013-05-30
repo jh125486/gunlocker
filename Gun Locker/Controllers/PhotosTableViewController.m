@@ -55,7 +55,7 @@
     int count = [_fetchedResultsController.fetchedObjects count];
     self.title = [NSString stringWithFormat:@"Photos (%d)", count];
     
-    _noPhotosImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Photos"]];
+    _noPhotosImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Images/Table/Blanks/Photos"]];
     _noPhotosImageView.hidden = (count != 0);
     self.tableView.hidden = (count == 0);
 }

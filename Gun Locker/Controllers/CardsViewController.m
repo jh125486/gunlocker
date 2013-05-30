@@ -35,11 +35,11 @@
     
     self.tableView.decelerationRate = UIScrollViewDecelerationRateFast;
 
-    UIImage *segmentSelected   = [[UIImage imageNamed:@"selected"]   resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)];
-    UIImage *segmentUnselected = [[UIImage imageNamed:@"unselected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)];
-    UIImage *segmentSelectedUnselected   = [UIImage imageNamed:@"selected_unselected"];
-    UIImage *segUnselectedSelected       = [UIImage imageNamed:@"unselected_selected"];
-    UIImage *segmentUnselectedUnselected = [UIImage imageNamed:@"unselected_unselected"];
+    UIImage *segmentSelected   = [[UIImage imageNamed:@"Images/tabs/selected"]   resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)];
+    UIImage *segmentUnselected = [[UIImage imageNamed:@"Images/tabs/unselected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)];
+    UIImage *segmentSelectedUnselected   = [UIImage imageNamed:@"Images/tabs/selected_unselected"];
+    UIImage *segUnselectedSelected       = [UIImage imageNamed:@"Images/tabs/unselected_selected"];
+    UIImage *segmentUnselectedUnselected = [UIImage imageNamed:@"Images/tabs/unselected_unselected"];
     
     [_selectedTypeControl setBackgroundImage:segmentUnselected forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [_selectedTypeControl setBackgroundImage:segmentSelected forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
@@ -108,16 +108,11 @@
     NSInteger count = [[[_fetchedResultsController sections] objectAtIndex:0] numberOfObjects];
     self.navigationItem.title = [NSString stringWithFormat:@"%d file%@ in folder", count, (count == 1) ? @"" : @"s"];
     
-    _noFilesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/%@", _selectedType]];
+    _noFilesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Images/Table/Blanks/%@", _selectedType]];
     _noFilesImageView.hidden = (count != 0);
     
-    if ([types indexOfObject:previousType] < [types indexOfObject:_selectedType]) {
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationLeft];
-    } else if ([types indexOfObject:previousType] > [types indexOfObject:_selectedType]){
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationRight];
-    } else {
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-    }
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+//    [self.tableView reloadData];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -281,7 +276,7 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     // The _fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self updateTitle];
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
     [self.tableView endUpdates];
 }
 
@@ -329,8 +324,7 @@
         _fetchedResultsController = frcArray[@"Rifles"];
 
         Weapon *newWeapon1 = [Weapon createEntity];
-        Photo *photo1 = [Photo createEntity];
-
+        DebugLog(@"count : %d", [Manufacturer countOfEntities]);
         newWeapon1.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
         newWeapon1.model = @"My Rifle 1";
         newWeapon1.caliber = [[calibers objectAtIndex:arc4random() % [calibers count]] name];
@@ -341,12 +335,12 @@
         newWeapon1.serial_number = [NSString randomStringWithLength:12];
         newWeapon1.purchased_price = [NSDecimalNumber decimalNumberWithString:@"1800.00"];
         newWeapon1.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];            
-        [photo1 setPhotoAndCreateThumbnailFromImage:[UIImage imageNamed:@"Test/test1.jpg"]];
+        Photo *photo1 = [Photo createEntity];        
+        [photo1 setPhotoAndCreateThumbnailFromImage:[UIImage imageNamed:@"Testing/Images/test1.jpg"]];
         newWeapon1.primary_photo = photo1;
         photo1.weapon = newWeapon1;
-    
         [[DataManager sharedManager] saveAppDatabase];
-    
+        
         DebugLog(@"Creating Test Weapon 2");
         _fetchedResultsController = [frcArray objectForKey:@"Rifles"];
         Weapon *newWeapon2 = [Weapon createEntity];
@@ -356,35 +350,14 @@
         newWeapon2.type = @"Rifles";
         newWeapon2.barrel_length = [NSNumber numberWithDouble:16.0f];
         newWeapon2.finish = @"Wood Furniture";
-        newWeapon2.threaded_barrel_pitch = @"1/2 x 28 LH";
+        newWeapon2.threaded_barrel_pitch = @"3 Lug";
         newWeapon2.serial_number = [NSString randomStringWithLength:12];
         newWeapon2.purchased_price = [NSDecimalNumber decimalNumberWithString:@"900.00"];
         newWeapon2.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
         Photo *photo2 = [Photo createEntity];
-        [photo2 setPhotoAndCreateThumbnailFromImage:[UIImage imageNamed:@"Test/test2.jpg"]];
+        [photo2 setPhotoAndCreateThumbnailFromImage:[UIImage imageNamed:@"Testing/Images/test2.jpg"]];
         newWeapon2.primary_photo = photo2;
         photo2.weapon = newWeapon2;
-
-        [[DataManager sharedManager] saveAppDatabase];
-        
-        DebugLog(@"Creating Test Weapon 3");
-        _fetchedResultsController = [frcArray objectForKey:@"Handguns"];
-        Weapon *newWeapon3 = [Weapon createEntity];
-        newWeapon3.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
-        newWeapon3.model = @"My Handgun 1";
-        newWeapon3.caliber = [[calibers objectAtIndex:arc4random() % [calibers count]] name];
-        newWeapon3.type = @"Handguns";
-        newWeapon3.barrel_length = [NSNumber numberWithDouble:5.2f];
-        newWeapon3.finish = @"Stainless/Black";
-        newWeapon3.threaded_barrel_pitch = @"3 lug";
-        newWeapon3.serial_number = [NSString randomStringWithLength:12];
-        newWeapon3.purchased_price = [NSDecimalNumber decimalNumberWithString:@"13000.00"];
-        newWeapon3.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
-        Photo *photo3 = [Photo createEntity];
-        [photo3 setPhotoAndCreateThumbnailFromImage:[UIImage imageNamed:@"Test/test3.jpg"]];
-        newWeapon3.primary_photo = photo3;
-        photo3.weapon = newWeapon3;
-    
         [[DataManager sharedManager] saveAppDatabase];
         
         DebugLog(@"Creating Test Weapon 4");
@@ -400,10 +373,28 @@
         newWeapon4.purchased_price = [NSDecimalNumber decimalNumberWithString:@"13000.00"];
         newWeapon4.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
         Photo *photo4 = [Photo createEntity];
-        [photo4 setPhotoAndCreateThumbnailFromImage:[UIImage imageNamed:@"Test/test4.jpg"]];
+        [photo4 setPhotoAndCreateThumbnailFromImage:[UIImage imageNamed:@"Testing/Images/test4.jpg"]];
         newWeapon4.primary_photo = photo4;
         photo4.weapon = newWeapon4;
-
+        [[DataManager sharedManager] saveAppDatabase];
+        
+        DebugLog(@"Creating Test Weapon 3");
+        _fetchedResultsController = [frcArray objectForKey:@"Handguns"];
+        Weapon *newWeapon3 = [Weapon createEntity];
+        newWeapon3.manufacturer = [[Manufacturer findAll]  objectAtIndex:arc4random() % [Manufacturer countOfEntities]];
+        newWeapon3.model = @"My Handgun";
+        newWeapon3.caliber = [[calibers objectAtIndex:arc4random() % [calibers count]] name];
+        newWeapon3.type = @"Handguns";
+        newWeapon3.barrel_length = [NSNumber numberWithDouble:5.2f];
+        newWeapon3.finish = @"Stainless/Black";
+        newWeapon3.threaded_barrel_pitch = @"16x1 LH";
+        newWeapon3.serial_number = [NSString randomStringWithLength:12];
+        newWeapon3.purchased_price = [NSDecimalNumber decimalNumberWithString:@"2000.00"];
+        newWeapon3.purchased_date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)(60 * 60 * 24 * arc4random_uniform(1000))];
+        Photo *photo3 = [Photo createEntity];
+        [photo3 setPhotoAndCreateThumbnailFromImage:[UIImage imageNamed:@"Testing/Images/test3.jpg"]];
+        newWeapon3.primary_photo = photo3;
+        photo3.weapon = newWeapon3;
         [[DataManager sharedManager] saveAppDatabase];
         
         [preferences setBool:YES forKey:@"TestWeaponsLoaded"];

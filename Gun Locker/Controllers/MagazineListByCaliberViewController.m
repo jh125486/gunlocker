@@ -50,7 +50,7 @@
     self.title = [NSString stringWithFormat:@"Calibers (%d)", count];
     
     // change to Table/Magazine
-    self.noMagazineImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Magazines"]];
+    self.noMagazineImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Images/Table/Blanks/Magazines"]];
     self.noMagazineImageView.hidden = (count != 0);
     self.tableView.hidden = (count == 0);    
 }

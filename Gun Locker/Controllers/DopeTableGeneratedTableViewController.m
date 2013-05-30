@@ -31,6 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     trajectory = _passedTrajectory;
 
     _weaponLabel.text      = _passedTrajectory.ballisticProfile.weapon.model;
@@ -51,7 +52,7 @@
     windage_click   = [[_passedTrajectory.ballisticProfile.windage_click decimalFromFraction] doubleValue];
     
     [trajectory setup];
-    [trajectory setupWindAndLeading];    
+    [trajectory setupWindAndLeading];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -119,21 +120,22 @@
     cell.energyLabel.text   = [NSString stringWithFormat:@"%g", round(rangeDatum.energy_ftlbs)];
     cell.timeLabel.text     = [NSString stringWithFormat:@"%.3f", rangeDatum.time];
     
-    if (rangeDatum.velocity_fps < 1116.45) { // XXX should be Speed of Sound
-//        tableView.opaque = NO;
-//        tableView.backgroundColor = [UIColor clearColor];
-//        tableView.backgroundView = nil;
-        cell.backgroundView.alpha = 1.f;
-        cell.backgroundColor = UIColorFromString(@"FF0000");
-    }
-    
     return cell;
 }
 
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath { 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(DopeTableGeneratedCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath { 
+//    if ([cell.velocityLabel.text floatValue] < 1116.45) { // XXX should be Speed of Sound
+//                                             // XXX highlight row if below speed of sound
+//                                             //        tableView.opaque = NO;
+//                                             //        tableView.backgroundColor = [UIColor clearColor];
+//                                             //        tableView.backgroundView = nil;
+//        cell.backgroundView.alpha = 1.f;
+//        cell.backgroundColor = UIColorFromString(@"FF0000");
+//    }
+    
     cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor clearColor] : [UIColor colorWithRed:0.855 green:0.812 blue:0.682 alpha:1.000];
-}  
+}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     return _dopeCardSectionHeaderView;
@@ -217,30 +219,30 @@
 }
 
 - (IBAction)infoViewTapped:(id)sender {
-    _infoView.hidden = !_infoView.hidden;
-    [self.tableView setContentOffset:CGPointMake(0.f, _infoView.isHidden ? CGRectGetHeight(_infoView.frame) : 0.f) animated:YES];
+    CGFloat offset = self.tableView.contentOffset.y == CGRectGetHeight(_infoView.frame) ? 0.f : CGRectGetHeight(_infoView.frame);
+    [self.tableView setContentOffset:CGPointMake(0.f, offset) animated:YES];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self dismissModalViewControllerAnimated:YES];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-}
-
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView reloadData];
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)theIndexPath {
-    for (NSIndexPath *indexPath in [tableView indexPathsForSelectedRows]) {
-        if ((indexPath.row == theIndexPath.row) && (indexPath.section == theIndexPath.section)) {
-            return tableView.rowHeight + 10.f;
-        }
-    }
-    return  tableView.rowHeight;
-}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//    [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+//}
+//
+//-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [tableView reloadData];
+//}
+//
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)theIndexPath {
+//    for (NSIndexPath *indexPath in [tableView indexPathsForSelectedRows]) {
+//        if ((indexPath.row == theIndexPath.row) && (indexPath.section == theIndexPath.section)) {
+//            return tableView.rowHeight + 10.f;
+//        }
+//    }
+//    return  tableView.rowHeight;
+//}
 
 @end

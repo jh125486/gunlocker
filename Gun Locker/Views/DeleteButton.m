@@ -30,7 +30,7 @@
 
 - (id) initWithCoder:(NSCoder *)coder {
     if (self = [super initWithCoder:coder]) {
-        [self setBackgroundImage:[[UIImage imageNamed:@"delete_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)] 
+        [self setBackgroundImage:[[UIImage imageNamed:@"Images/Buttons/delete_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)]
                         forState:UIControlStateNormal];
         
 //        [self setBackgroundImage:[[UIImage imageNamed:@"DefaultButton_Highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 22, 21, 21)] 

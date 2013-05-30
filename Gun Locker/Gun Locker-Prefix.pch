@@ -24,13 +24,19 @@
     #define MR_SHORTHAND 1
     #import "CoreData+MagicalRecord.h"
     #import <QuickDialog/QuickDialog.h>
-    #import "Extras/Categories/NSDate+Formatting.h"
-    #import "Models/Model+Helpers.h"
     #import "DataManager.h"
     #import "Constants.h"
+    #import "Extras/Categories/NSDate+Formatting.h"
+    #import "Extras/Categories/NSString+Extended.h"
     #import "Views/TableViewHeaderViewPlain.h"
     #import "Views/TableViewHeaderViewGrouped.h"
 
-    #import "Extras/Categories/NSString+Extended.h"
+    #import "Models/BallisticProfile+Extended.h"
+    #import "Models/Bullet+Extended.h"
+    #import "Models/Maintenance+Extended.h"
+    #import "Models/Malfunction+Extended.h"
+    #import "Models/Manufacturer+Extended.h"
+    #import "Models/Photo+Extended.h"
+    #import "Models/Weapon+Extended.h"
 
 #endif

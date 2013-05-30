@@ -44,7 +44,7 @@
     int count = [_fetchedResultsController.fetchedObjects count];
     self.title = [NSString stringWithFormat:@"Maintenance (%d)", count];    
     
-    self.noMaintenancesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Maintenance"]];
+    self.noMaintenancesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Images/Table/Blanks/Maintenance"]];
     self.noMaintenancesImageView.hidden = (count != 0);
     self.tableView.hidden = (count == 0);
 }
@@ -104,11 +104,11 @@
     UILabel *firstLine, *secondLine;
     
     if (_selectedWeapon) { // Weapon Malfunction Table
-        headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background"]];
+        headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Table/tableView_header_background"]];
         firstLine = [[UILabel alloc] initWithFrame:CGRectMake(8.0f, 0.0f, 320.0f, CGRectGetHeight(headerView.frame))];
         firstLine.text = [[[_fetchedResultsController sections] objectAtIndex:section] name];
     } else { // Logbook
-        headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background2"]];
+        headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Table/tableView_header_background2"]];
         Weapon *weapon = [[_fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]] weapon];
         UIImageView *thumbnailImageView = [[UIImageView alloc] initWithFrame:CGRectMake(4.0f, 3.0f, 56.0f, 42.0f)];
         firstLine     = [[UILabel alloc] initWithFrame:CGRectMake(64.0f, 2.0f, 256.0f, 23.0f)];

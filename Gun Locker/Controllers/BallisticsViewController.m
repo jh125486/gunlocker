@@ -40,7 +40,7 @@
     dataManager = [DataManager sharedManager];
     
     self.title = @"Ballistics";
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Table/tableView_background"]];
     
     _selectedProfilePickerView = [[UIPickerView alloc] init];
     _selectedProfilePickerView.delegate = self;
@@ -397,9 +397,7 @@
 #pragma mark TESTING Profiles below
 
 -(void)loadTestProfiles {
-    // only load test weapons on first load
-    NSLog(@"weapon count: %d", [Weapon countOfEntities]);
-    
+    // only load test weapons on first load    
     NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
     if ([preferences boolForKey:@"TestProfilesLoaded"]) return;
     
@@ -419,11 +417,10 @@
     ballisticProfile1.scope_click_unit = @"MOA";
     ballisticProfile1.elevation_click = @"1/2";
     ballisticProfile1.windage_click = @"1/4";
-    
     [ballisticProfile1 calculateTheta];
+    [[DataManager sharedManager] saveAppDatabase];
     
-    BallisticProfile *ballisticProfile2 = [BallisticProfile createEntity];
-    
+    BallisticProfile *ballisticProfile2 = [BallisticProfile createEntity];    
     ballisticProfile2.bullet_weight = [NSNumber numberWithInt:62.0f];
     ballisticProfile2.drag_model = @"G7";
     ballisticProfile2.muzzle_velocity = [NSNumber numberWithInt:2900];
@@ -439,7 +436,6 @@
     ballisticProfile2.scope_click_unit = @"MILs";
     ballisticProfile2.elevation_click = @"1/10";
     ballisticProfile2.windage_click = @"1/10";
-
     [ballisticProfile2 calculateTheta];
     
     [[DataManager sharedManager] saveAppDatabase];

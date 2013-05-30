@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Table/tableView_background"]];
     
     //Register addNewNoteToArray to recieve "newNote" notification
     DebugLog(@"tried to register delegate");
@@ -42,7 +42,7 @@
     int count = _selectedWeapon ? [_selectedWeapon.notes count] : [Note countOfEntities];
     self.title = [NSString stringWithFormat:@"Notes (%d)", count];
     
-    self.noNotesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Notes"]];
+    self.noNotesImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Images/Table/Blanks/Notes"]];
     self.noNotesImageView.hidden = (count != 0);
     self.tableView.hidden = (count == 0);
 }

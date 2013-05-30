@@ -28,15 +28,15 @@
 */
 - (id) initWithCoder:(NSCoder *)coder {
     if (self = [super initWithCoder:coder]) {
-        [self setBackgroundImage:[[UIImage imageNamed:@"DefaultButton_Normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 22, 21, 21)] 
+        [self setBackgroundImage:[[UIImage imageNamed:@"Images/Buttons/DefaultButton_Normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 22, 21, 21)] 
                         forState:UIControlStateNormal];
 
-        [self setBackgroundImage:[[UIImage imageNamed:@"DefaultButton_Highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 22, 21, 21)] 
+        [self setBackgroundImage:[[UIImage imageNamed:@"Images/Buttons/DefaultButton_Highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 22, 21, 21)] 
                         forState:UIControlStateHighlighted];
-        [self setBackgroundImage:[[UIImage imageNamed:@"DefaultButton_Highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 22, 21, 21)] 
+        [self setBackgroundImage:[[UIImage imageNamed:@"Images/Buttons/DefaultButton_Highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 22, 21, 21)] 
                         forState:UIControlStateSelected];
 
-        [self setBackgroundImage:[[UIImage imageNamed:@"DefaultButton_Disabled"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 22, 21, 21)] 
+        [self setBackgroundImage:[[UIImage imageNamed:@"Images/Buttons/DefaultButton_Disabled"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 22, 21, 21)] 
                         forState:UIControlStateDisabled];
 
         [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

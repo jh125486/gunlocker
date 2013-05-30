@@ -12,7 +12,7 @@
 @synthesize headerTitleLabel;
 
 -(void)awakeFromNib {
-    self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background"]];    
+    self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Table/tableView_header_background"]];    
 }
 
 @end

@@ -47,7 +47,7 @@
     [super viewDidLoad];
     dataManager = [DataManager sharedManager];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Table/tableView_background"]];
 
     sgDirections = [NSArray arrayWithObjects:@"LH", @"RH", nil];
     dragModels = [NSArray arrayWithObjects:@"G7", @"G1", nil];

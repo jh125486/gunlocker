@@ -29,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Iamges/Table/tableView_background"]];
     
     roundsFiredAlertView = [[UIAlertView alloc] initWithTitle:@"Rounds Fired" 
                                                       message:nil 

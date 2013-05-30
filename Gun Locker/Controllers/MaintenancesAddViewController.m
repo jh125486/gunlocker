@@ -22,7 +22,7 @@
 - (void)setQuickDialogTableView:(QuickDialogTableView *)aQuickDialogTableView {
     [super setQuickDialogTableView:aQuickDialogTableView];
     
-    self.quickDialogTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    self.quickDialogTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Table/tableView_background"]];
     self.quickDialogTableView.bounces = NO;
     self.quickDialogTableView.styleProvider = self;
 }
@@ -80,8 +80,8 @@
             NSString *title = [NSString stringWithFormat:@"%@ %@", malfunction.failure, [[malfunction.date distanceOfTimeInWords] lowercaseString]];
             QBooleanElement *malfunctionElement = [[QBooleanElement alloc] initWithTitle:title BoolValue:NO];
             malfunctionElement.controllerAction = @"linkedMalfunctionChanged:";
-            malfunctionElement.onImage  = [UIImage imageNamed:@"icon_link"];
-            malfunctionElement.offImage = [UIImage imageNamed:@"icon_delink"];
+            malfunctionElement.onImage  = [UIImage imageNamed:@"Images/Icons/link"];
+            malfunctionElement.offImage = [UIImage imageNamed:@"Images/Icons/delink"];
             malfunctionElement.key = [NSString stringWithFormat:@"%d", [malfunctions indexOfObject:malfunction]];        
             malfunctionElement.controllerAccessoryAction = @"linkedMalfunctionChanged:";
             [malfunctionSection addElement:malfunctionElement];        

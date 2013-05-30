@@ -92,8 +92,8 @@
 }
 
 - (IBAction)infoViewTapped:(id)sender {
-    _infoView.hidden = !_infoView.hidden;
-    [self.tableView setContentOffset:CGPointMake(0.f, _infoView.isHidden ? CGRectGetHeight(_infoView.frame) : 0.f) animated:YES];
+    CGFloat offset = self.tableView.contentOffset.y == CGRectGetHeight(_infoView.frame) ? 0.f : CGRectGetHeight(_infoView.frame);
+    [self.tableView setContentOffset:CGPointMake(0.f, offset) animated:YES];
 }
 
 #pragma mark - Table view data source

@@ -156,7 +156,7 @@
     _nightMode = YES;
     _rangesTableView.backgroundColor = _directionsTableView.backgroundColor = _resultContainerView.backgroundColor = _speedTableView.backgroundColor = _resultBackgroundView.backgroundColor = blackColor;
     
-    _reticleImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Reticles/%@_night", reticle]];
+    _reticleImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Images/Reticles/%@_night", reticle]];
     for (UILabel *label in _resultView.subviews)
         if ([label isKindOfClass:[UILabel class]])
             label.textColor = halfRedColor;
@@ -182,7 +182,7 @@
     _rangesTableView.backgroundColor = _directionsTableView.backgroundColor = _resultContainerView.backgroundColor = _speedTableView.backgroundColor = _resultBackgroundView.backgroundColor = _titleLabel.textColor = _rangeLabel.textColor = _directionTypeLabel.textColor = whiteColor;
     _fromLabel.textColor = _speedLabel.textColor = [UIColor colorWithWhite:0.75f alpha:1.f];
     
-    _reticleImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Reticles/%@_day", reticle]];
+    _reticleImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Images/Reticles/%@_day", reticle]];
     
     for (UILabel *label in _resultView.subviews)
         if ([label isKindOfClass:[UILabel class]])

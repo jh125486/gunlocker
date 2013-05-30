@@ -30,7 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Table/tableView_background"]];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 12, 14)];
     label.text = @"°";
@@ -230,7 +230,7 @@
 
 #pragma mark Tableview
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    _resultView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Table/tableView_header_background2"]];
+    _resultView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Table/tableView_header_background2"]];
     return _resultView;
 }
 

@@ -50,7 +50,7 @@
     self.title = [NSString stringWithFormat:@"Calibers (%d)", count];
     
     // change to Table/Ammunition
-    self.noAmmunitionImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/Ammunition"]];
+    self.noAmmunitionImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Images/Table/Blanks/Ammunition"]];
     self.noAmmunitionImageView.hidden = (count != 0);
     self.tableView.hidden = (count == 0);    
 }

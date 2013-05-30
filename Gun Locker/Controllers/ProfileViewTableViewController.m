@@ -29,7 +29,7 @@
     [super viewDidLoad];
     dataManager = [DataManager sharedManager];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Table/tableView_background"]];
 }
 
 -(void)viewWillAppear:(BOOL)animated {

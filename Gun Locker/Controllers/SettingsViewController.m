@@ -36,7 +36,7 @@
     dataManager = [DataManager sharedManager];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Table/tableView_background"]];
     _cardsSortByControl.selectedSegmentIndex  = [defaults integerForKey:kGLCardSortByTypeKey];
     _showNFAInformationSwitch.on              = [defaults boolForKey: kGLShowNFADetailsKey];
     _passcodeCell.detailTextLabel.text        = ([[KKPasscodeLock sharedLock] isPasscodeRequired]) ? @"On" : @"Off";

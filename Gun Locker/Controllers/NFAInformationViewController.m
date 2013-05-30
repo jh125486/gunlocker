@@ -66,6 +66,7 @@
 
         QEntryElement *stampNumber = [[QEntryElement alloc] initWithTitle:@"Stamp Number" Value:stamp.number Placeholder:@"n/a"];
         stampNumber.key = @"number";
+        stampNumber.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
 
         [infoSection addElement:nfaType];
         [infoSection addElement:transferType];
@@ -162,7 +163,7 @@
 
 -(void)cell:(UITableViewCell *)cell willAppearForElement:(QElement *)element atIndexPath:(NSIndexPath *)indexPath{
     if ([element isKindOfClass:[QButtonElement class]]){
-        UIImage *background = [[UIImage imageNamed:@"delete_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+        UIImage *background = [[UIImage imageNamed:@"Images/Buttons/delete_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
         cell.backgroundColor = [UIColor colorWithPatternImage:background];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
@@ -185,7 +186,7 @@
 - (void)setQuickDialogTableView:(QuickDialogTableView *)aQuickDialogTableView {
     [super setQuickDialogTableView:aQuickDialogTableView];
     if (self.root.grouped) {
-        self.quickDialogTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableView_background"]];
+        self.quickDialogTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Images/Table/tableView_background"]];
     } else {
         self.quickDialogTableView.backgroundColor = [UIColor whiteColor];
     }

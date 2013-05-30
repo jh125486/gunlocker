@@ -121,7 +121,7 @@
 
 - (void)loadManufacturers {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"manufacturers" ofType:@"txt"];
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"manufacturers.txt" ofType:nil];
         NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
         NSArray *splitParts;
         for (NSString *manufacturer in [content componentsSeparatedByString:@"\n"]) {
@@ -190,7 +190,7 @@
 
 - (void)loadCalibers {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"calibers" ofType:@"txt"];
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"calibers.txt" ofType:nil];
         NSString* content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
         NSArray *splitParts;
         for (NSString *caliber in [content componentsSeparatedByString:@"\n"]) {

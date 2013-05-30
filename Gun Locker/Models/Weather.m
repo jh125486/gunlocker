@@ -63,6 +63,7 @@
         _tempC                = [(NSNumber*)[weatherArray objectAtIndex:5] floatValue];
         _dewpointC            = [(NSNumber*)[weatherArray objectAtIndex:6] floatValue];
         _windDirectionDegrees = [(NSNumber*)[weatherArray objectAtIndex:7] floatValue];
+        if (_windDirectionDegrees == 360) {_windDirectionDegrees = 0;}
         _windSpeedKnots       = [(NSNumber*)[weatherArray objectAtIndex:8] floatValue];
         _altimInHg            = [(NSNumber*)[weatherArray objectAtIndex:11] floatValue];
         _relativeHumidity = exp((17.271 * _dewpointC)/(237.7 + _dewpointC)) / exp((17.271 * _tempC)/(237.7 + _tempC)) * 100;

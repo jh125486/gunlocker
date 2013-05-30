@@ -52,7 +52,7 @@
     int count = [_fetchedResultsController.fetchedObjects count];
     self.title = [NSString stringWithFormat:@"Dope Cards (%d)", count];
     
-    _noDopeCardsImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Table/DopeCards"]];
+    _noDopeCardsImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Images/Table/Blanks/DopeCards"]];
     _noDopeCardsImageView.hidden = (count != 0);
     self.tableView.hidden = (count == 0);
 }
@@ -142,8 +142,8 @@
     [[DataManager sharedManager] saveAppDatabase];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath { 
-    cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor clearColor] : [UIColor colorWithRed:0.855 green:0.812 blue:0.682 alpha:1.000];
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = ((indexPath.row + (indexPath.section % 2))% 2 == 0) ? [UIColor colorWithRed:0.855 green:0.812 blue:0.682 alpha:1.000] : [UIColor clearColor];
 }  
 
 #pragma mark FetchedResultsController
@@ -211,6 +211,7 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self updateTitle];
+    [self.tableView reloadData];
     [self.tableView endUpdates];
 }
 

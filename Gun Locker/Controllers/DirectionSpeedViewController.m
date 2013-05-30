@@ -46,7 +46,7 @@
     _speedSlider.labelStep = 5;
     
     int imageStepNumber = round(_speedValue/_speedSlider.labelStep) * _speedSlider.labelStep;
-    _speedImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_%d", _resultType, imageStepNumber]];    
+    _speedImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"JH_RotaryWheel_%@_%d", _resultType, imageStepNumber]];
     
     [_speedUnitControl setTitle:[_resultType isEqualToString:@"Wind"] ? @"Knots" : @"KPH" forSegmentAtIndex:0];
     
@@ -122,7 +122,7 @@
 
 -(void)sliderMoved:(UISlider *)slider {    
     _speedValue = slider.value;
-    _speedImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_%g",
+    _speedImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"JH_RotaryWheel_%@_%g",
                                            _resultType,
                                            round(_speedValue/_speedSlider.labelStep) * _speedSlider.labelStep]];
     [self updateTitleLabel];

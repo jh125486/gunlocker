@@ -83,14 +83,14 @@
         [self.stampViewContainer setHidden:NO];
         switch ([weapon.stamp.nfa_type intValue]) {
             case 5: //AOW
-                [self.stampViewButton setImage:[UIImage imageNamed:@"Stamp_AOW"] forState:UIControlStateNormal];
+                [self.stampViewButton setImage:[UIImage imageNamed:@"Images/Stamps/AOW"] forState:UIControlStateNormal];
                 self.stampDateLabel.transform = CGAffineTransformMakeRotation(-0.6);
                 self.stampSerialNumberLabel.frame = CGRectMake(13, 15, 60, 21);
                 self.stampDateLabel.font = [UIFont fontWithName:@"AmericanTypewriter-Condensed" size:17.0];
                 break;
                 
             default:
-                [self.stampViewButton setImage:[UIImage imageNamed:@"Stamp_NFA"] forState:UIControlStateNormal];
+                [self.stampViewButton setImage:[UIImage imageNamed:@"Images/Stamps/NFA"] forState:UIControlStateNormal];
                 self.stampDateLabel.transform = CGAffineTransformMakeRotation(-0.8);
                 self.stampDateLabel.font = [UIFont fontWithName:@"AmericanTypewriter-CondensedBold" size:17.0];
                 self.stampSerialNumberLabel.frame = CGRectMake(14, 11, 58, 21);
