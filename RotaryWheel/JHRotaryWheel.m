@@ -193,7 +193,7 @@ static float maxAlphaValue = 1.f;
         float y = touchPoint.y - _container.center.y;
         float radians = atan2(y,x);
 
-        int sectorNumber;
+        int sectorNumber = 0;
         for (JHSector *sector in _sectors) {
             if (sector.minValue > 0 && sector.maxValue < 0) { // 4 - Check for anomaly (occurs with even number of sectors)
                 if (sector.maxValue > radians || sector.minValue < radians) {
