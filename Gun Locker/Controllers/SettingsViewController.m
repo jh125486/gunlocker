@@ -244,7 +244,7 @@
 -(NSString *)csvDumpAmmunition {
     NSMutableString *tempString = [[NSMutableString alloc] initWithString:@"Brand,Type,Caliber,Count,Original Count,Purchase Date,Retailer, Purchase Price,Cost per Round\n"];
     
-    for (Ammunition *ammunition in [Magazine findAll]) {
+    for (Ammunition *ammunition in [Ammunition findAll]) {
         [tempString appendFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@\n",
          ammunition.brand,
          ammunition.type,

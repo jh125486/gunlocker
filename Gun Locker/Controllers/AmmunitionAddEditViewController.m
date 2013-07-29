@@ -128,7 +128,7 @@
         }
         
         textField.text = ([result doubleValue] > 0) ? [currencyFormatter stringFromNumber:[NSNumber numberWithDouble:[result doubleValue]]] : nil;
-        
+        [self purchasePriceValueChanged:nil];
         //always return no since we are manually changing the text field
         return NO;
     }
@@ -204,7 +204,6 @@
 
 # pragma mark Actions
 - (IBAction)cancelTapped:(id)sender {
-    
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -234,7 +233,7 @@
 - (IBAction)purchasePriceValueChanged:(id)sender {
     if([_purchasePriceTextField.text length]) { // move field to the right
         _currencySymbolLabel.hidden = NO;
-        _purchasePriceTextField.frame = CGRectMake(160.f, 
+        _purchasePriceTextField.frame = CGRectMake(160.f,
                                                    CGRectGetMinY(_purchasePriceTextField.frame), 
                                                    CGRectGetWidth(_purchasePriceTextField.frame), 
                                                    CGRectGetHeight( _purchasePriceTextField.frame));
