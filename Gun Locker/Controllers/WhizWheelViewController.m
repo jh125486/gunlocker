@@ -107,7 +107,7 @@
     [super viewWillAppear:animated];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    reticle = [defaults integerForKey:kGLReticleUnitsControlKey] == 0 ? @"MOA" : @"MilDot";
+    reticle = [defaults integerForKey:kGLReticleUnitsControlKey] == 0 ? @"MilDot" : @"MOA";
     
     // do all conversions for UnitControls
     trajectory.rangeUnit  = [defaults integerForKey:kGLRangeUnitsControlKey];
@@ -121,7 +121,7 @@
     arrayRanges = [[NSMutableArray alloc] initWithObjects:@"", @"", nil];
     for(int range = trajectory.rangeStart; range <= trajectory.rangeEnd; range += trajectory.rangeStep)
         [arrayRanges addObject:[NSString stringWithFormat:@"%d", range]];
-    [arrayRanges addObject:@""];
+    [arrayRanges addObject:@""]; // buffer fake table picker by two rows on top
     [arrayRanges addObject:@""];
     
     
@@ -208,12 +208,12 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
--(BOOL)shouldAutorotate {
-    return NO;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(BOOL)shouldAutorotate {
+    return YES;
 }
 
 #pragma mark Table view methods

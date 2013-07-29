@@ -81,8 +81,6 @@
 }
 
 - (void)loadDopeCard {
-    // TODO set pickers to correct values
-    
     self.title = @"Edit Dope Card";
     _cardNameTextField.text       = _selectedDopeCard.name;
     _zeroTextField.text           = _selectedDopeCard.zero;

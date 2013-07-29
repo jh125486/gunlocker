@@ -142,8 +142,6 @@
         NSString *bulletDirectory = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Extras/Bullets"];
         NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:bulletDirectory error:nil];
         NSPredicate *fltr = [NSPredicate predicateWithFormat:@"self ENDSWITH '.csv'"];
-        NSLog(@"directory %@", bulletDirectory);
-        int i = 0;
         for (NSString *bulletCSVFile in [dirContents filteredArrayUsingPredicate:fltr]) {
             NSString *csvFullPath = [bulletDirectory stringByAppendingPathComponent:bulletCSVFile];
             NSString* content = [NSString stringWithContentsOfFile:csvFullPath encoding:NSUTF8StringEncoding error:NULL];
@@ -183,10 +181,8 @@
                 
                 newBullet.ballistic_coefficient = bc;
             }
-            i++;
         }
         [[DataManager sharedManager] saveAppDatabase];
-        NSLog(@"count: %d", i);
     });
 }
 

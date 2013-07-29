@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFHTTPRequestOperation.h"
+//#import "AFHTTPRequestOperation.h"
 
 @interface Weather : NSObject
 
@@ -26,7 +26,7 @@
 @property BOOL  goodData;
 
 -(id)initClosetWeatherFromMetarArray:(NSArray*)metars andLocation:(CLLocation*)location;
--(id)initWithMetarString:(NSString*)metarString andAltitude:(float)altitudeM;
+-(id)initWithMetarString:(NSString*)metarString andLocation:(CLLocation*)location;
 
 -(NSString*)description;
 

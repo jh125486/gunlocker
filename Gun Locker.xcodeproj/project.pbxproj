@@ -153,6 +153,7 @@
 		53A6AAC117579BE0007E29B3 /* TextStepper_RightPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A6AAB117579BE0007E29B3 /* TextStepper_RightPressed.png */; };
 		53A6AAC217579BE0007E29B3 /* TextStepper_RightPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A6AAB217579BE0007E29B3 /* TextStepper_RightPressed@2x.png */; };
 		53A6AAC317579BE0007E29B3 /* TextStepperField.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A6AAB417579BE0007E29B3 /* TextStepperField.m */; };
+		53A6AAC517583C61007E29B3 /* Testing in Resources */ = {isa = PBXBuildFile; fileRef = 53A6AAC417583C61007E29B3 /* Testing */; };
 		53AF044A1560171200D702FD /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF04341560171200D702FD /* AFHTTPClient.m */; };
 		53AF044B1560171200D702FD /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF04361560171200D702FD /* AFHTTPRequestOperation.m */; };
 		53AF044C1560171200D702FD /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF04381560171200D702FD /* AFImageRequestOperation.m */; };
@@ -476,6 +477,7 @@
 		53A6AAB217579BE0007E29B3 /* TextStepper_RightPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TextStepper_RightPressed@2x.png"; sourceTree = "<group>"; };
 		53A6AAB317579BE0007E29B3 /* TextStepperField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextStepperField.h; sourceTree = "<group>"; };
 		53A6AAB417579BE0007E29B3 /* TextStepperField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextStepperField.m; sourceTree = "<group>"; };
+		53A6AAC417583C61007E29B3 /* Testing */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Testing; sourceTree = "<group>"; };
 		53AF04331560171200D702FD /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		53AF04341560171200D702FD /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		53AF04351560171200D702FD /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -654,6 +656,7 @@
 		530DDEFE14EEB6D800F1BC7F /* Gun Locker */ = {
 			isa = PBXGroup;
 			children = (
+				53A6AAC417583C61007E29B3 /* Testing */,
 				53421C801755039400A5B530 /* Application */,
 				53421CB51755096600A5B530 /* Controllers */,
 				53421C301754FCC600A5B530 /* Images */,
@@ -1316,6 +1319,7 @@
 				53A6AAC017579BE0007E29B3 /* TextStepper_Right@2x.png in Resources */,
 				53A6AAC117579BE0007E29B3 /* TextStepper_RightPressed.png in Resources */,
 				53A6AAC217579BE0007E29B3 /* TextStepper_RightPressed@2x.png in Resources */,
+				53A6AAC517583C61007E29B3 /* Testing in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

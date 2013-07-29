@@ -26,30 +26,28 @@
 
 -(id)initClosetWeatherFromMetarArray:(NSArray*)metars andLocation:(CLLocation*)location {
     NSString *closestStation;
-    _kmFromStation = MAXFLOAT;
+    float stationDistance = MAXFLOAT;
     float distanceKM;
-    NSArray *stationWeatherArray;
+    NSArray *weatherArray;
     
     // rolls through returned stations and find closest station
     for (NSString *stationWeather in metars) {
-        stationWeatherArray = [stationWeather componentsSeparatedByString:@","];
-        CLLocation *stationLocation = [[CLLocation alloc] initWithLatitude:[(NSNumber*)[stationWeatherArray objectAtIndex:3] floatValue]
-                                                                 longitude:[(NSNumber*)[stationWeatherArray objectAtIndex:4] floatValue]];
+        weatherArray = [stationWeather componentsSeparatedByString:@","];
+        CLLocation *stationLocation = [[CLLocation alloc] initWithLatitude:[(NSNumber*)[weatherArray objectAtIndex:3] floatValue]
+                                                                 longitude:[(NSNumber*)[weatherArray objectAtIndex:4] floatValue]];
         distanceKM = [location distanceFromLocation:stationLocation] / 1000.0f;
         
-        if (distanceKM < _kmFromStation) {
+        if (distanceKM < stationDistance) {
             closestStation = stationWeather;
-            _kmFromStation = distanceKM;
+            stationDistance = distanceKM;
         }
     }
 
-    return [self initWithMetarString:closestStation andAltitude:location.altitude];
+    return [self initWithMetarString:closestStation andLocation:location];
 }
 
--(id)initWithMetarString:(NSString*)metarString andAltitude:(float)altitudeM {
+-(id)initWithMetarString:(NSString*)metarString andLocation:(CLLocation *)location {
     if (self = [super init]) {
-        self.altitudeMeters = altitudeM;
-        
         NSArray *weatherArray = [metarString componentsSeparatedByString:@","];
         
         // METAR timestamp format 2012-03-10T19:23:00Z
@@ -58,7 +56,11 @@
         [formatter setLocale:[NSLocale systemLocale]];
         [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
 
-        _timestamp            = [formatter dateFromString:[weatherArray objectAtIndex:2]];        
+        CLLocation *stationLocation = [[CLLocation alloc] initWithLatitude:[(NSNumber*)[weatherArray objectAtIndex:3] floatValue]
+                                                                 longitude:[(NSNumber*)[weatherArray objectAtIndex:4] floatValue]];
+        _kmFromStation        = [location distanceFromLocation:stationLocation] / 1000.0f;
+        _altitudeMeters       = location.altitude;
+        _timestamp            = [formatter dateFromString:[weatherArray objectAtIndex:2]];
         _stationID            = [weatherArray objectAtIndex:1];
         _tempC                = [(NSNumber*)[weatherArray objectAtIndex:5] floatValue];
         _dewpointC            = [(NSNumber*)[weatherArray objectAtIndex:6] floatValue];
