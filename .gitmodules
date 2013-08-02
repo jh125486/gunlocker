@@ -6,10 +6,16 @@
 	url = git://github.com/aporat/KKPasscodeLock.git
 [submodule "QuickDialog"]
 	path = QuickDialog
-	url = git@github.com:escoz/QuickDialog.git
+	url = git://github.com/escoz/QuickDialog.git
 [submodule "AFNetworking"]
 	path = AFNetworking
 	url = git://github.com/seatme/AFNetworking.git
 [submodule "CBIntrospect"]
 	path = CBIntrospect
 	url = git://github.com/cbess/CBIntrospector.git
+[submodule "KosherCocoa"]
+	path = KosherCocoa
+	url = git://github.com/MosheBerman/KosherCocoa.git
+[submodule "ALAssetsLibrary-CustomPhotoAlbum"]
+	path = ALAssetsLibrary-CustomPhotoAlbum
+	url = https://github.com/Kjuly/ALAssetsLibrary-CustomPhotoAlbum.git

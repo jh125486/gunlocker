@@ -11,6 +11,8 @@
 		530DDEFB14EEB6D800F1BC7F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDEFA14EEB6D800F1BC7F /* Foundation.framework */; };
 		530DDEFD14EEB6D800F1BC7F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDEFC14EEB6D800F1BC7F /* CoreGraphics.framework */; };
 		530DDF1914EECF9400F1BC7F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530DDF1814EECF9400F1BC7F /* CoreData.framework */; };
+		5311F5E617A8089800F8250E /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 5311F5E517A8089800F8250E /* ALAssetsLibrary+CustomPhotoAlbum.m */; };
+		5311F5E917A8223600F8250E /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5311F5E817A8223600F8250E /* AssetsLibrary.framework */; };
 		5319C8C9150923EE00795B87 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5319C8C8150923EE00795B87 /* CoreLocation.framework */; };
 		53421C371754FCC600A5B530 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 53421C301754FCC600A5B530 /* Images */; };
 		53421C3F1754FF2F00A5B530 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 53421C3E1754FF2F00A5B530 /* icon.png */; };
@@ -241,6 +243,9 @@
 		530DDEFA14EEB6D800F1BC7F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		530DDEFC14EEB6D800F1BC7F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		530DDF1814EECF9400F1BC7F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		5311F5E417A8089800F8250E /* ALAssetsLibrary+CustomPhotoAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsLibrary+CustomPhotoAlbum.h"; sourceTree = "<group>"; };
+		5311F5E517A8089800F8250E /* ALAssetsLibrary+CustomPhotoAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetsLibrary+CustomPhotoAlbum.m"; sourceTree = "<group>"; };
+		5311F5E817A8223600F8250E /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		5319C8C8150923EE00795B87 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53421C301754FCC600A5B530 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		53421C3E1754FF2F00A5B530 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
@@ -592,6 +597,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5311F5E917A8223600F8250E /* AssetsLibrary.framework in Frameworks */,
 				537DAAEC174F97D800383E9C /* MapKit.framework in Frameworks */,
 				5356B20015806F9C00338095 /* MessageUI.framework in Frameworks */,
 				53E32F0F156CAA0C00941A5B /* libz.dylib in Frameworks */,
@@ -634,6 +640,7 @@
 		530DDEF714EEB6D800F1BC7F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5311F5E817A8223600F8250E /* AssetsLibrary.framework */,
 				537DAAEB174F97D800383E9C /* MapKit.framework */,
 				53AF06731512ACD8000B9943 /* AudioToolbox.framework */,
 				53E8313E1555B2590062893B /* CFNetwork.framework */,
@@ -666,6 +673,16 @@
 			);
 			path = "Gun Locker";
 			sourceTree = "<group>";
+		};
+		5311F5E317A8089800F8250E /* ALAssetsLibrary-CustomPhotoAlbum */ = {
+			isa = PBXGroup;
+			children = (
+				5311F5E417A8089800F8250E /* ALAssetsLibrary+CustomPhotoAlbum.h */,
+				5311F5E517A8089800F8250E /* ALAssetsLibrary+CustomPhotoAlbum.m */,
+			);
+			name = "ALAssetsLibrary-CustomPhotoAlbum";
+			path = "ALAssetsLibrary-CustomPhotoAlbum/ALAssetsLibrary-CustomPhotoAlbum";
+			sourceTree = SOURCE_ROOT;
 		};
 		53421C481754FF7400A5B530 /* Icons & Splash */ = {
 			isa = PBXGroup;
@@ -1039,6 +1056,7 @@
 		53CA990D150AA4BD0060A1E8 /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5311F5E317A8089800F8250E /* ALAssetsLibrary-CustomPhotoAlbum */,
 				53A6AAA317579BE0007E29B3 /* TextStepper */,
 				53421E51175682DC00A5B530 /* RotaryWheel */,
 				53F4C0A916AB7659002EEEEF /* MagicalRecord */,
@@ -1470,6 +1488,7 @@
 				53A6AA9A1757989E007E29B3 /* NSString+Extended.m in Sources */,
 				53A6AA9E175798B1007E29B3 /* DataModel.xcdatamodeld in Sources */,
 				53A6AAC317579BE0007E29B3 /* TextStepperField.m in Sources */,
+				5311F5E617A8089800F8250E /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -56,5 +56,6 @@ static NSString *const kGLDirectionControlKey = @"directionControl";
 static NSString *const kGLRangeStartKey = @"rangeStart";
 static NSString *const kGLRangeEndKey = @"rangeEnd";
 static NSString *const kGLRangeStepKey = @"rangeStep";
+static NSString *const kGLPhotoAlbumName = @"Gun Locker Photos";
 
 #endif

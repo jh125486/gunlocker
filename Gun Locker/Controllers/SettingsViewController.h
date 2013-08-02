@@ -42,6 +42,7 @@
 - (IBAction)cardsSortByChanged:(UISegmentedControl *)sender;
 - (IBAction)updateStepperRanges:(id)sender;
 - (IBAction)exportTapped:(UIButton *)button;
+- (IBAction)savePhotosTapped:(UIButton *)button;
 
 -(NSString *)csvDumpAll;
 -(NSString *)csvDumpWeapons;

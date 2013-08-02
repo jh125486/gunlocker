@@ -8,6 +8,7 @@
 
 #import "SettingsViewController.h"
 #import "KKPasscodeLock.h"
+#import "ALAssetsLibrary+CustomPhotoAlbum.h"
 
 @implementation SettingsViewController
 @synthesize nightModeControl = _nightModeControl;
@@ -68,11 +69,11 @@
     int magazinesCount  = [Magazine countOfEntities];
     int ammunitionCount = [Ammunition countOfEntities];
     
-    [_exportWeaponsButton setTitle:[NSString stringWithFormat:@"Export Weapons (%d)", weaponCount] 
+    [_exportWeaponsButton setTitle:[NSString stringWithFormat:@"Export Weapons [CSV] (%d)", weaponCount]
                           forState:UIControlStateNormal];
-    [_exportMagazinesButton setTitle:[NSString stringWithFormat:@"Export Magazines (%d)", magazinesCount] 
+    [_exportMagazinesButton setTitle:[NSString stringWithFormat:@"Export Magazines [CSV] (%d)", magazinesCount] 
                             forState:UIControlStateNormal];
-    [_exportAmmunitionButton setTitle:[NSString stringWithFormat:@"Export Ammunition (%d)", ammunitionCount] 
+    [_exportAmmunitionButton setTitle:[NSString stringWithFormat:@"Export Ammunition [CSV] (%d)", ammunitionCount] 
                              forState:UIControlStateNormal];
     
     [_exportWeaponsButton setEnabled:weaponCount];
@@ -160,6 +161,29 @@
                    destructiveButtonTitle:nil
                         otherButtonTitles:@"Email", @"iTunes File Sharing", nil] 
      showInView:[UIApplication sharedApplication].keyWindow];
+}
+
+- (IBAction)savePhotosTapped:(id)sender {
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+
+    [library addAssetsGroupAlbumWithName:kGLPhotoAlbumName
+                             resultBlock:nil
+                            failureBlock:nil];
+
+    
+    // roll through all Weapon photos
+    for (Photo *photo in [Photo findAll]) {
+        [library saveImageData:photo.normal_size
+                       toAlbum:kGLPhotoAlbumName
+                      metadata:[[NSDictionary alloc] initWithObjectsAndKeys:@"Weapon", photo.weapon.description, nil]
+                    completion:nil
+                       failure:^(NSError *error) {
+                           if (error != nil) {
+                               DebugLog(@"Error saving photo to photoalbum: %@", [error description]);
+                           }
+                       }
+         ];
+    }
 }
 
 #pragma mark Table delegates

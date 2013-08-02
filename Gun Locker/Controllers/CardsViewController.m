@@ -12,7 +12,7 @@
 @synthesize selectedTypeControl = _selectedTypeControl, selectedType = _selectedType;
 @synthesize noFilesImageView = _noFilesImageView;
 @synthesize tableView;
-@synthesize showPasscodeFlag = _showPasscodeFlag;
+@synthesize initialLoad = _initialLoad;
 @synthesize fetchedResultsController = _fetchedResultsController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -25,6 +25,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _initialLoad = true;
+    
     types = [NSArray arrayWithObjects:@"Handguns", @"Rifles", @"Shotguns", @"Misc.", nil];
 
 //    [self setupFRCArray];
@@ -83,11 +85,12 @@
         self.navigationItem.leftBarButtonItem.enabled = NO;
     
     
-    _showPasscodeFlag = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showPasscodeModal)
                                                  name:UIApplicationDidBecomeActiveNotification object:nil];
 }
+
+
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -96,6 +99,11 @@
         [DataManager sharedManager].cardSortingChanged = NO;
     }
     [self segmentedTypeControlClicked];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (_initialLoad) [self showPasscodeModal];
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
@@ -192,8 +200,7 @@
 }
 
 - (void)showPasscodeModal {
-    if (([[KKPasscodeLock sharedLock] isPasscodeRequired])) {
-        DebugLog(@"tried to show modal");
+    if ([[KKPasscodeLock sharedLock] isPasscodeRequired]) {
         KKPasscodeViewController *vc = [[KKPasscodeViewController alloc] initWithNibName:nil bundle:nil] ;
         vc.mode = KKPasscodeModeEnter;
         vc.delegate = self;
@@ -204,7 +211,10 @@
             nav.navigationBar.barStyle = UIBarStyleBlack;
             nav.navigationBar.opaque = NO;
             
-            [self presentViewController:nav animated:YES completion:^{_showPasscodeFlag = NO;}];
+            [self presentViewController:nav
+                               animated:YES
+                             completion:^{_initialLoad = NO;}
+             ];
         });
     }
 }
