@@ -157,8 +157,5 @@
                    destructiveButtonTitle:@"Delete"
                         otherButtonTitles:nil] showInView:[UIApplication sharedApplication].keyWindow];
 }
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
-}
 
 @end
