@@ -10,9 +10,11 @@
 #import "Ammunition.h"
 #import "AmmunitionAddEditViewController.h"
 
-@interface AmmunitionShowViewController : UITableViewController <UIAlertViewDelegate, UIActionSheetDelegate> {
+@interface AmmunitionShowViewController : UITableViewController <UIAlertViewDelegate, UIActionSheetDelegate, UITextFieldDelegate> {
     UIAlertView *roundsFiredAlertView;
     UIAlertView *roundsBoughtAlertView;
+    UIAlertView *pricePaidAlertView;
+    int tmpRoundsBought;
     NSNumberFormatter* currencyFormatter;
 }
 @property (weak, nonatomic) Ammunition *selectedAmmunition;

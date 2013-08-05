@@ -8556,7 +8556,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="g2x-NY-W1i" customClass="DefaultButton">
-                                                    <rect key="frame" x="-1" y="-1" width="302" height="44"/>
+                                                    <rect key="frame" x="-1" y="-2" width="302" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" title="Fire Ammunition">
@@ -8585,7 +8585,7 @@
                                             <rect key="frame" x="10" y="1" width="300" height="39"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hNt-uN-KwN" customClass="DefaultButton">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hNt-uN-KwN" customClass="DefaultButton">
                                                     <rect key="frame" x="-1" y="-1" width="302" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -10052,7 +10052,7 @@
         <segue reference="lhV-b9-5fc"/>
         <segue reference="GCB-J1-qDm"/>
         <segue reference="XRa-Ly-C8X"/>
-        <segue reference="e7w-6L-bbT"/>
+        <segue reference="2Ee-JQ-BfN"/>
         <segue reference="obo-2h-Fze"/>
         <segue reference="fxe-3L-tsA"/>
         <segue reference="Vt3-cf-MsD"/>
